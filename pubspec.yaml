@@ -1,0 +1,70 @@
+name: tailored_notes
+description: TailorEd Notes — digital care documentation for residential children's homes.
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.10.7
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management
+  flutter_riverpod: ^2.6.1
+  riverpod_annotation: ^2.6.1
+
+  # Backend
+  supabase_flutter: ^2.8.4
+
+  # Local database (offline-first)
+  drift: ^2.23.1
+  drift_flutter: ^0.2.4
+  sqlite3_flutter_libs: ^0.5.28
+
+  # Routing
+  go_router: ^14.8.1
+
+  # Forms
+  reactive_forms: ^18.2.2
+
+  # Models
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+  # Voice to text
+  speech_to_text: ^7.0.0
+
+  # Date/time & localisation
+  intl: ^0.20.2
+
+  # Network & storage
+  connectivity_plus: ^6.1.4
+  flutter_secure_storage: ^9.2.4
+
+  # Fonts
+  google_fonts: ^6.2.1
+
+  # Utils
+  cupertino_icons: ^1.0.8
+  uuid: ^4.5.1
+  path_provider: ^2.1.5
+  path: ^1.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+  # Code generation
+  riverpod_generator: ^2.6.2
+  build_runner: ^2.4.15
+  freezed: ^2.5.8
+  json_serializable: ^6.9.3
+  drift_dev: ^2.23.1
+
+flutter:
+  uses-material-design: true
+  generate: true

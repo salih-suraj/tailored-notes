@@ -1,0 +1,55 @@
+import 'package:drift/drift.dart';
+
+import '../../../core/offline/app_database.dart';
+import 'bath_temp_records_table.dart';
+
+part 'bath_temp_records_dao.g.dart';
+
+@DriftAccessor(tables: [BathTempRecordsTable])
+class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
+    with _$BathTempRecordsDaoMixin {
+  BathTempRecordsDao(super.db);
+
+  /// Live stream of non-deleted records for [childId] on [date] ('YYYY-MM-DD'),
+  /// newest first.
+  Stream<List<BathTempRow>> watchByChildAndDate(
+    String childId,
+    String date,
+  ) =>
+      (select(bathTempRecordsTable)
+            ..where(
+              (t) =>
+                  t.childId.equals(childId) &
+                  t.deletedAt.isNull() &
+                  _onDate(t, date),
+            )
+            ..orderBy([(t) => OrderingTerm.desc(t.recordedAt)]))
+          .watch();
+
+  Future<BathTempRow?> findById(String id) =>
+      (select(bathTempRecordsTable)..where((t) => t.id.equals(id)))
+          .getSingleOrNull();
+
+  Future<void> upsert(BathTempRecordsTableCompanion entry) =>
+      into(bathTempRecordsTable).insertOnConflictUpdate(entry);
+
+  Future<void> softDelete(String id) =>
+      (update(bathTempRecordsTable)..where((t) => t.id.equals(id))).write(
+        BathTempRecordsTableCompanion(
+          deletedAt: Value(DateTime.now().toUtc()),
+          updatedAt: Value(DateTime.now().toUtc()),
+          isSynced: const Value(false),
+        ),
+      );
+
+  // Matches rows where recorded_at falls on the given local date.
+  Expression<bool> _onDate(BathTempRecordsTable t, String date) {
+    final parts = date.split('-');
+    final year = int.parse(parts[0]);
+    final month = int.parse(parts[1]);
+    final day = int.parse(parts[2]);
+    final start = DateTime(year, month, day).toUtc();
+    final end = DateTime(year, month, day, 23, 59, 59).toUtc();
+    return t.recordedAt.isBetweenValues(start, end);
+  }
+}
