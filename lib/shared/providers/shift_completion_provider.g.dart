@@ -6,7 +6,7 @@ part of 'shift_completion_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shiftCompletionHash() => r'070ff81e259b5ffd6b700b1fe90a0de86567d9ac';
+String _$shiftCompletionHash() => r'0f313a83b17492f507b2821811a43e8e23929b2a';
 
 /// Copied from Dart SDK
 class _SystemHash {

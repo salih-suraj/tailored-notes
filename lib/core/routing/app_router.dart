@@ -5,6 +5,22 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
+import '../../features/behaviour/domain/behaviour_incident.dart';
+import '../../features/activities/domain/activity_entry.dart';
+import '../../features/smart_steps/domain/smart_step.dart';
+import '../../features/smart_steps/presentation/smart_step_detail_screen.dart';
+import '../../features/smart_steps/presentation/smart_step_editor_screen.dart';
+import '../../features/smart_steps/presentation/smart_steps_screen.dart';
+import '../../features/activities/presentation/activities_screen.dart';
+import '../../features/activities/presentation/activity_entry_editor_screen.dart';
+import '../../features/food_diary/domain/food_entry.dart';
+import '../../features/food_diary/presentation/food_diary_screen.dart';
+import '../../features/food_diary/presentation/food_entry_editor_screen.dart';
+import '../../features/sleep_diary/domain/sleep_entry.dart';
+import '../../features/sleep_diary/presentation/sleep_diary_screen.dart';
+import '../../features/sleep_diary/presentation/sleep_entry_editor_screen.dart';
+import '../../features/behaviour/presentation/behaviour_incident_editor_screen.dart';
+import '../../features/behaviour/presentation/behaviour_screen.dart';
 import '../../features/care_plans/domain/care_plan.dart';
 import '../../features/medical_history/domain/medical_profile.dart';
 import '../../features/medical_history/presentation/medical_history_screen.dart';
@@ -17,6 +33,7 @@ import '../../features/care_plans/presentation/care_plan_editor_screen.dart';
 import '../../features/care_plans/presentation/care_plans_screen.dart';
 import '../../features/checklists/presentation/bath_temp_screen.dart';
 import '../../features/checklists/presentation/checklist_screen.dart';
+import '../../features/checklists/presentation/home_cleaning_screen.dart';
 import '../../features/checklists/presentation/visitor_log_entry_screen.dart';
 import '../../features/checklists/presentation/visitor_log_screen.dart';
 import '../../features/checklists/domain/visitor_log_entry.dart';
@@ -114,6 +131,120 @@ GoRouter appRouter(Ref ref) {
                     ),
                   ),
                   GoRoute(
+                    path: 'smart-steps',
+                    builder: (_, state) => SmartStepsScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => SmartStepEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':stepId',
+                        builder: (_, state) => SmartStepDetailScreen(
+                          step: state.extra as SmartStep,
+                        ),
+                        routes: [
+                          GoRoute(
+                            path: 'edit',
+                            builder: (_, state) => SmartStepEditorScreen(
+                              childId: state.pathParameters['id']!,
+                              existing: state.extra as SmartStep?,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'activities',
+                    builder: (_, state) => ActivitiesScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => ActivityEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':entryId/edit',
+                        builder: (_, state) => ActivityEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                          existing: state.extra as ActivityEntry?,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'food-diary',
+                    builder: (_, state) => FoodDiaryScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => FoodEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':entryId/edit',
+                        builder: (_, state) => FoodEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                          existing: state.extra as FoodEntry?,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'sleep-diary',
+                    builder: (_, state) => SleepDiaryScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => SleepEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':entryId/edit',
+                        builder: (_, state) => SleepEntryEditorScreen(
+                          childId: state.pathParameters['id']!,
+                          existing: state.extra as SleepEntry?,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'behaviour',
+                    builder: (_, state) => BehaviourScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => BehaviourIncidentEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':incidentId/edit',
+                        builder: (_, state) => BehaviourIncidentEditorScreen(
+                          childId: state.pathParameters['id']!,
+                          existing:
+                              state.extra as BehaviourIncident?,
+                        ),
+                      ),
+                    ],
+                  ),
+                  GoRoute(
                     path: 'medical-history',
                     builder: (_, state) => MedicalHistoryScreen(
                       childId: state.pathParameters['id']!,
@@ -199,6 +330,11 @@ GoRouter appRouter(Ref ref) {
                 builder: (_, state) => VisitorLogEntryScreen(
                   existing: state.extra as VisitorLogEntry?,
                 ),
+              ),
+              // Cleaning kept in router for future re-enable.
+              GoRoute(
+                path: 'cleaning',
+                builder: (_, _) => const HomeCleaningScreen(),
               ),
             ],
           ),

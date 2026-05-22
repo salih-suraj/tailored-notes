@@ -76,11 +76,158 @@ abstract final class AppStrings {
   static const startVoiceInput = 'Start voice input';
   static const stopVoiceInput = 'Stop voice input';
 
-  // Checklists
+  // Checklists hub
+  static const checklistsHubVisitorDesc = 'Log visitor arrivals and departures';
+  static const checklistsHubCleaningDesc =
+      'Communal areas and all bedrooms';
+
+  // Cleaning screen
   static const checklistsTitle = 'Cleaning';
   static const checklistRoomSection = 'ROOM';
   static const checklistCommunalSection = 'COMMUNAL AREAS';
   static const checklistBedroom = 'Bedroom';
+  static const cleaningBedrooms = 'BEDROOMS';
+
+  // Smart Steps
+  static const smartStepsTitle = 'Smart Steps';
+  static const moduleSmartSteps = 'Smart Steps';
+  static const moduleSmartStepsDesc =
+      'Developmental goals and progress tracking';
+  static const smartStepsAddStep = 'Add step';
+  static const smartStepsNewStep = 'New Step';
+  static const smartStepsEditStep = 'Edit Step';
+  static const smartStepsNoSteps = 'No steps added yet';
+  static const smartStepsNoStepsHint =
+      'Tap + to add the first developmental step';
+  static const smartStepsInProgress = 'IN PROGRESS';
+  static const smartStepsNotStarted = 'NOT STARTED';
+  static const smartStepsAchieved = 'ACHIEVED';
+  static const smartStepsProgress = 'PROGRESS NOTES';
+  static const smartStepsNoProgress = 'No progress logged yet';
+  static const smartStepsLogProgress = 'Log progress';
+  static const smartStepsNoteLabel = 'Progress note';
+  static const smartStepsNoteHint =
+      'What happened? What did the child do?';
+  static const smartStepsNoteRequired = 'Please enter a progress note';
+  static const smartStepsAchievedNote =
+      'This will mark the step as Achieved';
+  static const smartStepsCategory = 'CATEGORY';
+  static const smartStepsStepTitle = 'STEP / GOAL';
+  static const smartStepsStepTitleHint =
+      'e.g. Can pour a drink independently';
+  static const smartStepsTitleRequired = 'Step title is required';
+  static const smartStepsDescription = 'DESCRIPTION (OPTIONAL)';
+  static const smartStepsDescriptionHint =
+      'More detail about what this goal involves';
+  static const smartStepsStatus = 'STATUS';
+  static const smartStepsTargetDate = 'TARGET DATE (OPTIONAL)';
+  static const smartStepsTargetDateHint = 'Select a target date';
+  static const smartStepsTarget = 'Target';
+  static const smartStepsAchievedOn = 'Achieved';
+
+  // Activities, reward charts & achievements
+  static const activitiesTitle = 'Activities & Achievements';
+  static const activitiesLog = 'Log activity';
+  static const activitiesNewEntry = 'Log Activity';
+  static const activitiesEditEntry = 'Edit Activity';
+  static const activitiesNoEntries = 'No activities recorded yet';
+  static const activitiesNoEntriesHint = 'Tap + to log an activity';
+  static const activitiesDeleteTitle = 'Delete activity?';
+  static const activitiesDeleteConfirm =
+      'This activity record will be permanently removed.';
+  static const activitiesCategory = 'CATEGORY';
+  static const activitiesTitle_ = 'ACTIVITY';
+  static const activitiesTitleHint = 'e.g. Trip to the park, Baked a cake';
+  static const activitiesTitleRequired = 'Activity title is required';
+  static const activitiesDescription = 'DETAILS (OPTIONAL)';
+  static const activitiesDescriptionHint =
+      'More detail about what happened';
+  static const activitiesDuration = 'DURATION (OPTIONAL)';
+  static const activitiesDurationUnit = 'mins';
+  static const activitiesRewardEarned = 'Reward point earned';
+  static const activitiesRewardSubtitle =
+      'Did the child earn a reward chart point for this?';
+  static const activitiesAchievement = 'ACHIEVEMENT HIGHLIGHT (OPTIONAL)';
+  static const activitiesAchievementHint =
+      'e.g. First time swimming independently, Cooked a full meal';
+
+  // Food diary
+  static const foodDiaryTitle = 'Food Diary';
+  static const foodLogEntry = 'Log meal';
+  static const foodNewEntry = 'Log Meal';
+  static const foodEditEntry = 'Edit Meal Record';
+  static const foodNoEntries = 'No meal records yet';
+  static const foodNoEntriesHint = 'Tap + to log a meal';
+  static const foodDeleteTitle = 'Delete meal record?';
+  static const foodDeleteConfirm =
+      'This meal record will be permanently removed.';
+  static const foodMealType = 'MEAL';
+  static const foodDescription = 'WHAT WAS EATEN';
+  static const foodDescriptionHint =
+      'e.g. Pasta with tomato sauce, two portions of garlic bread';
+  static const foodDescriptionRequired = 'Please describe what was eaten';
+  static const foodAppetite = 'APPETITE';
+  static const foodConcerns = 'CONCERNS (OPTIONAL)';
+  static const foodConcernsHint =
+      'e.g. Refused vegetables, only ate half portion';
+
+  // Sleep diary
+  static const sleepDiaryTitle = 'Sleep Diary';
+  static const sleepLogEntry = 'Log sleep';
+  static const sleepNewEntry = 'Log Sleep';
+  static const sleepEditEntry = 'Edit Sleep Record';
+  static const sleepNoEntries = 'No sleep records yet';
+  static const sleepNoEntriesHint = 'Tap + to log a sleep record';
+  static const sleepDeleteTitle = 'Delete sleep record?';
+  static const sleepDeleteConfirm =
+      'This sleep record will be permanently removed.';
+  static const sleepQuality = 'SLEEP QUALITY';
+  static const sleepTimes = 'TIMES';
+  static const sleepBedTime = 'Bed time';
+  static const sleepSettledTime = 'Settled / fell asleep';
+  static const sleepWakeTime = 'Wake time';
+  static const sleepWakingsLabel = 'NUMBER OF WAKINGS';
+  static const sleepWakingsSuffix = 'times';
+  static const sleepWakings = 'wakings';
+  static const sleepTonight = 'Today';
+  static const sleepTap = 'Tap to set';
+
+  // Behaviour monitoring
+  static const behaviourTitle = 'Behaviour';
+  static const behaviourLogIncident = 'Log incident';
+  static const behaviourNewIncident = 'Log Behaviour Incident';
+  static const behaviourEditIncident = 'Edit Incident';
+  static const behaviourNoIncidents = 'No behaviour incidents recorded';
+  static const behaviourNoIncidentsHint =
+      'Tap + to log a behaviour incident';
+  static const behaviourDeleteTitle = 'Delete incident?';
+  static const behaviourDeleteConfirm =
+      'This behaviour incident record will be permanently removed.';
+  static const behaviourSeverity = 'SEVERITY';
+  static const behaviourAntecedent = 'Antecedent';
+  static const behaviourAntecedentHint =
+      'What happened before? Environment, triggers, activity';
+  static const behaviourBehaviour = 'Behaviour';
+  static const behaviourBehaviourHint =
+      'Describe exactly what the child did';
+  static const behaviourConsequence = 'Consequence';
+  static const behaviourConsequenceHint =
+      'How did staff respond? What happened after?';
+  static const behaviourDuration = 'DURATION';
+  static const behaviourDurationHint = 'e.g. 5';
+  static const behaviourDurationUnit = 'mins';
+  static const behaviourLocation = 'LOCATION';
+  static const behaviourLocationHint = 'e.g. Bedroom, Living room';
+  static const behaviourPhysicalIntervention = 'Physical intervention used';
+  static const behaviourPhysicalInterventionSubtitle =
+      'Flag if any physical intervention was required';
+  static const behaviourInterventionDetails = 'Intervention details';
+  static const behaviourInjury = 'Injury occurred';
+  static const behaviourInjurySubtitle =
+      'Flag if any injury was sustained by child or staff';
+  static const behaviourInjuryDetails = 'Injury details';
+  static const behaviourRequiredFields =
+      'Antecedent, behaviour, and consequence are all required';
 
   // Medical history
   static const medHistoryTitle = 'Medical History';

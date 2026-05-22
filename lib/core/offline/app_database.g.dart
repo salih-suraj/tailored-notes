@@ -10141,6 +10141,6258 @@ class HealthcareContactsTableCompanion
   }
 }
 
+class $BehaviourIncidentsTableTable extends BehaviourIncidentsTable
+    with TableInfo<$BehaviourIncidentsTableTable, BehaviourIncidentRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $BehaviourIncidentsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _shiftMeta = const VerificationMeta('shift');
+  @override
+  late final GeneratedColumn<String> shift = GeneratedColumn<String>(
+    'shift',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _occurredAtMeta = const VerificationMeta(
+    'occurredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> occurredAt = GeneratedColumn<DateTime>(
+    'occurred_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _severityMeta = const VerificationMeta(
+    'severity',
+  );
+  @override
+  late final GeneratedColumn<String> severity = GeneratedColumn<String>(
+    'severity',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _antecedentMeta = const VerificationMeta(
+    'antecedent',
+  );
+  @override
+  late final GeneratedColumn<String> antecedent = GeneratedColumn<String>(
+    'antecedent',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _behaviourMeta = const VerificationMeta(
+    'behaviour',
+  );
+  @override
+  late final GeneratedColumn<String> behaviour = GeneratedColumn<String>(
+    'behaviour',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _consequenceMeta = const VerificationMeta(
+    'consequence',
+  );
+  @override
+  late final GeneratedColumn<String> consequence = GeneratedColumn<String>(
+    'consequence',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _durationMinutesMeta = const VerificationMeta(
+    'durationMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> durationMinutes = GeneratedColumn<int>(
+    'duration_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _locationMeta = const VerificationMeta(
+    'location',
+  );
+  @override
+  late final GeneratedColumn<String> location = GeneratedColumn<String>(
+    'location',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _physicalInterventionMeta =
+      const VerificationMeta('physicalIntervention');
+  @override
+  late final GeneratedColumn<bool> physicalIntervention = GeneratedColumn<bool>(
+    'physical_intervention',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("physical_intervention" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _interventionDetailsMeta =
+      const VerificationMeta('interventionDetails');
+  @override
+  late final GeneratedColumn<String> interventionDetails =
+      GeneratedColumn<String>(
+        'intervention_details',
+        aliasedName,
+        true,
+        type: DriftSqlType.string,
+        requiredDuringInsert: false,
+      );
+  static const VerificationMeta _injuryOccurredMeta = const VerificationMeta(
+    'injuryOccurred',
+  );
+  @override
+  late final GeneratedColumn<bool> injuryOccurred = GeneratedColumn<bool>(
+    'injury_occurred',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("injury_occurred" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _injuryDetailsMeta = const VerificationMeta(
+    'injuryDetails',
+  );
+  @override
+  late final GeneratedColumn<String> injuryDetails = GeneratedColumn<String>(
+    'injury_details',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordedByIdMeta = const VerificationMeta(
+    'recordedById',
+  );
+  @override
+  late final GeneratedColumn<String> recordedById = GeneratedColumn<String>(
+    'recorded_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByNameMeta = const VerificationMeta(
+    'recordedByName',
+  );
+  @override
+  late final GeneratedColumn<String> recordedByName = GeneratedColumn<String>(
+    'recorded_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    shift,
+    occurredAt,
+    severity,
+    antecedent,
+    behaviour,
+    consequence,
+    durationMinutes,
+    location,
+    physicalIntervention,
+    interventionDetails,
+    injuryOccurred,
+    injuryDetails,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'behaviour_incidents';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<BehaviourIncidentRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('shift')) {
+      context.handle(
+        _shiftMeta,
+        shift.isAcceptableOrUnknown(data['shift']!, _shiftMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftMeta);
+    }
+    if (data.containsKey('occurred_at')) {
+      context.handle(
+        _occurredAtMeta,
+        occurredAt.isAcceptableOrUnknown(data['occurred_at']!, _occurredAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_occurredAtMeta);
+    }
+    if (data.containsKey('severity')) {
+      context.handle(
+        _severityMeta,
+        severity.isAcceptableOrUnknown(data['severity']!, _severityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_severityMeta);
+    }
+    if (data.containsKey('antecedent')) {
+      context.handle(
+        _antecedentMeta,
+        antecedent.isAcceptableOrUnknown(data['antecedent']!, _antecedentMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_antecedentMeta);
+    }
+    if (data.containsKey('behaviour')) {
+      context.handle(
+        _behaviourMeta,
+        behaviour.isAcceptableOrUnknown(data['behaviour']!, _behaviourMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_behaviourMeta);
+    }
+    if (data.containsKey('consequence')) {
+      context.handle(
+        _consequenceMeta,
+        consequence.isAcceptableOrUnknown(
+          data['consequence']!,
+          _consequenceMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_consequenceMeta);
+    }
+    if (data.containsKey('duration_minutes')) {
+      context.handle(
+        _durationMinutesMeta,
+        durationMinutes.isAcceptableOrUnknown(
+          data['duration_minutes']!,
+          _durationMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('location')) {
+      context.handle(
+        _locationMeta,
+        location.isAcceptableOrUnknown(data['location']!, _locationMeta),
+      );
+    }
+    if (data.containsKey('physical_intervention')) {
+      context.handle(
+        _physicalInterventionMeta,
+        physicalIntervention.isAcceptableOrUnknown(
+          data['physical_intervention']!,
+          _physicalInterventionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('intervention_details')) {
+      context.handle(
+        _interventionDetailsMeta,
+        interventionDetails.isAcceptableOrUnknown(
+          data['intervention_details']!,
+          _interventionDetailsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('injury_occurred')) {
+      context.handle(
+        _injuryOccurredMeta,
+        injuryOccurred.isAcceptableOrUnknown(
+          data['injury_occurred']!,
+          _injuryOccurredMeta,
+        ),
+      );
+    }
+    if (data.containsKey('injury_details')) {
+      context.handle(
+        _injuryDetailsMeta,
+        injuryDetails.isAcceptableOrUnknown(
+          data['injury_details']!,
+          _injuryDetailsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('recorded_by_id')) {
+      context.handle(
+        _recordedByIdMeta,
+        recordedById.isAcceptableOrUnknown(
+          data['recorded_by_id']!,
+          _recordedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByIdMeta);
+    }
+    if (data.containsKey('recorded_by_name')) {
+      context.handle(
+        _recordedByNameMeta,
+        recordedByName.isAcceptableOrUnknown(
+          data['recorded_by_name']!,
+          _recordedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  BehaviourIncidentRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return BehaviourIncidentRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      shift: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift'],
+      )!,
+      occurredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}occurred_at'],
+      )!,
+      severity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}severity'],
+      )!,
+      antecedent: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}antecedent'],
+      )!,
+      behaviour: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}behaviour'],
+      )!,
+      consequence: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}consequence'],
+      )!,
+      durationMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_minutes'],
+      ),
+      location: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location'],
+      ),
+      physicalIntervention: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}physical_intervention'],
+      )!,
+      interventionDetails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}intervention_details'],
+      ),
+      injuryOccurred: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}injury_occurred'],
+      )!,
+      injuryDetails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}injury_details'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      recordedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_id'],
+      )!,
+      recordedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $BehaviourIncidentsTableTable createAlias(String alias) {
+    return $BehaviourIncidentsTableTable(attachedDatabase, alias);
+  }
+}
+
+class BehaviourIncidentRow extends DataClass
+    implements Insertable<BehaviourIncidentRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String shift;
+  final DateTime occurredAt;
+  final String severity;
+  final String antecedent;
+  final String behaviour;
+  final String consequence;
+  final int? durationMinutes;
+  final String? location;
+  final bool physicalIntervention;
+  final String? interventionDetails;
+  final bool injuryOccurred;
+  final String? injuryDetails;
+  final String? notes;
+  final String recordedById;
+  final String recordedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const BehaviourIncidentRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.shift,
+    required this.occurredAt,
+    required this.severity,
+    required this.antecedent,
+    required this.behaviour,
+    required this.consequence,
+    this.durationMinutes,
+    this.location,
+    required this.physicalIntervention,
+    this.interventionDetails,
+    required this.injuryOccurred,
+    this.injuryDetails,
+    this.notes,
+    required this.recordedById,
+    required this.recordedByName,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['shift'] = Variable<String>(shift);
+    map['occurred_at'] = Variable<DateTime>(occurredAt);
+    map['severity'] = Variable<String>(severity);
+    map['antecedent'] = Variable<String>(antecedent);
+    map['behaviour'] = Variable<String>(behaviour);
+    map['consequence'] = Variable<String>(consequence);
+    if (!nullToAbsent || durationMinutes != null) {
+      map['duration_minutes'] = Variable<int>(durationMinutes);
+    }
+    if (!nullToAbsent || location != null) {
+      map['location'] = Variable<String>(location);
+    }
+    map['physical_intervention'] = Variable<bool>(physicalIntervention);
+    if (!nullToAbsent || interventionDetails != null) {
+      map['intervention_details'] = Variable<String>(interventionDetails);
+    }
+    map['injury_occurred'] = Variable<bool>(injuryOccurred);
+    if (!nullToAbsent || injuryDetails != null) {
+      map['injury_details'] = Variable<String>(injuryDetails);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['recorded_by_id'] = Variable<String>(recordedById);
+    map['recorded_by_name'] = Variable<String>(recordedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  BehaviourIncidentsTableCompanion toCompanion(bool nullToAbsent) {
+    return BehaviourIncidentsTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      shift: Value(shift),
+      occurredAt: Value(occurredAt),
+      severity: Value(severity),
+      antecedent: Value(antecedent),
+      behaviour: Value(behaviour),
+      consequence: Value(consequence),
+      durationMinutes: durationMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(durationMinutes),
+      location: location == null && nullToAbsent
+          ? const Value.absent()
+          : Value(location),
+      physicalIntervention: Value(physicalIntervention),
+      interventionDetails: interventionDetails == null && nullToAbsent
+          ? const Value.absent()
+          : Value(interventionDetails),
+      injuryOccurred: Value(injuryOccurred),
+      injuryDetails: injuryDetails == null && nullToAbsent
+          ? const Value.absent()
+          : Value(injuryDetails),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      recordedById: Value(recordedById),
+      recordedByName: Value(recordedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory BehaviourIncidentRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return BehaviourIncidentRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      shift: serializer.fromJson<String>(json['shift']),
+      occurredAt: serializer.fromJson<DateTime>(json['occurredAt']),
+      severity: serializer.fromJson<String>(json['severity']),
+      antecedent: serializer.fromJson<String>(json['antecedent']),
+      behaviour: serializer.fromJson<String>(json['behaviour']),
+      consequence: serializer.fromJson<String>(json['consequence']),
+      durationMinutes: serializer.fromJson<int?>(json['durationMinutes']),
+      location: serializer.fromJson<String?>(json['location']),
+      physicalIntervention: serializer.fromJson<bool>(
+        json['physicalIntervention'],
+      ),
+      interventionDetails: serializer.fromJson<String?>(
+        json['interventionDetails'],
+      ),
+      injuryOccurred: serializer.fromJson<bool>(json['injuryOccurred']),
+      injuryDetails: serializer.fromJson<String?>(json['injuryDetails']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      recordedById: serializer.fromJson<String>(json['recordedById']),
+      recordedByName: serializer.fromJson<String>(json['recordedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'shift': serializer.toJson<String>(shift),
+      'occurredAt': serializer.toJson<DateTime>(occurredAt),
+      'severity': serializer.toJson<String>(severity),
+      'antecedent': serializer.toJson<String>(antecedent),
+      'behaviour': serializer.toJson<String>(behaviour),
+      'consequence': serializer.toJson<String>(consequence),
+      'durationMinutes': serializer.toJson<int?>(durationMinutes),
+      'location': serializer.toJson<String?>(location),
+      'physicalIntervention': serializer.toJson<bool>(physicalIntervention),
+      'interventionDetails': serializer.toJson<String?>(interventionDetails),
+      'injuryOccurred': serializer.toJson<bool>(injuryOccurred),
+      'injuryDetails': serializer.toJson<String?>(injuryDetails),
+      'notes': serializer.toJson<String?>(notes),
+      'recordedById': serializer.toJson<String>(recordedById),
+      'recordedByName': serializer.toJson<String>(recordedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  BehaviourIncidentRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? shift,
+    DateTime? occurredAt,
+    String? severity,
+    String? antecedent,
+    String? behaviour,
+    String? consequence,
+    Value<int?> durationMinutes = const Value.absent(),
+    Value<String?> location = const Value.absent(),
+    bool? physicalIntervention,
+    Value<String?> interventionDetails = const Value.absent(),
+    bool? injuryOccurred,
+    Value<String?> injuryDetails = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    String? recordedById,
+    String? recordedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => BehaviourIncidentRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    shift: shift ?? this.shift,
+    occurredAt: occurredAt ?? this.occurredAt,
+    severity: severity ?? this.severity,
+    antecedent: antecedent ?? this.antecedent,
+    behaviour: behaviour ?? this.behaviour,
+    consequence: consequence ?? this.consequence,
+    durationMinutes: durationMinutes.present
+        ? durationMinutes.value
+        : this.durationMinutes,
+    location: location.present ? location.value : this.location,
+    physicalIntervention: physicalIntervention ?? this.physicalIntervention,
+    interventionDetails: interventionDetails.present
+        ? interventionDetails.value
+        : this.interventionDetails,
+    injuryOccurred: injuryOccurred ?? this.injuryOccurred,
+    injuryDetails: injuryDetails.present
+        ? injuryDetails.value
+        : this.injuryDetails,
+    notes: notes.present ? notes.value : this.notes,
+    recordedById: recordedById ?? this.recordedById,
+    recordedByName: recordedByName ?? this.recordedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  BehaviourIncidentRow copyWithCompanion(
+    BehaviourIncidentsTableCompanion data,
+  ) {
+    return BehaviourIncidentRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      shift: data.shift.present ? data.shift.value : this.shift,
+      occurredAt: data.occurredAt.present
+          ? data.occurredAt.value
+          : this.occurredAt,
+      severity: data.severity.present ? data.severity.value : this.severity,
+      antecedent: data.antecedent.present
+          ? data.antecedent.value
+          : this.antecedent,
+      behaviour: data.behaviour.present ? data.behaviour.value : this.behaviour,
+      consequence: data.consequence.present
+          ? data.consequence.value
+          : this.consequence,
+      durationMinutes: data.durationMinutes.present
+          ? data.durationMinutes.value
+          : this.durationMinutes,
+      location: data.location.present ? data.location.value : this.location,
+      physicalIntervention: data.physicalIntervention.present
+          ? data.physicalIntervention.value
+          : this.physicalIntervention,
+      interventionDetails: data.interventionDetails.present
+          ? data.interventionDetails.value
+          : this.interventionDetails,
+      injuryOccurred: data.injuryOccurred.present
+          ? data.injuryOccurred.value
+          : this.injuryOccurred,
+      injuryDetails: data.injuryDetails.present
+          ? data.injuryDetails.value
+          : this.injuryDetails,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      recordedById: data.recordedById.present
+          ? data.recordedById.value
+          : this.recordedById,
+      recordedByName: data.recordedByName.present
+          ? data.recordedByName.value
+          : this.recordedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BehaviourIncidentRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('shift: $shift, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('severity: $severity, ')
+          ..write('antecedent: $antecedent, ')
+          ..write('behaviour: $behaviour, ')
+          ..write('consequence: $consequence, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('location: $location, ')
+          ..write('physicalIntervention: $physicalIntervention, ')
+          ..write('interventionDetails: $interventionDetails, ')
+          ..write('injuryOccurred: $injuryOccurred, ')
+          ..write('injuryDetails: $injuryDetails, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    homeId,
+    childId,
+    shift,
+    occurredAt,
+    severity,
+    antecedent,
+    behaviour,
+    consequence,
+    durationMinutes,
+    location,
+    physicalIntervention,
+    interventionDetails,
+    injuryOccurred,
+    injuryDetails,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is BehaviourIncidentRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.shift == this.shift &&
+          other.occurredAt == this.occurredAt &&
+          other.severity == this.severity &&
+          other.antecedent == this.antecedent &&
+          other.behaviour == this.behaviour &&
+          other.consequence == this.consequence &&
+          other.durationMinutes == this.durationMinutes &&
+          other.location == this.location &&
+          other.physicalIntervention == this.physicalIntervention &&
+          other.interventionDetails == this.interventionDetails &&
+          other.injuryOccurred == this.injuryOccurred &&
+          other.injuryDetails == this.injuryDetails &&
+          other.notes == this.notes &&
+          other.recordedById == this.recordedById &&
+          other.recordedByName == this.recordedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class BehaviourIncidentsTableCompanion
+    extends UpdateCompanion<BehaviourIncidentRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> shift;
+  final Value<DateTime> occurredAt;
+  final Value<String> severity;
+  final Value<String> antecedent;
+  final Value<String> behaviour;
+  final Value<String> consequence;
+  final Value<int?> durationMinutes;
+  final Value<String?> location;
+  final Value<bool> physicalIntervention;
+  final Value<String?> interventionDetails;
+  final Value<bool> injuryOccurred;
+  final Value<String?> injuryDetails;
+  final Value<String?> notes;
+  final Value<String> recordedById;
+  final Value<String> recordedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const BehaviourIncidentsTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.shift = const Value.absent(),
+    this.occurredAt = const Value.absent(),
+    this.severity = const Value.absent(),
+    this.antecedent = const Value.absent(),
+    this.behaviour = const Value.absent(),
+    this.consequence = const Value.absent(),
+    this.durationMinutes = const Value.absent(),
+    this.location = const Value.absent(),
+    this.physicalIntervention = const Value.absent(),
+    this.interventionDetails = const Value.absent(),
+    this.injuryOccurred = const Value.absent(),
+    this.injuryDetails = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.recordedById = const Value.absent(),
+    this.recordedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  BehaviourIncidentsTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String shift,
+    required DateTime occurredAt,
+    required String severity,
+    required String antecedent,
+    required String behaviour,
+    required String consequence,
+    this.durationMinutes = const Value.absent(),
+    this.location = const Value.absent(),
+    this.physicalIntervention = const Value.absent(),
+    this.interventionDetails = const Value.absent(),
+    this.injuryOccurred = const Value.absent(),
+    this.injuryDetails = const Value.absent(),
+    this.notes = const Value.absent(),
+    required String recordedById,
+    required String recordedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       shift = Value(shift),
+       occurredAt = Value(occurredAt),
+       severity = Value(severity),
+       antecedent = Value(antecedent),
+       behaviour = Value(behaviour),
+       consequence = Value(consequence),
+       recordedById = Value(recordedById),
+       recordedByName = Value(recordedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<BehaviourIncidentRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? shift,
+    Expression<DateTime>? occurredAt,
+    Expression<String>? severity,
+    Expression<String>? antecedent,
+    Expression<String>? behaviour,
+    Expression<String>? consequence,
+    Expression<int>? durationMinutes,
+    Expression<String>? location,
+    Expression<bool>? physicalIntervention,
+    Expression<String>? interventionDetails,
+    Expression<bool>? injuryOccurred,
+    Expression<String>? injuryDetails,
+    Expression<String>? notes,
+    Expression<String>? recordedById,
+    Expression<String>? recordedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (shift != null) 'shift': shift,
+      if (occurredAt != null) 'occurred_at': occurredAt,
+      if (severity != null) 'severity': severity,
+      if (antecedent != null) 'antecedent': antecedent,
+      if (behaviour != null) 'behaviour': behaviour,
+      if (consequence != null) 'consequence': consequence,
+      if (durationMinutes != null) 'duration_minutes': durationMinutes,
+      if (location != null) 'location': location,
+      if (physicalIntervention != null)
+        'physical_intervention': physicalIntervention,
+      if (interventionDetails != null)
+        'intervention_details': interventionDetails,
+      if (injuryOccurred != null) 'injury_occurred': injuryOccurred,
+      if (injuryDetails != null) 'injury_details': injuryDetails,
+      if (notes != null) 'notes': notes,
+      if (recordedById != null) 'recorded_by_id': recordedById,
+      if (recordedByName != null) 'recorded_by_name': recordedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  BehaviourIncidentsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? shift,
+    Value<DateTime>? occurredAt,
+    Value<String>? severity,
+    Value<String>? antecedent,
+    Value<String>? behaviour,
+    Value<String>? consequence,
+    Value<int?>? durationMinutes,
+    Value<String?>? location,
+    Value<bool>? physicalIntervention,
+    Value<String?>? interventionDetails,
+    Value<bool>? injuryOccurred,
+    Value<String?>? injuryDetails,
+    Value<String?>? notes,
+    Value<String>? recordedById,
+    Value<String>? recordedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return BehaviourIncidentsTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      shift: shift ?? this.shift,
+      occurredAt: occurredAt ?? this.occurredAt,
+      severity: severity ?? this.severity,
+      antecedent: antecedent ?? this.antecedent,
+      behaviour: behaviour ?? this.behaviour,
+      consequence: consequence ?? this.consequence,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      location: location ?? this.location,
+      physicalIntervention: physicalIntervention ?? this.physicalIntervention,
+      interventionDetails: interventionDetails ?? this.interventionDetails,
+      injuryOccurred: injuryOccurred ?? this.injuryOccurred,
+      injuryDetails: injuryDetails ?? this.injuryDetails,
+      notes: notes ?? this.notes,
+      recordedById: recordedById ?? this.recordedById,
+      recordedByName: recordedByName ?? this.recordedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (shift.present) {
+      map['shift'] = Variable<String>(shift.value);
+    }
+    if (occurredAt.present) {
+      map['occurred_at'] = Variable<DateTime>(occurredAt.value);
+    }
+    if (severity.present) {
+      map['severity'] = Variable<String>(severity.value);
+    }
+    if (antecedent.present) {
+      map['antecedent'] = Variable<String>(antecedent.value);
+    }
+    if (behaviour.present) {
+      map['behaviour'] = Variable<String>(behaviour.value);
+    }
+    if (consequence.present) {
+      map['consequence'] = Variable<String>(consequence.value);
+    }
+    if (durationMinutes.present) {
+      map['duration_minutes'] = Variable<int>(durationMinutes.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (physicalIntervention.present) {
+      map['physical_intervention'] = Variable<bool>(physicalIntervention.value);
+    }
+    if (interventionDetails.present) {
+      map['intervention_details'] = Variable<String>(interventionDetails.value);
+    }
+    if (injuryOccurred.present) {
+      map['injury_occurred'] = Variable<bool>(injuryOccurred.value);
+    }
+    if (injuryDetails.present) {
+      map['injury_details'] = Variable<String>(injuryDetails.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (recordedById.present) {
+      map['recorded_by_id'] = Variable<String>(recordedById.value);
+    }
+    if (recordedByName.present) {
+      map['recorded_by_name'] = Variable<String>(recordedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('BehaviourIncidentsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('shift: $shift, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('severity: $severity, ')
+          ..write('antecedent: $antecedent, ')
+          ..write('behaviour: $behaviour, ')
+          ..write('consequence: $consequence, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('location: $location, ')
+          ..write('physicalIntervention: $physicalIntervention, ')
+          ..write('interventionDetails: $interventionDetails, ')
+          ..write('injuryOccurred: $injuryOccurred, ')
+          ..write('injuryDetails: $injuryDetails, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SleepEntriesTableTable extends SleepEntriesTable
+    with TableInfo<$SleepEntriesTableTable, SleepEntryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SleepEntriesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _shiftMeta = const VerificationMeta('shift');
+  @override
+  late final GeneratedColumn<String> shift = GeneratedColumn<String>(
+    'shift',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _bedTimeMeta = const VerificationMeta(
+    'bedTime',
+  );
+  @override
+  late final GeneratedColumn<String> bedTime = GeneratedColumn<String>(
+    'bed_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _settledTimeMeta = const VerificationMeta(
+    'settledTime',
+  );
+  @override
+  late final GeneratedColumn<String> settledTime = GeneratedColumn<String>(
+    'settled_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _wakeTimeMeta = const VerificationMeta(
+    'wakeTime',
+  );
+  @override
+  late final GeneratedColumn<String> wakeTime = GeneratedColumn<String>(
+    'wake_time',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _numberOfWakingsMeta = const VerificationMeta(
+    'numberOfWakings',
+  );
+  @override
+  late final GeneratedColumn<int> numberOfWakings = GeneratedColumn<int>(
+    'number_of_wakings',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultValue: const Constant(0),
+  );
+  static const VerificationMeta _qualityMeta = const VerificationMeta(
+    'quality',
+  );
+  @override
+  late final GeneratedColumn<String> quality = GeneratedColumn<String>(
+    'quality',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordedByIdMeta = const VerificationMeta(
+    'recordedById',
+  );
+  @override
+  late final GeneratedColumn<String> recordedById = GeneratedColumn<String>(
+    'recorded_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByNameMeta = const VerificationMeta(
+    'recordedByName',
+  );
+  @override
+  late final GeneratedColumn<String> recordedByName = GeneratedColumn<String>(
+    'recorded_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    bedTime,
+    settledTime,
+    wakeTime,
+    numberOfWakings,
+    quality,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'sleep_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SleepEntryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('shift')) {
+      context.handle(
+        _shiftMeta,
+        shift.isAcceptableOrUnknown(data['shift']!, _shiftMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftMeta);
+    }
+    if (data.containsKey('bed_time')) {
+      context.handle(
+        _bedTimeMeta,
+        bedTime.isAcceptableOrUnknown(data['bed_time']!, _bedTimeMeta),
+      );
+    }
+    if (data.containsKey('settled_time')) {
+      context.handle(
+        _settledTimeMeta,
+        settledTime.isAcceptableOrUnknown(
+          data['settled_time']!,
+          _settledTimeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('wake_time')) {
+      context.handle(
+        _wakeTimeMeta,
+        wakeTime.isAcceptableOrUnknown(data['wake_time']!, _wakeTimeMeta),
+      );
+    }
+    if (data.containsKey('number_of_wakings')) {
+      context.handle(
+        _numberOfWakingsMeta,
+        numberOfWakings.isAcceptableOrUnknown(
+          data['number_of_wakings']!,
+          _numberOfWakingsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('quality')) {
+      context.handle(
+        _qualityMeta,
+        quality.isAcceptableOrUnknown(data['quality']!, _qualityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_qualityMeta);
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('recorded_by_id')) {
+      context.handle(
+        _recordedByIdMeta,
+        recordedById.isAcceptableOrUnknown(
+          data['recorded_by_id']!,
+          _recordedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByIdMeta);
+    }
+    if (data.containsKey('recorded_by_name')) {
+      context.handle(
+        _recordedByNameMeta,
+        recordedByName.isAcceptableOrUnknown(
+          data['recorded_by_name']!,
+          _recordedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SleepEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SleepEntryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      shift: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift'],
+      )!,
+      bedTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}bed_time'],
+      ),
+      settledTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}settled_time'],
+      ),
+      wakeTime: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}wake_time'],
+      ),
+      numberOfWakings: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}number_of_wakings'],
+      )!,
+      quality: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}quality'],
+      )!,
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      recordedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_id'],
+      )!,
+      recordedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $SleepEntriesTableTable createAlias(String alias) {
+    return $SleepEntriesTableTable(attachedDatabase, alias);
+  }
+}
+
+class SleepEntryRow extends DataClass implements Insertable<SleepEntryRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String date;
+  final String shift;
+  final String? bedTime;
+  final String? settledTime;
+  final String? wakeTime;
+  final int numberOfWakings;
+  final String quality;
+  final String? notes;
+  final String recordedById;
+  final String recordedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const SleepEntryRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.date,
+    required this.shift,
+    this.bedTime,
+    this.settledTime,
+    this.wakeTime,
+    required this.numberOfWakings,
+    required this.quality,
+    this.notes,
+    required this.recordedById,
+    required this.recordedByName,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['date'] = Variable<String>(date);
+    map['shift'] = Variable<String>(shift);
+    if (!nullToAbsent || bedTime != null) {
+      map['bed_time'] = Variable<String>(bedTime);
+    }
+    if (!nullToAbsent || settledTime != null) {
+      map['settled_time'] = Variable<String>(settledTime);
+    }
+    if (!nullToAbsent || wakeTime != null) {
+      map['wake_time'] = Variable<String>(wakeTime);
+    }
+    map['number_of_wakings'] = Variable<int>(numberOfWakings);
+    map['quality'] = Variable<String>(quality);
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['recorded_by_id'] = Variable<String>(recordedById);
+    map['recorded_by_name'] = Variable<String>(recordedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  SleepEntriesTableCompanion toCompanion(bool nullToAbsent) {
+    return SleepEntriesTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      date: Value(date),
+      shift: Value(shift),
+      bedTime: bedTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(bedTime),
+      settledTime: settledTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(settledTime),
+      wakeTime: wakeTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(wakeTime),
+      numberOfWakings: Value(numberOfWakings),
+      quality: Value(quality),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      recordedById: Value(recordedById),
+      recordedByName: Value(recordedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory SleepEntryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SleepEntryRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      date: serializer.fromJson<String>(json['date']),
+      shift: serializer.fromJson<String>(json['shift']),
+      bedTime: serializer.fromJson<String?>(json['bedTime']),
+      settledTime: serializer.fromJson<String?>(json['settledTime']),
+      wakeTime: serializer.fromJson<String?>(json['wakeTime']),
+      numberOfWakings: serializer.fromJson<int>(json['numberOfWakings']),
+      quality: serializer.fromJson<String>(json['quality']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      recordedById: serializer.fromJson<String>(json['recordedById']),
+      recordedByName: serializer.fromJson<String>(json['recordedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'date': serializer.toJson<String>(date),
+      'shift': serializer.toJson<String>(shift),
+      'bedTime': serializer.toJson<String?>(bedTime),
+      'settledTime': serializer.toJson<String?>(settledTime),
+      'wakeTime': serializer.toJson<String?>(wakeTime),
+      'numberOfWakings': serializer.toJson<int>(numberOfWakings),
+      'quality': serializer.toJson<String>(quality),
+      'notes': serializer.toJson<String?>(notes),
+      'recordedById': serializer.toJson<String>(recordedById),
+      'recordedByName': serializer.toJson<String>(recordedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  SleepEntryRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? date,
+    String? shift,
+    Value<String?> bedTime = const Value.absent(),
+    Value<String?> settledTime = const Value.absent(),
+    Value<String?> wakeTime = const Value.absent(),
+    int? numberOfWakings,
+    String? quality,
+    Value<String?> notes = const Value.absent(),
+    String? recordedById,
+    String? recordedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => SleepEntryRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    date: date ?? this.date,
+    shift: shift ?? this.shift,
+    bedTime: bedTime.present ? bedTime.value : this.bedTime,
+    settledTime: settledTime.present ? settledTime.value : this.settledTime,
+    wakeTime: wakeTime.present ? wakeTime.value : this.wakeTime,
+    numberOfWakings: numberOfWakings ?? this.numberOfWakings,
+    quality: quality ?? this.quality,
+    notes: notes.present ? notes.value : this.notes,
+    recordedById: recordedById ?? this.recordedById,
+    recordedByName: recordedByName ?? this.recordedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  SleepEntryRow copyWithCompanion(SleepEntriesTableCompanion data) {
+    return SleepEntryRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      date: data.date.present ? data.date.value : this.date,
+      shift: data.shift.present ? data.shift.value : this.shift,
+      bedTime: data.bedTime.present ? data.bedTime.value : this.bedTime,
+      settledTime: data.settledTime.present
+          ? data.settledTime.value
+          : this.settledTime,
+      wakeTime: data.wakeTime.present ? data.wakeTime.value : this.wakeTime,
+      numberOfWakings: data.numberOfWakings.present
+          ? data.numberOfWakings.value
+          : this.numberOfWakings,
+      quality: data.quality.present ? data.quality.value : this.quality,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      recordedById: data.recordedById.present
+          ? data.recordedById.value
+          : this.recordedById,
+      recordedByName: data.recordedByName.present
+          ? data.recordedByName.value
+          : this.recordedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SleepEntryRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('bedTime: $bedTime, ')
+          ..write('settledTime: $settledTime, ')
+          ..write('wakeTime: $wakeTime, ')
+          ..write('numberOfWakings: $numberOfWakings, ')
+          ..write('quality: $quality, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    bedTime,
+    settledTime,
+    wakeTime,
+    numberOfWakings,
+    quality,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SleepEntryRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.date == this.date &&
+          other.shift == this.shift &&
+          other.bedTime == this.bedTime &&
+          other.settledTime == this.settledTime &&
+          other.wakeTime == this.wakeTime &&
+          other.numberOfWakings == this.numberOfWakings &&
+          other.quality == this.quality &&
+          other.notes == this.notes &&
+          other.recordedById == this.recordedById &&
+          other.recordedByName == this.recordedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class SleepEntriesTableCompanion extends UpdateCompanion<SleepEntryRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> date;
+  final Value<String> shift;
+  final Value<String?> bedTime;
+  final Value<String?> settledTime;
+  final Value<String?> wakeTime;
+  final Value<int> numberOfWakings;
+  final Value<String> quality;
+  final Value<String?> notes;
+  final Value<String> recordedById;
+  final Value<String> recordedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const SleepEntriesTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.shift = const Value.absent(),
+    this.bedTime = const Value.absent(),
+    this.settledTime = const Value.absent(),
+    this.wakeTime = const Value.absent(),
+    this.numberOfWakings = const Value.absent(),
+    this.quality = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.recordedById = const Value.absent(),
+    this.recordedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SleepEntriesTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String date,
+    required String shift,
+    this.bedTime = const Value.absent(),
+    this.settledTime = const Value.absent(),
+    this.wakeTime = const Value.absent(),
+    this.numberOfWakings = const Value.absent(),
+    required String quality,
+    this.notes = const Value.absent(),
+    required String recordedById,
+    required String recordedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       date = Value(date),
+       shift = Value(shift),
+       quality = Value(quality),
+       recordedById = Value(recordedById),
+       recordedByName = Value(recordedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SleepEntryRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? date,
+    Expression<String>? shift,
+    Expression<String>? bedTime,
+    Expression<String>? settledTime,
+    Expression<String>? wakeTime,
+    Expression<int>? numberOfWakings,
+    Expression<String>? quality,
+    Expression<String>? notes,
+    Expression<String>? recordedById,
+    Expression<String>? recordedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (date != null) 'date': date,
+      if (shift != null) 'shift': shift,
+      if (bedTime != null) 'bed_time': bedTime,
+      if (settledTime != null) 'settled_time': settledTime,
+      if (wakeTime != null) 'wake_time': wakeTime,
+      if (numberOfWakings != null) 'number_of_wakings': numberOfWakings,
+      if (quality != null) 'quality': quality,
+      if (notes != null) 'notes': notes,
+      if (recordedById != null) 'recorded_by_id': recordedById,
+      if (recordedByName != null) 'recorded_by_name': recordedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SleepEntriesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? date,
+    Value<String>? shift,
+    Value<String?>? bedTime,
+    Value<String?>? settledTime,
+    Value<String?>? wakeTime,
+    Value<int>? numberOfWakings,
+    Value<String>? quality,
+    Value<String?>? notes,
+    Value<String>? recordedById,
+    Value<String>? recordedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return SleepEntriesTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      date: date ?? this.date,
+      shift: shift ?? this.shift,
+      bedTime: bedTime ?? this.bedTime,
+      settledTime: settledTime ?? this.settledTime,
+      wakeTime: wakeTime ?? this.wakeTime,
+      numberOfWakings: numberOfWakings ?? this.numberOfWakings,
+      quality: quality ?? this.quality,
+      notes: notes ?? this.notes,
+      recordedById: recordedById ?? this.recordedById,
+      recordedByName: recordedByName ?? this.recordedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (shift.present) {
+      map['shift'] = Variable<String>(shift.value);
+    }
+    if (bedTime.present) {
+      map['bed_time'] = Variable<String>(bedTime.value);
+    }
+    if (settledTime.present) {
+      map['settled_time'] = Variable<String>(settledTime.value);
+    }
+    if (wakeTime.present) {
+      map['wake_time'] = Variable<String>(wakeTime.value);
+    }
+    if (numberOfWakings.present) {
+      map['number_of_wakings'] = Variable<int>(numberOfWakings.value);
+    }
+    if (quality.present) {
+      map['quality'] = Variable<String>(quality.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (recordedById.present) {
+      map['recorded_by_id'] = Variable<String>(recordedById.value);
+    }
+    if (recordedByName.present) {
+      map['recorded_by_name'] = Variable<String>(recordedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SleepEntriesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('bedTime: $bedTime, ')
+          ..write('settledTime: $settledTime, ')
+          ..write('wakeTime: $wakeTime, ')
+          ..write('numberOfWakings: $numberOfWakings, ')
+          ..write('quality: $quality, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FoodEntriesTableTable extends FoodEntriesTable
+    with TableInfo<$FoodEntriesTableTable, FoodEntryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FoodEntriesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _shiftMeta = const VerificationMeta('shift');
+  @override
+  late final GeneratedColumn<String> shift = GeneratedColumn<String>(
+    'shift',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _mealTypeMeta = const VerificationMeta(
+    'mealType',
+  );
+  @override
+  late final GeneratedColumn<String> mealType = GeneratedColumn<String>(
+    'meal_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _appetiteMeta = const VerificationMeta(
+    'appetite',
+  );
+  @override
+  late final GeneratedColumn<String> appetite = GeneratedColumn<String>(
+    'appetite',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _concernsMeta = const VerificationMeta(
+    'concerns',
+  );
+  @override
+  late final GeneratedColumn<String> concerns = GeneratedColumn<String>(
+    'concerns',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordedByIdMeta = const VerificationMeta(
+    'recordedById',
+  );
+  @override
+  late final GeneratedColumn<String> recordedById = GeneratedColumn<String>(
+    'recorded_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByNameMeta = const VerificationMeta(
+    'recordedByName',
+  );
+  @override
+  late final GeneratedColumn<String> recordedByName = GeneratedColumn<String>(
+    'recorded_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    mealType,
+    description,
+    appetite,
+    concerns,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'food_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FoodEntryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('shift')) {
+      context.handle(
+        _shiftMeta,
+        shift.isAcceptableOrUnknown(data['shift']!, _shiftMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftMeta);
+    }
+    if (data.containsKey('meal_type')) {
+      context.handle(
+        _mealTypeMeta,
+        mealType.isAcceptableOrUnknown(data['meal_type']!, _mealTypeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_mealTypeMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('appetite')) {
+      context.handle(
+        _appetiteMeta,
+        appetite.isAcceptableOrUnknown(data['appetite']!, _appetiteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_appetiteMeta);
+    }
+    if (data.containsKey('concerns')) {
+      context.handle(
+        _concernsMeta,
+        concerns.isAcceptableOrUnknown(data['concerns']!, _concernsMeta),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('recorded_by_id')) {
+      context.handle(
+        _recordedByIdMeta,
+        recordedById.isAcceptableOrUnknown(
+          data['recorded_by_id']!,
+          _recordedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByIdMeta);
+    }
+    if (data.containsKey('recorded_by_name')) {
+      context.handle(
+        _recordedByNameMeta,
+        recordedByName.isAcceptableOrUnknown(
+          data['recorded_by_name']!,
+          _recordedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FoodEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FoodEntryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      shift: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift'],
+      )!,
+      mealType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}meal_type'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      appetite: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}appetite'],
+      )!,
+      concerns: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}concerns'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      recordedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_id'],
+      )!,
+      recordedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $FoodEntriesTableTable createAlias(String alias) {
+    return $FoodEntriesTableTable(attachedDatabase, alias);
+  }
+}
+
+class FoodEntryRow extends DataClass implements Insertable<FoodEntryRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String date;
+  final String shift;
+  final String mealType;
+  final String description;
+  final String appetite;
+  final String? concerns;
+  final String? notes;
+  final String recordedById;
+  final String recordedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const FoodEntryRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.date,
+    required this.shift,
+    required this.mealType,
+    required this.description,
+    required this.appetite,
+    this.concerns,
+    this.notes,
+    required this.recordedById,
+    required this.recordedByName,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['date'] = Variable<String>(date);
+    map['shift'] = Variable<String>(shift);
+    map['meal_type'] = Variable<String>(mealType);
+    map['description'] = Variable<String>(description);
+    map['appetite'] = Variable<String>(appetite);
+    if (!nullToAbsent || concerns != null) {
+      map['concerns'] = Variable<String>(concerns);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['recorded_by_id'] = Variable<String>(recordedById);
+    map['recorded_by_name'] = Variable<String>(recordedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  FoodEntriesTableCompanion toCompanion(bool nullToAbsent) {
+    return FoodEntriesTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      date: Value(date),
+      shift: Value(shift),
+      mealType: Value(mealType),
+      description: Value(description),
+      appetite: Value(appetite),
+      concerns: concerns == null && nullToAbsent
+          ? const Value.absent()
+          : Value(concerns),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      recordedById: Value(recordedById),
+      recordedByName: Value(recordedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory FoodEntryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FoodEntryRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      date: serializer.fromJson<String>(json['date']),
+      shift: serializer.fromJson<String>(json['shift']),
+      mealType: serializer.fromJson<String>(json['mealType']),
+      description: serializer.fromJson<String>(json['description']),
+      appetite: serializer.fromJson<String>(json['appetite']),
+      concerns: serializer.fromJson<String?>(json['concerns']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      recordedById: serializer.fromJson<String>(json['recordedById']),
+      recordedByName: serializer.fromJson<String>(json['recordedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'date': serializer.toJson<String>(date),
+      'shift': serializer.toJson<String>(shift),
+      'mealType': serializer.toJson<String>(mealType),
+      'description': serializer.toJson<String>(description),
+      'appetite': serializer.toJson<String>(appetite),
+      'concerns': serializer.toJson<String?>(concerns),
+      'notes': serializer.toJson<String?>(notes),
+      'recordedById': serializer.toJson<String>(recordedById),
+      'recordedByName': serializer.toJson<String>(recordedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  FoodEntryRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? date,
+    String? shift,
+    String? mealType,
+    String? description,
+    String? appetite,
+    Value<String?> concerns = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    String? recordedById,
+    String? recordedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => FoodEntryRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    date: date ?? this.date,
+    shift: shift ?? this.shift,
+    mealType: mealType ?? this.mealType,
+    description: description ?? this.description,
+    appetite: appetite ?? this.appetite,
+    concerns: concerns.present ? concerns.value : this.concerns,
+    notes: notes.present ? notes.value : this.notes,
+    recordedById: recordedById ?? this.recordedById,
+    recordedByName: recordedByName ?? this.recordedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  FoodEntryRow copyWithCompanion(FoodEntriesTableCompanion data) {
+    return FoodEntryRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      date: data.date.present ? data.date.value : this.date,
+      shift: data.shift.present ? data.shift.value : this.shift,
+      mealType: data.mealType.present ? data.mealType.value : this.mealType,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      appetite: data.appetite.present ? data.appetite.value : this.appetite,
+      concerns: data.concerns.present ? data.concerns.value : this.concerns,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      recordedById: data.recordedById.present
+          ? data.recordedById.value
+          : this.recordedById,
+      recordedByName: data.recordedByName.present
+          ? data.recordedByName.value
+          : this.recordedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FoodEntryRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('mealType: $mealType, ')
+          ..write('description: $description, ')
+          ..write('appetite: $appetite, ')
+          ..write('concerns: $concerns, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    mealType,
+    description,
+    appetite,
+    concerns,
+    notes,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FoodEntryRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.date == this.date &&
+          other.shift == this.shift &&
+          other.mealType == this.mealType &&
+          other.description == this.description &&
+          other.appetite == this.appetite &&
+          other.concerns == this.concerns &&
+          other.notes == this.notes &&
+          other.recordedById == this.recordedById &&
+          other.recordedByName == this.recordedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class FoodEntriesTableCompanion extends UpdateCompanion<FoodEntryRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> date;
+  final Value<String> shift;
+  final Value<String> mealType;
+  final Value<String> description;
+  final Value<String> appetite;
+  final Value<String?> concerns;
+  final Value<String?> notes;
+  final Value<String> recordedById;
+  final Value<String> recordedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const FoodEntriesTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.shift = const Value.absent(),
+    this.mealType = const Value.absent(),
+    this.description = const Value.absent(),
+    this.appetite = const Value.absent(),
+    this.concerns = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.recordedById = const Value.absent(),
+    this.recordedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  FoodEntriesTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String date,
+    required String shift,
+    required String mealType,
+    required String description,
+    required String appetite,
+    this.concerns = const Value.absent(),
+    this.notes = const Value.absent(),
+    required String recordedById,
+    required String recordedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       date = Value(date),
+       shift = Value(shift),
+       mealType = Value(mealType),
+       description = Value(description),
+       appetite = Value(appetite),
+       recordedById = Value(recordedById),
+       recordedByName = Value(recordedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<FoodEntryRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? date,
+    Expression<String>? shift,
+    Expression<String>? mealType,
+    Expression<String>? description,
+    Expression<String>? appetite,
+    Expression<String>? concerns,
+    Expression<String>? notes,
+    Expression<String>? recordedById,
+    Expression<String>? recordedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (date != null) 'date': date,
+      if (shift != null) 'shift': shift,
+      if (mealType != null) 'meal_type': mealType,
+      if (description != null) 'description': description,
+      if (appetite != null) 'appetite': appetite,
+      if (concerns != null) 'concerns': concerns,
+      if (notes != null) 'notes': notes,
+      if (recordedById != null) 'recorded_by_id': recordedById,
+      if (recordedByName != null) 'recorded_by_name': recordedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  FoodEntriesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? date,
+    Value<String>? shift,
+    Value<String>? mealType,
+    Value<String>? description,
+    Value<String>? appetite,
+    Value<String?>? concerns,
+    Value<String?>? notes,
+    Value<String>? recordedById,
+    Value<String>? recordedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return FoodEntriesTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      date: date ?? this.date,
+      shift: shift ?? this.shift,
+      mealType: mealType ?? this.mealType,
+      description: description ?? this.description,
+      appetite: appetite ?? this.appetite,
+      concerns: concerns ?? this.concerns,
+      notes: notes ?? this.notes,
+      recordedById: recordedById ?? this.recordedById,
+      recordedByName: recordedByName ?? this.recordedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (shift.present) {
+      map['shift'] = Variable<String>(shift.value);
+    }
+    if (mealType.present) {
+      map['meal_type'] = Variable<String>(mealType.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (appetite.present) {
+      map['appetite'] = Variable<String>(appetite.value);
+    }
+    if (concerns.present) {
+      map['concerns'] = Variable<String>(concerns.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (recordedById.present) {
+      map['recorded_by_id'] = Variable<String>(recordedById.value);
+    }
+    if (recordedByName.present) {
+      map['recorded_by_name'] = Variable<String>(recordedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FoodEntriesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('mealType: $mealType, ')
+          ..write('description: $description, ')
+          ..write('appetite: $appetite, ')
+          ..write('concerns: $concerns, ')
+          ..write('notes: $notes, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $ActivityEntriesTableTable extends ActivityEntriesTable
+    with TableInfo<$ActivityEntriesTableTable, ActivityEntryRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ActivityEntriesTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _shiftMeta = const VerificationMeta('shift');
+  @override
+  late final GeneratedColumn<String> shift = GeneratedColumn<String>(
+    'shift',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _durationMinutesMeta = const VerificationMeta(
+    'durationMinutes',
+  );
+  @override
+  late final GeneratedColumn<int> durationMinutes = GeneratedColumn<int>(
+    'duration_minutes',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _rewardEarnedMeta = const VerificationMeta(
+    'rewardEarned',
+  );
+  @override
+  late final GeneratedColumn<bool> rewardEarned = GeneratedColumn<bool>(
+    'reward_earned',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("reward_earned" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _achievementMeta = const VerificationMeta(
+    'achievement',
+  );
+  @override
+  late final GeneratedColumn<String> achievement = GeneratedColumn<String>(
+    'achievement',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _recordedByIdMeta = const VerificationMeta(
+    'recordedById',
+  );
+  @override
+  late final GeneratedColumn<String> recordedById = GeneratedColumn<String>(
+    'recorded_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByNameMeta = const VerificationMeta(
+    'recordedByName',
+  );
+  @override
+  late final GeneratedColumn<String> recordedByName = GeneratedColumn<String>(
+    'recorded_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    category,
+    title,
+    description,
+    durationMinutes,
+    rewardEarned,
+    achievement,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'activity_entries';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ActivityEntryRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('shift')) {
+      context.handle(
+        _shiftMeta,
+        shift.isAcceptableOrUnknown(data['shift']!, _shiftMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('duration_minutes')) {
+      context.handle(
+        _durationMinutesMeta,
+        durationMinutes.isAcceptableOrUnknown(
+          data['duration_minutes']!,
+          _durationMinutesMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reward_earned')) {
+      context.handle(
+        _rewardEarnedMeta,
+        rewardEarned.isAcceptableOrUnknown(
+          data['reward_earned']!,
+          _rewardEarnedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('achievement')) {
+      context.handle(
+        _achievementMeta,
+        achievement.isAcceptableOrUnknown(
+          data['achievement']!,
+          _achievementMeta,
+        ),
+      );
+    }
+    if (data.containsKey('recorded_by_id')) {
+      context.handle(
+        _recordedByIdMeta,
+        recordedById.isAcceptableOrUnknown(
+          data['recorded_by_id']!,
+          _recordedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByIdMeta);
+    }
+    if (data.containsKey('recorded_by_name')) {
+      context.handle(
+        _recordedByNameMeta,
+        recordedByName.isAcceptableOrUnknown(
+          data['recorded_by_name']!,
+          _recordedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ActivityEntryRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ActivityEntryRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      shift: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      durationMinutes: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}duration_minutes'],
+      ),
+      rewardEarned: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}reward_earned'],
+      )!,
+      achievement: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}achievement'],
+      ),
+      recordedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_id'],
+      )!,
+      recordedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $ActivityEntriesTableTable createAlias(String alias) {
+    return $ActivityEntriesTableTable(attachedDatabase, alias);
+  }
+}
+
+class ActivityEntryRow extends DataClass
+    implements Insertable<ActivityEntryRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String date;
+  final String shift;
+  final String category;
+  final String title;
+  final String? description;
+  final int? durationMinutes;
+  final bool rewardEarned;
+  final String? achievement;
+  final String recordedById;
+  final String recordedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const ActivityEntryRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.date,
+    required this.shift,
+    required this.category,
+    required this.title,
+    this.description,
+    this.durationMinutes,
+    required this.rewardEarned,
+    this.achievement,
+    required this.recordedById,
+    required this.recordedByName,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['date'] = Variable<String>(date);
+    map['shift'] = Variable<String>(shift);
+    map['category'] = Variable<String>(category);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || durationMinutes != null) {
+      map['duration_minutes'] = Variable<int>(durationMinutes);
+    }
+    map['reward_earned'] = Variable<bool>(rewardEarned);
+    if (!nullToAbsent || achievement != null) {
+      map['achievement'] = Variable<String>(achievement);
+    }
+    map['recorded_by_id'] = Variable<String>(recordedById);
+    map['recorded_by_name'] = Variable<String>(recordedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  ActivityEntriesTableCompanion toCompanion(bool nullToAbsent) {
+    return ActivityEntriesTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      date: Value(date),
+      shift: Value(shift),
+      category: Value(category),
+      title: Value(title),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      durationMinutes: durationMinutes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(durationMinutes),
+      rewardEarned: Value(rewardEarned),
+      achievement: achievement == null && nullToAbsent
+          ? const Value.absent()
+          : Value(achievement),
+      recordedById: Value(recordedById),
+      recordedByName: Value(recordedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory ActivityEntryRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ActivityEntryRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      date: serializer.fromJson<String>(json['date']),
+      shift: serializer.fromJson<String>(json['shift']),
+      category: serializer.fromJson<String>(json['category']),
+      title: serializer.fromJson<String>(json['title']),
+      description: serializer.fromJson<String?>(json['description']),
+      durationMinutes: serializer.fromJson<int?>(json['durationMinutes']),
+      rewardEarned: serializer.fromJson<bool>(json['rewardEarned']),
+      achievement: serializer.fromJson<String?>(json['achievement']),
+      recordedById: serializer.fromJson<String>(json['recordedById']),
+      recordedByName: serializer.fromJson<String>(json['recordedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'date': serializer.toJson<String>(date),
+      'shift': serializer.toJson<String>(shift),
+      'category': serializer.toJson<String>(category),
+      'title': serializer.toJson<String>(title),
+      'description': serializer.toJson<String?>(description),
+      'durationMinutes': serializer.toJson<int?>(durationMinutes),
+      'rewardEarned': serializer.toJson<bool>(rewardEarned),
+      'achievement': serializer.toJson<String?>(achievement),
+      'recordedById': serializer.toJson<String>(recordedById),
+      'recordedByName': serializer.toJson<String>(recordedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  ActivityEntryRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? date,
+    String? shift,
+    String? category,
+    String? title,
+    Value<String?> description = const Value.absent(),
+    Value<int?> durationMinutes = const Value.absent(),
+    bool? rewardEarned,
+    Value<String?> achievement = const Value.absent(),
+    String? recordedById,
+    String? recordedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => ActivityEntryRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    date: date ?? this.date,
+    shift: shift ?? this.shift,
+    category: category ?? this.category,
+    title: title ?? this.title,
+    description: description.present ? description.value : this.description,
+    durationMinutes: durationMinutes.present
+        ? durationMinutes.value
+        : this.durationMinutes,
+    rewardEarned: rewardEarned ?? this.rewardEarned,
+    achievement: achievement.present ? achievement.value : this.achievement,
+    recordedById: recordedById ?? this.recordedById,
+    recordedByName: recordedByName ?? this.recordedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  ActivityEntryRow copyWithCompanion(ActivityEntriesTableCompanion data) {
+    return ActivityEntryRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      date: data.date.present ? data.date.value : this.date,
+      shift: data.shift.present ? data.shift.value : this.shift,
+      category: data.category.present ? data.category.value : this.category,
+      title: data.title.present ? data.title.value : this.title,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      durationMinutes: data.durationMinutes.present
+          ? data.durationMinutes.value
+          : this.durationMinutes,
+      rewardEarned: data.rewardEarned.present
+          ? data.rewardEarned.value
+          : this.rewardEarned,
+      achievement: data.achievement.present
+          ? data.achievement.value
+          : this.achievement,
+      recordedById: data.recordedById.present
+          ? data.recordedById.value
+          : this.recordedById,
+      recordedByName: data.recordedByName.present
+          ? data.recordedByName.value
+          : this.recordedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivityEntryRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('rewardEarned: $rewardEarned, ')
+          ..write('achievement: $achievement, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    childId,
+    date,
+    shift,
+    category,
+    title,
+    description,
+    durationMinutes,
+    rewardEarned,
+    achievement,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ActivityEntryRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.date == this.date &&
+          other.shift == this.shift &&
+          other.category == this.category &&
+          other.title == this.title &&
+          other.description == this.description &&
+          other.durationMinutes == this.durationMinutes &&
+          other.rewardEarned == this.rewardEarned &&
+          other.achievement == this.achievement &&
+          other.recordedById == this.recordedById &&
+          other.recordedByName == this.recordedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class ActivityEntriesTableCompanion extends UpdateCompanion<ActivityEntryRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> date;
+  final Value<String> shift;
+  final Value<String> category;
+  final Value<String> title;
+  final Value<String?> description;
+  final Value<int?> durationMinutes;
+  final Value<bool> rewardEarned;
+  final Value<String?> achievement;
+  final Value<String> recordedById;
+  final Value<String> recordedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const ActivityEntriesTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.shift = const Value.absent(),
+    this.category = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.durationMinutes = const Value.absent(),
+    this.rewardEarned = const Value.absent(),
+    this.achievement = const Value.absent(),
+    this.recordedById = const Value.absent(),
+    this.recordedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ActivityEntriesTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String date,
+    required String shift,
+    required String category,
+    required String title,
+    this.description = const Value.absent(),
+    this.durationMinutes = const Value.absent(),
+    this.rewardEarned = const Value.absent(),
+    this.achievement = const Value.absent(),
+    required String recordedById,
+    required String recordedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       date = Value(date),
+       shift = Value(shift),
+       category = Value(category),
+       title = Value(title),
+       recordedById = Value(recordedById),
+       recordedByName = Value(recordedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<ActivityEntryRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? date,
+    Expression<String>? shift,
+    Expression<String>? category,
+    Expression<String>? title,
+    Expression<String>? description,
+    Expression<int>? durationMinutes,
+    Expression<bool>? rewardEarned,
+    Expression<String>? achievement,
+    Expression<String>? recordedById,
+    Expression<String>? recordedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (date != null) 'date': date,
+      if (shift != null) 'shift': shift,
+      if (category != null) 'category': category,
+      if (title != null) 'title': title,
+      if (description != null) 'description': description,
+      if (durationMinutes != null) 'duration_minutes': durationMinutes,
+      if (rewardEarned != null) 'reward_earned': rewardEarned,
+      if (achievement != null) 'achievement': achievement,
+      if (recordedById != null) 'recorded_by_id': recordedById,
+      if (recordedByName != null) 'recorded_by_name': recordedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ActivityEntriesTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? date,
+    Value<String>? shift,
+    Value<String>? category,
+    Value<String>? title,
+    Value<String?>? description,
+    Value<int?>? durationMinutes,
+    Value<bool>? rewardEarned,
+    Value<String?>? achievement,
+    Value<String>? recordedById,
+    Value<String>? recordedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return ActivityEntriesTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      date: date ?? this.date,
+      shift: shift ?? this.shift,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      durationMinutes: durationMinutes ?? this.durationMinutes,
+      rewardEarned: rewardEarned ?? this.rewardEarned,
+      achievement: achievement ?? this.achievement,
+      recordedById: recordedById ?? this.recordedById,
+      recordedByName: recordedByName ?? this.recordedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (shift.present) {
+      map['shift'] = Variable<String>(shift.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (durationMinutes.present) {
+      map['duration_minutes'] = Variable<int>(durationMinutes.value);
+    }
+    if (rewardEarned.present) {
+      map['reward_earned'] = Variable<bool>(rewardEarned.value);
+    }
+    if (achievement.present) {
+      map['achievement'] = Variable<String>(achievement.value);
+    }
+    if (recordedById.present) {
+      map['recorded_by_id'] = Variable<String>(recordedById.value);
+    }
+    if (recordedByName.present) {
+      map['recorded_by_name'] = Variable<String>(recordedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ActivityEntriesTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('durationMinutes: $durationMinutes, ')
+          ..write('rewardEarned: $rewardEarned, ')
+          ..write('achievement: $achievement, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $SmartStepsTableTable extends SmartStepsTable
+    with TableInfo<$SmartStepsTableTable, SmartStepRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SmartStepsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _categoryMeta = const VerificationMeta(
+    'category',
+  );
+  @override
+  late final GeneratedColumn<String> category = GeneratedColumn<String>(
+    'category',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _targetDateMeta = const VerificationMeta(
+    'targetDate',
+  );
+  @override
+  late final GeneratedColumn<String> targetDate = GeneratedColumn<String>(
+    'target_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _statusMeta = const VerificationMeta('status');
+  @override
+  late final GeneratedColumn<String> status = GeneratedColumn<String>(
+    'status',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _achievedDateMeta = const VerificationMeta(
+    'achievedDate',
+  );
+  @override
+  late final GeneratedColumn<String> achievedDate = GeneratedColumn<String>(
+    'achieved_date',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    category,
+    title,
+    description,
+    targetDate,
+    status,
+    achievedDate,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'smart_steps';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<SmartStepRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(
+        _categoryMeta,
+        category.isAcceptableOrUnknown(data['category']!, _categoryMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    }
+    if (data.containsKey('target_date')) {
+      context.handle(
+        _targetDateMeta,
+        targetDate.isAcceptableOrUnknown(data['target_date']!, _targetDateMeta),
+      );
+    }
+    if (data.containsKey('status')) {
+      context.handle(
+        _statusMeta,
+        status.isAcceptableOrUnknown(data['status']!, _statusMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_statusMeta);
+    }
+    if (data.containsKey('achieved_date')) {
+      context.handle(
+        _achievedDateMeta,
+        achievedDate.isAcceptableOrUnknown(
+          data['achieved_date']!,
+          _achievedDateMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  SmartStepRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return SmartStepRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      category: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}category'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      ),
+      targetDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}target_date'],
+      ),
+      status: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}status'],
+      )!,
+      achievedDate: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}achieved_date'],
+      ),
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $SmartStepsTableTable createAlias(String alias) {
+    return $SmartStepsTableTable(attachedDatabase, alias);
+  }
+}
+
+class SmartStepRow extends DataClass implements Insertable<SmartStepRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String category;
+  final String title;
+  final String? description;
+  final String? targetDate;
+  final String status;
+  final String? achievedDate;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const SmartStepRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.category,
+    required this.title,
+    this.description,
+    this.targetDate,
+    required this.status,
+    this.achievedDate,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['category'] = Variable<String>(category);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    if (!nullToAbsent || targetDate != null) {
+      map['target_date'] = Variable<String>(targetDate);
+    }
+    map['status'] = Variable<String>(status);
+    if (!nullToAbsent || achievedDate != null) {
+      map['achieved_date'] = Variable<String>(achievedDate);
+    }
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  SmartStepsTableCompanion toCompanion(bool nullToAbsent) {
+    return SmartStepsTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      category: Value(category),
+      title: Value(title),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      targetDate: targetDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(targetDate),
+      status: Value(status),
+      achievedDate: achievedDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(achievedDate),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory SmartStepRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return SmartStepRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      category: serializer.fromJson<String>(json['category']),
+      title: serializer.fromJson<String>(json['title']),
+      description: serializer.fromJson<String?>(json['description']),
+      targetDate: serializer.fromJson<String?>(json['targetDate']),
+      status: serializer.fromJson<String>(json['status']),
+      achievedDate: serializer.fromJson<String?>(json['achievedDate']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'category': serializer.toJson<String>(category),
+      'title': serializer.toJson<String>(title),
+      'description': serializer.toJson<String?>(description),
+      'targetDate': serializer.toJson<String?>(targetDate),
+      'status': serializer.toJson<String>(status),
+      'achievedDate': serializer.toJson<String?>(achievedDate),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  SmartStepRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? category,
+    String? title,
+    Value<String?> description = const Value.absent(),
+    Value<String?> targetDate = const Value.absent(),
+    String? status,
+    Value<String?> achievedDate = const Value.absent(),
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => SmartStepRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    category: category ?? this.category,
+    title: title ?? this.title,
+    description: description.present ? description.value : this.description,
+    targetDate: targetDate.present ? targetDate.value : this.targetDate,
+    status: status ?? this.status,
+    achievedDate: achievedDate.present ? achievedDate.value : this.achievedDate,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  SmartStepRow copyWithCompanion(SmartStepsTableCompanion data) {
+    return SmartStepRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      category: data.category.present ? data.category.value : this.category,
+      title: data.title.present ? data.title.value : this.title,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      targetDate: data.targetDate.present
+          ? data.targetDate.value
+          : this.targetDate,
+      status: data.status.present ? data.status.value : this.status,
+      achievedDate: data.achievedDate.present
+          ? data.achievedDate.value
+          : this.achievedDate,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmartStepRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('targetDate: $targetDate, ')
+          ..write('status: $status, ')
+          ..write('achievedDate: $achievedDate, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    childId,
+    category,
+    title,
+    description,
+    targetDate,
+    status,
+    achievedDate,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SmartStepRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.category == this.category &&
+          other.title == this.title &&
+          other.description == this.description &&
+          other.targetDate == this.targetDate &&
+          other.status == this.status &&
+          other.achievedDate == this.achievedDate &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class SmartStepsTableCompanion extends UpdateCompanion<SmartStepRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> category;
+  final Value<String> title;
+  final Value<String?> description;
+  final Value<String?> targetDate;
+  final Value<String> status;
+  final Value<String?> achievedDate;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const SmartStepsTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.category = const Value.absent(),
+    this.title = const Value.absent(),
+    this.description = const Value.absent(),
+    this.targetDate = const Value.absent(),
+    this.status = const Value.absent(),
+    this.achievedDate = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SmartStepsTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String category,
+    required String title,
+    this.description = const Value.absent(),
+    this.targetDate = const Value.absent(),
+    required String status,
+    this.achievedDate = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       category = Value(category),
+       title = Value(title),
+       status = Value(status),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<SmartStepRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? category,
+    Expression<String>? title,
+    Expression<String>? description,
+    Expression<String>? targetDate,
+    Expression<String>? status,
+    Expression<String>? achievedDate,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (category != null) 'category': category,
+      if (title != null) 'title': title,
+      if (description != null) 'description': description,
+      if (targetDate != null) 'target_date': targetDate,
+      if (status != null) 'status': status,
+      if (achievedDate != null) 'achieved_date': achievedDate,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SmartStepsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? category,
+    Value<String>? title,
+    Value<String?>? description,
+    Value<String?>? targetDate,
+    Value<String>? status,
+    Value<String?>? achievedDate,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return SmartStepsTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      category: category ?? this.category,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      targetDate: targetDate ?? this.targetDate,
+      status: status ?? this.status,
+      achievedDate: achievedDate ?? this.achievedDate,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<String>(category.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (targetDate.present) {
+      map['target_date'] = Variable<String>(targetDate.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(status.value);
+    }
+    if (achievedDate.present) {
+      map['achieved_date'] = Variable<String>(achievedDate.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SmartStepsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('category: $category, ')
+          ..write('title: $title, ')
+          ..write('description: $description, ')
+          ..write('targetDate: $targetDate, ')
+          ..write('status: $status, ')
+          ..write('achievedDate: $achievedDate, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $StepProgressTableTable extends StepProgressTable
+    with TableInfo<$StepProgressTableTable, StepProgressRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $StepProgressTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _stepIdMeta = const VerificationMeta('stepId');
+  @override
+  late final GeneratedColumn<String> stepId = GeneratedColumn<String>(
+    'step_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String> date = GeneratedColumn<String>(
+    'date',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _shiftMeta = const VerificationMeta('shift');
+  @override
+  late final GeneratedColumn<String> shift = GeneratedColumn<String>(
+    'shift',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _outcomeMeta = const VerificationMeta(
+    'outcome',
+  );
+  @override
+  late final GeneratedColumn<String> outcome = GeneratedColumn<String>(
+    'outcome',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+    'note',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByIdMeta = const VerificationMeta(
+    'recordedById',
+  );
+  @override
+  late final GeneratedColumn<String> recordedById = GeneratedColumn<String>(
+    'recorded_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _recordedByNameMeta = const VerificationMeta(
+    'recordedByName',
+  );
+  @override
+  late final GeneratedColumn<String> recordedByName = GeneratedColumn<String>(
+    'recorded_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    stepId,
+    date,
+    shift,
+    outcome,
+    note,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'step_progress';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<StepProgressRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('step_id')) {
+      context.handle(
+        _stepIdMeta,
+        stepId.isAcceptableOrUnknown(data['step_id']!, _stepIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_stepIdMeta);
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+        _dateMeta,
+        date.isAcceptableOrUnknown(data['date']!, _dateMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('shift')) {
+      context.handle(
+        _shiftMeta,
+        shift.isAcceptableOrUnknown(data['shift']!, _shiftMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_shiftMeta);
+    }
+    if (data.containsKey('outcome')) {
+      context.handle(
+        _outcomeMeta,
+        outcome.isAcceptableOrUnknown(data['outcome']!, _outcomeMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_outcomeMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+        _noteMeta,
+        note.isAcceptableOrUnknown(data['note']!, _noteMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_noteMeta);
+    }
+    if (data.containsKey('recorded_by_id')) {
+      context.handle(
+        _recordedByIdMeta,
+        recordedById.isAcceptableOrUnknown(
+          data['recorded_by_id']!,
+          _recordedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByIdMeta);
+    }
+    if (data.containsKey('recorded_by_name')) {
+      context.handle(
+        _recordedByNameMeta,
+        recordedByName.isAcceptableOrUnknown(
+          data['recorded_by_name']!,
+          _recordedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_recordedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  StepProgressRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return StepProgressRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      stepId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}step_id'],
+      )!,
+      date: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date'],
+      )!,
+      shift: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}shift'],
+      )!,
+      outcome: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}outcome'],
+      )!,
+      note: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}note'],
+      )!,
+      recordedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_id'],
+      )!,
+      recordedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}recorded_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $StepProgressTableTable createAlias(String alias) {
+    return $StepProgressTableTable(attachedDatabase, alias);
+  }
+}
+
+class StepProgressRow extends DataClass implements Insertable<StepProgressRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String stepId;
+  final String date;
+  final String shift;
+  final String outcome;
+  final String note;
+  final String recordedById;
+  final String recordedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const StepProgressRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.stepId,
+    required this.date,
+    required this.shift,
+    required this.outcome,
+    required this.note,
+    required this.recordedById,
+    required this.recordedByName,
+    this.createdById,
+    this.updatedById,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['step_id'] = Variable<String>(stepId);
+    map['date'] = Variable<String>(date);
+    map['shift'] = Variable<String>(shift);
+    map['outcome'] = Variable<String>(outcome);
+    map['note'] = Variable<String>(note);
+    map['recorded_by_id'] = Variable<String>(recordedById);
+    map['recorded_by_name'] = Variable<String>(recordedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  StepProgressTableCompanion toCompanion(bool nullToAbsent) {
+    return StepProgressTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      stepId: Value(stepId),
+      date: Value(date),
+      shift: Value(shift),
+      outcome: Value(outcome),
+      note: Value(note),
+      recordedById: Value(recordedById),
+      recordedByName: Value(recordedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory StepProgressRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return StepProgressRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      stepId: serializer.fromJson<String>(json['stepId']),
+      date: serializer.fromJson<String>(json['date']),
+      shift: serializer.fromJson<String>(json['shift']),
+      outcome: serializer.fromJson<String>(json['outcome']),
+      note: serializer.fromJson<String>(json['note']),
+      recordedById: serializer.fromJson<String>(json['recordedById']),
+      recordedByName: serializer.fromJson<String>(json['recordedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'stepId': serializer.toJson<String>(stepId),
+      'date': serializer.toJson<String>(date),
+      'shift': serializer.toJson<String>(shift),
+      'outcome': serializer.toJson<String>(outcome),
+      'note': serializer.toJson<String>(note),
+      'recordedById': serializer.toJson<String>(recordedById),
+      'recordedByName': serializer.toJson<String>(recordedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  StepProgressRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? stepId,
+    String? date,
+    String? shift,
+    String? outcome,
+    String? note,
+    String? recordedById,
+    String? recordedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => StepProgressRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    stepId: stepId ?? this.stepId,
+    date: date ?? this.date,
+    shift: shift ?? this.shift,
+    outcome: outcome ?? this.outcome,
+    note: note ?? this.note,
+    recordedById: recordedById ?? this.recordedById,
+    recordedByName: recordedByName ?? this.recordedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  StepProgressRow copyWithCompanion(StepProgressTableCompanion data) {
+    return StepProgressRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      stepId: data.stepId.present ? data.stepId.value : this.stepId,
+      date: data.date.present ? data.date.value : this.date,
+      shift: data.shift.present ? data.shift.value : this.shift,
+      outcome: data.outcome.present ? data.outcome.value : this.outcome,
+      note: data.note.present ? data.note.value : this.note,
+      recordedById: data.recordedById.present
+          ? data.recordedById.value
+          : this.recordedById,
+      recordedByName: data.recordedByName.present
+          ? data.recordedByName.value
+          : this.recordedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StepProgressRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('stepId: $stepId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('outcome: $outcome, ')
+          ..write('note: $note, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    childId,
+    stepId,
+    date,
+    shift,
+    outcome,
+    note,
+    recordedById,
+    recordedByName,
+    createdById,
+    updatedById,
+    createdAt,
+    updatedAt,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is StepProgressRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.stepId == this.stepId &&
+          other.date == this.date &&
+          other.shift == this.shift &&
+          other.outcome == this.outcome &&
+          other.note == this.note &&
+          other.recordedById == this.recordedById &&
+          other.recordedByName == this.recordedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class StepProgressTableCompanion extends UpdateCompanion<StepProgressRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> stepId;
+  final Value<String> date;
+  final Value<String> shift;
+  final Value<String> outcome;
+  final Value<String> note;
+  final Value<String> recordedById;
+  final Value<String> recordedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const StepProgressTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.stepId = const Value.absent(),
+    this.date = const Value.absent(),
+    this.shift = const Value.absent(),
+    this.outcome = const Value.absent(),
+    this.note = const Value.absent(),
+    this.recordedById = const Value.absent(),
+    this.recordedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  StepProgressTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String stepId,
+    required String date,
+    required String shift,
+    required String outcome,
+    required String note,
+    required String recordedById,
+    required String recordedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       stepId = Value(stepId),
+       date = Value(date),
+       shift = Value(shift),
+       outcome = Value(outcome),
+       note = Value(note),
+       recordedById = Value(recordedById),
+       recordedByName = Value(recordedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<StepProgressRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? stepId,
+    Expression<String>? date,
+    Expression<String>? shift,
+    Expression<String>? outcome,
+    Expression<String>? note,
+    Expression<String>? recordedById,
+    Expression<String>? recordedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (stepId != null) 'step_id': stepId,
+      if (date != null) 'date': date,
+      if (shift != null) 'shift': shift,
+      if (outcome != null) 'outcome': outcome,
+      if (note != null) 'note': note,
+      if (recordedById != null) 'recorded_by_id': recordedById,
+      if (recordedByName != null) 'recorded_by_name': recordedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  StepProgressTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? stepId,
+    Value<String>? date,
+    Value<String>? shift,
+    Value<String>? outcome,
+    Value<String>? note,
+    Value<String>? recordedById,
+    Value<String>? recordedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return StepProgressTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      stepId: stepId ?? this.stepId,
+      date: date ?? this.date,
+      shift: shift ?? this.shift,
+      outcome: outcome ?? this.outcome,
+      note: note ?? this.note,
+      recordedById: recordedById ?? this.recordedById,
+      recordedByName: recordedByName ?? this.recordedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (stepId.present) {
+      map['step_id'] = Variable<String>(stepId.value);
+    }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
+    if (shift.present) {
+      map['shift'] = Variable<String>(shift.value);
+    }
+    if (outcome.present) {
+      map['outcome'] = Variable<String>(outcome.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    if (recordedById.present) {
+      map['recorded_by_id'] = Variable<String>(recordedById.value);
+    }
+    if (recordedByName.present) {
+      map['recorded_by_name'] = Variable<String>(recordedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('StepProgressTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('stepId: $stepId, ')
+          ..write('date: $date, ')
+          ..write('shift: $shift, ')
+          ..write('outcome: $outcome, ')
+          ..write('note: $note, ')
+          ..write('recordedById: $recordedById, ')
+          ..write('recordedByName: $recordedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -10166,6 +16418,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $MedicalProfileTableTable(this);
   late final $HealthcareContactsTableTable healthcareContactsTable =
       $HealthcareContactsTableTable(this);
+  late final $BehaviourIncidentsTableTable behaviourIncidentsTable =
+      $BehaviourIncidentsTableTable(this);
+  late final $SleepEntriesTableTable sleepEntriesTable =
+      $SleepEntriesTableTable(this);
+  late final $FoodEntriesTableTable foodEntriesTable = $FoodEntriesTableTable(
+    this,
+  );
+  late final $ActivityEntriesTableTable activityEntriesTable =
+      $ActivityEntriesTableTable(this);
+  late final $SmartStepsTableTable smartStepsTable = $SmartStepsTableTable(
+    this,
+  );
+  late final $StepProgressTableTable stepProgressTable =
+      $StepProgressTableTable(this);
   late final DailyNotesDao dailyNotesDao = DailyNotesDao(this as AppDatabase);
   late final ChecklistItemsDao checklistItemsDao = ChecklistItemsDao(
     this as AppDatabase,
@@ -10180,6 +16446,18 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final MedicalHistoryDao medicalHistoryDao = MedicalHistoryDao(
     this as AppDatabase,
   );
+  late final BehaviourIncidentsDao behaviourIncidentsDao =
+      BehaviourIncidentsDao(this as AppDatabase);
+  late final SleepEntriesDao sleepEntriesDao = SleepEntriesDao(
+    this as AppDatabase,
+  );
+  late final FoodEntriesDao foodEntriesDao = FoodEntriesDao(
+    this as AppDatabase,
+  );
+  late final ActivityEntriesDao activityEntriesDao = ActivityEntriesDao(
+    this as AppDatabase,
+  );
+  late final SmartStepsDao smartStepsDao = SmartStepsDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -10196,6 +16474,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     medAdministrationsTable,
     medicalProfileTable,
     healthcareContactsTable,
+    behaviourIncidentsTable,
+    sleepEntriesTable,
+    foodEntriesTable,
+    activityEntriesTable,
+    smartStepsTable,
+    stepProgressTable,
   ];
 }
 
@@ -14927,6 +21211,2863 @@ typedef $$HealthcareContactsTableTableProcessedTableManager =
       HealthcareContactRow,
       PrefetchHooks Function()
     >;
+typedef $$BehaviourIncidentsTableTableCreateCompanionBuilder =
+    BehaviourIncidentsTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String shift,
+      required DateTime occurredAt,
+      required String severity,
+      required String antecedent,
+      required String behaviour,
+      required String consequence,
+      Value<int?> durationMinutes,
+      Value<String?> location,
+      Value<bool> physicalIntervention,
+      Value<String?> interventionDetails,
+      Value<bool> injuryOccurred,
+      Value<String?> injuryDetails,
+      Value<String?> notes,
+      required String recordedById,
+      required String recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$BehaviourIncidentsTableTableUpdateCompanionBuilder =
+    BehaviourIncidentsTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> shift,
+      Value<DateTime> occurredAt,
+      Value<String> severity,
+      Value<String> antecedent,
+      Value<String> behaviour,
+      Value<String> consequence,
+      Value<int?> durationMinutes,
+      Value<String?> location,
+      Value<bool> physicalIntervention,
+      Value<String?> interventionDetails,
+      Value<bool> injuryOccurred,
+      Value<String?> injuryDetails,
+      Value<String?> notes,
+      Value<String> recordedById,
+      Value<String> recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$BehaviourIncidentsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $BehaviourIncidentsTableTable> {
+  $$BehaviourIncidentsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get antecedent => $composableBuilder(
+    column: $table.antecedent,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get behaviour => $composableBuilder(
+    column: $table.behaviour,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get consequence => $composableBuilder(
+    column: $table.consequence,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get physicalIntervention => $composableBuilder(
+    column: $table.physicalIntervention,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get interventionDetails => $composableBuilder(
+    column: $table.interventionDetails,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get injuryOccurred => $composableBuilder(
+    column: $table.injuryOccurred,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$BehaviourIncidentsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $BehaviourIncidentsTableTable> {
+  $$BehaviourIncidentsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get antecedent => $composableBuilder(
+    column: $table.antecedent,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get behaviour => $composableBuilder(
+    column: $table.behaviour,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get consequence => $composableBuilder(
+    column: $table.consequence,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get physicalIntervention => $composableBuilder(
+    column: $table.physicalIntervention,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get interventionDetails => $composableBuilder(
+    column: $table.interventionDetails,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get injuryOccurred => $composableBuilder(
+    column: $table.injuryOccurred,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$BehaviourIncidentsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $BehaviourIncidentsTableTable> {
+  $$BehaviourIncidentsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get shift =>
+      $composableBuilder(column: $table.shift, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get severity =>
+      $composableBuilder(column: $table.severity, builder: (column) => column);
+
+  GeneratedColumn<String> get antecedent => $composableBuilder(
+    column: $table.antecedent,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get behaviour =>
+      $composableBuilder(column: $table.behaviour, builder: (column) => column);
+
+  GeneratedColumn<String> get consequence => $composableBuilder(
+    column: $table.consequence,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get location =>
+      $composableBuilder(column: $table.location, builder: (column) => column);
+
+  GeneratedColumn<bool> get physicalIntervention => $composableBuilder(
+    column: $table.physicalIntervention,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get interventionDetails => $composableBuilder(
+    column: $table.interventionDetails,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get injuryOccurred => $composableBuilder(
+    column: $table.injuryOccurred,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$BehaviourIncidentsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $BehaviourIncidentsTableTable,
+          BehaviourIncidentRow,
+          $$BehaviourIncidentsTableTableFilterComposer,
+          $$BehaviourIncidentsTableTableOrderingComposer,
+          $$BehaviourIncidentsTableTableAnnotationComposer,
+          $$BehaviourIncidentsTableTableCreateCompanionBuilder,
+          $$BehaviourIncidentsTableTableUpdateCompanionBuilder,
+          (
+            BehaviourIncidentRow,
+            BaseReferences<
+              _$AppDatabase,
+              $BehaviourIncidentsTableTable,
+              BehaviourIncidentRow
+            >,
+          ),
+          BehaviourIncidentRow,
+          PrefetchHooks Function()
+        > {
+  $$BehaviourIncidentsTableTableTableManager(
+    _$AppDatabase db,
+    $BehaviourIncidentsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$BehaviourIncidentsTableTableFilterComposer(
+                $db: db,
+                $table: table,
+              ),
+          createOrderingComposer: () =>
+              $$BehaviourIncidentsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$BehaviourIncidentsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> shift = const Value.absent(),
+                Value<DateTime> occurredAt = const Value.absent(),
+                Value<String> severity = const Value.absent(),
+                Value<String> antecedent = const Value.absent(),
+                Value<String> behaviour = const Value.absent(),
+                Value<String> consequence = const Value.absent(),
+                Value<int?> durationMinutes = const Value.absent(),
+                Value<String?> location = const Value.absent(),
+                Value<bool> physicalIntervention = const Value.absent(),
+                Value<String?> interventionDetails = const Value.absent(),
+                Value<bool> injuryOccurred = const Value.absent(),
+                Value<String?> injuryDetails = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<String> recordedById = const Value.absent(),
+                Value<String> recordedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BehaviourIncidentsTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                shift: shift,
+                occurredAt: occurredAt,
+                severity: severity,
+                antecedent: antecedent,
+                behaviour: behaviour,
+                consequence: consequence,
+                durationMinutes: durationMinutes,
+                location: location,
+                physicalIntervention: physicalIntervention,
+                interventionDetails: interventionDetails,
+                injuryOccurred: injuryOccurred,
+                injuryDetails: injuryDetails,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String shift,
+                required DateTime occurredAt,
+                required String severity,
+                required String antecedent,
+                required String behaviour,
+                required String consequence,
+                Value<int?> durationMinutes = const Value.absent(),
+                Value<String?> location = const Value.absent(),
+                Value<bool> physicalIntervention = const Value.absent(),
+                Value<String?> interventionDetails = const Value.absent(),
+                Value<bool> injuryOccurred = const Value.absent(),
+                Value<String?> injuryDetails = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                required String recordedById,
+                required String recordedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => BehaviourIncidentsTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                shift: shift,
+                occurredAt: occurredAt,
+                severity: severity,
+                antecedent: antecedent,
+                behaviour: behaviour,
+                consequence: consequence,
+                durationMinutes: durationMinutes,
+                location: location,
+                physicalIntervention: physicalIntervention,
+                interventionDetails: interventionDetails,
+                injuryOccurred: injuryOccurred,
+                injuryDetails: injuryDetails,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$BehaviourIncidentsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $BehaviourIncidentsTableTable,
+      BehaviourIncidentRow,
+      $$BehaviourIncidentsTableTableFilterComposer,
+      $$BehaviourIncidentsTableTableOrderingComposer,
+      $$BehaviourIncidentsTableTableAnnotationComposer,
+      $$BehaviourIncidentsTableTableCreateCompanionBuilder,
+      $$BehaviourIncidentsTableTableUpdateCompanionBuilder,
+      (
+        BehaviourIncidentRow,
+        BaseReferences<
+          _$AppDatabase,
+          $BehaviourIncidentsTableTable,
+          BehaviourIncidentRow
+        >,
+      ),
+      BehaviourIncidentRow,
+      PrefetchHooks Function()
+    >;
+typedef $$SleepEntriesTableTableCreateCompanionBuilder =
+    SleepEntriesTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String date,
+      required String shift,
+      Value<String?> bedTime,
+      Value<String?> settledTime,
+      Value<String?> wakeTime,
+      Value<int> numberOfWakings,
+      required String quality,
+      Value<String?> notes,
+      required String recordedById,
+      required String recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$SleepEntriesTableTableUpdateCompanionBuilder =
+    SleepEntriesTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> date,
+      Value<String> shift,
+      Value<String?> bedTime,
+      Value<String?> settledTime,
+      Value<String?> wakeTime,
+      Value<int> numberOfWakings,
+      Value<String> quality,
+      Value<String?> notes,
+      Value<String> recordedById,
+      Value<String> recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$SleepEntriesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $SleepEntriesTableTable> {
+  $$SleepEntriesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get bedTime => $composableBuilder(
+    column: $table.bedTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get settledTime => $composableBuilder(
+    column: $table.settledTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get wakeTime => $composableBuilder(
+    column: $table.wakeTime,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get numberOfWakings => $composableBuilder(
+    column: $table.numberOfWakings,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get quality => $composableBuilder(
+    column: $table.quality,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SleepEntriesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $SleepEntriesTableTable> {
+  $$SleepEntriesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get bedTime => $composableBuilder(
+    column: $table.bedTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get settledTime => $composableBuilder(
+    column: $table.settledTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get wakeTime => $composableBuilder(
+    column: $table.wakeTime,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get numberOfWakings => $composableBuilder(
+    column: $table.numberOfWakings,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get quality => $composableBuilder(
+    column: $table.quality,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SleepEntriesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SleepEntriesTableTable> {
+  $$SleepEntriesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get shift =>
+      $composableBuilder(column: $table.shift, builder: (column) => column);
+
+  GeneratedColumn<String> get bedTime =>
+      $composableBuilder(column: $table.bedTime, builder: (column) => column);
+
+  GeneratedColumn<String> get settledTime => $composableBuilder(
+    column: $table.settledTime,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get wakeTime =>
+      $composableBuilder(column: $table.wakeTime, builder: (column) => column);
+
+  GeneratedColumn<int> get numberOfWakings => $composableBuilder(
+    column: $table.numberOfWakings,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get quality =>
+      $composableBuilder(column: $table.quality, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$SleepEntriesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SleepEntriesTableTable,
+          SleepEntryRow,
+          $$SleepEntriesTableTableFilterComposer,
+          $$SleepEntriesTableTableOrderingComposer,
+          $$SleepEntriesTableTableAnnotationComposer,
+          $$SleepEntriesTableTableCreateCompanionBuilder,
+          $$SleepEntriesTableTableUpdateCompanionBuilder,
+          (
+            SleepEntryRow,
+            BaseReferences<
+              _$AppDatabase,
+              $SleepEntriesTableTable,
+              SleepEntryRow
+            >,
+          ),
+          SleepEntryRow,
+          PrefetchHooks Function()
+        > {
+  $$SleepEntriesTableTableTableManager(
+    _$AppDatabase db,
+    $SleepEntriesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SleepEntriesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SleepEntriesTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SleepEntriesTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> shift = const Value.absent(),
+                Value<String?> bedTime = const Value.absent(),
+                Value<String?> settledTime = const Value.absent(),
+                Value<String?> wakeTime = const Value.absent(),
+                Value<int> numberOfWakings = const Value.absent(),
+                Value<String> quality = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<String> recordedById = const Value.absent(),
+                Value<String> recordedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SleepEntriesTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                bedTime: bedTime,
+                settledTime: settledTime,
+                wakeTime: wakeTime,
+                numberOfWakings: numberOfWakings,
+                quality: quality,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String date,
+                required String shift,
+                Value<String?> bedTime = const Value.absent(),
+                Value<String?> settledTime = const Value.absent(),
+                Value<String?> wakeTime = const Value.absent(),
+                Value<int> numberOfWakings = const Value.absent(),
+                required String quality,
+                Value<String?> notes = const Value.absent(),
+                required String recordedById,
+                required String recordedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SleepEntriesTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                bedTime: bedTime,
+                settledTime: settledTime,
+                wakeTime: wakeTime,
+                numberOfWakings: numberOfWakings,
+                quality: quality,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SleepEntriesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SleepEntriesTableTable,
+      SleepEntryRow,
+      $$SleepEntriesTableTableFilterComposer,
+      $$SleepEntriesTableTableOrderingComposer,
+      $$SleepEntriesTableTableAnnotationComposer,
+      $$SleepEntriesTableTableCreateCompanionBuilder,
+      $$SleepEntriesTableTableUpdateCompanionBuilder,
+      (
+        SleepEntryRow,
+        BaseReferences<_$AppDatabase, $SleepEntriesTableTable, SleepEntryRow>,
+      ),
+      SleepEntryRow,
+      PrefetchHooks Function()
+    >;
+typedef $$FoodEntriesTableTableCreateCompanionBuilder =
+    FoodEntriesTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String date,
+      required String shift,
+      required String mealType,
+      required String description,
+      required String appetite,
+      Value<String?> concerns,
+      Value<String?> notes,
+      required String recordedById,
+      required String recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$FoodEntriesTableTableUpdateCompanionBuilder =
+    FoodEntriesTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> date,
+      Value<String> shift,
+      Value<String> mealType,
+      Value<String> description,
+      Value<String> appetite,
+      Value<String?> concerns,
+      Value<String?> notes,
+      Value<String> recordedById,
+      Value<String> recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$FoodEntriesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $FoodEntriesTableTable> {
+  $$FoodEntriesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get mealType => $composableBuilder(
+    column: $table.mealType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get appetite => $composableBuilder(
+    column: $table.appetite,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get concerns => $composableBuilder(
+    column: $table.concerns,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$FoodEntriesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $FoodEntriesTableTable> {
+  $$FoodEntriesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get mealType => $composableBuilder(
+    column: $table.mealType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get appetite => $composableBuilder(
+    column: $table.appetite,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get concerns => $composableBuilder(
+    column: $table.concerns,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$FoodEntriesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FoodEntriesTableTable> {
+  $$FoodEntriesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get shift =>
+      $composableBuilder(column: $table.shift, builder: (column) => column);
+
+  GeneratedColumn<String> get mealType =>
+      $composableBuilder(column: $table.mealType, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get appetite =>
+      $composableBuilder(column: $table.appetite, builder: (column) => column);
+
+  GeneratedColumn<String> get concerns =>
+      $composableBuilder(column: $table.concerns, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$FoodEntriesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $FoodEntriesTableTable,
+          FoodEntryRow,
+          $$FoodEntriesTableTableFilterComposer,
+          $$FoodEntriesTableTableOrderingComposer,
+          $$FoodEntriesTableTableAnnotationComposer,
+          $$FoodEntriesTableTableCreateCompanionBuilder,
+          $$FoodEntriesTableTableUpdateCompanionBuilder,
+          (
+            FoodEntryRow,
+            BaseReferences<_$AppDatabase, $FoodEntriesTableTable, FoodEntryRow>,
+          ),
+          FoodEntryRow,
+          PrefetchHooks Function()
+        > {
+  $$FoodEntriesTableTableTableManager(
+    _$AppDatabase db,
+    $FoodEntriesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$FoodEntriesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$FoodEntriesTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$FoodEntriesTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> shift = const Value.absent(),
+                Value<String> mealType = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<String> appetite = const Value.absent(),
+                Value<String?> concerns = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<String> recordedById = const Value.absent(),
+                Value<String> recordedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FoodEntriesTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                mealType: mealType,
+                description: description,
+                appetite: appetite,
+                concerns: concerns,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String date,
+                required String shift,
+                required String mealType,
+                required String description,
+                required String appetite,
+                Value<String?> concerns = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                required String recordedById,
+                required String recordedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => FoodEntriesTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                mealType: mealType,
+                description: description,
+                appetite: appetite,
+                concerns: concerns,
+                notes: notes,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$FoodEntriesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $FoodEntriesTableTable,
+      FoodEntryRow,
+      $$FoodEntriesTableTableFilterComposer,
+      $$FoodEntriesTableTableOrderingComposer,
+      $$FoodEntriesTableTableAnnotationComposer,
+      $$FoodEntriesTableTableCreateCompanionBuilder,
+      $$FoodEntriesTableTableUpdateCompanionBuilder,
+      (
+        FoodEntryRow,
+        BaseReferences<_$AppDatabase, $FoodEntriesTableTable, FoodEntryRow>,
+      ),
+      FoodEntryRow,
+      PrefetchHooks Function()
+    >;
+typedef $$ActivityEntriesTableTableCreateCompanionBuilder =
+    ActivityEntriesTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String date,
+      required String shift,
+      required String category,
+      required String title,
+      Value<String?> description,
+      Value<int?> durationMinutes,
+      Value<bool> rewardEarned,
+      Value<String?> achievement,
+      required String recordedById,
+      required String recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$ActivityEntriesTableTableUpdateCompanionBuilder =
+    ActivityEntriesTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> date,
+      Value<String> shift,
+      Value<String> category,
+      Value<String> title,
+      Value<String?> description,
+      Value<int?> durationMinutes,
+      Value<bool> rewardEarned,
+      Value<String?> achievement,
+      Value<String> recordedById,
+      Value<String> recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$ActivityEntriesTableTableFilterComposer
+    extends Composer<_$AppDatabase, $ActivityEntriesTableTable> {
+  $$ActivityEntriesTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get rewardEarned => $composableBuilder(
+    column: $table.rewardEarned,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get achievement => $composableBuilder(
+    column: $table.achievement,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ActivityEntriesTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $ActivityEntriesTableTable> {
+  $$ActivityEntriesTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get rewardEarned => $composableBuilder(
+    column: $table.rewardEarned,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get achievement => $composableBuilder(
+    column: $table.achievement,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ActivityEntriesTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ActivityEntriesTableTable> {
+  $$ActivityEntriesTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get shift =>
+      $composableBuilder(column: $table.shift, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get durationMinutes => $composableBuilder(
+    column: $table.durationMinutes,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get rewardEarned => $composableBuilder(
+    column: $table.rewardEarned,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get achievement => $composableBuilder(
+    column: $table.achievement,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$ActivityEntriesTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ActivityEntriesTableTable,
+          ActivityEntryRow,
+          $$ActivityEntriesTableTableFilterComposer,
+          $$ActivityEntriesTableTableOrderingComposer,
+          $$ActivityEntriesTableTableAnnotationComposer,
+          $$ActivityEntriesTableTableCreateCompanionBuilder,
+          $$ActivityEntriesTableTableUpdateCompanionBuilder,
+          (
+            ActivityEntryRow,
+            BaseReferences<
+              _$AppDatabase,
+              $ActivityEntriesTableTable,
+              ActivityEntryRow
+            >,
+          ),
+          ActivityEntryRow,
+          PrefetchHooks Function()
+        > {
+  $$ActivityEntriesTableTableTableManager(
+    _$AppDatabase db,
+    $ActivityEntriesTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ActivityEntriesTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ActivityEntriesTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$ActivityEntriesTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> shift = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<int?> durationMinutes = const Value.absent(),
+                Value<bool> rewardEarned = const Value.absent(),
+                Value<String?> achievement = const Value.absent(),
+                Value<String> recordedById = const Value.absent(),
+                Value<String> recordedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ActivityEntriesTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                category: category,
+                title: title,
+                description: description,
+                durationMinutes: durationMinutes,
+                rewardEarned: rewardEarned,
+                achievement: achievement,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String date,
+                required String shift,
+                required String category,
+                required String title,
+                Value<String?> description = const Value.absent(),
+                Value<int?> durationMinutes = const Value.absent(),
+                Value<bool> rewardEarned = const Value.absent(),
+                Value<String?> achievement = const Value.absent(),
+                required String recordedById,
+                required String recordedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ActivityEntriesTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                date: date,
+                shift: shift,
+                category: category,
+                title: title,
+                description: description,
+                durationMinutes: durationMinutes,
+                rewardEarned: rewardEarned,
+                achievement: achievement,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ActivityEntriesTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ActivityEntriesTableTable,
+      ActivityEntryRow,
+      $$ActivityEntriesTableTableFilterComposer,
+      $$ActivityEntriesTableTableOrderingComposer,
+      $$ActivityEntriesTableTableAnnotationComposer,
+      $$ActivityEntriesTableTableCreateCompanionBuilder,
+      $$ActivityEntriesTableTableUpdateCompanionBuilder,
+      (
+        ActivityEntryRow,
+        BaseReferences<
+          _$AppDatabase,
+          $ActivityEntriesTableTable,
+          ActivityEntryRow
+        >,
+      ),
+      ActivityEntryRow,
+      PrefetchHooks Function()
+    >;
+typedef $$SmartStepsTableTableCreateCompanionBuilder =
+    SmartStepsTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String category,
+      required String title,
+      Value<String?> description,
+      Value<String?> targetDate,
+      required String status,
+      Value<String?> achievedDate,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$SmartStepsTableTableUpdateCompanionBuilder =
+    SmartStepsTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> category,
+      Value<String> title,
+      Value<String?> description,
+      Value<String?> targetDate,
+      Value<String> status,
+      Value<String?> achievedDate,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$SmartStepsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $SmartStepsTableTable> {
+  $$SmartStepsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get targetDate => $composableBuilder(
+    column: $table.targetDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get achievedDate => $composableBuilder(
+    column: $table.achievedDate,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$SmartStepsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $SmartStepsTableTable> {
+  $$SmartStepsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get category => $composableBuilder(
+    column: $table.category,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get targetDate => $composableBuilder(
+    column: $table.targetDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get status => $composableBuilder(
+    column: $table.status,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get achievedDate => $composableBuilder(
+    column: $table.achievedDate,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$SmartStepsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SmartStepsTableTable> {
+  $$SmartStepsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get category =>
+      $composableBuilder(column: $table.category, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get targetDate => $composableBuilder(
+    column: $table.targetDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<String> get achievedDate => $composableBuilder(
+    column: $table.achievedDate,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$SmartStepsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $SmartStepsTableTable,
+          SmartStepRow,
+          $$SmartStepsTableTableFilterComposer,
+          $$SmartStepsTableTableOrderingComposer,
+          $$SmartStepsTableTableAnnotationComposer,
+          $$SmartStepsTableTableCreateCompanionBuilder,
+          $$SmartStepsTableTableUpdateCompanionBuilder,
+          (
+            SmartStepRow,
+            BaseReferences<_$AppDatabase, $SmartStepsTableTable, SmartStepRow>,
+          ),
+          SmartStepRow,
+          PrefetchHooks Function()
+        > {
+  $$SmartStepsTableTableTableManager(
+    _$AppDatabase db,
+    $SmartStepsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SmartStepsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SmartStepsTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SmartStepsTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> category = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<String?> description = const Value.absent(),
+                Value<String?> targetDate = const Value.absent(),
+                Value<String> status = const Value.absent(),
+                Value<String?> achievedDate = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SmartStepsTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                category: category,
+                title: title,
+                description: description,
+                targetDate: targetDate,
+                status: status,
+                achievedDate: achievedDate,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String category,
+                required String title,
+                Value<String?> description = const Value.absent(),
+                Value<String?> targetDate = const Value.absent(),
+                required String status,
+                Value<String?> achievedDate = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => SmartStepsTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                category: category,
+                title: title,
+                description: description,
+                targetDate: targetDate,
+                status: status,
+                achievedDate: achievedDate,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$SmartStepsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $SmartStepsTableTable,
+      SmartStepRow,
+      $$SmartStepsTableTableFilterComposer,
+      $$SmartStepsTableTableOrderingComposer,
+      $$SmartStepsTableTableAnnotationComposer,
+      $$SmartStepsTableTableCreateCompanionBuilder,
+      $$SmartStepsTableTableUpdateCompanionBuilder,
+      (
+        SmartStepRow,
+        BaseReferences<_$AppDatabase, $SmartStepsTableTable, SmartStepRow>,
+      ),
+      SmartStepRow,
+      PrefetchHooks Function()
+    >;
+typedef $$StepProgressTableTableCreateCompanionBuilder =
+    StepProgressTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String stepId,
+      required String date,
+      required String shift,
+      required String outcome,
+      required String note,
+      required String recordedById,
+      required String recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$StepProgressTableTableUpdateCompanionBuilder =
+    StepProgressTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> stepId,
+      Value<String> date,
+      Value<String> shift,
+      Value<String> outcome,
+      Value<String> note,
+      Value<String> recordedById,
+      Value<String> recordedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$StepProgressTableTableFilterComposer
+    extends Composer<_$AppDatabase, $StepProgressTableTable> {
+  $$StepProgressTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get stepId => $composableBuilder(
+    column: $table.stepId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get outcome => $composableBuilder(
+    column: $table.outcome,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$StepProgressTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $StepProgressTableTable> {
+  $$StepProgressTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get stepId => $composableBuilder(
+    column: $table.stepId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get date => $composableBuilder(
+    column: $table.date,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get shift => $composableBuilder(
+    column: $table.shift,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get outcome => $composableBuilder(
+    column: $table.outcome,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get note => $composableBuilder(
+    column: $table.note,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$StepProgressTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $StepProgressTableTable> {
+  $$StepProgressTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get stepId =>
+      $composableBuilder(column: $table.stepId, builder: (column) => column);
+
+  GeneratedColumn<String> get date =>
+      $composableBuilder(column: $table.date, builder: (column) => column);
+
+  GeneratedColumn<String> get shift =>
+      $composableBuilder(column: $table.shift, builder: (column) => column);
+
+  GeneratedColumn<String> get outcome =>
+      $composableBuilder(column: $table.outcome, builder: (column) => column);
+
+  GeneratedColumn<String> get note =>
+      $composableBuilder(column: $table.note, builder: (column) => column);
+
+  GeneratedColumn<String> get recordedById => $composableBuilder(
+    column: $table.recordedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get recordedByName => $composableBuilder(
+    column: $table.recordedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$StepProgressTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $StepProgressTableTable,
+          StepProgressRow,
+          $$StepProgressTableTableFilterComposer,
+          $$StepProgressTableTableOrderingComposer,
+          $$StepProgressTableTableAnnotationComposer,
+          $$StepProgressTableTableCreateCompanionBuilder,
+          $$StepProgressTableTableUpdateCompanionBuilder,
+          (
+            StepProgressRow,
+            BaseReferences<
+              _$AppDatabase,
+              $StepProgressTableTable,
+              StepProgressRow
+            >,
+          ),
+          StepProgressRow,
+          PrefetchHooks Function()
+        > {
+  $$StepProgressTableTableTableManager(
+    _$AppDatabase db,
+    $StepProgressTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$StepProgressTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$StepProgressTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$StepProgressTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> stepId = const Value.absent(),
+                Value<String> date = const Value.absent(),
+                Value<String> shift = const Value.absent(),
+                Value<String> outcome = const Value.absent(),
+                Value<String> note = const Value.absent(),
+                Value<String> recordedById = const Value.absent(),
+                Value<String> recordedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StepProgressTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                stepId: stepId,
+                date: date,
+                shift: shift,
+                outcome: outcome,
+                note: note,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String stepId,
+                required String date,
+                required String shift,
+                required String outcome,
+                required String note,
+                required String recordedById,
+                required String recordedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => StepProgressTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                stepId: stepId,
+                date: date,
+                shift: shift,
+                outcome: outcome,
+                note: note,
+                recordedById: recordedById,
+                recordedByName: recordedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$StepProgressTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $StepProgressTableTable,
+      StepProgressRow,
+      $$StepProgressTableTableFilterComposer,
+      $$StepProgressTableTableOrderingComposer,
+      $$StepProgressTableTableAnnotationComposer,
+      $$StepProgressTableTableCreateCompanionBuilder,
+      $$StepProgressTableTableUpdateCompanionBuilder,
+      (
+        StepProgressRow,
+        BaseReferences<_$AppDatabase, $StepProgressTableTable, StepProgressRow>,
+      ),
+      StepProgressRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -14959,6 +24100,21 @@ class $AppDatabaseManager {
         _db,
         _db.healthcareContactsTable,
       );
+  $$BehaviourIncidentsTableTableTableManager get behaviourIncidentsTable =>
+      $$BehaviourIncidentsTableTableTableManager(
+        _db,
+        _db.behaviourIncidentsTable,
+      );
+  $$SleepEntriesTableTableTableManager get sleepEntriesTable =>
+      $$SleepEntriesTableTableTableManager(_db, _db.sleepEntriesTable);
+  $$FoodEntriesTableTableTableManager get foodEntriesTable =>
+      $$FoodEntriesTableTableTableManager(_db, _db.foodEntriesTable);
+  $$ActivityEntriesTableTableTableManager get activityEntriesTable =>
+      $$ActivityEntriesTableTableTableManager(_db, _db.activityEntriesTable);
+  $$SmartStepsTableTableTableManager get smartStepsTable =>
+      $$SmartStepsTableTableTableManager(_db, _db.smartStepsTable);
+  $$StepProgressTableTableTableManager get stepProgressTable =>
+      $$StepProgressTableTableTableManager(_db, _db.stepProgressTable);
 }
 
 // **************************************************************************

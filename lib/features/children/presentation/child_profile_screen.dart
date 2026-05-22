@@ -99,14 +99,6 @@ class ChildProfileScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
-                icon: Icons.cleaning_services_outlined,
-                label: AppStrings.moduleCleaning,
-                description: AppStrings.moduleCleaningDesc,
-                color: AppColors.teal400,
-                onTap: () => context.push('/children/$childId/checklists'),
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              _ModuleCard(
                 icon: Icons.thermostat_outlined,
                 label: AppStrings.bathTempModule,
                 description: AppStrings.bathTempModuleDesc,
@@ -140,36 +132,49 @@ class ChildProfileScreen extends ConsumerWidget {
                     context.push('/children/$childId/medical-history'),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const _ModuleCard(
+              _ModuleCard(
                 icon: Icons.show_chart,
                 label: AppStrings.moduleBehaviour,
                 description: AppStrings.moduleBehaviourDesc,
                 color: AppColors.amber,
-                locked: true,
+                onTap: () =>
+                    context.push('/children/$childId/behaviour'),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const _ModuleCard(
+              _ModuleCard(
                 icon: Icons.bedtime_outlined,
                 label: AppStrings.moduleSleepDiary,
                 description: AppStrings.moduleSleepDiaryDesc,
                 color: AppColors.roleSupportWorker,
-                locked: true,
+                onTap: () =>
+                    context.push('/children/$childId/sleep-diary'),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const _ModuleCard(
+              _ModuleCard(
                 icon: Icons.restaurant_outlined,
                 label: AppStrings.moduleFoodDiary,
                 description: AppStrings.moduleFoodDiaryDesc,
                 color: AppColors.green,
-                locked: true,
+                onTap: () =>
+                    context.push('/children/$childId/food-diary'),
               ),
               const SizedBox(height: AppSpacing.sm),
-              const _ModuleCard(
+              _ModuleCard(
                 icon: Icons.star_outline,
                 label: AppStrings.moduleActivities,
                 description: AppStrings.moduleActivitiesDesc,
                 color: AppColors.amber,
-                locked: true,
+                onTap: () =>
+                    context.push('/children/$childId/activities'),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              _ModuleCard(
+                icon: Icons.stairs_outlined,
+                label: AppStrings.moduleSmartSteps,
+                description: AppStrings.moduleSmartStepsDesc,
+                color: AppColors.teal400,
+                onTap: () =>
+                    context.push('/children/$childId/smart-steps'),
               ),
             ],
           ),
@@ -186,7 +191,6 @@ class _ModuleCard extends StatelessWidget {
     required this.description,
     required this.color,
     this.onTap,
-    this.locked = false,
   });
 
   final IconData icon;
@@ -194,20 +198,16 @@ class _ModuleCard extends StatelessWidget {
   final String description;
   final Color color;
   final VoidCallback? onTap;
-  final bool locked;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final effectiveOnTap = locked ? null : onTap;
 
-    return Opacity(
-      opacity: locked ? 0.45 : 1.0,
-      child: Material(
+    return Material(
         color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: InkWell(
-          onTap: effectiveOnTap,
+          onTap: onTap,
           borderRadius: BorderRadius.circular(AppRadius.card),
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -239,7 +239,7 @@ class _ModuleCard extends StatelessWidget {
                   ),
                 ),
                 Icon(
-                  locked ? Icons.lock_outline : Icons.chevron_right,
+                  Icons.chevron_right,
                   color: colors.onSurfaceVariant,
                   size: 18,
                 ),
@@ -247,7 +247,6 @@ class _ModuleCard extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }

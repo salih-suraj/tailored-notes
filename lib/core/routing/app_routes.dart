@@ -20,6 +20,36 @@ abstract final class AppRoutes {
   // Bath temperature — nested under child profile
   static const childBathTemp = '/children/:id/bath-temp';
 
+  // Smart Steps — nested under child profile
+  static const childSmartSteps = '/children/:id/smart-steps';
+  static const childSmartStepsNew = '/children/:id/smart-steps/new';
+  static const childSmartStepsDetail =
+      '/children/:id/smart-steps/:stepId';
+  static const childSmartStepsEdit =
+      '/children/:id/smart-steps/:stepId/edit';
+
+  // Activities — nested under child profile
+  static const childActivities = '/children/:id/activities';
+  static const childActivitiesNew = '/children/:id/activities/new';
+  static const childActivitiesEdit =
+      '/children/:id/activities/:entryId/edit';
+
+  // Food diary — nested under child profile
+  static const childFoodDiary = '/children/:id/food-diary';
+  static const childFoodNew = '/children/:id/food-diary/new';
+  static const childFoodEdit = '/children/:id/food-diary/:entryId/edit';
+
+  // Sleep diary — nested under child profile
+  static const childSleepDiary = '/children/:id/sleep-diary';
+  static const childSleepNew = '/children/:id/sleep-diary/new';
+  static const childSleepEdit =
+      '/children/:id/sleep-diary/:entryId/edit';
+
+  // Behaviour — nested under child profile
+  static const childBehaviour = '/children/:id/behaviour';
+  static const childBehaviourNew = '/children/:id/behaviour/new';
+  static const childBehaviourEdit = '/children/:id/behaviour/:incidentId/edit';
+
   // Medical history — nested under child profile
   static const childMedicalHistory = '/children/:id/medical-history';
   static const childMedicalHistoryEdit = '/children/:id/medical-history/edit';
@@ -35,9 +65,13 @@ abstract final class AppRoutes {
   static const childCarePlanDetail = '/children/:id/care-plans/:planId';
   static const childCarePlanEdit = '/children/:id/care-plans/:planId/edit';
 
-  // Visitor log — top-level, accessed via Checklists nav tab
-  static const visitorLogNew = '/checklists/new';
-  static const visitorLogEdit = '/checklists/:entryId/edit';
+  // Visitor log — under Checklists hub
+  static const visitorLog = '/checklists/visitors';
+  static const visitorLogNew = '/checklists/visitors/new';
+  static const visitorLogEdit = '/checklists/visitors/:entryId/edit';
+
+  // Home cleaning — under Checklists hub
+  static const homeCleaning = '/checklists/cleaning';
 
   static const dailyNotes = '/daily-notes';
   static const dailyNoteEditor = '/daily-notes/:id/edit';

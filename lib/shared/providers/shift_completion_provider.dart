@@ -1,9 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../features/checklists/domain/checklist_item.dart';
 import '../../features/checklists/presentation/providers/bath_temp_provider.dart';
-import '../../features/checklists/presentation/providers/checklist_provider.dart';
 import '../../features/daily_notes/domain/daily_note.dart';
 import '../../features/daily_notes/presentation/providers/daily_notes_provider.dart';
 import '../../features/medication/presentation/providers/medication_provider.dart';
@@ -16,13 +14,11 @@ part 'shift_completion_provider.g.dart';
 @riverpod
 ShiftCompletion shiftCompletion(Ref ref, String childId) {
   final notesAsync = ref.watch(dailyNotesProvider(childId));
-  final checklistAsync = ref.watch(roomChecklistProvider(childId));
   final bathTempAsync = ref.watch(bathTempTodayProvider(childId));
   final medsAsync = ref.watch(prescribedMedsProvider(childId));
   final adminsAsync = ref.watch(todayAdminsProvider(childId));
 
   final notes = notesAsync.valueOrNull ?? [];
-  final roomItems = checklistAsync.valueOrNull ?? [];
   final bathRecords = bathTempAsync.valueOrNull ?? [];
   final meds = medsAsync.valueOrNull ?? [];
   final admins = adminsAsync.valueOrNull ?? [];
@@ -34,17 +30,10 @@ ShiftCompletion shiftCompletion(Ref ref, String childId) {
     (n) => n.shift == currentShift && _isSameDay(n.occurredAt.toLocal(), now),
   );
 
-  final allRoomDone = roomItems.length == roomCleaningTasks.length &&
-      roomItems.every((i) => i.isComplete);
-
   final hasBathTempToday = bathRecords.isNotEmpty;
 
-  // Medication complete when every active scheduled (non-PRN) med has a
-  // recorded outcome today.
-  final scheduledMeds =
-      meds.where((m) => !m.frequency.isPrn).toList();
-  final administeredMedIds =
-      admins.map((a) => a.prescribedMedId).toSet();
+  final scheduledMeds = meds.where((m) => !m.frequency.isPrn).toList();
+  final administeredMedIds = admins.map((a) => a.prescribedMedId).toSet();
   final allMedsDone = scheduledMeds.isNotEmpty &&
       scheduledMeds.every((m) => administeredMedIds.contains(m.id));
 
@@ -55,7 +44,6 @@ ShiftCompletion shiftCompletion(Ref ref, String childId) {
       ShiftSection('Daily Notes', complete: hasNoteToday),
       ShiftSection('Bath Temp', complete: hasBathTempToday),
       ShiftSection('Medication', complete: allMedsDone),
-      ShiftSection('Cleaning', complete: allRoomDone),
     ],
   );
 }
