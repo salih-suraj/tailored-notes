@@ -153,6 +153,7 @@ class _MARBody extends ConsumerWidget {
                 latestAdmin: record,
                 onAdminister: () =>
                     _showAdminSheet(context, ref, med, record),
+                onDelete: () => _confirmDelete(context, ref, med.id),
               ),
             );
           }),
@@ -173,6 +174,7 @@ class _MARBody extends ConsumerWidget {
                 todayRecords: records,
                 onAdminister: () =>
                     _showAdminSheet(context, ref, med, null),
+                onDelete: () => _confirmDelete(context, ref, med.id),
               ),
             );
           }),
@@ -204,6 +206,32 @@ class _MARBody extends ConsumerWidget {
         useSafeArea: true,
         builder: (_) => _AdminSheet(med: med, existing: existing),
       );
+
+  Future<void> _confirmDelete(
+      BuildContext context, WidgetRef ref, String id) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text(AppStrings.medDeleteTitle),
+        content: const Text(AppStrings.medDeleteConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.error),
+            child: const Text(AppStrings.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await ref.read(medicationRepositoryProvider).deleteMed(id);
+    }
+  }
 }
 
 // ── Scheduled med card ────────────────────────────────────────────────────────
@@ -213,11 +241,13 @@ class _MedCard extends StatelessWidget {
     required this.med,
     required this.latestAdmin,
     required this.onAdminister,
+    required this.onDelete,
   });
 
   final PrescribedMed med;
   final MedAdministration? latestAdmin;
   final VoidCallback onAdminister;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -275,8 +305,18 @@ class _MedCard extends StatelessWidget {
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right,
-                  color: colors.onSurfaceVariant, size: 18),
+              PopupMenuButton<String>(
+                icon: Icon(Icons.more_vert,
+                    size: 18, color: colors.onSurfaceVariant),
+                tooltip: AppStrings.recordOptions,
+                onSelected: (v) {
+                  if (v == 'delete') onDelete();
+                },
+                itemBuilder: (_) => [
+                  const PopupMenuItem(
+                      value: 'delete', child: Text(AppStrings.delete)),
+                ],
+              ),
             ],
           ),
         ),
@@ -292,11 +332,13 @@ class _PrnMedCard extends StatelessWidget {
     required this.med,
     required this.todayRecords,
     required this.onAdminister,
+    required this.onDelete,
   });
 
   final PrescribedMed med;
   final List<MedAdministration> todayRecords;
   final VoidCallback onAdminister;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -340,6 +382,19 @@ class _PrnMedCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.md, vertical: AppSpacing.sm),
                   ),
+                ),
+                PopupMenuButton<String>(
+                  icon: Icon(Icons.more_vert,
+                      size: 18,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  tooltip: AppStrings.recordOptions,
+                  onSelected: (v) {
+                    if (v == 'delete') onDelete();
+                  },
+                  itemBuilder: (_) => [
+                    const PopupMenuItem(
+                        value: 'delete', child: Text(AppStrings.delete)),
+                  ],
                 ),
               ],
             ),

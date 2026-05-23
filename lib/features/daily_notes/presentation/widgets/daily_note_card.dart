@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../shared/models/app_strings.dart';
 import '../../domain/daily_note.dart';
 
 /// Displays a single daily observation in a card.
@@ -115,16 +116,16 @@ class _NoteMenu extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     return PopupMenuButton<String>(
       icon: Icon(Icons.more_vert, size: 18, color: colors.onSurfaceVariant),
-      tooltip: 'Note options',
+      tooltip: AppStrings.recordOptions,
       onSelected: (value) {
         if (value == 'edit') onEdit?.call();
         if (value == 'delete') onDelete?.call();
       },
       itemBuilder: (_) => [
         if (onEdit != null)
-          const PopupMenuItem(value: 'edit', child: Text('Edit')),
+          const PopupMenuItem(value: 'edit', child: Text(AppStrings.edit)),
         if (onDelete != null)
-          const PopupMenuItem(value: 'delete', child: Text('Delete')),
+          const PopupMenuItem(value: 'delete', child: Text(AppStrings.delete)),
       ],
     );
   }

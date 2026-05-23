@@ -368,6 +368,28 @@ abstract final class AppStrings {
       'Please fill in name, purpose, and authorised by.';
   static const change = 'Change';
 
+  // Team Leader Oversight
+  static const oversightTitle = 'Shift Overview';
+  static const oversightNeedsAttention = 'NEEDS ATTENTION';
+  static const oversightFullyDocumented = 'FULLY DOCUMENTED';
+  static const oversightAllComplete = 'All sections complete';
+  static const oversightChildrenDocumented =
+      'Children fully documented this shift';
+
+  // Incomplete documentation alerts
+  static const alertIncompleteTitle = 'Documentation outstanding this shift';
+  static const alertNotRecordedThisShift = 'Not yet recorded this shift';
+
+  // Medication delete
+  static const medDeleteTitle = 'Remove medication?';
+  static const medDeleteConfirm =
+      'This prescribed medication will be permanently removed from the MAR.';
+
+  // Smart Steps delete
+  static const smartStepsDeleteTitle = 'Delete step?';
+  static const smartStepsDeleteConfirm =
+      'This SMART step and all its progress records will be permanently removed.';
+
   // Common
   static const loading = 'Loading…';
   static const retry = 'Retry';

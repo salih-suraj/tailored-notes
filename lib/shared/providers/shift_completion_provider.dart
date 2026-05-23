@@ -34,7 +34,7 @@ ShiftCompletion shiftCompletion(Ref ref, String childId) {
 
   final scheduledMeds = meds.where((m) => !m.frequency.isPrn).toList();
   final administeredMedIds = admins.map((a) => a.prescribedMedId).toSet();
-  final allMedsDone = scheduledMeds.isNotEmpty &&
+  final allMedsDone =
       scheduledMeds.every((m) => administeredMedIds.contains(m.id));
 
   return ShiftCompletion(
@@ -43,7 +43,8 @@ ShiftCompletion shiftCompletion(Ref ref, String childId) {
     sections: [
       ShiftSection('Daily Notes', complete: hasNoteToday),
       ShiftSection('Bath Temp', complete: hasBathTempToday),
-      ShiftSection('Medication', complete: allMedsDone),
+      if (scheduledMeds.isNotEmpty)
+        ShiftSection('Medication', complete: allMedsDone),
     ],
   );
 }

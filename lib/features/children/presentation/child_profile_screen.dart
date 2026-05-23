@@ -6,6 +6,8 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/models/shift_completion.dart';
+import '../../../shared/providers/shift_completion_provider.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
 import '../../../shared/widgets/shift_progress_bar.dart';
@@ -20,6 +22,7 @@ class ChildProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final childrenAsync = ref.watch(childrenProvider);
+    final completion = ref.watch(shiftCompletionProvider(childId));
     final colors = Theme.of(context).colorScheme;
 
     return childrenAsync.when(
@@ -79,6 +82,12 @@ class ChildProfileScreen extends ConsumerWidget {
                 ),
               ),
               const SizedBox(height: AppSpacing.xl),
+
+              // ── Incomplete docs alert ───────────────────────────────────
+              if (completion.status != CompletionStatus.complete) ...[
+                _IncompleteDocsAlert(completion: completion),
+                const SizedBox(height: AppSpacing.sm),
+              ],
 
               // ── Shift completion ────────────────────────────────────────
               ShiftProgressBar(childId: childId),
@@ -180,6 +189,48 @@ class ChildProfileScreen extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _IncompleteDocsAlert extends StatelessWidget {
+  const _IncompleteDocsAlert({required this.completion});
+
+  final ShiftCompletion completion;
+
+  @override
+  Widget build(BuildContext context) {
+    final incomplete =
+        completion.sections.where((s) => !s.complete).toList();
+    final color = completion.status == CompletionStatus.none
+        ? AppColors.red
+        : AppColors.amber;
+    final sectionNames = incomplete.map((s) => s.label).join(' · ');
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: color.withAlpha(20),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+        border: Border.all(color: color.withAlpha(80)),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.warning_amber_rounded, color: color, size: 18),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(AppStrings.alertNotRecordedThisShift,
+                    style: AppTextStyles.label(color)),
+                Text(sectionNames,
+                    style: AppTextStyles.small(color)),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

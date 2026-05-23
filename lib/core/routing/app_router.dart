@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
+import '../../features/handover/presentation/team_leader_oversight_screen.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/behaviour/domain/behaviour_incident.dart';
 import '../../features/activities/domain/activity_entry.dart';
@@ -372,7 +373,7 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: AppRoutes.handover,
-            builder: (_, _) => const PlaceholderScreen(title: 'Handover'),
+            builder: (_, _) => const TeamLeaderOversightScreen(),
           ),
           GoRoute(
             path: AppRoutes.dashboard,

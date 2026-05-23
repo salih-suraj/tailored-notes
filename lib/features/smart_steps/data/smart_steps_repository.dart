@@ -94,6 +94,7 @@ class SmartStepsRepository {
       if (step != null && step.status != StepStatus.achieved.name) {
         final now = DateTime.now().toUtc();
         final todayStr = _todayStr();
+        final before = _stepToDomain(step);
         await _dao.upsertStep(SmartStepsTableCompanion(
           id: Value(step.id),
           status: const Value('achieved'),
@@ -102,6 +103,19 @@ class SmartStepsRepository {
           updatedAt: Value(now),
           isSynced: const Value(false),
         ));
+        final after = before.copyWith(
+          status: StepStatus.achieved,
+          achievedDate: todayStr,
+          updatedById: _currentUser?.id,
+          updatedAt: now,
+        );
+        await _audit.record(
+          action: 'update',
+          table: 'smart_steps',
+          recordId: step.id,
+          before: before.toJson(),
+          after: after.toJson(),
+        );
       }
     }
 

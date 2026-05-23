@@ -92,6 +92,7 @@ class SmartStepsScreen extends ConsumerWidget {
                         '/children/$childId/smart-steps/${s.id}',
                         extra: s,
                       ),
+                      onDelete: () => _confirmDelete(context, ref, s.id),
                     )),
                 const SizedBox(height: AppSpacing.lg),
               ],
@@ -108,6 +109,7 @@ class SmartStepsScreen extends ConsumerWidget {
                         '/children/$childId/smart-steps/${s.id}',
                         extra: s,
                       ),
+                      onDelete: () => _confirmDelete(context, ref, s.id),
                     )),
                 const SizedBox(height: AppSpacing.lg),
               ],
@@ -124,6 +126,7 @@ class SmartStepsScreen extends ConsumerWidget {
                         '/children/$childId/smart-steps/${s.id}',
                         extra: s,
                       ),
+                      onDelete: () => _confirmDelete(context, ref, s.id),
                     )),
               ],
               const SizedBox(height: 80),
@@ -140,6 +143,32 @@ class SmartStepsScreen extends ConsumerWidget {
         label: const Text(AppStrings.smartStepsAddStep),
       ),
     );
+  }
+
+  Future<void> _confirmDelete(
+      BuildContext context, WidgetRef ref, String id) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text(AppStrings.smartStepsDeleteTitle),
+        content: const Text(AppStrings.smartStepsDeleteConfirm),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: TextButton.styleFrom(
+                foregroundColor: Theme.of(context).colorScheme.error),
+            child: const Text(AppStrings.delete),
+          ),
+        ],
+      ),
+    );
+    if (confirmed == true) {
+      await ref.read(smartStepsRepositoryProvider).deleteStep(id);
+    }
   }
 }
 
@@ -166,10 +195,15 @@ class _SectionHeader extends StatelessWidget {
 }
 
 class _StepCard extends StatelessWidget {
-  const _StepCard({required this.step, required this.onTap});
+  const _StepCard({
+    required this.step,
+    required this.onTap,
+    required this.onDelete,
+  });
 
   final SmartStep step;
   final VoidCallback onTap;
+  final VoidCallback onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -228,8 +262,18 @@ class _StepCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Icon(Icons.chevron_right,
-                    color: colors.onSurfaceVariant, size: 18),
+                PopupMenuButton<String>(
+                  icon: Icon(Icons.more_vert,
+                      size: 18, color: colors.onSurfaceVariant),
+                  tooltip: AppStrings.recordOptions,
+                  onSelected: (v) {
+                    if (v == 'delete') onDelete();
+                  },
+                  itemBuilder: (_) => [
+                    const PopupMenuItem(
+                        value: 'delete', child: Text(AppStrings.delete)),
+                  ],
+                ),
               ],
             ),
           ),
