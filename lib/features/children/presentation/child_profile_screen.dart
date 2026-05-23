@@ -185,6 +185,15 @@ class ChildProfileScreen extends ConsumerWidget {
                 onTap: () =>
                     context.push('/children/$childId/smart-steps'),
               ),
+              const SizedBox(height: AppSpacing.sm),
+              _ModuleCard(
+                icon: Icons.report_outlined,
+                label: AppStrings.moduleIncidents,
+                description: AppStrings.moduleIncidentsDesc,
+                color: AppColors.red,
+                onTap: () =>
+                    context.push('/children/$childId/incidents'),
+              ),
             ],
           ),
         );

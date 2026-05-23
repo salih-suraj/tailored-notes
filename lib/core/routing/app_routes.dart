@@ -59,6 +59,12 @@ abstract final class AppRoutes {
   static const childMedNew = '/children/:id/medication/meds/new';
   static const childMedEdit = '/children/:id/medication/meds/:medId/edit';
 
+  // Incidents — nested under child profile
+  static const childIncidents = '/children/:id/incidents';
+  static const childIncidentNew = '/children/:id/incidents/new';
+  static const childIncidentEdit =
+      '/children/:id/incidents/:incidentId/edit';
+
   // Care plans — nested under child profile
   static const childCarePlans = '/children/:id/care-plans';
   static const childCarePlanNew = '/children/:id/care-plans/new';

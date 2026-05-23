@@ -52,7 +52,7 @@
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 17 | Incident reporting (replaces Datix) | `todo` | |
+| 17 | Incident reporting (replaces Datix) | `done` | `features/incidents/`. 6 types, 4 severity levels, notifications, follow-up. schemaVersion 14. |
 | 18 | Shift handover summary (auto-generated) | `todo` | |
 | 19 | Team Leader oversight queue | `done` | Shift overview on Handover tab. Progress bar, Needs Attention / Fully Documented sections, taps to child profile. |
 | 20 | Manager Oversight Dashboard | `todo` | |
@@ -108,4 +108,4 @@
 
 ---
 
-_Last updated: 2026-05-23 — Phase 2 complete. Phase 3 complete. Phase 4 item 19 (Team Leader oversight) done. Alerts for incomplete docs done. Delete buttons added to Medication and Smart Steps. Audit gap in Smart Steps auto-achieve fixed._
+_Last updated: 2026-05-23 — Phase 2 complete. Phase 3 complete. Phase 4 item 17 (Incident Reporting) done. Phase 4 item 19 (Team Leader oversight) done. Alerts for incomplete docs done. Delete buttons added to Medication and Smart Steps. Audit gap in Smart Steps auto-achieve fixed._

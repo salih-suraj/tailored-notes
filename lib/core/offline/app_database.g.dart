@@ -16393,6 +16393,1365 @@ class StepProgressTableCompanion extends UpdateCompanion<StepProgressRow> {
   }
 }
 
+class $IncidentReportsTableTable extends IncidentReportsTable
+    with TableInfo<$IncidentReportsTableTable, IncidentReportRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $IncidentReportsTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _childIdMeta = const VerificationMeta(
+    'childId',
+  );
+  @override
+  late final GeneratedColumn<String> childId = GeneratedColumn<String>(
+    'child_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _incidentTypeMeta = const VerificationMeta(
+    'incidentType',
+  );
+  @override
+  late final GeneratedColumn<String> incidentType = GeneratedColumn<String>(
+    'incident_type',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _severityMeta = const VerificationMeta(
+    'severity',
+  );
+  @override
+  late final GeneratedColumn<String> severity = GeneratedColumn<String>(
+    'severity',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+    'title',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _occurredAtMeta = const VerificationMeta(
+    'occurredAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> occurredAt = GeneratedColumn<DateTime>(
+    'occurred_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _locationMeta = const VerificationMeta(
+    'location',
+  );
+  @override
+  late final GeneratedColumn<String> location = GeneratedColumn<String>(
+    'location',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _descriptionMeta = const VerificationMeta(
+    'description',
+  );
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+    'description',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _immediateActionMeta = const VerificationMeta(
+    'immediateAction',
+  );
+  @override
+  late final GeneratedColumn<String> immediateAction = GeneratedColumn<String>(
+    'immediate_action',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _injuryDetailsMeta = const VerificationMeta(
+    'injuryDetails',
+  );
+  @override
+  late final GeneratedColumn<String> injuryDetails = GeneratedColumn<String>(
+    'injury_details',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _policeNotifiedMeta = const VerificationMeta(
+    'policeNotified',
+  );
+  @override
+  late final GeneratedColumn<bool> policeNotified = GeneratedColumn<bool>(
+    'police_notified',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("police_notified" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _parentNotifiedMeta = const VerificationMeta(
+    'parentNotified',
+  );
+  @override
+  late final GeneratedColumn<bool> parentNotified = GeneratedColumn<bool>(
+    'parent_notified',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("parent_notified" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _managerNotifiedMeta = const VerificationMeta(
+    'managerNotified',
+  );
+  @override
+  late final GeneratedColumn<bool> managerNotified = GeneratedColumn<bool>(
+    'manager_notified',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("manager_notified" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _followUpRequiredMeta = const VerificationMeta(
+    'followUpRequired',
+  );
+  @override
+  late final GeneratedColumn<bool> followUpRequired = GeneratedColumn<bool>(
+    'follow_up_required',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("follow_up_required" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _followUpDetailsMeta = const VerificationMeta(
+    'followUpDetails',
+  );
+  @override
+  late final GeneratedColumn<String> followUpDetails = GeneratedColumn<String>(
+    'follow_up_details',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _reportedByIdMeta = const VerificationMeta(
+    'reportedById',
+  );
+  @override
+  late final GeneratedColumn<String> reportedById = GeneratedColumn<String>(
+    'reported_by_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _reportedByNameMeta = const VerificationMeta(
+    'reportedByName',
+  );
+  @override
+  late final GeneratedColumn<String> reportedByName = GeneratedColumn<String>(
+    'reported_by_name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    childId,
+    incidentType,
+    severity,
+    title,
+    occurredAt,
+    location,
+    description,
+    immediateAction,
+    injuryDetails,
+    policeNotified,
+    parentNotified,
+    managerNotified,
+    followUpRequired,
+    followUpDetails,
+    reportedById,
+    reportedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'incident_reports';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<IncidentReportRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('child_id')) {
+      context.handle(
+        _childIdMeta,
+        childId.isAcceptableOrUnknown(data['child_id']!, _childIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_childIdMeta);
+    }
+    if (data.containsKey('incident_type')) {
+      context.handle(
+        _incidentTypeMeta,
+        incidentType.isAcceptableOrUnknown(
+          data['incident_type']!,
+          _incidentTypeMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_incidentTypeMeta);
+    }
+    if (data.containsKey('severity')) {
+      context.handle(
+        _severityMeta,
+        severity.isAcceptableOrUnknown(data['severity']!, _severityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_severityMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+        _titleMeta,
+        title.isAcceptableOrUnknown(data['title']!, _titleMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('occurred_at')) {
+      context.handle(
+        _occurredAtMeta,
+        occurredAt.isAcceptableOrUnknown(data['occurred_at']!, _occurredAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_occurredAtMeta);
+    }
+    if (data.containsKey('location')) {
+      context.handle(
+        _locationMeta,
+        location.isAcceptableOrUnknown(data['location']!, _locationMeta),
+      );
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+        _descriptionMeta,
+        description.isAcceptableOrUnknown(
+          data['description']!,
+          _descriptionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_descriptionMeta);
+    }
+    if (data.containsKey('immediate_action')) {
+      context.handle(
+        _immediateActionMeta,
+        immediateAction.isAcceptableOrUnknown(
+          data['immediate_action']!,
+          _immediateActionMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_immediateActionMeta);
+    }
+    if (data.containsKey('injury_details')) {
+      context.handle(
+        _injuryDetailsMeta,
+        injuryDetails.isAcceptableOrUnknown(
+          data['injury_details']!,
+          _injuryDetailsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('police_notified')) {
+      context.handle(
+        _policeNotifiedMeta,
+        policeNotified.isAcceptableOrUnknown(
+          data['police_notified']!,
+          _policeNotifiedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('parent_notified')) {
+      context.handle(
+        _parentNotifiedMeta,
+        parentNotified.isAcceptableOrUnknown(
+          data['parent_notified']!,
+          _parentNotifiedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('manager_notified')) {
+      context.handle(
+        _managerNotifiedMeta,
+        managerNotified.isAcceptableOrUnknown(
+          data['manager_notified']!,
+          _managerNotifiedMeta,
+        ),
+      );
+    }
+    if (data.containsKey('follow_up_required')) {
+      context.handle(
+        _followUpRequiredMeta,
+        followUpRequired.isAcceptableOrUnknown(
+          data['follow_up_required']!,
+          _followUpRequiredMeta,
+        ),
+      );
+    }
+    if (data.containsKey('follow_up_details')) {
+      context.handle(
+        _followUpDetailsMeta,
+        followUpDetails.isAcceptableOrUnknown(
+          data['follow_up_details']!,
+          _followUpDetailsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reported_by_id')) {
+      context.handle(
+        _reportedByIdMeta,
+        reportedById.isAcceptableOrUnknown(
+          data['reported_by_id']!,
+          _reportedByIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_reportedByIdMeta);
+    }
+    if (data.containsKey('reported_by_name')) {
+      context.handle(
+        _reportedByNameMeta,
+        reportedByName.isAcceptableOrUnknown(
+          data['reported_by_name']!,
+          _reportedByNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_reportedByNameMeta);
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  IncidentReportRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return IncidentReportRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      childId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}child_id'],
+      )!,
+      incidentType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}incident_type'],
+      )!,
+      severity: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}severity'],
+      )!,
+      title: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}title'],
+      )!,
+      occurredAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}occurred_at'],
+      )!,
+      location: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}location'],
+      ),
+      description: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}description'],
+      )!,
+      immediateAction: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}immediate_action'],
+      )!,
+      injuryDetails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}injury_details'],
+      ),
+      policeNotified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}police_notified'],
+      )!,
+      parentNotified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}parent_notified'],
+      )!,
+      managerNotified: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}manager_notified'],
+      )!,
+      followUpRequired: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}follow_up_required'],
+      )!,
+      followUpDetails: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}follow_up_details'],
+      ),
+      reportedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reported_by_id'],
+      )!,
+      reportedByName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reported_by_name'],
+      )!,
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $IncidentReportsTableTable createAlias(String alias) {
+    return $IncidentReportsTableTable(attachedDatabase, alias);
+  }
+}
+
+class IncidentReportRow extends DataClass
+    implements Insertable<IncidentReportRow> {
+  final String id;
+  final String homeId;
+  final String childId;
+  final String incidentType;
+  final String severity;
+  final String title;
+  final DateTime occurredAt;
+  final String? location;
+  final String description;
+  final String immediateAction;
+  final String? injuryDetails;
+  final bool policeNotified;
+  final bool parentNotified;
+  final bool managerNotified;
+  final bool followUpRequired;
+  final String? followUpDetails;
+  final String reportedById;
+  final String reportedByName;
+  final String? createdById;
+  final String? updatedById;
+  final DateTime? deletedAt;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isSynced;
+  const IncidentReportRow({
+    required this.id,
+    required this.homeId,
+    required this.childId,
+    required this.incidentType,
+    required this.severity,
+    required this.title,
+    required this.occurredAt,
+    this.location,
+    required this.description,
+    required this.immediateAction,
+    this.injuryDetails,
+    required this.policeNotified,
+    required this.parentNotified,
+    required this.managerNotified,
+    required this.followUpRequired,
+    this.followUpDetails,
+    required this.reportedById,
+    required this.reportedByName,
+    this.createdById,
+    this.updatedById,
+    this.deletedAt,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['child_id'] = Variable<String>(childId);
+    map['incident_type'] = Variable<String>(incidentType);
+    map['severity'] = Variable<String>(severity);
+    map['title'] = Variable<String>(title);
+    map['occurred_at'] = Variable<DateTime>(occurredAt);
+    if (!nullToAbsent || location != null) {
+      map['location'] = Variable<String>(location);
+    }
+    map['description'] = Variable<String>(description);
+    map['immediate_action'] = Variable<String>(immediateAction);
+    if (!nullToAbsent || injuryDetails != null) {
+      map['injury_details'] = Variable<String>(injuryDetails);
+    }
+    map['police_notified'] = Variable<bool>(policeNotified);
+    map['parent_notified'] = Variable<bool>(parentNotified);
+    map['manager_notified'] = Variable<bool>(managerNotified);
+    map['follow_up_required'] = Variable<bool>(followUpRequired);
+    if (!nullToAbsent || followUpDetails != null) {
+      map['follow_up_details'] = Variable<String>(followUpDetails);
+    }
+    map['reported_by_id'] = Variable<String>(reportedById);
+    map['reported_by_name'] = Variable<String>(reportedByName);
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  IncidentReportsTableCompanion toCompanion(bool nullToAbsent) {
+    return IncidentReportsTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      childId: Value(childId),
+      incidentType: Value(incidentType),
+      severity: Value(severity),
+      title: Value(title),
+      occurredAt: Value(occurredAt),
+      location: location == null && nullToAbsent
+          ? const Value.absent()
+          : Value(location),
+      description: Value(description),
+      immediateAction: Value(immediateAction),
+      injuryDetails: injuryDetails == null && nullToAbsent
+          ? const Value.absent()
+          : Value(injuryDetails),
+      policeNotified: Value(policeNotified),
+      parentNotified: Value(parentNotified),
+      managerNotified: Value(managerNotified),
+      followUpRequired: Value(followUpRequired),
+      followUpDetails: followUpDetails == null && nullToAbsent
+          ? const Value.absent()
+          : Value(followUpDetails),
+      reportedById: Value(reportedById),
+      reportedByName: Value(reportedByName),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory IncidentReportRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return IncidentReportRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      childId: serializer.fromJson<String>(json['childId']),
+      incidentType: serializer.fromJson<String>(json['incidentType']),
+      severity: serializer.fromJson<String>(json['severity']),
+      title: serializer.fromJson<String>(json['title']),
+      occurredAt: serializer.fromJson<DateTime>(json['occurredAt']),
+      location: serializer.fromJson<String?>(json['location']),
+      description: serializer.fromJson<String>(json['description']),
+      immediateAction: serializer.fromJson<String>(json['immediateAction']),
+      injuryDetails: serializer.fromJson<String?>(json['injuryDetails']),
+      policeNotified: serializer.fromJson<bool>(json['policeNotified']),
+      parentNotified: serializer.fromJson<bool>(json['parentNotified']),
+      managerNotified: serializer.fromJson<bool>(json['managerNotified']),
+      followUpRequired: serializer.fromJson<bool>(json['followUpRequired']),
+      followUpDetails: serializer.fromJson<String?>(json['followUpDetails']),
+      reportedById: serializer.fromJson<String>(json['reportedById']),
+      reportedByName: serializer.fromJson<String>(json['reportedByName']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'childId': serializer.toJson<String>(childId),
+      'incidentType': serializer.toJson<String>(incidentType),
+      'severity': serializer.toJson<String>(severity),
+      'title': serializer.toJson<String>(title),
+      'occurredAt': serializer.toJson<DateTime>(occurredAt),
+      'location': serializer.toJson<String?>(location),
+      'description': serializer.toJson<String>(description),
+      'immediateAction': serializer.toJson<String>(immediateAction),
+      'injuryDetails': serializer.toJson<String?>(injuryDetails),
+      'policeNotified': serializer.toJson<bool>(policeNotified),
+      'parentNotified': serializer.toJson<bool>(parentNotified),
+      'managerNotified': serializer.toJson<bool>(managerNotified),
+      'followUpRequired': serializer.toJson<bool>(followUpRequired),
+      'followUpDetails': serializer.toJson<String?>(followUpDetails),
+      'reportedById': serializer.toJson<String>(reportedById),
+      'reportedByName': serializer.toJson<String>(reportedByName),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  IncidentReportRow copyWith({
+    String? id,
+    String? homeId,
+    String? childId,
+    String? incidentType,
+    String? severity,
+    String? title,
+    DateTime? occurredAt,
+    Value<String?> location = const Value.absent(),
+    String? description,
+    String? immediateAction,
+    Value<String?> injuryDetails = const Value.absent(),
+    bool? policeNotified,
+    bool? parentNotified,
+    bool? managerNotified,
+    bool? followUpRequired,
+    Value<String?> followUpDetails = const Value.absent(),
+    String? reportedById,
+    String? reportedByName,
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    Value<DateTime?> deletedAt = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isSynced,
+  }) => IncidentReportRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    childId: childId ?? this.childId,
+    incidentType: incidentType ?? this.incidentType,
+    severity: severity ?? this.severity,
+    title: title ?? this.title,
+    occurredAt: occurredAt ?? this.occurredAt,
+    location: location.present ? location.value : this.location,
+    description: description ?? this.description,
+    immediateAction: immediateAction ?? this.immediateAction,
+    injuryDetails: injuryDetails.present
+        ? injuryDetails.value
+        : this.injuryDetails,
+    policeNotified: policeNotified ?? this.policeNotified,
+    parentNotified: parentNotified ?? this.parentNotified,
+    managerNotified: managerNotified ?? this.managerNotified,
+    followUpRequired: followUpRequired ?? this.followUpRequired,
+    followUpDetails: followUpDetails.present
+        ? followUpDetails.value
+        : this.followUpDetails,
+    reportedById: reportedById ?? this.reportedById,
+    reportedByName: reportedByName ?? this.reportedByName,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  IncidentReportRow copyWithCompanion(IncidentReportsTableCompanion data) {
+    return IncidentReportRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      childId: data.childId.present ? data.childId.value : this.childId,
+      incidentType: data.incidentType.present
+          ? data.incidentType.value
+          : this.incidentType,
+      severity: data.severity.present ? data.severity.value : this.severity,
+      title: data.title.present ? data.title.value : this.title,
+      occurredAt: data.occurredAt.present
+          ? data.occurredAt.value
+          : this.occurredAt,
+      location: data.location.present ? data.location.value : this.location,
+      description: data.description.present
+          ? data.description.value
+          : this.description,
+      immediateAction: data.immediateAction.present
+          ? data.immediateAction.value
+          : this.immediateAction,
+      injuryDetails: data.injuryDetails.present
+          ? data.injuryDetails.value
+          : this.injuryDetails,
+      policeNotified: data.policeNotified.present
+          ? data.policeNotified.value
+          : this.policeNotified,
+      parentNotified: data.parentNotified.present
+          ? data.parentNotified.value
+          : this.parentNotified,
+      managerNotified: data.managerNotified.present
+          ? data.managerNotified.value
+          : this.managerNotified,
+      followUpRequired: data.followUpRequired.present
+          ? data.followUpRequired.value
+          : this.followUpRequired,
+      followUpDetails: data.followUpDetails.present
+          ? data.followUpDetails.value
+          : this.followUpDetails,
+      reportedById: data.reportedById.present
+          ? data.reportedById.value
+          : this.reportedById,
+      reportedByName: data.reportedByName.present
+          ? data.reportedByName.value
+          : this.reportedByName,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IncidentReportRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('incidentType: $incidentType, ')
+          ..write('severity: $severity, ')
+          ..write('title: $title, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('location: $location, ')
+          ..write('description: $description, ')
+          ..write('immediateAction: $immediateAction, ')
+          ..write('injuryDetails: $injuryDetails, ')
+          ..write('policeNotified: $policeNotified, ')
+          ..write('parentNotified: $parentNotified, ')
+          ..write('managerNotified: $managerNotified, ')
+          ..write('followUpRequired: $followUpRequired, ')
+          ..write('followUpDetails: $followUpDetails, ')
+          ..write('reportedById: $reportedById, ')
+          ..write('reportedByName: $reportedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hashAll([
+    id,
+    homeId,
+    childId,
+    incidentType,
+    severity,
+    title,
+    occurredAt,
+    location,
+    description,
+    immediateAction,
+    injuryDetails,
+    policeNotified,
+    parentNotified,
+    managerNotified,
+    followUpRequired,
+    followUpDetails,
+    reportedById,
+    reportedByName,
+    createdById,
+    updatedById,
+    deletedAt,
+    createdAt,
+    updatedAt,
+    isSynced,
+  ]);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is IncidentReportRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.childId == this.childId &&
+          other.incidentType == this.incidentType &&
+          other.severity == this.severity &&
+          other.title == this.title &&
+          other.occurredAt == this.occurredAt &&
+          other.location == this.location &&
+          other.description == this.description &&
+          other.immediateAction == this.immediateAction &&
+          other.injuryDetails == this.injuryDetails &&
+          other.policeNotified == this.policeNotified &&
+          other.parentNotified == this.parentNotified &&
+          other.managerNotified == this.managerNotified &&
+          other.followUpRequired == this.followUpRequired &&
+          other.followUpDetails == this.followUpDetails &&
+          other.reportedById == this.reportedById &&
+          other.reportedByName == this.reportedByName &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.deletedAt == this.deletedAt &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isSynced == this.isSynced);
+}
+
+class IncidentReportsTableCompanion extends UpdateCompanion<IncidentReportRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> childId;
+  final Value<String> incidentType;
+  final Value<String> severity;
+  final Value<String> title;
+  final Value<DateTime> occurredAt;
+  final Value<String?> location;
+  final Value<String> description;
+  final Value<String> immediateAction;
+  final Value<String?> injuryDetails;
+  final Value<bool> policeNotified;
+  final Value<bool> parentNotified;
+  final Value<bool> managerNotified;
+  final Value<bool> followUpRequired;
+  final Value<String?> followUpDetails;
+  final Value<String> reportedById;
+  final Value<String> reportedByName;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<DateTime?> deletedAt;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const IncidentReportsTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.childId = const Value.absent(),
+    this.incidentType = const Value.absent(),
+    this.severity = const Value.absent(),
+    this.title = const Value.absent(),
+    this.occurredAt = const Value.absent(),
+    this.location = const Value.absent(),
+    this.description = const Value.absent(),
+    this.immediateAction = const Value.absent(),
+    this.injuryDetails = const Value.absent(),
+    this.policeNotified = const Value.absent(),
+    this.parentNotified = const Value.absent(),
+    this.managerNotified = const Value.absent(),
+    this.followUpRequired = const Value.absent(),
+    this.followUpDetails = const Value.absent(),
+    this.reportedById = const Value.absent(),
+    this.reportedByName = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  IncidentReportsTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String childId,
+    required String incidentType,
+    required String severity,
+    required String title,
+    required DateTime occurredAt,
+    this.location = const Value.absent(),
+    required String description,
+    required String immediateAction,
+    this.injuryDetails = const Value.absent(),
+    this.policeNotified = const Value.absent(),
+    this.parentNotified = const Value.absent(),
+    this.managerNotified = const Value.absent(),
+    this.followUpRequired = const Value.absent(),
+    this.followUpDetails = const Value.absent(),
+    required String reportedById,
+    required String reportedByName,
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       childId = Value(childId),
+       incidentType = Value(incidentType),
+       severity = Value(severity),
+       title = Value(title),
+       occurredAt = Value(occurredAt),
+       description = Value(description),
+       immediateAction = Value(immediateAction),
+       reportedById = Value(reportedById),
+       reportedByName = Value(reportedByName),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<IncidentReportRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? childId,
+    Expression<String>? incidentType,
+    Expression<String>? severity,
+    Expression<String>? title,
+    Expression<DateTime>? occurredAt,
+    Expression<String>? location,
+    Expression<String>? description,
+    Expression<String>? immediateAction,
+    Expression<String>? injuryDetails,
+    Expression<bool>? policeNotified,
+    Expression<bool>? parentNotified,
+    Expression<bool>? managerNotified,
+    Expression<bool>? followUpRequired,
+    Expression<String>? followUpDetails,
+    Expression<String>? reportedById,
+    Expression<String>? reportedByName,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<DateTime>? deletedAt,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (childId != null) 'child_id': childId,
+      if (incidentType != null) 'incident_type': incidentType,
+      if (severity != null) 'severity': severity,
+      if (title != null) 'title': title,
+      if (occurredAt != null) 'occurred_at': occurredAt,
+      if (location != null) 'location': location,
+      if (description != null) 'description': description,
+      if (immediateAction != null) 'immediate_action': immediateAction,
+      if (injuryDetails != null) 'injury_details': injuryDetails,
+      if (policeNotified != null) 'police_notified': policeNotified,
+      if (parentNotified != null) 'parent_notified': parentNotified,
+      if (managerNotified != null) 'manager_notified': managerNotified,
+      if (followUpRequired != null) 'follow_up_required': followUpRequired,
+      if (followUpDetails != null) 'follow_up_details': followUpDetails,
+      if (reportedById != null) 'reported_by_id': reportedById,
+      if (reportedByName != null) 'reported_by_name': reportedByName,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  IncidentReportsTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? childId,
+    Value<String>? incidentType,
+    Value<String>? severity,
+    Value<String>? title,
+    Value<DateTime>? occurredAt,
+    Value<String?>? location,
+    Value<String>? description,
+    Value<String>? immediateAction,
+    Value<String?>? injuryDetails,
+    Value<bool>? policeNotified,
+    Value<bool>? parentNotified,
+    Value<bool>? managerNotified,
+    Value<bool>? followUpRequired,
+    Value<String?>? followUpDetails,
+    Value<String>? reportedById,
+    Value<String>? reportedByName,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<DateTime?>? deletedAt,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return IncidentReportsTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      childId: childId ?? this.childId,
+      incidentType: incidentType ?? this.incidentType,
+      severity: severity ?? this.severity,
+      title: title ?? this.title,
+      occurredAt: occurredAt ?? this.occurredAt,
+      location: location ?? this.location,
+      description: description ?? this.description,
+      immediateAction: immediateAction ?? this.immediateAction,
+      injuryDetails: injuryDetails ?? this.injuryDetails,
+      policeNotified: policeNotified ?? this.policeNotified,
+      parentNotified: parentNotified ?? this.parentNotified,
+      managerNotified: managerNotified ?? this.managerNotified,
+      followUpRequired: followUpRequired ?? this.followUpRequired,
+      followUpDetails: followUpDetails ?? this.followUpDetails,
+      reportedById: reportedById ?? this.reportedById,
+      reportedByName: reportedByName ?? this.reportedByName,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (childId.present) {
+      map['child_id'] = Variable<String>(childId.value);
+    }
+    if (incidentType.present) {
+      map['incident_type'] = Variable<String>(incidentType.value);
+    }
+    if (severity.present) {
+      map['severity'] = Variable<String>(severity.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (occurredAt.present) {
+      map['occurred_at'] = Variable<DateTime>(occurredAt.value);
+    }
+    if (location.present) {
+      map['location'] = Variable<String>(location.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (immediateAction.present) {
+      map['immediate_action'] = Variable<String>(immediateAction.value);
+    }
+    if (injuryDetails.present) {
+      map['injury_details'] = Variable<String>(injuryDetails.value);
+    }
+    if (policeNotified.present) {
+      map['police_notified'] = Variable<bool>(policeNotified.value);
+    }
+    if (parentNotified.present) {
+      map['parent_notified'] = Variable<bool>(parentNotified.value);
+    }
+    if (managerNotified.present) {
+      map['manager_notified'] = Variable<bool>(managerNotified.value);
+    }
+    if (followUpRequired.present) {
+      map['follow_up_required'] = Variable<bool>(followUpRequired.value);
+    }
+    if (followUpDetails.present) {
+      map['follow_up_details'] = Variable<String>(followUpDetails.value);
+    }
+    if (reportedById.present) {
+      map['reported_by_id'] = Variable<String>(reportedById.value);
+    }
+    if (reportedByName.present) {
+      map['reported_by_name'] = Variable<String>(reportedByName.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('IncidentReportsTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('childId: $childId, ')
+          ..write('incidentType: $incidentType, ')
+          ..write('severity: $severity, ')
+          ..write('title: $title, ')
+          ..write('occurredAt: $occurredAt, ')
+          ..write('location: $location, ')
+          ..write('description: $description, ')
+          ..write('immediateAction: $immediateAction, ')
+          ..write('injuryDetails: $injuryDetails, ')
+          ..write('policeNotified: $policeNotified, ')
+          ..write('parentNotified: $parentNotified, ')
+          ..write('managerNotified: $managerNotified, ')
+          ..write('followUpRequired: $followUpRequired, ')
+          ..write('followUpDetails: $followUpDetails, ')
+          ..write('reportedById: $reportedById, ')
+          ..write('reportedByName: $reportedByName, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -16432,6 +17791,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $StepProgressTableTable stepProgressTable =
       $StepProgressTableTable(this);
+  late final $IncidentReportsTableTable incidentReportsTable =
+      $IncidentReportsTableTable(this);
   late final DailyNotesDao dailyNotesDao = DailyNotesDao(this as AppDatabase);
   late final ChecklistItemsDao checklistItemsDao = ChecklistItemsDao(
     this as AppDatabase,
@@ -16458,6 +17819,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     this as AppDatabase,
   );
   late final SmartStepsDao smartStepsDao = SmartStepsDao(this as AppDatabase);
+  late final IncidentReportsDao incidentReportsDao = IncidentReportsDao(
+    this as AppDatabase,
+  );
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -16480,6 +17844,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     activityEntriesTable,
     smartStepsTable,
     stepProgressTable,
+    incidentReportsTable,
   ];
 }
 
@@ -24068,6 +25433,611 @@ typedef $$StepProgressTableTableProcessedTableManager =
       StepProgressRow,
       PrefetchHooks Function()
     >;
+typedef $$IncidentReportsTableTableCreateCompanionBuilder =
+    IncidentReportsTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String childId,
+      required String incidentType,
+      required String severity,
+      required String title,
+      required DateTime occurredAt,
+      Value<String?> location,
+      required String description,
+      required String immediateAction,
+      Value<String?> injuryDetails,
+      Value<bool> policeNotified,
+      Value<bool> parentNotified,
+      Value<bool> managerNotified,
+      Value<bool> followUpRequired,
+      Value<String?> followUpDetails,
+      required String reportedById,
+      required String reportedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$IncidentReportsTableTableUpdateCompanionBuilder =
+    IncidentReportsTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> childId,
+      Value<String> incidentType,
+      Value<String> severity,
+      Value<String> title,
+      Value<DateTime> occurredAt,
+      Value<String?> location,
+      Value<String> description,
+      Value<String> immediateAction,
+      Value<String?> injuryDetails,
+      Value<bool> policeNotified,
+      Value<bool> parentNotified,
+      Value<bool> managerNotified,
+      Value<bool> followUpRequired,
+      Value<String?> followUpDetails,
+      Value<String> reportedById,
+      Value<String> reportedByName,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<DateTime?> deletedAt,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$IncidentReportsTableTableFilterComposer
+    extends Composer<_$AppDatabase, $IncidentReportsTableTable> {
+  $$IncidentReportsTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get incidentType => $composableBuilder(
+    column: $table.incidentType,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get immediateAction => $composableBuilder(
+    column: $table.immediateAction,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get policeNotified => $composableBuilder(
+    column: $table.policeNotified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get parentNotified => $composableBuilder(
+    column: $table.parentNotified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get managerNotified => $composableBuilder(
+    column: $table.managerNotified,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get followUpRequired => $composableBuilder(
+    column: $table.followUpRequired,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get followUpDetails => $composableBuilder(
+    column: $table.followUpDetails,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reportedById => $composableBuilder(
+    column: $table.reportedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get reportedByName => $composableBuilder(
+    column: $table.reportedByName,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$IncidentReportsTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $IncidentReportsTableTable> {
+  $$IncidentReportsTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get childId => $composableBuilder(
+    column: $table.childId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get incidentType => $composableBuilder(
+    column: $table.incidentType,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get severity => $composableBuilder(
+    column: $table.severity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get title => $composableBuilder(
+    column: $table.title,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get location => $composableBuilder(
+    column: $table.location,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get immediateAction => $composableBuilder(
+    column: $table.immediateAction,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get policeNotified => $composableBuilder(
+    column: $table.policeNotified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get parentNotified => $composableBuilder(
+    column: $table.parentNotified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get managerNotified => $composableBuilder(
+    column: $table.managerNotified,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get followUpRequired => $composableBuilder(
+    column: $table.followUpRequired,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get followUpDetails => $composableBuilder(
+    column: $table.followUpDetails,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reportedById => $composableBuilder(
+    column: $table.reportedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get reportedByName => $composableBuilder(
+    column: $table.reportedByName,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$IncidentReportsTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $IncidentReportsTableTable> {
+  $$IncidentReportsTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get childId =>
+      $composableBuilder(column: $table.childId, builder: (column) => column);
+
+  GeneratedColumn<String> get incidentType => $composableBuilder(
+    column: $table.incidentType,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get severity =>
+      $composableBuilder(column: $table.severity, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get occurredAt => $composableBuilder(
+    column: $table.occurredAt,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get location =>
+      $composableBuilder(column: $table.location, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+    column: $table.description,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get immediateAction => $composableBuilder(
+    column: $table.immediateAction,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get injuryDetails => $composableBuilder(
+    column: $table.injuryDetails,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get policeNotified => $composableBuilder(
+    column: $table.policeNotified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get parentNotified => $composableBuilder(
+    column: $table.parentNotified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get managerNotified => $composableBuilder(
+    column: $table.managerNotified,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get followUpRequired => $composableBuilder(
+    column: $table.followUpRequired,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get followUpDetails => $composableBuilder(
+    column: $table.followUpDetails,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reportedById => $composableBuilder(
+    column: $table.reportedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get reportedByName => $composableBuilder(
+    column: $table.reportedByName,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$IncidentReportsTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $IncidentReportsTableTable,
+          IncidentReportRow,
+          $$IncidentReportsTableTableFilterComposer,
+          $$IncidentReportsTableTableOrderingComposer,
+          $$IncidentReportsTableTableAnnotationComposer,
+          $$IncidentReportsTableTableCreateCompanionBuilder,
+          $$IncidentReportsTableTableUpdateCompanionBuilder,
+          (
+            IncidentReportRow,
+            BaseReferences<
+              _$AppDatabase,
+              $IncidentReportsTableTable,
+              IncidentReportRow
+            >,
+          ),
+          IncidentReportRow,
+          PrefetchHooks Function()
+        > {
+  $$IncidentReportsTableTableTableManager(
+    _$AppDatabase db,
+    $IncidentReportsTableTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$IncidentReportsTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$IncidentReportsTableTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$IncidentReportsTableTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> childId = const Value.absent(),
+                Value<String> incidentType = const Value.absent(),
+                Value<String> severity = const Value.absent(),
+                Value<String> title = const Value.absent(),
+                Value<DateTime> occurredAt = const Value.absent(),
+                Value<String?> location = const Value.absent(),
+                Value<String> description = const Value.absent(),
+                Value<String> immediateAction = const Value.absent(),
+                Value<String?> injuryDetails = const Value.absent(),
+                Value<bool> policeNotified = const Value.absent(),
+                Value<bool> parentNotified = const Value.absent(),
+                Value<bool> managerNotified = const Value.absent(),
+                Value<bool> followUpRequired = const Value.absent(),
+                Value<String?> followUpDetails = const Value.absent(),
+                Value<String> reportedById = const Value.absent(),
+                Value<String> reportedByName = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => IncidentReportsTableCompanion(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                incidentType: incidentType,
+                severity: severity,
+                title: title,
+                occurredAt: occurredAt,
+                location: location,
+                description: description,
+                immediateAction: immediateAction,
+                injuryDetails: injuryDetails,
+                policeNotified: policeNotified,
+                parentNotified: parentNotified,
+                managerNotified: managerNotified,
+                followUpRequired: followUpRequired,
+                followUpDetails: followUpDetails,
+                reportedById: reportedById,
+                reportedByName: reportedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String childId,
+                required String incidentType,
+                required String severity,
+                required String title,
+                required DateTime occurredAt,
+                Value<String?> location = const Value.absent(),
+                required String description,
+                required String immediateAction,
+                Value<String?> injuryDetails = const Value.absent(),
+                Value<bool> policeNotified = const Value.absent(),
+                Value<bool> parentNotified = const Value.absent(),
+                Value<bool> managerNotified = const Value.absent(),
+                Value<bool> followUpRequired = const Value.absent(),
+                Value<String?> followUpDetails = const Value.absent(),
+                required String reportedById,
+                required String reportedByName,
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => IncidentReportsTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                childId: childId,
+                incidentType: incidentType,
+                severity: severity,
+                title: title,
+                occurredAt: occurredAt,
+                location: location,
+                description: description,
+                immediateAction: immediateAction,
+                injuryDetails: injuryDetails,
+                policeNotified: policeNotified,
+                parentNotified: parentNotified,
+                managerNotified: managerNotified,
+                followUpRequired: followUpRequired,
+                followUpDetails: followUpDetails,
+                reportedById: reportedById,
+                reportedByName: reportedByName,
+                createdById: createdById,
+                updatedById: updatedById,
+                deletedAt: deletedAt,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$IncidentReportsTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $IncidentReportsTableTable,
+      IncidentReportRow,
+      $$IncidentReportsTableTableFilterComposer,
+      $$IncidentReportsTableTableOrderingComposer,
+      $$IncidentReportsTableTableAnnotationComposer,
+      $$IncidentReportsTableTableCreateCompanionBuilder,
+      $$IncidentReportsTableTableUpdateCompanionBuilder,
+      (
+        IncidentReportRow,
+        BaseReferences<
+          _$AppDatabase,
+          $IncidentReportsTableTable,
+          IncidentReportRow
+        >,
+      ),
+      IncidentReportRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -24115,6 +26085,8 @@ class $AppDatabaseManager {
       $$SmartStepsTableTableTableManager(_db, _db.smartStepsTable);
   $$StepProgressTableTableTableManager get stepProgressTable =>
       $$StepProgressTableTableTableManager(_db, _db.stepProgressTable);
+  $$IncidentReportsTableTableTableManager get incidentReportsTable =>
+      $$IncidentReportsTableTableTableManager(_db, _db.incidentReportsTable);
 }
 
 // **************************************************************************

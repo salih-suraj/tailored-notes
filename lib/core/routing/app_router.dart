@@ -5,6 +5,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/handover/presentation/team_leader_oversight_screen.dart';
+import '../../features/incidents/domain/incident_report.dart';
+import '../../features/incidents/presentation/incident_report_editor_screen.dart';
+import '../../features/incidents/presentation/incidents_screen.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/behaviour/domain/behaviour_incident.dart';
 import '../../features/activities/domain/activity_entry.dart';
@@ -307,6 +310,27 @@ GoRouter appRouter(Ref ref) {
                             ),
                           ),
                         ],
+                      ),
+                    ],
+                  ),
+                  GoRoute(
+                    path: 'incidents',
+                    builder: (_, state) => IncidentsScreen(
+                      childId: state.pathParameters['id']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: 'new',
+                        builder: (_, state) => IncidentReportEditorScreen(
+                          childId: state.pathParameters['id']!,
+                        ),
+                      ),
+                      GoRoute(
+                        path: ':incidentId/edit',
+                        builder: (_, state) => IncidentReportEditorScreen(
+                          childId: state.pathParameters['id']!,
+                          existing: state.extra as IncidentReport?,
+                        ),
                       ),
                     ],
                   ),

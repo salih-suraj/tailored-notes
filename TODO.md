@@ -81,7 +81,7 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 24 | Incident reporting (replaces Datix) | ⬜ | Designed specifically for residential childcare — simpler than Datix. Severity levels, involved parties, follow-up actions. |
+| 24 | Incident reporting (replaces Datix) | ✅ | `features/incidents/`. IncidentReport (freezed), 6 incident types (behaviour/medical/accident/property damage/missing person/safeguarding), 4 severity levels, immediate action, injury details, police/parent/manager notification toggles, follow-up tracking. Drift table + DAO + repo (audit wired) + providers + list screen + editor. Module card on child profile. schemaVersion 14. |
 | 25 | Auto shift handover summary | ⬜ | Compiles key information from the shift into a clear summary for the next team. Reduces manual effort for Team Leaders. |
 | 26 | Team Leader oversight queue | ✅ | `features/handover/`. Shift overview screen on the Handover tab. Per-shift progress bar, children split into Needs Attention / Fully Documented sections. Each card shows missing sections or ✓ all complete. Taps through to child profile. Live from Drift streams. |
 | 27 | Manager Oversight Dashboard | ⬜ | Completion levels across staff/shifts, incidents, behaviour trends, medication records, safeguarding alerts. Real-time overview. |
@@ -139,19 +139,19 @@ Every new feature added without them makes the retrofit harder.
 | Phase 1 — Foundation | 8 of 9 | (MFA pending Supabase) | 89% |
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
-| Phase 4 — Oversight | 1 of 5 | (Team Leader oversight done) | 20% |
+| Phase 4 — Oversight | 2 of 5 | (Incidents + Team Leader oversight done) | 40% |
 | Phase 5 — External | 0 of 3 | | 0% |
 | Backend / Supabase | 0 of 8 | (all blocked on B1) | 0% |
 | Infrastructure gaps | 3 of 5 | (I4 MFA + I5 semantics pending) | 60% |
 | Quality / cross-cutting | 0 of 9 | | 0% |
-| **Total** | **26 of 53** | | **49%** |
+| **Total** | **27 of 53** | | **51%** |
 
 ---
 
 ## Recommended build order from here
 
-1. **Phase 4** — Oversight, starting with item 24 (Incident Reporting — replaces Datix)
-2. **B1** — Abba provisions Supabase — unblocks RLS, MFA, audit backend, AI summary
-3. **Phase 2 item 12** — Alerts for incomplete documentation
+1. **Phase 4 item 25** — Auto shift handover summary (compiles key shift info for the next team)
+2. **Phase 4 items 27–28** — Manager Oversight Dashboard + Behaviour Pattern Tracking Dashboard
+3. **B1** — Abba provisions Supabase — unblocks RLS, MFA, audit backend, AI summary
 4. **Phase 5** — External access (inspector portal, parent portal, AI summary)
 5. **Q-items** — tests, timezone rendering, CI pipeline — weave in throughout

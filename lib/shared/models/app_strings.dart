@@ -368,6 +368,54 @@ abstract final class AppStrings {
       'Please fill in name, purpose, and authorised by.';
   static const change = 'Change';
 
+  // Incidents
+  static const incidentsTitle = 'Incident Reports';
+  static const moduleIncidents = 'Incidents';
+  static const moduleIncidentsDesc = 'Log and track incident reports';
+  static const incidentLog = 'Log incident';
+  static const incidentNew = 'Report Incident';
+  static const incidentEdit = 'Edit Incident Report';
+  static const incidentNoReports = 'No incidents recorded';
+  static const incidentNoReportsHint = 'Tap + to log an incident report';
+  static const incidentDeleteTitle = 'Delete incident report?';
+  static const incidentDeleteConfirm =
+      'This incident report will be permanently removed.';
+  static const incidentTypeLabel = 'INCIDENT TYPE';
+  static const incidentSeverityLabel = 'SEVERITY';
+  static const incidentTitleLabel = 'INCIDENT TITLE';
+  static const incidentTitleHint = 'Brief summary of what happened';
+  static const incidentLocationLabel = 'LOCATION (OPTIONAL)';
+  static const incidentLocationHint = 'e.g. Bedroom, Kitchen, Garden';
+  static const incidentDescriptionLabel = 'WHAT HAPPENED';
+  static const incidentDescriptionHint =
+      'Full account of the incident — what was observed, who was present';
+  static const incidentImmediateActionLabel = 'IMMEDIATE ACTION TAKEN';
+  static const incidentImmediateActionHint =
+      'What did staff do in response?';
+  static const incidentInjuryDetails = 'INJURY DETAILS (OPTIONAL)';
+  static const incidentInjuryDetailsHint =
+      'Describe any injuries sustained by child or staff';
+  static const incidentNotifications = 'NOTIFICATIONS';
+  static const incidentPoliceNotified = 'Police notified';
+  static const incidentPoliceNotifiedSubtitle =
+      'Has the police been informed of this incident?';
+  static const incidentParentNotified = 'Parent / guardian notified';
+  static const incidentParentNotifiedSubtitle =
+      'Have the parent or guardian been informed?';
+  static const incidentManagerNotified = 'Manager notified';
+  static const incidentManagerNotifiedSubtitle =
+      'Has the home manager been informed?';
+  static const incidentFollowUpSection = 'FOLLOW-UP';
+  static const incidentFollowUpRequired = 'Follow-up required';
+  static const incidentFollowUpRequiredSubtitle =
+      'Does this incident require further action?';
+  static const incidentFollowUpDetails = 'Follow-up details';
+  static const incidentFollowUpDetailsHint =
+      'What actions are required and by whom?';
+  static const incidentRequiredFields =
+      'Title, description, and immediate action are required';
+  static const incidentReportedBy = 'Reported by';
+
   // Team Leader Oversight
   static const oversightTitle = 'Shift Overview';
   static const oversightNeedsAttention = 'NEEDS ATTENTION';
