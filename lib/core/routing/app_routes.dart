@@ -92,6 +92,7 @@ abstract final class AppRoutes {
   static const activities = '/activities';
   static const smartSteps = '/smart-steps';
   static const handover = '/handover';
+  static const handoverSummary = '/handover/summary';
   static const dashboard = '/dashboard';
   static const inspector = '/inspector';
   static const parentPortal = '/parent-portal';

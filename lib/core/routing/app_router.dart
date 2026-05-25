@@ -42,6 +42,7 @@ import '../../features/checklists/presentation/visitor_log_entry_screen.dart';
 import '../../features/checklists/presentation/visitor_log_screen.dart';
 import '../../features/checklists/domain/visitor_log_entry.dart';
 import '../../features/children/presentation/add_child_screen.dart';
+import '../../features/handover/presentation/handover_summary_screen.dart';
 import '../../features/children/presentation/children_list_screen.dart';
 import '../../features/daily_notes/domain/daily_note.dart';
 import '../../features/children/presentation/child_profile_screen.dart';
@@ -403,6 +404,12 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: AppRoutes.handover,
             builder: (_, _) => const TeamLeaderOversightScreen(),
+            routes: [
+              GoRoute(
+                path: 'summary',
+                builder: (_, _) => const HandoverSummaryScreen(),
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutes.dashboard,

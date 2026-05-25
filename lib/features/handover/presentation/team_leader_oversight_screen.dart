@@ -9,6 +9,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../features/children/domain/child.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/routing/app_routes.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/models/shift_completion.dart';
 import '../../../shared/providers/shift_completion_provider.dart';
@@ -29,7 +30,16 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
         DateFormat('EEEE d MMMM yyyy', 'en_GB').format(DateTime.now());
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.oversightTitle)),
+      appBar: AppBar(
+        title: const Text(AppStrings.oversightTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.summarize_outlined),
+            tooltip: AppStrings.oversightViewSummary,
+            onPressed: () => context.push(AppRoutes.handoverSummary),
+          ),
+        ],
+      ),
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(

@@ -437,6 +437,25 @@ abstract final class AppStrings {
   static const oversightAllComplete = 'All sections complete';
   static const oversightChildrenDocumented =
       'Children fully documented this shift';
+  static const oversightViewSummary = 'Handover Summary';
+
+  // Handover summary
+  static const handoverSummaryTitle = 'Handover Summary';
+  static const handoverSummaryGenerated = 'Generated at';
+  static const handoverSectionNotes = 'Notes';
+  static const handoverSectionBehaviour = 'Behaviour';
+  static const handoverSectionIncidents = 'Incidents';
+  static const handoverSectionMedication = 'Medication';
+  static const handoverSectionBathTemp = 'Bath Temp';
+  static const handoverNoNotes = 'No notes this shift';
+  static const handoverNoBehaviour = 'None';
+  static const handoverNoIncidents = 'None';
+  static const handoverNoMeds = 'No scheduled medication';
+  static const handoverBathNotRecorded = 'Not recorded';
+  static const handoverFlagPhysical = 'Physical intervention';
+  static const handoverFlagSafeguarding = 'Safeguarding';
+  static const handoverFlagCritical = 'Critical incident';
+  static const handoverFlagMedRefusal = 'Med refused';
 
   // Incomplete documentation alerts
   static const alertIncompleteTitle = 'Documentation outstanding this shift';
