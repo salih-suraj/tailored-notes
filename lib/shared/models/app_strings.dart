@@ -35,6 +35,20 @@ abstract final class AppStrings {
   static const childNotFound = 'Child not found';
   static const addChild = 'Add child';
 
+  // Add child form
+  static const addChildTitle = 'Add Child';
+  static const addChildNameLabel = 'FULL NAME';
+  static const addChildNameHint = 'e.g. Jamie Thornton';
+  static const addChildDobLabel = 'DATE OF BIRTH';
+  static const addChildSelectDob = 'Select date of birth';
+  static const addChildRoomLabel = 'ROOM';
+  static const addChildRoomHint = 'e.g. 1A';
+  static const addChildNotesLabel = 'NOTES';
+  static const addChildNotesHint = 'Additional information (optional)';
+  static const addChildNameRequired = 'Name is required';
+  static const addChildDobRequired = 'Date of birth is required';
+  static const addChildRoomRequired = 'Room is required';
+
   // Child profile — section headers
   static const careRecordSection = 'CARE RECORD';
 

@@ -8,6 +8,8 @@ import '../../../shared/models/shift_completion.dart';
 import '../../../shared/providers/shift_completion_provider.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
+import '../../auth/domain/user_role.dart';
+import '../../auth/presentation/providers/auth_provider.dart';
 import '../domain/child.dart';
 import 'providers/children_provider.dart';
 import 'widgets/child_list_tile.dart';
@@ -61,18 +63,18 @@ class ChildrenListScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
+    final isManager = ref.watch(currentUserProvider)?.role == UserRole.manager;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.childrenTitle),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            tooltip: AppStrings.addChild,
-            onPressed: () {
-              // TODO: navigate to add child form
-            },
-          ),
+          if (isManager)
+            IconButton(
+              icon: const Icon(Icons.add),
+              tooltip: AppStrings.addChild,
+              onPressed: () => context.push('/children/new'),
+            ),
         ],
       ),
       body: childrenAsync.when(

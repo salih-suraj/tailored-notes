@@ -24,7 +24,7 @@ AppUser? currentUser(Ref ref) {
     return const AppUser(
       id: 'dev-user-001',
       email: 'dev@tailorednotes.local',
-      role: UserRole.supportWorker,
+      role: UserRole.manager,
       homeId: 'dev-home-001',
       displayName: 'Dev User',
     );

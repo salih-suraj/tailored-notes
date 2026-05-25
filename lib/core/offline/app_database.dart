@@ -5,6 +5,8 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/activities/data/activity_entries_dao.dart';
 import '../../features/activities/data/activity_entries_table.dart';
+import '../../features/children/data/children_dao.dart';
+import '../../features/children/data/children_table.dart';
 import '../../features/incidents/data/incident_reports_dao.dart';
 import '../../features/incidents/data/incident_reports_table.dart';
 import '../../features/behaviour/data/behaviour_incidents_dao.dart';
@@ -49,6 +51,7 @@ part 'app_database.g.dart';
     FoodEntriesTable, ActivityEntriesTable,
     SmartStepsTable, StepProgressTable,
     IncidentReportsTable,
+    ChildrenTable,
   ],
   daos: [
     DailyNotesDao, ChecklistItemsDao, AuditLogDao,
@@ -56,13 +59,14 @@ part 'app_database.g.dart';
     MedicationDao, MedicalHistoryDao, BehaviourIncidentsDao,
     SleepEntriesDao, FoodEntriesDao, ActivityEntriesDao,
     SmartStepsDao, IncidentReportsDao,
+    ChildrenDao,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 14;
+  int get schemaVersion => 15;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -102,6 +106,7 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(stepProgressTable);
           }
           if (from < 14) await m.createTable(incidentReportsTable);
+          if (from < 15) await m.createTable(childrenTable);
         },
       );
 

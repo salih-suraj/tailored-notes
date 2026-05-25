@@ -1,17 +1,30 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../core/audit/audit_log_writer.dart';
 import '../../../../core/dev_mode.dart';
+import '../../../../core/network/supabase_client.dart';
+import '../../../../core/offline/app_database.dart';
+import '../../../auth/presentation/providers/auth_provider.dart';
+import '../../data/children_repository.dart';
 import '../../domain/child.dart';
 
 part 'children_provider.g.dart';
 
-/// Stub — will be replaced with repository + Drift + Supabase sync in Phase 2.
 @riverpod
-Future<List<Child>> children(Ref ref) async {
-  if (kDevMode) return _devChildren;
-  // TODO: wire up ChildrenRepository once Drift tables are generated
-  return [];
+ChildrenRepository childrenRepository(Ref ref) => ChildrenRepository(
+      dao: ref.watch(appDatabaseProvider).childrenDao,
+      supabaseClient: ref.watch(supabaseClientProvider),
+      currentUser: ref.watch(currentUserProvider),
+      auditWriter: ref.watch(auditLogWriterProvider),
+    );
+
+@riverpod
+Stream<List<Child>> children(Ref ref) {
+  if (kDevMode) return Stream.value(_devChildren);
+  final user = ref.watch(currentUserProvider);
+  final homeId = user?.homeId ?? '';
+  return ref.watch(childrenRepositoryProvider).watchByHome(homeId);
 }
 
 final _now = DateTime.now();
@@ -21,7 +34,7 @@ final _devChildren = [
     id: 'child-001',
     homeId: 'dev-home-001',
     name: 'Jamie Thornton',
-    dateOfBirth: DateTime(2012, 3, 14),
+    dateOfBirth: '2012-03-14',
     room: '1A',
     createdAt: _now,
     updatedAt: _now,
@@ -30,7 +43,7 @@ final _devChildren = [
     id: 'child-002',
     homeId: 'dev-home-001',
     name: 'Priya Osei',
-    dateOfBirth: DateTime(2010, 8, 22),
+    dateOfBirth: '2010-08-22',
     room: '2B',
     createdAt: _now,
     updatedAt: _now,
@@ -39,7 +52,7 @@ final _devChildren = [
     id: 'child-003',
     homeId: 'dev-home-001',
     name: 'Marcus Elliot',
-    dateOfBirth: DateTime(2013, 11, 5),
+    dateOfBirth: '2013-11-05',
     room: '3A',
     createdAt: _now,
     updatedAt: _now,
@@ -48,7 +61,7 @@ final _devChildren = [
     id: 'child-004',
     homeId: 'dev-home-001',
     name: 'Aisha Kamara',
-    dateOfBirth: DateTime(2011, 6, 30),
+    dateOfBirth: '2011-06-30',
     room: '2A',
     createdAt: _now,
     updatedAt: _now,

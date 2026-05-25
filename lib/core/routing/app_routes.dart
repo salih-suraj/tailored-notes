@@ -7,6 +7,7 @@ abstract final class AppRoutes {
   // Shell (role-gated nav shell hosts these)
   static const home = '/home';
   static const children = '/children';
+  static const addChild = '/children/new';
   static const childProfile = '/children/:id';
 
   // Daily notes — nested under child profile

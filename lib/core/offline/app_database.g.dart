@@ -17752,6 +17752,771 @@ class IncidentReportsTableCompanion extends UpdateCompanion<IncidentReportRow> {
   }
 }
 
+class $ChildrenTableTable extends ChildrenTable
+    with TableInfo<$ChildrenTableTable, ChildRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $ChildrenTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+    'id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _homeIdMeta = const VerificationMeta('homeId');
+  @override
+  late final GeneratedColumn<String> homeId = GeneratedColumn<String>(
+    'home_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _dateOfBirthMeta = const VerificationMeta(
+    'dateOfBirth',
+  );
+  @override
+  late final GeneratedColumn<String> dateOfBirth = GeneratedColumn<String>(
+    'date_of_birth',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _roomMeta = const VerificationMeta('room');
+  @override
+  late final GeneratedColumn<String> room = GeneratedColumn<String>(
+    'room',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _photoUrlMeta = const VerificationMeta(
+    'photoUrl',
+  );
+  @override
+  late final GeneratedColumn<String> photoUrl = GeneratedColumn<String>(
+    'photo_url',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _notesMeta = const VerificationMeta('notes');
+  @override
+  late final GeneratedColumn<String> notes = GeneratedColumn<String>(
+    'notes',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _deletedAtMeta = const VerificationMeta(
+    'deletedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+    'deleted_at',
+    aliasedName,
+    true,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _createdByIdMeta = const VerificationMeta(
+    'createdById',
+  );
+  @override
+  late final GeneratedColumn<String> createdById = GeneratedColumn<String>(
+    'created_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _updatedByIdMeta = const VerificationMeta(
+    'updatedById',
+  );
+  @override
+  late final GeneratedColumn<String> updatedById = GeneratedColumn<String>(
+    'updated_by_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    homeId,
+    name,
+    dateOfBirth,
+    room,
+    photoUrl,
+    notes,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    createdById,
+    updatedById,
+    isSynced,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'children';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<ChildRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('home_id')) {
+      context.handle(
+        _homeIdMeta,
+        homeId.isAcceptableOrUnknown(data['home_id']!, _homeIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_homeIdMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('date_of_birth')) {
+      context.handle(
+        _dateOfBirthMeta,
+        dateOfBirth.isAcceptableOrUnknown(
+          data['date_of_birth']!,
+          _dateOfBirthMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_dateOfBirthMeta);
+    }
+    if (data.containsKey('room')) {
+      context.handle(
+        _roomMeta,
+        room.isAcceptableOrUnknown(data['room']!, _roomMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_roomMeta);
+    }
+    if (data.containsKey('photo_url')) {
+      context.handle(
+        _photoUrlMeta,
+        photoUrl.isAcceptableOrUnknown(data['photo_url']!, _photoUrlMeta),
+      );
+    }
+    if (data.containsKey('notes')) {
+      context.handle(
+        _notesMeta,
+        notes.isAcceptableOrUnknown(data['notes']!, _notesMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(
+        _deletedAtMeta,
+        deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta),
+      );
+    }
+    if (data.containsKey('created_by_id')) {
+      context.handle(
+        _createdByIdMeta,
+        createdById.isAcceptableOrUnknown(
+          data['created_by_id']!,
+          _createdByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('updated_by_id')) {
+      context.handle(
+        _updatedByIdMeta,
+        updatedById.isAcceptableOrUnknown(
+          data['updated_by_id']!,
+          _updatedByIdMeta,
+        ),
+      );
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  ChildRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return ChildRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}id'],
+      )!,
+      homeId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}home_id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      dateOfBirth: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}date_of_birth'],
+      )!,
+      room: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}room'],
+      )!,
+      photoUrl: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}photo_url'],
+      ),
+      notes: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}notes'],
+      ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      deletedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}deleted_at'],
+      ),
+      createdById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}created_by_id'],
+      ),
+      updatedById: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}updated_by_id'],
+      ),
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
+    );
+  }
+
+  @override
+  $ChildrenTableTable createAlias(String alias) {
+    return $ChildrenTableTable(attachedDatabase, alias);
+  }
+}
+
+class ChildRow extends DataClass implements Insertable<ChildRow> {
+  final String id;
+  final String homeId;
+  final String name;
+  final String dateOfBirth;
+  final String room;
+  final String? photoUrl;
+  final String? notes;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final DateTime? deletedAt;
+  final String? createdById;
+  final String? updatedById;
+  final bool isSynced;
+  const ChildRow({
+    required this.id,
+    required this.homeId,
+    required this.name,
+    required this.dateOfBirth,
+    required this.room,
+    this.photoUrl,
+    this.notes,
+    required this.createdAt,
+    required this.updatedAt,
+    this.deletedAt,
+    this.createdById,
+    this.updatedById,
+    required this.isSynced,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['home_id'] = Variable<String>(homeId);
+    map['name'] = Variable<String>(name);
+    map['date_of_birth'] = Variable<String>(dateOfBirth);
+    map['room'] = Variable<String>(room);
+    if (!nullToAbsent || photoUrl != null) {
+      map['photo_url'] = Variable<String>(photoUrl);
+    }
+    if (!nullToAbsent || notes != null) {
+      map['notes'] = Variable<String>(notes);
+    }
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || createdById != null) {
+      map['created_by_id'] = Variable<String>(createdById);
+    }
+    if (!nullToAbsent || updatedById != null) {
+      map['updated_by_id'] = Variable<String>(updatedById);
+    }
+    map['is_synced'] = Variable<bool>(isSynced);
+    return map;
+  }
+
+  ChildrenTableCompanion toCompanion(bool nullToAbsent) {
+    return ChildrenTableCompanion(
+      id: Value(id),
+      homeId: Value(homeId),
+      name: Value(name),
+      dateOfBirth: Value(dateOfBirth),
+      room: Value(room),
+      photoUrl: photoUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(photoUrl),
+      notes: notes == null && nullToAbsent
+          ? const Value.absent()
+          : Value(notes),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      createdById: createdById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(createdById),
+      updatedById: updatedById == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedById),
+      isSynced: Value(isSynced),
+    );
+  }
+
+  factory ChildRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return ChildRow(
+      id: serializer.fromJson<String>(json['id']),
+      homeId: serializer.fromJson<String>(json['homeId']),
+      name: serializer.fromJson<String>(json['name']),
+      dateOfBirth: serializer.fromJson<String>(json['dateOfBirth']),
+      room: serializer.fromJson<String>(json['room']),
+      photoUrl: serializer.fromJson<String?>(json['photoUrl']),
+      notes: serializer.fromJson<String?>(json['notes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      createdById: serializer.fromJson<String?>(json['createdById']),
+      updatedById: serializer.fromJson<String?>(json['updatedById']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'homeId': serializer.toJson<String>(homeId),
+      'name': serializer.toJson<String>(name),
+      'dateOfBirth': serializer.toJson<String>(dateOfBirth),
+      'room': serializer.toJson<String>(room),
+      'photoUrl': serializer.toJson<String?>(photoUrl),
+      'notes': serializer.toJson<String?>(notes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'createdById': serializer.toJson<String?>(createdById),
+      'updatedById': serializer.toJson<String?>(updatedById),
+      'isSynced': serializer.toJson<bool>(isSynced),
+    };
+  }
+
+  ChildRow copyWith({
+    String? id,
+    String? homeId,
+    String? name,
+    String? dateOfBirth,
+    String? room,
+    Value<String?> photoUrl = const Value.absent(),
+    Value<String?> notes = const Value.absent(),
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    Value<DateTime?> deletedAt = const Value.absent(),
+    Value<String?> createdById = const Value.absent(),
+    Value<String?> updatedById = const Value.absent(),
+    bool? isSynced,
+  }) => ChildRow(
+    id: id ?? this.id,
+    homeId: homeId ?? this.homeId,
+    name: name ?? this.name,
+    dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+    room: room ?? this.room,
+    photoUrl: photoUrl.present ? photoUrl.value : this.photoUrl,
+    notes: notes.present ? notes.value : this.notes,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+    createdById: createdById.present ? createdById.value : this.createdById,
+    updatedById: updatedById.present ? updatedById.value : this.updatedById,
+    isSynced: isSynced ?? this.isSynced,
+  );
+  ChildRow copyWithCompanion(ChildrenTableCompanion data) {
+    return ChildRow(
+      id: data.id.present ? data.id.value : this.id,
+      homeId: data.homeId.present ? data.homeId.value : this.homeId,
+      name: data.name.present ? data.name.value : this.name,
+      dateOfBirth: data.dateOfBirth.present
+          ? data.dateOfBirth.value
+          : this.dateOfBirth,
+      room: data.room.present ? data.room.value : this.room,
+      photoUrl: data.photoUrl.present ? data.photoUrl.value : this.photoUrl,
+      notes: data.notes.present ? data.notes.value : this.notes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      createdById: data.createdById.present
+          ? data.createdById.value
+          : this.createdById,
+      updatedById: data.updatedById.present
+          ? data.updatedById.value
+          : this.updatedById,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChildRow(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('name: $name, ')
+          ..write('dateOfBirth: $dateOfBirth, ')
+          ..write('room: $room, ')
+          ..write('photoUrl: $photoUrl, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    homeId,
+    name,
+    dateOfBirth,
+    room,
+    photoUrl,
+    notes,
+    createdAt,
+    updatedAt,
+    deletedAt,
+    createdById,
+    updatedById,
+    isSynced,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is ChildRow &&
+          other.id == this.id &&
+          other.homeId == this.homeId &&
+          other.name == this.name &&
+          other.dateOfBirth == this.dateOfBirth &&
+          other.room == this.room &&
+          other.photoUrl == this.photoUrl &&
+          other.notes == this.notes &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.deletedAt == this.deletedAt &&
+          other.createdById == this.createdById &&
+          other.updatedById == this.updatedById &&
+          other.isSynced == this.isSynced);
+}
+
+class ChildrenTableCompanion extends UpdateCompanion<ChildRow> {
+  final Value<String> id;
+  final Value<String> homeId;
+  final Value<String> name;
+  final Value<String> dateOfBirth;
+  final Value<String> room;
+  final Value<String?> photoUrl;
+  final Value<String?> notes;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<DateTime?> deletedAt;
+  final Value<String?> createdById;
+  final Value<String?> updatedById;
+  final Value<bool> isSynced;
+  final Value<int> rowid;
+  const ChildrenTableCompanion({
+    this.id = const Value.absent(),
+    this.homeId = const Value.absent(),
+    this.name = const Value.absent(),
+    this.dateOfBirth = const Value.absent(),
+    this.room = const Value.absent(),
+    this.photoUrl = const Value.absent(),
+    this.notes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  ChildrenTableCompanion.insert({
+    required String id,
+    required String homeId,
+    required String name,
+    required String dateOfBirth,
+    required String room,
+    this.photoUrl = const Value.absent(),
+    this.notes = const Value.absent(),
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.deletedAt = const Value.absent(),
+    this.createdById = const Value.absent(),
+    this.updatedById = const Value.absent(),
+    this.isSynced = const Value.absent(),
+    this.rowid = const Value.absent(),
+  }) : id = Value(id),
+       homeId = Value(homeId),
+       name = Value(name),
+       dateOfBirth = Value(dateOfBirth),
+       room = Value(room),
+       createdAt = Value(createdAt),
+       updatedAt = Value(updatedAt);
+  static Insertable<ChildRow> custom({
+    Expression<String>? id,
+    Expression<String>? homeId,
+    Expression<String>? name,
+    Expression<String>? dateOfBirth,
+    Expression<String>? room,
+    Expression<String>? photoUrl,
+    Expression<String>? notes,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<DateTime>? deletedAt,
+    Expression<String>? createdById,
+    Expression<String>? updatedById,
+    Expression<bool>? isSynced,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (homeId != null) 'home_id': homeId,
+      if (name != null) 'name': name,
+      if (dateOfBirth != null) 'date_of_birth': dateOfBirth,
+      if (room != null) 'room': room,
+      if (photoUrl != null) 'photo_url': photoUrl,
+      if (notes != null) 'notes': notes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (createdById != null) 'created_by_id': createdById,
+      if (updatedById != null) 'updated_by_id': updatedById,
+      if (isSynced != null) 'is_synced': isSynced,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  ChildrenTableCompanion copyWith({
+    Value<String>? id,
+    Value<String>? homeId,
+    Value<String>? name,
+    Value<String>? dateOfBirth,
+    Value<String>? room,
+    Value<String?>? photoUrl,
+    Value<String?>? notes,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<DateTime?>? deletedAt,
+    Value<String?>? createdById,
+    Value<String?>? updatedById,
+    Value<bool>? isSynced,
+    Value<int>? rowid,
+  }) {
+    return ChildrenTableCompanion(
+      id: id ?? this.id,
+      homeId: homeId ?? this.homeId,
+      name: name ?? this.name,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      room: room ?? this.room,
+      photoUrl: photoUrl ?? this.photoUrl,
+      notes: notes ?? this.notes,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      deletedAt: deletedAt ?? this.deletedAt,
+      createdById: createdById ?? this.createdById,
+      updatedById: updatedById ?? this.updatedById,
+      isSynced: isSynced ?? this.isSynced,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (homeId.present) {
+      map['home_id'] = Variable<String>(homeId.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (dateOfBirth.present) {
+      map['date_of_birth'] = Variable<String>(dateOfBirth.value);
+    }
+    if (room.present) {
+      map['room'] = Variable<String>(room.value);
+    }
+    if (photoUrl.present) {
+      map['photo_url'] = Variable<String>(photoUrl.value);
+    }
+    if (notes.present) {
+      map['notes'] = Variable<String>(notes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (createdById.present) {
+      map['created_by_id'] = Variable<String>(createdById.value);
+    }
+    if (updatedById.present) {
+      map['updated_by_id'] = Variable<String>(updatedById.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('ChildrenTableCompanion(')
+          ..write('id: $id, ')
+          ..write('homeId: $homeId, ')
+          ..write('name: $name, ')
+          ..write('dateOfBirth: $dateOfBirth, ')
+          ..write('room: $room, ')
+          ..write('photoUrl: $photoUrl, ')
+          ..write('notes: $notes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('createdById: $createdById, ')
+          ..write('updatedById: $updatedById, ')
+          ..write('isSynced: $isSynced, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -17793,6 +18558,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $StepProgressTableTable(this);
   late final $IncidentReportsTableTable incidentReportsTable =
       $IncidentReportsTableTable(this);
+  late final $ChildrenTableTable childrenTable = $ChildrenTableTable(this);
   late final DailyNotesDao dailyNotesDao = DailyNotesDao(this as AppDatabase);
   late final ChecklistItemsDao checklistItemsDao = ChecklistItemsDao(
     this as AppDatabase,
@@ -17822,6 +18588,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final IncidentReportsDao incidentReportsDao = IncidentReportsDao(
     this as AppDatabase,
   );
+  late final ChildrenDao childrenDao = ChildrenDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -17845,6 +18612,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     smartStepsTable,
     stepProgressTable,
     incidentReportsTable,
+    childrenTable,
   ];
 }
 
@@ -26038,6 +26806,361 @@ typedef $$IncidentReportsTableTableProcessedTableManager =
       IncidentReportRow,
       PrefetchHooks Function()
     >;
+typedef $$ChildrenTableTableCreateCompanionBuilder =
+    ChildrenTableCompanion Function({
+      required String id,
+      required String homeId,
+      required String name,
+      required String dateOfBirth,
+      required String room,
+      Value<String?> photoUrl,
+      Value<String?> notes,
+      required DateTime createdAt,
+      required DateTime updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+typedef $$ChildrenTableTableUpdateCompanionBuilder =
+    ChildrenTableCompanion Function({
+      Value<String> id,
+      Value<String> homeId,
+      Value<String> name,
+      Value<String> dateOfBirth,
+      Value<String> room,
+      Value<String?> photoUrl,
+      Value<String?> notes,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<DateTime?> deletedAt,
+      Value<String?> createdById,
+      Value<String?> updatedById,
+      Value<bool> isSynced,
+      Value<int> rowid,
+    });
+
+class $$ChildrenTableTableFilterComposer
+    extends Composer<_$AppDatabase, $ChildrenTableTable> {
+  $$ChildrenTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get photoUrl => $composableBuilder(
+    column: $table.photoUrl,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnFilters(column),
+  );
+}
+
+class $$ChildrenTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $ChildrenTableTable> {
+  $$ChildrenTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get homeId => $composableBuilder(
+    column: $table.homeId,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get room => $composableBuilder(
+    column: $table.room,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get photoUrl => $composableBuilder(
+    column: $table.photoUrl,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get notes => $composableBuilder(
+    column: $table.notes,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+    column: $table.deletedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isSynced => $composableBuilder(
+    column: $table.isSynced,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$ChildrenTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ChildrenTableTable> {
+  $$ChildrenTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get homeId =>
+      $composableBuilder(column: $table.homeId, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get dateOfBirth => $composableBuilder(
+    column: $table.dateOfBirth,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get room =>
+      $composableBuilder(column: $table.room, builder: (column) => column);
+
+  GeneratedColumn<String> get photoUrl =>
+      $composableBuilder(column: $table.photoUrl, builder: (column) => column);
+
+  GeneratedColumn<String> get notes =>
+      $composableBuilder(column: $table.notes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get createdById => $composableBuilder(
+    column: $table.createdById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<String> get updatedById => $composableBuilder(
+    column: $table.updatedById,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<bool> get isSynced =>
+      $composableBuilder(column: $table.isSynced, builder: (column) => column);
+}
+
+class $$ChildrenTableTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $ChildrenTableTable,
+          ChildRow,
+          $$ChildrenTableTableFilterComposer,
+          $$ChildrenTableTableOrderingComposer,
+          $$ChildrenTableTableAnnotationComposer,
+          $$ChildrenTableTableCreateCompanionBuilder,
+          $$ChildrenTableTableUpdateCompanionBuilder,
+          (
+            ChildRow,
+            BaseReferences<_$AppDatabase, $ChildrenTableTable, ChildRow>,
+          ),
+          ChildRow,
+          PrefetchHooks Function()
+        > {
+  $$ChildrenTableTableTableManager(_$AppDatabase db, $ChildrenTableTable table)
+    : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$ChildrenTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$ChildrenTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$ChildrenTableTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<String> id = const Value.absent(),
+                Value<String> homeId = const Value.absent(),
+                Value<String> name = const Value.absent(),
+                Value<String> dateOfBirth = const Value.absent(),
+                Value<String> room = const Value.absent(),
+                Value<String?> photoUrl = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChildrenTableCompanion(
+                id: id,
+                homeId: homeId,
+                name: name,
+                dateOfBirth: dateOfBirth,
+                room: room,
+                photoUrl: photoUrl,
+                notes: notes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                createdById: createdById,
+                updatedById: updatedById,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required String id,
+                required String homeId,
+                required String name,
+                required String dateOfBirth,
+                required String room,
+                Value<String?> photoUrl = const Value.absent(),
+                Value<String?> notes = const Value.absent(),
+                required DateTime createdAt,
+                required DateTime updatedAt,
+                Value<DateTime?> deletedAt = const Value.absent(),
+                Value<String?> createdById = const Value.absent(),
+                Value<String?> updatedById = const Value.absent(),
+                Value<bool> isSynced = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => ChildrenTableCompanion.insert(
+                id: id,
+                homeId: homeId,
+                name: name,
+                dateOfBirth: dateOfBirth,
+                room: room,
+                photoUrl: photoUrl,
+                notes: notes,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                deletedAt: deletedAt,
+                createdById: createdById,
+                updatedById: updatedById,
+                isSynced: isSynced,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ),
+      );
+}
+
+typedef $$ChildrenTableTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $ChildrenTableTable,
+      ChildRow,
+      $$ChildrenTableTableFilterComposer,
+      $$ChildrenTableTableOrderingComposer,
+      $$ChildrenTableTableAnnotationComposer,
+      $$ChildrenTableTableCreateCompanionBuilder,
+      $$ChildrenTableTableUpdateCompanionBuilder,
+      (ChildRow, BaseReferences<_$AppDatabase, $ChildrenTableTable, ChildRow>),
+      ChildRow,
+      PrefetchHooks Function()
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -26087,6 +27210,8 @@ class $AppDatabaseManager {
       $$StepProgressTableTableTableManager(_db, _db.stepProgressTable);
   $$IncidentReportsTableTableTableManager get incidentReportsTable =>
       $$IncidentReportsTableTableTableManager(_db, _db.incidentReportsTable);
+  $$ChildrenTableTableTableManager get childrenTable =>
+      $$ChildrenTableTableTableManager(_db, _db.childrenTable);
 }
 
 // **************************************************************************

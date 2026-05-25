@@ -41,6 +41,7 @@ import '../../features/checklists/presentation/home_cleaning_screen.dart';
 import '../../features/checklists/presentation/visitor_log_entry_screen.dart';
 import '../../features/checklists/presentation/visitor_log_screen.dart';
 import '../../features/checklists/domain/visitor_log_entry.dart';
+import '../../features/children/presentation/add_child_screen.dart';
 import '../../features/children/presentation/children_list_screen.dart';
 import '../../features/daily_notes/domain/daily_note.dart';
 import '../../features/children/presentation/child_profile_screen.dart';
@@ -95,6 +96,10 @@ GoRouter appRouter(Ref ref) {
             path: AppRoutes.children,
             builder: (_, _) => const ChildrenListScreen(),
             routes: [
+              GoRoute(
+                path: 'new',
+                builder: (_, _) => const AddChildScreen(),
+              ),
               GoRoute(
                 path: ':id',
                 builder: (_, state) => ChildProfileScreen(

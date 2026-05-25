@@ -1,30 +1,34 @@
-/// Represents a child resident in the home.
-class Child {
-  const Child({
-    required this.id,
-    required this.homeId,
-    required this.name,
-    required this.dateOfBirth,
-    required this.room,
-    this.photoUrl,
-    this.notes,
-    required this.createdAt,
-    required this.updatedAt,
-    this.deletedAt,
-  });
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  final String id;
-  final String homeId;
-  final String name;
-  final DateTime dateOfBirth;
-  final String room;
-  final String? photoUrl;
-  final String? notes;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final DateTime? deletedAt;
+part 'child.freezed.dart';
+part 'child.g.dart';
 
-  /// Returns initials for the avatar (up to 2 characters).
+/// A child resident in the home.
+/// Written to local Drift first; synced to Supabase when online.
+@freezed
+class Child with _$Child {
+  const Child._();
+
+  const factory Child({
+    required String id,
+    required String homeId,
+    required String name,
+    required String dateOfBirth, // YYYY-MM-DD
+    required String room,
+    String? photoUrl,
+    String? notes,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    DateTime? deletedAt,
+    String? createdById,
+    String? updatedById,
+    @Default(false) bool isSynced,
+  }) = _Child;
+
+  factory Child.fromJson(Map<String, dynamic> json) =>
+      _$ChildFromJson(json);
+
+  /// Up to two initials for the avatar.
   String get initials {
     final parts = name.trim().split(' ');
     if (parts.length >= 2) {
@@ -33,33 +37,21 @@ class Child {
     return name.substring(0, name.length.clamp(0, 2)).toUpperCase();
   }
 
+  /// Age in whole years, computed from [dateOfBirth].
   int get ageYears {
+    final parts = dateOfBirth.split('-');
+    if (parts.length != 3) return 0;
+    final dob = DateTime(
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+    );
     final now = DateTime.now();
-    int age = now.year - dateOfBirth.year;
-    if (now.month < dateOfBirth.month ||
-        (now.month == dateOfBirth.month && now.day < dateOfBirth.day)) {
+    int age = now.year - dob.year;
+    if (now.month < dob.month ||
+        (now.month == dob.month && now.day < dob.day)) {
       age--;
     }
     return age;
-  }
-
-  Child copyWith({
-    String? name,
-    String? room,
-    String? photoUrl,
-    String? notes,
-  }) {
-    return Child(
-      id: id,
-      homeId: homeId,
-      name: name ?? this.name,
-      dateOfBirth: dateOfBirth,
-      room: room ?? this.room,
-      photoUrl: photoUrl ?? this.photoUrl,
-      notes: notes ?? this.notes,
-      createdAt: createdAt,
-      updatedAt: DateTime.now(),
-      deletedAt: deletedAt,
-    );
   }
 }
