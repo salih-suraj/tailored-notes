@@ -82,7 +82,7 @@ Every new feature added without them makes the retrofit harder.
 | # | Task | Status | Notes |
 |---|------|--------|-------|
 | 24 | Incident reporting (replaces Datix) | ✅ | `features/incidents/`. IncidentReport (freezed), 6 incident types (behaviour/medical/accident/property damage/missing person/safeguarding), 4 severity levels, immediate action, injury details, police/parent/manager notification toggles, follow-up tracking. Drift table + DAO + repo (audit wired) + providers + list screen + editor. Module card on child profile. schemaVersion 14. |
-| 25 | Auto shift handover summary | ⬜ | Compiles key information from the shift into a clear summary for the next team. Reduces manual effort for Team Leaders. |
+| 25 | Auto shift handover summary | ✅ | `features/handover/`. HandoverSummaryScreen auto-generates from live Drift data — no manual entry. Per-child cards with flag chips (physical intervention/safeguarding/critical/med refusal) and section rows for notes, behaviour, incidents, medication, bath temp. Accessible via summarize button on Handover tab. |
 | 26 | Team Leader oversight queue | ✅ | `features/handover/`. Shift overview screen on the Handover tab. Per-shift progress bar, children split into Needs Attention / Fully Documented sections. Each card shows missing sections or ✓ all complete. Taps through to child profile. Live from Drift streams. |
 | 27 | Manager Oversight Dashboard | ⬜ | Completion levels across staff/shifts, incidents, behaviour trends, medication records, safeguarding alerts. Real-time overview. |
 | 28 | Behaviour Pattern Tracking Dashboard | ⬜ | Visual analytics — trends over time, potential triggers, sleep/activity correlations. |
@@ -139,12 +139,12 @@ Every new feature added without them makes the retrofit harder.
 | Phase 1 — Foundation | 8 of 9 | (MFA pending Supabase) | 89% |
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
-| Phase 4 — Oversight | 2 of 5 | (Incidents + Team Leader oversight done) | 40% |
+| Phase 4 — Oversight | 3 of 5 | (Incidents + Team Leader oversight + Handover summary done) | 60% |
 | Phase 5 — External | 0 of 3 | | 0% |
 | Backend / Supabase | 0 of 8 | (all blocked on B1) | 0% |
 | Infrastructure gaps | 3 of 5 | (I4 MFA + I5 semantics pending) | 60% |
 | Quality / cross-cutting | 0 of 9 | | 0% |
-| **Total** | **27 of 53** | | **51%** |
+| **Total** | **28 of 53** | | **53%** |
 
 ---
 
