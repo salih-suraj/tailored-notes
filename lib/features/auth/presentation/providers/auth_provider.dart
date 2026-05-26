@@ -18,6 +18,8 @@ Stream<AuthState> authStateChanges(Ref ref) {
 }
 
 /// The currently signed-in [AppUser], or null if unauthenticated.
+/// Watches [authStateChangesProvider] so it re-computes on login, logout,
+/// and MFA AAL upgrade — ensuring the router always sees fresh auth state.
 @riverpod
 AppUser? currentUser(Ref ref) {
   if (kDevMode) {
@@ -27,18 +29,15 @@ AppUser? currentUser(Ref ref) {
       role: UserRole.manager,
       homeId: 'dev-home-001',
       displayName: 'Dev User',
+      isMfaVerified: true,
     );
   }
+  ref.watch(authStateChangesProvider);
   final client = ref.watch(supabaseClientProvider);
   if (client == null) return null;
   final session = client.auth.currentSession;
   if (session == null) return null;
-  final supaUser = session.user;
-  return AppUser.fromMetadata(
-    id: supaUser.id,
-    email: supaUser.email ?? '',
-    metadata: supaUser.userMetadata ?? {},
-  );
+  return AppUser.fromSession(session);
 }
 
 /// True when a user is authenticated.

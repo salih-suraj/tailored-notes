@@ -44,9 +44,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
-    } else {
-      context.go(AppRoutes.children);
     }
+    // On success the router's refreshListenable fires and handles navigation
+    // (to /mfa for manager/inspector or /children for other roles).
   }
 
   @override

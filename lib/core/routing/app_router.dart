@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
+import '../../features/auth/presentation/mfa_screen.dart';
 import '../../features/handover/presentation/team_leader_oversight_screen.dart';
 import '../../features/incidents/domain/incident_report.dart';
 import '../../features/incidents/presentation/incident_report_editor_screen.dart';
@@ -74,13 +75,21 @@ GoRouter appRouter(Ref ref) {
     debugLogDiagnostics: kDebugMode,
     refreshListenable: authChange,
     redirect: (context, state) {
-      final isAuth = ref.read(isAuthenticatedProvider);
+      final user = ref.read(currentUserProvider);
       final location = state.matchedLocation;
       final isAuthRoute = location == AppRoutes.login ||
           location == AppRoutes.forgotPassword;
+      final isMfaRoute = location == AppRoutes.mfa;
 
-      if (!isAuth && !isAuthRoute) return AppRoutes.login;
-      if (isAuth && isAuthRoute) return AppRoutes.children;
+      if (user == null && !isAuthRoute) return AppRoutes.login;
+      if (user == null) return null;
+
+      // Authenticated — decide where to send them.
+      if (isAuthRoute) {
+        return user.needsMfaChallenge ? AppRoutes.mfa : AppRoutes.children;
+      }
+      if (user.needsMfaChallenge && !isMfaRoute) return AppRoutes.mfa;
+      if (!user.needsMfaChallenge && isMfaRoute) return AppRoutes.children;
       return null;
     },
     routes: [
@@ -91,6 +100,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: AppRoutes.forgotPassword,
         builder: (_, _) => const PlaceholderScreen(title: 'Forgot Password'),
+      ),
+      GoRoute(
+        path: AppRoutes.mfa,
+        builder: (_, _) => const MfaScreen(),
       ),
       ShellRoute(
         builder: (context, state, child) => NavShell(child: child),

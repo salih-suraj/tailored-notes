@@ -16,6 +16,26 @@ abstract final class AppStrings {
   static const showPassword = 'Show password';
   static const hidePassword = 'Hide password';
 
+  // MFA
+  static const mfaTitle = 'Two-Factor Authentication';
+  static const mfaEnrollTitle = 'Set Up Authenticator';
+  static const mfaEnrollBody =
+      'Your role requires two-factor authentication. '
+      'Open Google Authenticator, Authy, or any TOTP app, '
+      'tap Add Account, and enter the key below.';
+  static const mfaSecretLabel = 'MANUAL ENTRY KEY';
+  static const mfaEnrollConfirmPrompt =
+      'Once added, enter the 6-digit code from the app to confirm.';
+  static const mfaChallengeBody =
+      'Enter the 6-digit code from your authenticator app.';
+  static const mfaCodeLabel = 'VERIFICATION CODE';
+  static const mfaCodeHint = '000000';
+  static const mfaCodeRequired = 'Enter the 6-digit code';
+  static const mfaCodeLength = 'Code must be 6 digits';
+  static const mfaVerify = 'Verify';
+  static const mfaVerifying = 'Verifying…';
+  static const mfaCopied = 'Key copied to clipboard';
+
   // Navigation
   static const navChildren = 'Children';
   static const navDailyNotes = 'Daily Notes';
