@@ -53,19 +53,26 @@ class HandoverSummaryScreen extends ConsumerWidget {
               ),
             );
           }
-          return ListView(
+          // ListView.builder — each _ChildSummaryCard watches 7 providers;
+          // virtualising prevents building off-screen cards at startup.
+          return ListView.builder(
             padding: const EdgeInsets.all(AppSpacing.lg),
-            children: [
-              _HeaderCard(shift: shift, now: now, childCount: children.length),
-              const SizedBox(height: AppSpacing.lg),
-              ...children.map(
-                (c) => Padding(
-                  padding: const EdgeInsets.only(bottom: AppSpacing.md),
-                  child: _ChildSummaryCard(child: c, shift: shift, now: now),
-                ),
-              ),
-              const SizedBox(height: 80),
-            ],
+            itemCount: children.length + 3,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return _HeaderCard(
+                    shift: shift, now: now, childCount: children.length);
+              }
+              if (index == 1) return const SizedBox(height: AppSpacing.lg);
+              if (index == children.length + 2) {
+                return const SizedBox(height: 80);
+              }
+              final c = children[index - 2];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: AppSpacing.md),
+                child: _ChildSummaryCard(child: c, shift: shift, now: now),
+              );
+            },
           );
         },
       ),

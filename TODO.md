@@ -127,6 +127,7 @@ Every new feature added without them makes the retrofit harder.
 | Q7 | Integration tests — offline→online sync, auth flow | ⬜ | 0 tests written. Guide specifies `test/integration/`. |
 | Q8 | CI — `dart format` + `dart analyze` gate on every push | ⬜ | |
 | Q9 | Update ROADMAP.md to reflect actual current status | ⬜ | Needs a full update to match current progress. |
+| Q10 | ~~reactive_forms~~ — **dropped from stack** | ✅ | Guide listed it as required but entire codebase (15+ screens) uses TextEditingController consistently. Migrating would be pure churn with regression risk and no functional gain. Removed from pubspec. Decision logged in ROADMAP. |
 
 ---
 

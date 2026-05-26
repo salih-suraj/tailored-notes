@@ -33,6 +33,7 @@ class DailyNoteEditorScreen extends ConsumerStatefulWidget {
 
 class _DailyNoteEditorScreenState
     extends ConsumerState<DailyNoteEditorScreen> {
+  // late: both assigned unconditionally in initState before first use.
   late final TextEditingController _content;
   late ShiftType _shift;
   final _speech = SpeechToText();

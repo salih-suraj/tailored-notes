@@ -105,6 +105,8 @@
 | 2026-05-19 | Added `updated_by_id/name` to DailyNotesTable | Audit compliance — track who last edited a note |
 | 2026-05-19 | Added `created_by_id/updated_by_id` to ChecklistItemsTable | Standard across all tables per build brief |
 | 2026-05-19 | AuditLogWriter uses `record()` not `log()` | Avoids name collision with `dart:developer` |
+| 2026-05-26 | Dropped `reactive_forms` from tech stack | Guide listed it as required but entire codebase (15+ screens) built consistently with TextEditingController. Migration would be pure churn with regression risk and zero functional gain. Formally removed from pubspec. |
+| 2026-05-26 | Moved `ShiftType` to `shared/models/shift_type.dart` | Was incorrectly defined inside `daily_notes/domain/daily_note.dart` despite being used by behaviour, medication, handover, and dashboard features. Exported from `daily_note.dart` for backwards compatibility. |
 
 ---
 

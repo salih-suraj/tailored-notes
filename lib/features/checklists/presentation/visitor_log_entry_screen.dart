@@ -31,6 +31,7 @@ class _VisitorLogEntryScreenState
   final _authorisedByController = TextEditingController();
   final _notesController = TextEditingController();
   String? _selectedRelation;
+  // late: assigned unconditionally in initState before first use.
   late DateTime _arrivedAt;
   bool _saving = false;
 

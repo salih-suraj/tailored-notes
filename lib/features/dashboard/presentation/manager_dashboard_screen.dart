@@ -9,7 +9,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../features/behaviour/domain/behaviour_incident.dart';
 import '../../../features/behaviour/presentation/providers/behaviour_provider.dart';
-import '../../../features/daily_notes/domain/daily_note.dart' show ShiftType;
+import '../../../shared/models/shift_type.dart';
 import '../../../features/children/domain/child.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
 import '../../../features/incidents/domain/incident_report.dart';
