@@ -36,7 +36,16 @@ class ManagerDashboardScreen extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.dashboardTitle)),
+      appBar: AppBar(
+        title: const Text(AppStrings.dashboardTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.insights_outlined),
+            tooltip: AppStrings.dashboardViewBehaviourPatterns,
+            onPressed: () => context.push(AppRoutes.behaviourPatterns),
+          ),
+        ],
+      ),
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(

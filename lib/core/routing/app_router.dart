@@ -42,6 +42,7 @@ import '../../features/checklists/presentation/visitor_log_entry_screen.dart';
 import '../../features/checklists/presentation/visitor_log_screen.dart';
 import '../../features/checklists/domain/visitor_log_entry.dart';
 import '../../features/children/presentation/add_child_screen.dart';
+import '../../features/dashboard/presentation/behaviour_pattern_screen.dart';
 import '../../features/dashboard/presentation/manager_dashboard_screen.dart';
 import '../../features/handover/presentation/handover_summary_screen.dart';
 import '../../features/children/presentation/children_list_screen.dart';
@@ -415,6 +416,12 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: AppRoutes.dashboard,
             builder: (_, _) => const ManagerDashboardScreen(),
+            routes: [
+              GoRoute(
+                path: 'behaviour-patterns',
+                builder: (_, _) => const BehaviourPatternScreen(),
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutes.inspector,

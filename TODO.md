@@ -85,7 +85,7 @@ Every new feature added without them makes the retrofit harder.
 | 25 | Auto shift handover summary | ✅ | `features/handover/`. HandoverSummaryScreen auto-generates from live Drift data — no manual entry. Per-child cards with flag chips (physical intervention/safeguarding/critical/med refusal) and section rows for notes, behaviour, incidents, medication, bath temp. Accessible via summarize button on Handover tab. |
 | 26 | Team Leader oversight queue | ✅ | `features/handover/`. Shift overview screen on the Handover tab. Per-shift progress bar, children split into Needs Attention / Fully Documented sections. Each card shows missing sections or ✓ all complete. Taps through to child profile. Live from Drift streams. |
 | 27 | Manager Oversight Dashboard | ✅ | `features/dashboard/`. ManagerDashboardScreen — aggregates all children live from Drift. Header stats card, priority alert cards (safeguarding/critical/intervention/med refusal), documentation status with child names, incidents by severity, behaviour summary. Route: /dashboard. |
-| 28 | Behaviour Pattern Tracking Dashboard | ⬜ | Visual analytics — trends over time, potential triggers, sleep/activity correlations. |
+| 28 | Behaviour Pattern Tracking Dashboard | ✅ | `features/dashboard/`. BehaviourPatternScreen — fl_chart bar chart (daily trend), shift/severity/child breakdown bars, top 5 antecedents. Period filter (7/14/30 days), child filter dropdown. Accessible from Manager Dashboard + Team Leader Oversight AppBars. Route: /dashboard/behaviour-patterns. |
 
 ---
 
@@ -140,12 +140,12 @@ Every new feature added without them makes the retrofit harder.
 | Phase 1 — Foundation | 8 of 9 | (MFA pending Supabase) | 89% |
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
-| Phase 4 — Oversight | 4 of 5 | (Incidents + Team Leader oversight + Handover summary + Manager dashboard done) | 80% |
+| Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
 | Phase 5 — External | 0 of 3 | | 0% |
 | Backend / Supabase | 0 of 8 | (all blocked on B1) | 0% |
 | Infrastructure gaps | 3 of 5 | (I4 MFA + I5 semantics pending) | 60% |
 | Quality / cross-cutting | 0 of 9 | | 0% |
-| **Total** | **29 of 53** | | **55%** |
+| **Total** | **30 of 53** | | **57%** |
 
 ---
 

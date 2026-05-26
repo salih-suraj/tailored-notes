@@ -469,6 +469,23 @@ abstract final class AppStrings {
   static const dashboardIncidents = 'Incidents Today';
   static const dashboardBehaviour = 'Behaviour Today';
   static const dashboardNone = 'None today';
+  static const dashboardViewBehaviourPatterns = 'Behaviour Patterns';
+
+  // Behaviour Pattern Tracking
+  static const behaviourPatternsTitle = 'Behaviour Patterns';
+  static const behaviourPatternsAllChildren = 'All children';
+  static const behaviourPatternsDays7 = '7 days';
+  static const behaviourPatternsDays14 = '14 days';
+  static const behaviourPatternsDays30 = '30 days';
+  static const behaviourPatternsNoData = 'No behaviour incidents in this period';
+  static const behaviourPatternsTotalLabel = 'Total';
+  static const behaviourPatternsInterventionsLabel = 'Interventions';
+  static const behaviourPatternsInjuriesLabel = 'Injuries';
+  static const behaviourPatternsTrendTitle = 'Daily Trend';
+  static const behaviourPatternsShiftTitle = 'By Shift';
+  static const behaviourPatternsSeverityTitle = 'By Severity';
+  static const behaviourPatternsChildTitle = 'By Child';
+  static const behaviourPatternsTriggersTitle = 'Common Antecedents';
 
   // Incomplete documentation alerts
   static const alertIncompleteTitle = 'Documentation outstanding this shift';

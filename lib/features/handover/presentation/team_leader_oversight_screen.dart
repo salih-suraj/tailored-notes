@@ -34,6 +34,11 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
         title: const Text(AppStrings.oversightTitle),
         actions: [
           IconButton(
+            icon: const Icon(Icons.insights_outlined),
+            tooltip: AppStrings.dashboardViewBehaviourPatterns,
+            onPressed: () => context.push(AppRoutes.behaviourPatterns),
+          ),
+          IconButton(
             icon: const Icon(Icons.summarize_outlined),
             tooltip: AppStrings.oversightViewSummary,
             onPressed: () => context.push(AppRoutes.handoverSummary),
