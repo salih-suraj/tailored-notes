@@ -55,7 +55,7 @@
 | 17 | Incident reporting (replaces Datix) | `done` | `features/incidents/`. 6 types, 4 severity levels, notifications, follow-up. schemaVersion 14. |
 | 18 | Shift handover summary (auto-generated) | `done` | `features/handover/`. HandoverSummaryScreen — per-child flag chips + section rows, live from Drift. |
 | 19 | Team Leader oversight queue | `done` | Shift overview on Handover tab. Progress bar, Needs Attention / Fully Documented sections, taps to child profile. |
-| 20 | Manager Oversight Dashboard | `todo` | |
+| 20 | Manager Oversight Dashboard | `done` | `features/dashboard/`. ManagerDashboardScreen — priority alerts + aggregated home-wide stats. |
 | 21 | Behaviour Pattern Tracking Dashboard | `todo` | |
 
 ---

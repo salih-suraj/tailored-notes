@@ -457,6 +457,19 @@ abstract final class AppStrings {
   static const handoverFlagCritical = 'Critical incident';
   static const handoverFlagMedRefusal = 'Med refused';
 
+  // Manager Dashboard
+  static const dashboardTitle = 'Manager Dashboard';
+  static const dashboardDocumented = 'documented';
+  static const dashboardAlertSafeguarding = 'Safeguarding Alert';
+  static const dashboardAlertCritical = 'Critical Incident';
+  static const dashboardAlertIntervention = 'Physical Intervention';
+  static const dashboardAlertMedRefusal = 'Medication Refusal';
+  static const dashboardDocumentation = 'Documentation';
+  static const dashboardAllDocumented = 'All children documented this shift';
+  static const dashboardIncidents = 'Incidents Today';
+  static const dashboardBehaviour = 'Behaviour Today';
+  static const dashboardNone = 'None today';
+
   // Incomplete documentation alerts
   static const alertIncompleteTitle = 'Documentation outstanding this shift';
   static const alertNotRecordedThisShift = 'Not yet recorded this shift';
