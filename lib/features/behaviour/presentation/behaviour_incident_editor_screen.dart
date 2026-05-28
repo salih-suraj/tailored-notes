@@ -424,7 +424,7 @@ class _BehaviourIncidentEditorScreenState
 
   Color _severityColor(BehaviourSeverity s) => switch (s) {
         BehaviourSeverity.mild => AppColors.amber,
-        BehaviourSeverity.moderate => const Color(0xFFE87510),
+        BehaviourSeverity.moderate => AppColors.orange,
         BehaviourSeverity.severe => AppColors.red,
       };
 }

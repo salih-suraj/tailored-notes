@@ -412,7 +412,7 @@ class _IncidentReportEditorScreenState
   Color _typeColor(IncidentType t) => switch (t) {
         IncidentType.behaviour => AppColors.amber,
         IncidentType.medical => AppColors.blue,
-        IncidentType.accident => const Color(0xFFE87510),
+        IncidentType.accident => AppColors.orange,
         IncidentType.propertyDamage => AppColors.slate400,
         IncidentType.missingPerson => AppColors.red,
         IncidentType.safeguarding => AppColors.roleInspector,
@@ -421,7 +421,7 @@ class _IncidentReportEditorScreenState
   Color _severityColor(IncidentSeverity s) => switch (s) {
         IncidentSeverity.low => AppColors.green,
         IncidentSeverity.medium => AppColors.amber,
-        IncidentSeverity.high => const Color(0xFFE87510),
+        IncidentSeverity.high => AppColors.orange,
         IncidentSeverity.critical => AppColors.red,
       };
 }

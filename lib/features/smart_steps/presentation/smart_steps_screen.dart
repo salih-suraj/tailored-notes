@@ -293,9 +293,9 @@ class _StepCard extends StatelessWidget {
         StepCategory.selfCare => AppColors.teal400,
         StepCategory.independence => AppColors.green,
         StepCategory.social => AppColors.amber,
-        StepCategory.emotional => const Color(0xFF9C27B0),
+        StepCategory.emotional => AppColors.purple,
         StepCategory.learning => AppColors.roleSupportWorker,
-        StepCategory.physical => const Color(0xFFE87510),
+        StepCategory.physical => AppColors.orange,
         StepCategory.other => AppColors.slate400,
       };
 }

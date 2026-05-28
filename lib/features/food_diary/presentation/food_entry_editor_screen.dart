@@ -301,7 +301,7 @@ class _FoodEntryEditorScreenState
 
   Color _mealColor(MealType m) => switch (m) {
         MealType.breakfast => AppColors.amber,
-        MealType.morningSnack => const Color(0xFFD4892A),
+        MealType.morningSnack => AppColors.darkAmber,
         MealType.lunch => AppColors.teal400,
         MealType.afternoonSnack => AppColors.blue,
         MealType.dinner => AppColors.green,

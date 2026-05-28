@@ -16,9 +16,11 @@ abstract final class AppColors {
 
   // Semantic
   static const amber = Color(0xFFEF9F27);
+  static const orange = Color(0xFFE87510);
   static const red = Color(0xFFE24B4A);
   static const blue = Color(0xFF378ADD);
   static const green = Color(0xFF639922);
+  static const purple = Color(0xFF9C27B0);
 
   // Role indicators
   static const roleSupportWorker = teal400;

@@ -341,7 +341,7 @@ class _ActivityEntryEditorScreenState
         ActivityCategory.educational => AppColors.teal400,
         ActivityCategory.social => AppColors.amber,
         ActivityCategory.community => AppColors.roleSupportWorker,
-        ActivityCategory.lifeSkills => const Color(0xFF9C27B0),
+        ActivityCategory.lifeSkills => AppColors.purple,
         ActivityCategory.other => AppColors.slate400,
       };
 }
