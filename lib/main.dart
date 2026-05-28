@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app.dart';
@@ -13,7 +14,8 @@ const _supabaseUrl = String.fromEnvironment('SUPABASE_URL');
 const _supabaseAnonKey = String.fromEnvironment('SUPABASE_ANON_KEY');
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  final widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   if (_supabaseUrl.isNotEmpty && _supabaseAnonKey.isNotEmpty) {
     await SupabaseInit.initialize(
@@ -21,6 +23,8 @@ void main() async {
       anonKey: _supabaseAnonKey,
     );
   }
+
+  FlutterNativeSplash.remove();
 
   runApp(
     const ProviderScope(
