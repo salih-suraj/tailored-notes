@@ -189,6 +189,11 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          Image.asset(
+            'assets/images/logo.png',
+            height: 72,
+          ),
+          const SizedBox(height: AppSpacing.md),
           Text(
             AppStrings.appName,
             style: GoogleFonts.dmSerifDisplay(

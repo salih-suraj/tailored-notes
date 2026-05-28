@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Design-token colour constants. All values from the TailorEd design system.
 abstract final class AppColors {
-  // Primary — Teal
-  static const teal400 = Color(0xFF1D9E75);
-  static const teal600 = Color(0xFF0F6E56);
-  static const teal50 = Color(0xFFE1F5EE);
+  // Primary — Brand Blue
+  static const teal400 = Color(0xFF5271FF);
+  static const teal600 = Color(0xFF3A58E0);
+  static const teal50 = Color(0xFFEEF1FF);
 
   // Neutral — Slate
   static const slate900 = Color(0xFF2C2C2A);

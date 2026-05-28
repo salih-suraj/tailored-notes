@@ -71,11 +71,16 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    // Wordmark
+                    // Logo + wordmark
+                    Image.asset(
+                      'assets/images/logo.png',
+                      height: 80,
+                    ),
+                    const SizedBox(height: AppSpacing.md),
                     Text(
                       AppStrings.appName,
                       style: GoogleFonts.dmSerifDisplay(
-                        fontSize: 32,
+                        fontSize: 28,
                         color: AppColors.teal600,
                         height: 1.2,
                       ),
