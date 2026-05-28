@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -99,18 +99,17 @@ class ActivitiesScreen extends ConsumerWidget {
       BuildContext context, WidgetRef ref, String id) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text(AppStrings.activitiesDeleteTitle),
         content: const Text(AppStrings.activitiesDeleteConfirm),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
             child: const Text(AppStrings.cancel),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -283,3 +282,4 @@ class _Badge extends StatelessWidget {
         child: Text(label, style: AppTextStyles.label(color)),
       );
 }
+

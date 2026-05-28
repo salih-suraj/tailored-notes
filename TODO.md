@@ -128,12 +128,14 @@ Every new feature added without them makes the retrofit harder.
 | Q8 | CI — `dart format` + `dart analyze` gate on every push | ⬜ | |
 | Q9 | Update ROADMAP.md to reflect actual current status | ⬜ | Needs a full update to match current progress. |
 | Q10 | ~~reactive_forms~~ — **dropped from stack** | ✅ | Guide listed it as required but entire codebase (15+ screens) uses TextEditingController consistently. Migrating would be pure churn with regression risk and no functional gain. Removed from pubspec. Decision logged in ROADMAP. |
+| Q11 | Fix delete confirmation dialogs — all screens | ✅ | `Navigator.pop(context, ...)` inside dialog builders was using the outer screen context instead of the dialog's own context, causing the wrong navigator to be popped inside ShellRoute. Fixed across all 12 screens (bath temp, daily notes, incidents, behaviour, sleep diary, food diary, activities, smart steps, visitor log, medication, medical history, care plans). |
+| Q12 | Fix voice-to-text in daily note editor | ✅ | Original code only acted on `finalResult` which never fired on many Android devices. Removed `localeId: 'en_GB'` (silently failed if language pack missing). Added real-time partial result display. Moved session-end logic to `onStatus` callback in `initialize()` — `await _speech.listen()` returns immediately on start, not on finish, so the previous code was resetting `_isListening` right after starting. |
 
 ---
 
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-05-28*
+*Last updated: 2026-05-28 (session 3)*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
@@ -144,8 +146,8 @@ Every new feature added without them makes the retrofit harder.
 | Phase 5 — External | 0 of 3 | | 0% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
-| Quality / cross-cutting | 1 of 10 | (Q10 done; Q1 partial) | 10% |
-| **Total** | **40 of 54** | | **74%** |
+| Quality / cross-cutting | 3 of 12 | (Q10, Q11, Q12 done; Q1 partial) | 25% |
+| **Total** | **42 of 56** | | **75%** |
 
 ---
 

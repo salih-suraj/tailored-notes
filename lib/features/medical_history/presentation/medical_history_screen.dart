@@ -1,4 +1,4 @@
-import 'dart:developer';
+﻿import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -230,18 +230,17 @@ class _MedHistoryBody extends ConsumerWidget {
       BuildContext context, WidgetRef ref, String id) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text(AppStrings.medHistoryDeleteContact),
         content: const Text(AppStrings.medHistoryDeleteContactConfirm),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
             child: const Text(AppStrings.cancel),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
-            style: TextButton.styleFrom(
-                foregroundColor: Theme.of(context).colorScheme.error),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -648,3 +647,4 @@ class _SheetField extends StatelessWidget {
         ),
       );
 }
+

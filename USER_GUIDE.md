@@ -109,7 +109,7 @@ Reached via **Daily Notes tab → tap a child** or **Child Profile → Daily Not
 1. Tap the **+ Add observation** button (bottom right).
 2. Select the **shift** this observation relates to.
 3. Write your observation in the text box.
-4. **Voice input** — tap the microphone icon to dictate. Tap again to stop. The text is added automatically.
+4. **Voice input** — tap the blue microphone button (bottom right). It turns red while listening. Speak your observation — words appear in real time as you speak. Tap the red button to stop early, or pause for a few seconds and the mic stops automatically. Your words are added to any text already written.
 5. Tap **Save**.
 
 ### Editing or deleting
@@ -136,6 +136,9 @@ The record is colour-coded automatically:
 - **Red** — above 40°C (too hot — risk of scalding, do not bathe)
 
 One temperature record per day counts as the bath temp section being complete.
+
+### Deleting a record
+Tap the **⋮ menu** on any record card and select **Delete**. Confirm in the dialog that appears.
 
 ---
 

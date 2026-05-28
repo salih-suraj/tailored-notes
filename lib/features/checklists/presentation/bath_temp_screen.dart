@@ -117,18 +117,18 @@ class BathTempScreen extends ConsumerWidget {
   ) async {
     final confirmed = await showDialog<bool>(
       context: context,
-      builder: (_) => AlertDialog(
+      builder: (dialogContext) => AlertDialog(
         title: const Text(AppStrings.bathTempDeleteTitle),
         content: const Text(AppStrings.bathTempDeleteConfirm),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context, false),
+            onPressed: () => Navigator.of(dialogContext).pop(false),
             child: const Text(AppStrings.cancel),
           ),
           TextButton(
-            onPressed: () => Navigator.pop(context, true),
+            onPressed: () => Navigator.of(dialogContext).pop(true),
             style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
             ),
             child: const Text(AppStrings.delete),
           ),
@@ -136,7 +136,15 @@ class BathTempScreen extends ConsumerWidget {
       ),
     );
     if (confirmed == true) {
-      await ref.read(bathTempRepositoryProvider).delete(id);
+      try {
+        await ref.read(bathTempRepositoryProvider).delete(id);
+      } catch (e) {
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(e.toString())),
+          );
+        }
+      }
     }
   }
 }

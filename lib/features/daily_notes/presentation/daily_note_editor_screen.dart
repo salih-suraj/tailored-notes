@@ -40,6 +40,8 @@ class _DailyNoteEditorScreenState
   bool _speechAvailable = false;
   bool _isListening = false;
   bool _isSaving = false;
+  String _textBeforeListening = '';
+  String _partialWords = '';
 
   @override
   void initState() {
@@ -64,6 +66,12 @@ class _DailyNoteEditorScreenState
           log('Speech error: $error', name: 'DailyNoteEditor');
           if (mounted) setState(() => _isListening = false);
         },
+        onStatus: (status) {
+          // 'notListening' fires when the engine stops (pause timeout or stop()).
+          if ((status == 'notListening' || status == 'done') && mounted) {
+            _commitPartial();
+          }
+        },
       );
       if (mounted) setState(() => _speechAvailable = available);
     } catch (e) {
@@ -74,30 +82,55 @@ class _DailyNoteEditorScreenState
   Future<void> _toggleListening() async {
     if (_isListening) {
       await _speech.stop();
-      setState(() => _isListening = false);
-      return;
+      return; // onStatus fires -> _commitPartial() called there
     }
     if (!_speechAvailable) return;
 
+    _textBeforeListening = _content.text;
+    _partialWords = '';
     setState(() => _isListening = true);
-    await _speech.listen(
+
+    final started = await _speech.listen(
       onResult: (result) {
-        if (result.finalResult && result.recognizedWords.isNotEmpty) {
-          final existing = _content.text;
-          final appended = existing.isEmpty
-              ? result.recognizedWords
-              : '$existing ${result.recognizedWords}';
+        final words = result.recognizedWords;
+        if (result.finalResult) {
+          _partialWords = '';
+          if (words.isNotEmpty) _appendWords(words);
+        } else {
+          // Show partial transcript in real time.
+          _partialWords = words;
+          final base = _textBeforeListening.trimRight();
+          final preview = base.isEmpty ? words : '$base $words';
           _content.value = TextEditingValue(
-            text: appended,
-            selection: TextSelection.collapsed(offset: appended.length),
+            text: preview,
+            selection: TextSelection.collapsed(offset: preview.length),
           );
-          setState(() => _isListening = false);
         }
       },
       listenFor: const Duration(seconds: 60),
-      pauseFor: const Duration(seconds: 4),
-      localeId: 'en_GB',
+      pauseFor: const Duration(seconds: 3),
     );
+
+    // listen() failed to start — reset immediately.
+    if (!started && mounted) {
+      setState(() => _isListening = false);
+    }
+  }
+
+  void _appendWords(String words) {
+    final base = _textBeforeListening.trimRight();
+    final appended = base.isEmpty ? words : '$base $words';
+    _textBeforeListening = appended;
+    _content.value = TextEditingValue(
+      text: appended,
+      selection: TextSelection.collapsed(offset: appended.length),
+    );
+  }
+
+  void _commitPartial() {
+    if (_partialWords.isNotEmpty) _appendWords(_partialWords);
+    _partialWords = '';
+    if (mounted) setState(() => _isListening = false);
   }
 
   Future<void> _save() async {
