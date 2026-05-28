@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-05-22
+> Last updated: 2026-05-28
 
 ---
 
@@ -28,7 +28,7 @@ Every new feature added without them makes the retrofit harder.
 | I1 | Build `core/audit/` — AuditLogWriter called by every repository on every mutation | ✅ | AuditLogTable + AuditLogDao + AuditLogWriter. Wired into DailyNotesRepository + ChecklistItemsRepository. schemaVersion bumped to 3. |
 | I2 | Add `created_by` + `updated_by` to DailyNotesTable and ChecklistItemsTable | ✅ | `updated_by_id/name` on DailyNotesTable. `created_by_id/updated_by_id` on ChecklistItemsTable. Every new table must include these from day one. |
 | I3 | Fix AppStrings violations in all existing screens | ✅ | All 4 screens fixed. Added: childNotFound, careRecordSection, module labels/descs, checklist strings, observation strings. |
-| I4 | MFA for Manager and Inspector roles | ⬜ | Build brief requires this. Supabase supports TOTP MFA. Flutter side needs MFA prompt flow on login for those roles. |
+| I4 | MFA for Manager and Inspector roles | ✅ | `MfaScreen` built — enrollment mode (first-time TOTP setup with manual secret key entry) + challenge mode (ongoing 6-digit code). Triggers automatically post-login via `needsMfaChallenge` on `AppUser`. Session upgrades to AAL2 on success. Supabase TOTP enabled platform-wide. |
 | I5 | Semantic labels on all interactive elements | ⬜ | Nav shell done. Module cards on profile screen, FABs, checklist task tiles, note cards — all missing Semantics wrappers or tooltip/semanticLabel properties. Guide: every interactive element labelled, text scales to 200%. |
 
 ---
@@ -40,9 +40,9 @@ Every new feature added without them makes the retrofit harder.
 | 1 | Project setup, folder structure, pubspec.yaml | ✅ | |
 | 2 | Design tokens — colours, spacing, radius, typography | ✅ | |
 | 3 | Theme — light + dark ThemeData | ✅ | |
-| 4 | Router skeleton — all top-level routes, placeholder screens | ✅ | |
+| 4 | Router skeleton — all top-level routes, placeholder screens | ✅ | `/daily-notes` tab (Support Worker + Team Leader) now shows `DailyNotesHubScreen` — lists all children, tap routes to that child's daily notes. Other unused top-level placeholders remain as stubs. |
 | 5 | Supabase client — EU region, --dart-define credentials, safe null init | ✅ | |
-| 6 | Auth — login screen, role-based redirect | 🔧 | Works for email/password. MFA not built (see I4). |
+| 6 | Auth — login screen, role-based redirect, MFA | ✅ | Email/password login + MFA (TOTP) for Manager and Inspector. Settings screen with sign-out, theme switcher, user/role card. |
 | 7 | Navigation shell — bottom bar (mobile) + rail (tablet) + extended rail (wide) | ✅ | Role-based tabs. Semantic labels on icons. |
 | 8 | Children list screen | ✅ | Loading/error/empty states. |
 | 9 | Child profile screen | ✅ | Avatar, age, room, shift progress bar, module cards. |
@@ -99,18 +99,18 @@ Every new feature added without them makes the retrofit harder.
 
 ---
 
-## Backend / Supabase  *(parallel track — needs Supabase project first)*
+## Backend / Supabase
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| B1 | Provision Supabase project — EU region (eu-west-2 or eu-central-1) | ⬜ | **Abba must create this.** Nothing else in this section can proceed without it. |
-| B2 | Full schema SQL — all tables with `id, home_id, created_at, updated_at, created_by, updated_by, deleted_at` | 🚫 | Blocked on B1. |
-| B3 | RLS policies on every table, every role | 🚫 | Blocked on B1. Non-negotiable: no user reads/writes outside their home + role scope. |
-| B4 | `audit_log` table | 🚫 | Blocked on B1. |
-| B5 | `inspector_grants` table — `(inspector_user_id, home_id, granted_by, expires_at, scope[])` | 🚫 | Blocked on B1. |
-| B6 | Supabase Auth — MFA (TOTP) enabled for Manager and Inspector roles | 🚫 | Blocked on B1. |
-| B7 | Storage bucket for child photos — EU region, private, access-controlled | 🚫 | Blocked on B1. |
-| B8 | Supabase Edge Function for AI shift summary | 🚫 | Blocked on B1 and Phase 5 item 31. |
+| B1 | Provision Supabase project — EU region (eu-west-2) | ✅ | Provisioned 2026-05-27. URL: https://uvjvizphpmxybezkjjbl.supabase.co. eu-west-2 London — UK GDPR compliant. |
+| B2 | Full schema SQL — all tables with `id, home_id, created_at, updated_at, created_by, updated_by, deleted_at` | ✅ | 21 tables total (user_profiles, inspector_grants + 19 care tables). Script at `supabase_schema.sql`. |
+| B3 | RLS policies on every table, every role | ✅ | All 21 tables have RLS. Auto-RLS enabled on project. home_id-scoped read/write for all roles. |
+| B4 | `audit_log` table | ✅ | Audit log table + triggers on all 18 care-record tables. |
+| B5 | `inspector_grants` table — `(inspector_user_id, home_id, granted_by, expires_at, scope[])` | ✅ | Table created. `inspector_has_grant()` function + RLS policies ready for Phase 5. |
+| B6 | Supabase Auth — MFA (TOTP) enabled for Manager and Inspector roles | ✅ | TOTP enabled platform-wide. Enforcement in Flutter via `needsMfaChallenge` on `AppUser` (reads `aal` JWT claim). |
+| B7 | Storage bucket for child photos — EU region, private, access-controlled | ✅ | `child-photos` bucket. Private, 5 MB limit, jpeg/png/webp only. RLS policies in place. |
+| B8 | Supabase Edge Function for AI shift summary | ⬜ | Blocked on Phase 5 item 31. Infrastructure ready; function not written yet. |
 
 ---
 
@@ -118,7 +118,7 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| Q1 | `core/audit/` — AuditLogWriter built and called by all repositories | 🔧 | Local Drift part done (same as I1). Backend `audit_log` Supabase table still blocked on B1. |
+| Q1 | `core/audit/` — AuditLogWriter built and called by all repositories | 🔧 | Local Drift part done (same as I1). Backend `audit_log` Supabase table live (B4 done). Sync of local audit rows to Supabase not yet wired — part of Q2 offline sync work. |
 | Q2 | Proper offline sync queue in `core/offline/` | ⬜ | Current `_trySyncToSupabase()` is fire-and-forget with no retry, no queue, no conflict resolution. Needs a proper sync engine. Guide specifies "Drift offline sync engine" in `core/offline/`. |
 | Q3 | Date/time — render in Europe/London timezone everywhere | ⬜ | Currently displaying UTC. Guide says: always UTC in storage, render in Europe/London. |
 | Q4 | Riverpod `select()` — prevent unnecessary rebuilds | ⬜ | Currently using plain `watch()` everywhere. For large screens this will cause rebuild storms. |
@@ -133,26 +133,28 @@ Every new feature added without them makes the retrofit harder.
 
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-05-23*
+*Last updated: 2026-05-28*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
-| Phase 1 — Foundation | 8 of 9 | (MFA pending Supabase) | 89% |
+| Phase 1 — Foundation | 9 of 9 | ✅ COMPLETE | 100% |
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
 | Phase 5 — External | 0 of 3 | | 0% |
-| Backend / Supabase | 0 of 8 | (all blocked on B1) | 0% |
-| Infrastructure gaps | 3 of 5 | (I4 MFA + I5 semantics pending) | 60% |
-| Quality / cross-cutting | 0 of 9 | | 0% |
-| **Total** | **30 of 53** | | **57%** |
+| Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
+| Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
+| Quality / cross-cutting | 1 of 10 | (Q10 done; Q1 partial) | 10% |
+| **Total** | **40 of 54** | | **74%** |
 
 ---
 
 ## Recommended build order from here
 
-1. **Phase 4 item 25** — Auto shift handover summary (compiles key shift info for the next team)
-2. **Phase 4 items 27–28** — Manager Oversight Dashboard + Behaviour Pattern Tracking Dashboard
-3. **B1** — Abba provisions Supabase — unblocks RLS, MFA, audit backend, AI summary
-4. **Phase 5** — External access (inspector portal, parent portal, AI summary)
-5. **Q-items** — tests, timezone rendering, CI pipeline — weave in throughout
+1. **Phase 5 item 29** — Regulatory Inspector Access Portal (time-limited tokens, feedback entry)
+2. **Phase 5 item 30** — Parent/Guardian Portal (read-only, activity/achievement/photo updates)
+3. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
+4. **I5** — Accessibility: semantic labels on all interactive elements
+5. **Q2** — Proper offline sync queue (critical before going live with real data)
+6. **Q3** — Timezone rendering (UTC → Europe/London)
+7. **Q-items** — Tests and CI pipeline — weave in throughout

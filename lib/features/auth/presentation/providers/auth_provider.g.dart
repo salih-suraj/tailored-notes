@@ -25,9 +25,11 @@ final authStateChangesProvider = AutoDisposeStreamProvider<AuthState>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef AuthStateChangesRef = AutoDisposeStreamProviderRef<AuthState>;
-String _$currentUserHash() => r'12e1d72899657753ab0855b05a5325102b5a9e19';
+String _$currentUserHash() => r'9dad6722165cf809b1d5772360fd67e56ef7c751';
 
 /// The currently signed-in [AppUser], or null if unauthenticated.
+/// Watches [authStateChangesProvider] so it re-computes on login, logout,
+/// and MFA AAL upgrade — ensuring the router always sees fresh auth state.
 ///
 /// Copied from [currentUser].
 @ProviderFor(currentUser)

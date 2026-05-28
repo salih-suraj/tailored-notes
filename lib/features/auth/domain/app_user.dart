@@ -39,8 +39,8 @@ class AppUser {
     return AppUser(
       id: session.user.id,
       email: session.user.email ?? '',
-      role: UserRole.fromString(claims['role'] as String? ?? ''),
-      homeId: claims['home_id'] as String? ?? '',
+      role: UserRole.fromString(claims['app_role'] as String? ?? ''),
+      homeId: claims['app_home_id'] as String? ?? '',
       displayName: session.user.userMetadata?['display_name'] as String?,
       isMfaVerified: claims['aal'] == 'aal2',
     );

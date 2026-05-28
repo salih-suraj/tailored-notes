@@ -48,9 +48,11 @@ import '../../features/dashboard/presentation/manager_dashboard_screen.dart';
 import '../../features/handover/presentation/handover_summary_screen.dart';
 import '../../features/children/presentation/children_list_screen.dart';
 import '../../features/daily_notes/domain/daily_note.dart';
+import '../../features/daily_notes/presentation/daily_notes_hub_screen.dart';
 import '../../features/children/presentation/child_profile_screen.dart';
 import '../../features/daily_notes/presentation/daily_note_editor_screen.dart';
 import '../../features/daily_notes/presentation/daily_notes_list_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/nav_shell.dart';
 import '../errors/placeholder_screen.dart';
 import 'app_routes.dart';
@@ -361,7 +363,7 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: AppRoutes.dailyNotes,
-            builder: (_, _) => const PlaceholderScreen(title: 'Daily Notes'),
+            builder: (_, _) => const DailyNotesHubScreen(),
           ),
           GoRoute(
             path: AppRoutes.checklists,
@@ -447,7 +449,7 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: AppRoutes.settings,
-            builder: (_, _) => const PlaceholderScreen(title: 'Settings'),
+            builder: (_, _) => const SettingsScreen(),
           ),
         ],
       ),

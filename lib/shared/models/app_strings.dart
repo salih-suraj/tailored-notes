@@ -521,6 +521,16 @@ abstract final class AppStrings {
   static const smartStepsDeleteConfirm =
       'This SMART step and all its progress records will be permanently removed.';
 
+  // Settings
+  static const settingsAppearance = 'APPEARANCE';
+  static const settingsAccount = 'ACCOUNT';
+  static const settingsThemeSystem = 'System default';
+  static const settingsThemeLight = 'Light';
+  static const settingsThemeDark = 'Dark';
+  static const settingsSignOut = 'Sign out';
+  static const settingsSignOutTitle = 'Sign out?';
+  static const settingsSignOutBody = 'You will be returned to the login screen.';
+
   // Common
   static const loading = 'Loading…';
   static const retry = 'Retry';

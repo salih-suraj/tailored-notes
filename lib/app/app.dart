@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/routing/app_router.dart';
 import '../core/theme/theme.dart';
+import '../features/settings/presentation/settings_screen.dart';
 
 /// Root widget — sets up theme, localisation, and router.
 class TailorEdApp extends ConsumerWidget {
@@ -17,7 +18,7 @@ class TailorEdApp extends ConsumerWidget {
       title: 'TailorEd Notes',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode: ref.watch(themeModeNotifierProvider),
       routerConfig: router,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
