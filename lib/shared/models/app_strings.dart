@@ -252,6 +252,9 @@ abstract final class AppStrings {
   static const behaviourDurationUnit = 'mins';
   static const behaviourLocation = 'LOCATION';
   static const behaviourLocationHint = 'e.g. Bedroom, Living room';
+  static const behaviourAbcA = 'A';
+  static const behaviourAbcB = 'B';
+  static const behaviourAbcC = 'C';
   static const behaviourPhysicalIntervention = 'Physical intervention used';
   static const behaviourPhysicalInterventionSubtitle =
       'Flag if any physical intervention was required';

@@ -210,17 +210,17 @@ class _IncidentCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
               // ABC summary
               _AbcRow(
-                  label: 'A',
+                  label: AppStrings.behaviourAbcA,
                   color: AppColors.blue,
                   text: incident.antecedent),
               const SizedBox(height: AppSpacing.xs),
               _AbcRow(
-                  label: 'B',
+                  label: AppStrings.behaviourAbcB,
                   color: severityColor,
                   text: incident.behaviour),
               const SizedBox(height: AppSpacing.xs),
               _AbcRow(
-                  label: 'C',
+                  label: AppStrings.behaviourAbcC,
                   color: AppColors.green,
                   text: incident.consequence),
               if (incident.location != null) ...[

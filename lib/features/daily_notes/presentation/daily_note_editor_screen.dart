@@ -259,7 +259,7 @@ class _DailyNoteEditorScreenState
                 _isListening ? Icons.mic : Icons.mic_none,
                 color: AppColors.white,
                 semanticLabel:
-                    _isListening ? 'Stop voice input' : 'Start voice input',
+                    _isListening ? AppStrings.stopVoiceInput : AppStrings.startVoiceInput,
               ),
             )
           : null,

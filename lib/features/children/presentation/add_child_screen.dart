@@ -77,7 +77,7 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
       final now = DateTime.now().toUtc();
       final child = Child(
         id: const Uuid().v4(),
-        homeId: user?.homeId ?? '',
+        homeId: user?.homeId ?? 'dev-home-001',
         name: _name.text.trim(),
         dateOfBirth: _toDobString(_dob!),
         room: _room.text.trim(),

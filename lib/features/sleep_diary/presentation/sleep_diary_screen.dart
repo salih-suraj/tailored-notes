@@ -87,7 +87,7 @@ class SleepDiaryScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () =>
             context.push('/children/$childId/sleep-diary/new'),
-        backgroundColor: AppColors.roleSupportWorker,
+        backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text(AppStrings.sleepLogEntry),
