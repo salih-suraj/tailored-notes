@@ -131,7 +131,7 @@ Every new feature added without them makes the retrofit harder.
 | Q11 | Fix delete confirmation dialogs — all screens | ✅ | `Navigator.pop(context, ...)` inside dialog builders was using the outer screen context instead of the dialog's own context, causing the wrong navigator to be popped inside ShellRoute. Fixed across all 12 screens (bath temp, daily notes, incidents, behaviour, sleep diary, food diary, activities, smart steps, visitor log, medication, medical history, care plans). |
 | Q12 | Fix voice-to-text in daily note editor | ✅ | Original code only acted on `finalResult` which never fired on many Android devices. Removed `localeId: 'en_GB'` (silently failed if language pack missing). Added real-time partial result display. Moved session-end logic to `onStatus` callback in `initialize()` — `await _speech.listen()` returns immediately on start, not on finish, so the previous code was resetting `_isListening` right after starting. |
 | Q13 | Full codebase audit — bugs and inconsistencies | ✅ | Found and fixed: `homeId ?? ''` → `'dev-home-001'` in add_child_screen (children would be saved with empty homeId and disappear from all lists); `Theme.of(context)` → `Theme.of(dialogContext)` in 2 remaining dialog builders (care_plan_detail, daily_notes_list); sleep diary FAB `AppColors.roleSupportWorker` → `teal400` (role badge color misused as action color); ABC labels in behaviour_screen hardcoded → AppStrings; mic semanticLabel inline strings → AppStrings. |
-| Q14 | Router role-based route guards | ⬜ | Router redirect only checks auth and MFA — does not enforce role. A support worker could navigate to `/dashboard` or `/handover` directly. NavShell hides the tabs correctly but routes themselves are open. Low risk on mobile (no URL bar) but should be locked before web deployment. |
+| Q14 | Router role-based route guards | ✅ | Added `_isRouteAllowed(location, role)` and `_defaultRoute(role)` to app_router.dart. Redirect now enforces role after auth/MFA checks — forbidden routes silently redirect to the role's default landing screen. Also fixed post-MFA redirect to use `_defaultRoute` (inspector → `/inspector`, parentGuardian → `/parent-portal`) instead of hardcoded `/children`. |
 
 ---
 
@@ -148,8 +148,8 @@ Every new feature added without them makes the retrofit harder.
 | Phase 5 — External | 0 of 3 | | 0% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
-| Quality / cross-cutting | 4 of 14 | (Q10–Q13 done; Q1 partial; Q14 pending) | 29% |
-| **Total** | **43 of 57** | | **75%** |
+| Quality / cross-cutting | 5 of 14 | (Q10–Q14 done; Q1 partial) | 36% |
+| **Total** | **44 of 57** | | **77%** |
 
 ---
 

@@ -9,6 +9,7 @@ import '../../features/handover/presentation/team_leader_oversight_screen.dart';
 import '../../features/incidents/domain/incident_report.dart';
 import '../../features/incidents/presentation/incident_report_editor_screen.dart';
 import '../../features/incidents/presentation/incidents_screen.dart';
+import '../../features/auth/domain/user_role.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../../features/behaviour/domain/behaviour_incident.dart';
 import '../../features/activities/domain/activity_entry.dart';
@@ -64,6 +65,47 @@ class _AuthChangeNotifier extends ChangeNotifier {
   void notify() => notifyListeners();
 }
 
+/// Returns the default landing route for [role] after login / MFA.
+String _defaultRoute(UserRole role) => switch (role) {
+      UserRole.supportWorker => AppRoutes.children,
+      UserRole.teamLeader => AppRoutes.children,
+      UserRole.manager => AppRoutes.children,
+      UserRole.inspector => AppRoutes.inspector,
+      UserRole.parentGuardian => AppRoutes.parentPortal,
+    };
+
+/// Returns true if [role] is allowed to visit [location].
+/// Settings is always permitted. All other routes are role-gated.
+bool _isRouteAllowed(String location, UserRole role) {
+  if (location.startsWith(AppRoutes.settings)) return true;
+  final allowed = switch (role) {
+    UserRole.supportWorker => [
+        AppRoutes.children,
+        AppRoutes.dailyNotes,
+        AppRoutes.checklists,
+      ],
+    UserRole.teamLeader => [
+        AppRoutes.children,
+        AppRoutes.dailyNotes,
+        AppRoutes.checklists,
+        AppRoutes.handover,
+      ],
+    UserRole.manager => [
+        AppRoutes.children,
+        AppRoutes.dashboard,
+        AppRoutes.handover,
+      ],
+    UserRole.inspector => [
+        AppRoutes.children,
+        AppRoutes.inspector,
+      ],
+    UserRole.parentGuardian => [
+        AppRoutes.parentPortal,
+      ],
+  };
+  return allowed.any(location.startsWith);
+}
+
 @riverpod
 GoRouter appRouter(Ref ref) {
   final authChange = _AuthChangeNotifier();
@@ -83,15 +125,24 @@ GoRouter appRouter(Ref ref) {
           location == AppRoutes.forgotPassword;
       final isMfaRoute = location == AppRoutes.mfa;
 
+      // Not logged in — send to login.
       if (user == null && !isAuthRoute) return AppRoutes.login;
       if (user == null) return null;
 
-      // Authenticated — decide where to send them.
+      // Logged in but on auth screen — send to correct landing page.
       if (isAuthRoute) {
-        return user.needsMfaChallenge ? AppRoutes.mfa : AppRoutes.children;
+        return user.needsMfaChallenge ? AppRoutes.mfa : _defaultRoute(user.role);
       }
+
+      // MFA checks.
       if (user.needsMfaChallenge && !isMfaRoute) return AppRoutes.mfa;
-      if (!user.needsMfaChallenge && isMfaRoute) return AppRoutes.children;
+      if (!user.needsMfaChallenge && isMfaRoute) return _defaultRoute(user.role);
+
+      // Role-based route guard — redirect to role's home if route is forbidden.
+      if (!_isRouteAllowed(location, user.role)) {
+        return _defaultRoute(user.role);
+      }
+
       return null;
     },
     routes: [
