@@ -100,8 +100,9 @@ bool _isRouteAllowed(String location, UserRole role) {
         AppRoutes.dashboard,
         AppRoutes.handover,
       ],
+    // Inspectors only reach children through an access grant in the portal —
+    // the home-scoped /children routes are off-limits.
     UserRole.inspector => [
-        AppRoutes.children,
         AppRoutes.inspector,
       ],
     UserRole.parentGuardian => [

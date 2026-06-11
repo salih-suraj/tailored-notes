@@ -90,7 +90,9 @@ List<_NavItem> _destinationsForRole(UserRole role) {
     UserRole.teamLeader =>
       [children, dailyNotes, checklists, handover, settings],
     UserRole.manager => [children, dashboard, handover, settings],
-    UserRole.inspector => [children, inspector, settings],
+    // Inspectors only reach children through an access grant in the portal,
+    // where every view is audit-logged — never via the home-scoped tab.
+    UserRole.inspector => [inspector, settings],
     UserRole.parentGuardian => [parentPortal, settings],
   };
 }
