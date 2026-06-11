@@ -44,6 +44,11 @@ class ManagerDashboardScreen extends ConsumerWidget {
             tooltip: AppStrings.dashboardViewBehaviourPatterns,
             onPressed: () => context.push(AppRoutes.behaviourPatterns),
           ),
+          IconButton(
+            icon: const Icon(Icons.fact_check_outlined),
+            tooltip: AppStrings.managerInspectorAccessOpenTooltip,
+            onPressed: () => context.push(AppRoutes.managerInspectorAccess),
+          ),
         ],
       ),
       body: childrenAsync.when(

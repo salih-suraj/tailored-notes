@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-05-28
+> Last updated: 2026-06-11
 
 ---
 
@@ -93,7 +93,7 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 29 | Regulatory Inspector Access Portal | ⬜ | Time-limited tokens + **feedback/recommendation entry** (proposal says inspectors can leave correction points — not just read-only). Full audit trail of all inspector activity. |
+| 29 | Regulatory Inspector Access Portal | ✅ | v1 built + audited (session 5). Inspector Portal (`/inspector`) lists active grants, home access screen (children + module sections), generic read-only records viewer for Daily Notes, Care Plans, Incidents, Behaviour, Medication, Medical History, feedback editor (compliment/recommendation/requirement). Manager screen (`/dashboard/inspector-access`) for granting/revoking access and reviewing/resolving feedback. All inspector views + feedback writes logged to `audit_log` via `InspectorAuditService`. `'children'` scope auto-appended on grant creation (required by `inspectors_read_children` RLS). Backend SQL (`supabase_inspector_feedback.sql`, idempotent) run successfully 2026-06-11 — `inspector_feedback` table + RLS, 4 inspector read policies missing from base schema (care_plans, care_plan_goals, medical_profiles, healthcare_contacts), inspector `audit_log` INSERT policy, `user_profiles.email` column + backfill + sync trigger + manager search policy. **Not yet verified end-to-end with a real inspector account.** Deferred to a follow-up (same pattern extends cleanly): sleep diary, food diary, activities, smart steps, visitor log, bath temp, cleaning checklists. |
 | 30 | Parent/Guardian Portal | ⬜ | Activities, achievements, wellbeing updates, photos (where permissions granted). Read-only. Controlled by role permissions. |
 | 31 | AI-assisted shift summary | ⬜ | Anthropic API via Supabase Edge Function. Auto-summarises shift notes into handover brief. |
 
@@ -137,7 +137,7 @@ Every new feature added without them makes the retrofit harder.
 
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-05-29 (session 4)*
+*Last updated: 2026-06-11 (session 5)*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
@@ -145,17 +145,17 @@ Every new feature added without them makes the retrofit harder.
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
-| Phase 5 — External | 0 of 3 | | 0% |
+| Phase 5 — External | 1 of 3 | (item 29 done; 30 + 31 remain) | 33% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
 | Quality / cross-cutting | 5 of 14 | (Q10–Q14 done; Q1 partial) | 36% |
-| **Total** | **44 of 57** | | **77%** |
+| **Total** | **45 of 57** | | **79%** |
 
 ---
 
 ## Recommended build order from here
 
-1. **Phase 5 item 29** — Regulatory Inspector Access Portal (time-limited tokens, feedback entry)
+1. **Verify item 29 end-to-end** — create a test inspector account, grant access as manager, review records + leave feedback as inspector
 2. **Phase 5 item 30** — Parent/Guardian Portal (read-only, activity/achievement/photo updates)
 3. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
 4. **I5** — Accessibility: semantic labels on all interactive elements

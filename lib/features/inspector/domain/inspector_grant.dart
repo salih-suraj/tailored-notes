@@ -7,6 +7,7 @@ class InspectorGrant {
     required this.grantedBy,
     required this.expiresAt,
     required this.createdAt,
+    required this.scope,
     this.homeName,
     this.inspectorEmail,
   });
@@ -17,6 +18,9 @@ class InspectorGrant {
   final String grantedBy;
   final DateTime expiresAt;
   final DateTime createdAt;
+
+  /// `InspectorModule.scopeKey` values this grant covers.
+  final List<String> scope;
   final String? homeName;
   final String? inspectorEmail;
 
@@ -35,6 +39,9 @@ class InspectorGrant {
       grantedBy: json['granted_by'] as String,
       expiresAt: DateTime.parse(json['expires_at'] as String),
       createdAt: DateTime.parse(json['created_at'] as String),
+      scope: (json['scope'] as List? ?? const [])
+          .map((s) => s as String)
+          .toList(),
       homeName: homes?['name'] as String?,
       inspectorEmail: users?['email'] as String?,
     );

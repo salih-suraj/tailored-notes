@@ -545,4 +545,61 @@ abstract final class AppStrings {
   static const unknownError = 'Something went wrong. Please try again.';
   static const offlineBanner =
       'You are offline — changes will sync when reconnected';
+
+  // Inspector Portal (inspector role)
+  static const inspectorPortalTitle = 'Inspector Portal';
+  static const inspectorNoGrants = 'No active access grants';
+  static const inspectorNoGrantsHint =
+      'Ask a home manager to grant you access to begin a review.';
+  static const inspectorExpiresInPrefix = 'Expires in';
+  static const inspectorExpired = 'Expired';
+  static const inspectorExpiresToday = 'Expires today';
+  static const inspectorScopeLabel = 'Access scope';
+  static const inspectorChildrenSection = 'Children';
+  static const inspectorSectionsLabel = 'Sections';
+  static const inspectorGoalsLabel = 'Goals';
+  static const inspectorNoRecords = 'No records found for this section';
+  static const inspectorRecordsLimitNote = 'Showing the most recent records';
+
+  // Inspector feedback editor
+  static const inspectorFeedbackTitle = 'Leave Feedback';
+  static const inspectorFeedbackModuleLabel = 'Section';
+  static const inspectorFeedbackChildLabel = 'Child (optional)';
+  static const inspectorFeedbackChildNone = 'General — not child-specific';
+  static const inspectorFeedbackSeverityLabel = 'Type';
+  static const inspectorFeedbackContentLabel = 'Feedback';
+  static const inspectorFeedbackContentHint =
+      'Describe your observation or recommendation';
+  static const inspectorFeedbackSubmit = 'Submit Feedback';
+  static const inspectorFeedbackSubmitted = 'Feedback submitted';
+  static const inspectorFeedbackEmpty = 'Please enter your feedback';
+
+  // Manager — Inspector Access
+  static const managerInspectorAccessTitle = 'Inspector Access';
+  static const managerInspectorAccessTabGrants = 'Access';
+  static const managerInspectorAccessTabFeedback = 'Feedback';
+  static const managerInspectorAccessOpenTooltip = 'Inspector Access';
+  static const managerNoGrants = 'No inspector access has been granted';
+  static const managerGrantActive = 'Active';
+  static const managerGrantExpired = 'Expired';
+  static const managerGrantExpiresPrefix = 'Expires';
+  static const managerRevokeGrant = 'Revoke access';
+  static const managerRevokeGrantTitle = 'Revoke inspector access?';
+  static const managerRevokeGrantConfirm =
+      'This inspector will lose access to your home immediately.';
+  static const managerNewGrant = 'Grant Access';
+  static const managerGrantFormTitle = 'Grant Inspector Access';
+  static const managerGrantFormSearchLabel = 'Inspector email';
+  static const managerGrantFormSearchHint = 'Search by email';
+  static const managerGrantFormNoResults = 'No inspector accounts found';
+  static const managerGrantFormScopeLabel = 'Sections to grant access to';
+  static const managerGrantFormExpiryLabel = 'Access expires';
+  static const managerGrantFormSubmit = 'Grant Access';
+  static const managerGrantCreated = 'Access granted';
+  static const managerNoFeedback = 'No feedback from inspectors yet';
+  static const managerFeedbackAcknowledge = 'Acknowledge';
+  static const managerFeedbackResolve = 'Mark resolved';
+  static const managerFeedbackResolutionLabel = 'Resolution notes (optional)';
+  static const managerFeedbackUpdated = 'Feedback updated';
+  static const managerFeedbackFrom = 'From';
 }

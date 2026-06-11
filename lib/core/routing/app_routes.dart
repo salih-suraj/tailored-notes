@@ -96,7 +96,16 @@ abstract final class AppRoutes {
   static const handoverSummary = '/handover/summary';
   static const behaviourPatterns = '/dashboard/behaviour-patterns';
   static const dashboard = '/dashboard';
+  static const managerInspectorAccess = '/dashboard/inspector-access';
+
+  // Inspector portal — nested under /inspector
   static const inspector = '/inspector';
+  static const inspectorGrant = '/inspector/:grantId';
+  static const inspectorRecords = '/inspector/:grantId/:module';
+  static const inspectorRecordsForChild =
+      '/inspector/:grantId/:module/:childId';
+  static const inspectorFeedbackNew = '/inspector/:grantId/feedback/new';
+
   static const parentPortal = '/parent-portal';
   static const settings = '/settings';
 }

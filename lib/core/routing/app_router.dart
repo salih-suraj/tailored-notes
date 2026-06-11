@@ -53,6 +53,11 @@ import '../../features/daily_notes/presentation/daily_notes_hub_screen.dart';
 import '../../features/children/presentation/child_profile_screen.dart';
 import '../../features/daily_notes/presentation/daily_note_editor_screen.dart';
 import '../../features/daily_notes/presentation/daily_notes_list_screen.dart';
+import '../../features/inspector/presentation/inspector_feedback_editor_screen.dart';
+import '../../features/inspector/presentation/inspector_home_access_screen.dart';
+import '../../features/inspector/presentation/inspector_portal_screen.dart';
+import '../../features/inspector/presentation/inspector_records_screen.dart';
+import '../../features/inspector/presentation/manager_inspector_access_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/nav_shell.dart';
 import '../errors/placeholder_screen.dart';
@@ -487,11 +492,48 @@ GoRouter appRouter(Ref ref) {
                 path: 'behaviour-patterns',
                 builder: (_, _) => const BehaviourPatternScreen(),
               ),
+              GoRoute(
+                path: 'inspector-access',
+                builder: (_, _) => const ManagerInspectorAccessScreen(),
+              ),
             ],
           ),
           GoRoute(
             path: AppRoutes.inspector,
-            builder: (_, _) => const PlaceholderScreen(title: 'Inspector'),
+            builder: (_, _) => const InspectorPortalScreen(),
+            routes: [
+              GoRoute(
+                path: ':grantId',
+                builder: (_, state) => InspectorHomeAccessScreen(
+                  grantId: state.pathParameters['grantId']!,
+                ),
+                routes: [
+                  GoRoute(
+                    path: 'feedback/new',
+                    builder: (_, state) => InspectorFeedbackEditorScreen(
+                      grantId: state.pathParameters['grantId']!,
+                    ),
+                  ),
+                  GoRoute(
+                    path: ':module',
+                    builder: (_, state) => InspectorRecordsScreen(
+                      grantId: state.pathParameters['grantId']!,
+                      moduleKey: state.pathParameters['module']!,
+                    ),
+                    routes: [
+                      GoRoute(
+                        path: ':childId',
+                        builder: (_, state) => InspectorRecordsScreen(
+                          grantId: state.pathParameters['grantId']!,
+                          moduleKey: state.pathParameters['module']!,
+                          childId: state.pathParameters['childId'],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutes.parentPortal,
