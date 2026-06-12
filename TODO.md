@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-06-11
+> Last updated: 2026-06-12
 
 ---
 
@@ -93,8 +93,8 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| 29 | Regulatory Inspector Access Portal | ✅ | v1 built + audited (session 5). Inspector Portal (`/inspector`) lists active grants, home access screen (children + module sections), generic read-only records viewer for Daily Notes, Care Plans, Incidents, Behaviour, Medication, Medical History, feedback editor (compliment/recommendation/requirement). Manager screen (`/dashboard/inspector-access`) for granting/revoking access and reviewing/resolving feedback. All inspector views + feedback writes logged to `audit_log` via `InspectorAuditService`. `'children'` scope auto-appended on grant creation (required by `inspectors_read_children` RLS). Backend SQL (`supabase_inspector_feedback.sql`, idempotent) run successfully 2026-06-11 — `inspector_feedback` table + RLS, 4 inspector read policies missing from base schema (care_plans, care_plan_goals, medical_profiles, healthcare_contacts), inspector `audit_log` INSERT policy, `user_profiles.email` column + backfill + sync trigger + manager search policy. **Not yet verified end-to-end with a real inspector account.** Deferred to a follow-up (same pattern extends cleanly): sleep diary, food diary, activities, smart steps, visitor log, bath temp, cleaning checklists. |
-| 30 | Parent/Guardian Portal | ⬜ | Activities, achievements, wellbeing updates, photos (where permissions granted). Read-only. Controlled by role permissions. |
+| 29 | Regulatory Inspector Access Portal | ✅ | v1 built + audited (session 5). Inspector Portal (`/inspector`) lists active grants, home access screen (children + module sections), generic read-only records viewer for Daily Notes, Care Plans, Incidents, Behaviour, Medication, Medical History, feedback editor (compliment/recommendation/requirement). Manager screen (`/dashboard/inspector-access`) for granting/revoking access and reviewing/resolving feedback. All inspector views + feedback writes logged to `audit_log` via `InspectorAuditService`. `'children'` scope auto-appended on grant creation (required by `inspectors_read_children` RLS). Backend SQL (`supabase_inspector_feedback.sql`, idempotent) run successfully 2026-06-11 — `inspector_feedback` table + RLS, 4 inspector read policies missing from base schema (care_plans, care_plan_goals, medical_profiles, healthcare_contacts), inspector `audit_log` INSERT policy, `user_profiles.email` column + backfill + sync trigger + manager search policy. **✅ Verified end-to-end 2026-06-12 with real manager + inspector accounts**: grant creation (email search), MFA login both roles, portal → home access → module records, feedback submission, manager feedback review, grant revoke, and `inspector_view`/`inspector_feedback` rows confirmed in `audit_log`. Required 3 fixes found during verification (see B3 + Q14 notes). Deferred to a follow-up (same pattern extends cleanly): sleep diary, food diary, activities, smart steps, visitor log, bath temp, cleaning checklists. |
+| 30 | Parent/Guardian Portal | ✅ | v1 built 2026-06-12, mirrors inspector portal architecture. `features/parent_portal/`: ParentLink (manual model), cloud-only repos (links + records), riverpod providers, Parent Portal screen (`/parent-portal`, linked children list), child feed screen (`/parent-portal/:linkId` — date-grouped activities with ⭐ reward + 🏆 achievement cards, read-only), manager Parent Access screen (`/dashboard/parent-access` — link parent↔child by email search, per-link photo permission toggle, revoke). Backend: `supabase_parent_portal.sql` (parent_links table + RLS, `parent_has_link()`, parent read policies on children + activity_entries only — no clinical tables, manager parent-search policy; JWT-claim policies per the 42P17 lesson). **✅ SQL run + verified end-to-end 2026-06-12** with a real parent_guardian account: manager link by email search, parent login (no MFA), linked child in portal, activity feed. Found during verification: missing/unknown `app_role` claim fell back to `UserRole.supportWorker` (staff tabs for a parent account) — `UserRole.fromString` fallback hardened to `parentGuardian` (least privilege). Deferred: photo storage RLS for signed URLs (photo gating is per-link `can_view_photos`, avatar only in v1), staff-authored wellbeing updates. |
 | 31 | AI-assisted shift summary | ⬜ | Anthropic API via Supabase Edge Function. Auto-summarises shift notes into handover brief. |
 
 ---
@@ -105,7 +105,7 @@ Every new feature added without them makes the retrofit harder.
 |---|------|--------|-------|
 | B1 | Provision Supabase project — EU region (eu-west-2) | ✅ | Provisioned 2026-05-27. URL: https://uvjvizphpmxybezkjjbl.supabase.co. eu-west-2 London — UK GDPR compliant. |
 | B2 | Full schema SQL — all tables with `id, home_id, created_at, updated_at, created_by, updated_by, deleted_at` | ✅ | 21 tables total (user_profiles, inspector_grants + 19 care tables). Script at `supabase_schema.sql`. |
-| B3 | RLS policies on every table, every role | ✅ | All 21 tables have RLS. Auto-RLS enabled on project. home_id-scoped read/write for all roles. |
+| B3 | RLS policies on every table, every role | ✅ | All 21 tables have RLS. Auto-RLS enabled on project. home_id-scoped read/write for all roles. **2 backend bugs found + fixed during item 29 verification (2026-06-12):** (1) `managers_read_home_profiles` policy on `user_profiles` subqueried `user_profiles` itself → `42P17 infinite recursion` on every authenticated query (fix: `supabase_fix_user_profiles_recursion.sql`, rewritten to JWT claims; master schema patched too). (2) `authenticated` role had no base table GRANTs on the public schema → `42501 permission denied` regardless of RLS (fix: `supabase_fix_table_grants.sql`, grants + default privileges; RLS remains the row gatekeeper). Both ran against prod 2026-06-12. The backend had likely never served a successful authenticated query before these — sync errors were swallowed by fire-and-forget `_trySyncToSupabase()` (see Q2). |
 | B4 | `audit_log` table | ✅ | Audit log table + triggers on all 18 care-record tables. |
 | B5 | `inspector_grants` table — `(inspector_user_id, home_id, granted_by, expires_at, scope[])` | ✅ | Table created. `inspector_has_grant()` function + RLS policies ready for Phase 5. |
 | B6 | Supabase Auth — MFA (TOTP) enabled for Manager and Inspector roles | ✅ | TOTP enabled platform-wide. Enforcement in Flutter via `needsMfaChallenge` on `AppUser` (reads `aal` JWT claim). |
@@ -131,13 +131,13 @@ Every new feature added without them makes the retrofit harder.
 | Q11 | Fix delete confirmation dialogs — all screens | ✅ | `Navigator.pop(context, ...)` inside dialog builders was using the outer screen context instead of the dialog's own context, causing the wrong navigator to be popped inside ShellRoute. Fixed across all 12 screens (bath temp, daily notes, incidents, behaviour, sleep diary, food diary, activities, smart steps, visitor log, medication, medical history, care plans). |
 | Q12 | Fix voice-to-text in daily note editor | ✅ | Original code only acted on `finalResult` which never fired on many Android devices. Removed `localeId: 'en_GB'` (silently failed if language pack missing). Added real-time partial result display. Moved session-end logic to `onStatus` callback in `initialize()` — `await _speech.listen()` returns immediately on start, not on finish, so the previous code was resetting `_isListening` right after starting. |
 | Q13 | Full codebase audit — bugs and inconsistencies | ✅ | Found and fixed: `homeId ?? ''` → `'dev-home-001'` in add_child_screen (children would be saved with empty homeId and disappear from all lists); `Theme.of(context)` → `Theme.of(dialogContext)` in 2 remaining dialog builders (care_plan_detail, daily_notes_list); sleep diary FAB `AppColors.roleSupportWorker` → `teal400` (role badge color misused as action color); ABC labels in behaviour_screen hardcoded → AppStrings; mic semanticLabel inline strings → AppStrings. |
-| Q14 | Router role-based route guards | ✅ | Added `_isRouteAllowed(location, role)` and `_defaultRoute(role)` to app_router.dart. Redirect now enforces role after auth/MFA checks — forbidden routes silently redirect to the role's default landing screen. Also fixed post-MFA redirect to use `_defaultRoute` (inspector → `/inspector`, parentGuardian → `/parent-portal`) instead of hardcoded `/children`. |
+| Q14 | Router role-based route guards | ✅ | Added `_isRouteAllowed(location, role)` and `_defaultRoute(role)` to app_router.dart. Redirect now enforces role after auth/MFA checks — forbidden routes silently redirect to the role's default landing screen. Also fixed post-MFA redirect to use `_defaultRoute` (inspector → `/inspector`, parentGuardian → `/parent-portal`) instead of hardcoded `/children`. **Bug found + fixed 2026-06-12:** the role guard ran on `/mfa` (not in any role's allowed list) → redirect loop `/mfa → role home → /mfa` for every MFA role. `/mfa` is now fully resolved by the MFA checks before the role guard runs. |
 
 ---
 
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-06-11 (session 5)*
+*Last updated: 2026-06-12 (session 6)*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
@@ -145,20 +145,20 @@ Every new feature added without them makes the retrofit harder.
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
-| Phase 5 — External | 1 of 3 | (item 29 done; 30 + 31 remain) | 33% |
+| Phase 5 — External | 2 of 3 | (29 + 30 done and verified; 31 remains) | 67% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
 | Quality / cross-cutting | 5 of 14 | (Q10–Q14 done; Q1 partial) | 36% |
-| **Total** | **45 of 57** | | **79%** |
+| **Total** | **46 of 57** | | **81%** |
 
 ---
 
 ## Recommended build order from here
 
-1. **Verify item 29 end-to-end** — create a test inspector account, grant access as manager, review records + leave feedback as inspector
-2. **Phase 5 item 30** — Parent/Guardian Portal (read-only, activity/achievement/photo updates)
+1. ~~Verify item 29 end-to-end~~ ✅ Done 2026-06-12 — see item 29 / B3 / Q14 notes
+2. ~~Verify item 30 end-to-end~~ ✅ Done 2026-06-12
 3. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
 4. **I5** — Accessibility: semantic labels on all interactive elements
-5. **Q2** — Proper offline sync queue (critical before going live with real data)
+5. **Q2** — Proper offline sync queue (critical before going live with real data — note the backend was silently rejecting every sync until the 2026-06-12 fixes; verify historical local data actually reaches Supabase)
 6. **Q3** — Timezone rendering (UTC → Europe/London)
 7. **Q-items** — Tests and CI pipeline — weave in throughout
