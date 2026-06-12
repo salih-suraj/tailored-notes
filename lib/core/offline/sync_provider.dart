@@ -17,6 +17,7 @@ import '../../features/medication/presentation/providers/medication_provider.dar
 import '../../features/sleep_diary/presentation/providers/sleep_diary_provider.dart';
 import '../../features/smart_steps/presentation/providers/smart_steps_provider.dart';
 import '../audit/audit_log_writer.dart';
+import '../network/connectivity_provider.dart';
 import 'sync_service.dart';
 
 part 'sync_provider.g.dart';
@@ -45,9 +46,24 @@ SyncService syncService(Ref ref) {
     ref.watch(incidentReportsRepositoryProvider),
     ref.watch(auditLogWriterProvider),
   ]);
-  if (ref.watch(isAuthenticatedProvider)) {
+  // Wait for the MFA challenge to complete before sweeping: the
+  // require_mfa_for_privileged_roles restrictive RLS policy denies
+  // manager/inspector sessions at AAL1, so sweeping earlier would only
+  // produce denied requests.
+  final user = ref.watch(currentUserProvider);
+  final ready = user != null && !user.needsMfaChallenge;
+  if (ready) {
     service.start();
   }
+
+  // Sweep immediately when connectivity returns instead of waiting for
+  // the next timer tick.
+  ref.listen(isOnlineProvider, (previous, next) {
+    if (ready && next && previous == false) {
+      service.syncAll();
+    }
+  });
+
   ref.onDispose(service.stop);
   return service;
 }

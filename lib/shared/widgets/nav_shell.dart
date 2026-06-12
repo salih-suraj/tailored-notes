@@ -8,6 +8,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../features/auth/domain/user_role.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
 import '../models/app_strings.dart';
+import 'offline_banner.dart';
 
 /// A single navigation destination entry.
 class _NavItem {
@@ -155,7 +156,12 @@ class _MobileShell extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      body: child,
+      body: Column(
+        children: [
+          const SafeArea(bottom: false, child: OfflineBanner()),
+          Expanded(child: child),
+        ],
+      ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         onDestinationSelected: (i) => context.go(destinations[i].route),
@@ -228,7 +234,14 @@ class _TabletShell extends StatelessWidget {
             thickness: 1,
             color: colors.outline,
           ),
-          Expanded(child: child),
+          Expanded(
+            child: Column(
+              children: [
+                const SafeArea(bottom: false, child: OfflineBanner()),
+                Expanded(child: child),
+              ],
+            ),
+          ),
         ],
       ),
     );
