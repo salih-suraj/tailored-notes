@@ -602,4 +602,43 @@ abstract final class AppStrings {
   static const managerFeedbackResolutionLabel = 'Resolution notes (optional)';
   static const managerFeedbackUpdated = 'Feedback updated';
   static const managerFeedbackFrom = 'From';
+
+  // Parent Portal (parent/guardian role)
+  static const parentPortalTitle = 'My Child';
+  static const parentNoLinks = 'No children linked to your account yet';
+  static const parentNoLinksHint =
+      'Ask the home manager to link your child to your account.';
+  static const parentFeedTitle = 'Updates';
+  static const parentNoActivities = 'No updates to show yet';
+  static const parentNoActivitiesHint =
+      'Activities, rewards, and achievements will appear here as staff record them.';
+  static const parentRewardBadge = 'Reward earned';
+  static const parentAchievementLabel = 'Achievement';
+  static const parentDurationSuffix = 'min';
+  static const parentRecordsLimitNote = 'Showing the most recent updates';
+
+  // Manager — Parent Access
+  static const managerParentAccessTitle = 'Parent Access';
+  static const managerParentAccessOpenTooltip = 'Parent Access';
+  static const managerNoParentLinks = 'No parent accounts have been linked';
+  static const managerParentLinkActive = 'Active';
+  static const managerParentLinkRevoked = 'Revoked';
+  static const managerParentLinkPhotosOn = 'Photos visible';
+  static const managerParentLinkPhotosOff = 'Photos hidden';
+  static const managerParentLinkedPrefix = 'Linked';
+  static const managerRevokeParentLink = 'Revoke access';
+  static const managerRevokeParentLinkTitle = 'Revoke parent access?';
+  static const managerRevokeParentLinkConfirm =
+      'This parent will immediately lose access to this child\'s updates.';
+  static const managerNewParentLink = 'Link Parent';
+  static const managerParentLinkFormTitle = 'Link Parent to Child';
+  static const managerParentLinkFormSearchLabel = 'Parent email';
+  static const managerParentLinkFormSearchHint = 'Search by email';
+  static const managerParentLinkFormNoResults = 'No parent accounts found';
+  static const managerParentLinkFormChildLabel = 'Child';
+  static const managerParentLinkFormPhotosLabel = 'Allow photo access';
+  static const managerParentLinkFormPhotosHint =
+      'Show this child\'s photo to the parent in the portal';
+  static const managerParentLinkFormSubmit = 'Link Parent';
+  static const managerParentLinkCreated = 'Parent linked';
 }

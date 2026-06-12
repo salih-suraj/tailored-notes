@@ -49,6 +49,11 @@ class ManagerDashboardScreen extends ConsumerWidget {
             tooltip: AppStrings.managerInspectorAccessOpenTooltip,
             onPressed: () => context.push(AppRoutes.managerInspectorAccess),
           ),
+          IconButton(
+            icon: const Icon(Icons.family_restroom_outlined),
+            tooltip: AppStrings.managerParentAccessOpenTooltip,
+            onPressed: () => context.push(AppRoutes.managerParentAccess),
+          ),
         ],
       ),
       body: childrenAsync.when(

@@ -58,6 +58,9 @@ import '../../features/inspector/presentation/inspector_home_access_screen.dart'
 import '../../features/inspector/presentation/inspector_portal_screen.dart';
 import '../../features/inspector/presentation/inspector_records_screen.dart';
 import '../../features/inspector/presentation/manager_inspector_access_screen.dart';
+import '../../features/parent_portal/presentation/manager_parent_access_screen.dart';
+import '../../features/parent_portal/presentation/parent_child_feed_screen.dart';
+import '../../features/parent_portal/presentation/parent_portal_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../shared/widgets/nav_shell.dart';
 import '../errors/placeholder_screen.dart';
@@ -140,9 +143,13 @@ GoRouter appRouter(Ref ref) {
         return user.needsMfaChallenge ? AppRoutes.mfa : _defaultRoute(user.role);
       }
 
-      // MFA checks.
+      // MFA checks. /mfa is fully resolved here — it must not fall through
+      // to the role guard below, which would bounce the user off the MFA
+      // screen and into a redirect loop (/mfa => role home => /mfa).
       if (user.needsMfaChallenge && !isMfaRoute) return AppRoutes.mfa;
-      if (!user.needsMfaChallenge && isMfaRoute) return _defaultRoute(user.role);
+      if (isMfaRoute) {
+        return user.needsMfaChallenge ? null : _defaultRoute(user.role);
+      }
 
       // Role-based route guard — redirect to role's home if route is forbidden.
       if (!_isRouteAllowed(location, user.role)) {
@@ -497,6 +504,10 @@ GoRouter appRouter(Ref ref) {
                 path: 'inspector-access',
                 builder: (_, _) => const ManagerInspectorAccessScreen(),
               ),
+              GoRoute(
+                path: 'parent-access',
+                builder: (_, _) => const ManagerParentAccessScreen(),
+              ),
             ],
           ),
           GoRoute(
@@ -538,8 +549,15 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: AppRoutes.parentPortal,
-            builder: (_, _) =>
-                const PlaceholderScreen(title: 'Parent Portal'),
+            builder: (_, _) => const ParentPortalScreen(),
+            routes: [
+              GoRoute(
+                path: ':linkId',
+                builder: (_, state) => ParentChildFeedScreen(
+                  linkId: state.pathParameters['linkId']!,
+                ),
+              ),
+            ],
           ),
           GoRoute(
             path: AppRoutes.settings,

@@ -27,6 +27,7 @@ abstract final class AppColors {
   static const roleTeamLeader = blue;
   static const roleManager = Color(0xFFBA7517);
   static const roleInspector = Color(0xFFA32D2D);
+  static const roleParent = purple;
 
   // Dark-mode surfaces
   static const darkBackground = Color(0xFF1A1A18);

@@ -97,6 +97,7 @@ abstract final class AppRoutes {
   static const behaviourPatterns = '/dashboard/behaviour-patterns';
   static const dashboard = '/dashboard';
   static const managerInspectorAccess = '/dashboard/inspector-access';
+  static const managerParentAccess = '/dashboard/parent-access';
 
   // Inspector portal — nested under /inspector
   static const inspector = '/inspector';
@@ -106,6 +107,8 @@ abstract final class AppRoutes {
       '/inspector/:grantId/:module/:childId';
   static const inspectorFeedbackNew = '/inspector/:grantId/feedback/new';
 
+  // Parent portal — nested under /parent-portal
   static const parentPortal = '/parent-portal';
+  static const parentChildFeed = '/parent-portal/:linkId';
   static const settings = '/settings';
 }
