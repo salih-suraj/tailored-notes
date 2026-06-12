@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -140,7 +141,7 @@ class _LinkTile extends ConsumerWidget {
             const SizedBox(height: AppSpacing.xs),
             Text(
               '${AppStrings.managerParentLinkedPrefix} '
-              '${_dateFormat.format(link.createdAt.toLocal())}',
+              '${_dateFormat.format(link.createdAt.toUk())}',
               style: AppTextStyles.small(colors.onSurfaceVariant),
             ),
             const SizedBox(height: AppSpacing.sm),

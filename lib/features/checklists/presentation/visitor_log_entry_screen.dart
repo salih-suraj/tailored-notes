@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../shared/models/app_strings.dart';
 import '../domain/visitor_log_entry.dart';
@@ -181,7 +182,7 @@ class _VisitorLogEntryScreenState
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
-                    timeFmt.format(_arrivedAt.toLocal()),
+                    timeFmt.format(_arrivedAt.toUk()),
                     style: AppTextStyles.body(colors.onSurface),
                   ),
                   const Spacer(),

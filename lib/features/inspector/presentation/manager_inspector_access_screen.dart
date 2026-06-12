@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -200,7 +201,7 @@ class _GrantTile extends ConsumerWidget {
             const SizedBox(height: AppSpacing.xs),
             Text(
               '${AppStrings.managerGrantExpiresPrefix} '
-              '${_dateFormat.format(grant.expiresAt.toLocal())}',
+              '${_dateFormat.format(grant.expiresAt.toUk())}',
               style: AppTextStyles.small(colors.onSurfaceVariant),
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -326,7 +327,7 @@ class _FeedbackTile extends ConsumerWidget {
                       label: feedback.status.displayName,
                       color: _statusColor(feedback.status)),
                   const Spacer(),
-                  Text(_dateFormat.format(feedback.createdAt.toLocal()),
+                  Text(_dateFormat.format(feedback.createdAt.toUk()),
                       style: AppTextStyles.small(colors.onSurfaceVariant)),
                 ],
               ),

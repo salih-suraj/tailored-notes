@@ -8,6 +8,7 @@ import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../core/offline/sync_service.dart';
+import '../../../core/time/uk_time.dart';
 import '../domain/med_administration.dart';
 import '../domain/prescribed_med.dart';
 import 'medication_dao.dart';
@@ -87,13 +88,14 @@ class MedicationRepository implements SyncTarget {
 
   // ── Administrations ───────────────────────────────────────────────────
 
-  /// Live stream of today's administration records for [childId].
+  /// Live stream of today's (London time) administration records for [childId].
   Stream<List<MedAdministration>> watchTodayAdmins(String childId) {
-    final now = DateTime.now().toLocal();
-    final start = DateTime(now.year, now.month, now.day).toUtc();
-    final end = DateTime(now.year, now.month, now.day, 23, 59, 59).toUtc();
     return _dao
-        .watchByChildAndDate(childId, start, end)
+        .watchByChildAndDate(
+          childId,
+          UkTime.startOfTodayUtc(),
+          UkTime.endOfTodayUtc(),
+        )
         .map((rows) => rows.map(_adminToDomain).toList());
   }
 

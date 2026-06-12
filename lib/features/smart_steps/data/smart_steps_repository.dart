@@ -8,6 +8,7 @@ import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../core/offline/sync_service.dart';
+import '../../../core/time/uk_time.dart';
 import '../domain/smart_step.dart';
 import '../domain/step_progress.dart';
 import 'smart_steps_dao.dart';
@@ -144,10 +145,7 @@ class SmartStepsRepository implements SyncTarget {
     _trySyncProgress(withUser);
   }
 
-  String _todayStr() {
-    final d = DateTime.now().toLocal();
-    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  }
+  String _todayStr() => UkTime.todayStr();
 
   // ── Helpers ───────────────────────────────────────────────────────────
 

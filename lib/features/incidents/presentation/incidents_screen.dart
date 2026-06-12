@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
@@ -138,7 +139,7 @@ class _IncidentCard extends StatelessWidget {
     final typeColor = _typeColor(report.incidentType);
     final severityColor = _severityColor(report.severity);
     final dateStr = DateFormat('EEE d MMM · HH:mm', 'en_GB')
-        .format(report.occurredAt.toLocal());
+        .format(report.occurredAt.toUk());
 
     return Material(
       color: colors.surfaceContainerLow,

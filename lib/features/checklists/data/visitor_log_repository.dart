@@ -7,6 +7,7 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../core/offline/sync_service.dart';
+import '../../../core/time/uk_time.dart';
 import '../domain/visitor_log_entry.dart';
 import 'visitor_log_dao.dart';
 
@@ -28,13 +29,14 @@ class VisitorLogRepository implements SyncTarget {
 
   String get _homeId => _currentUser?.homeId ?? 'dev-home-001';
 
-  /// Live stream of today's visitor entries for the home, newest first.
+  /// Live stream of today's (London time) visitor entries, newest first.
   Stream<List<VisitorLogEntry>> watchToday() {
-    final now = DateTime.now().toLocal();
-    final start = DateTime(now.year, now.month, now.day).toUtc();
-    final end = DateTime(now.year, now.month, now.day, 23, 59, 59).toUtc();
     return _dao
-        .watchByHomeAndDate(_homeId, start, end)
+        .watchByHomeAndDate(
+          _homeId,
+          UkTime.startOfTodayUtc(),
+          UkTime.endOfTodayUtc(),
+        )
         .map((rows) => rows.map(_toDomain).toList());
   }
 

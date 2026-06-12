@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../shared/models/app_strings.dart';
 import '../domain/incident_report.dart';
@@ -60,7 +61,7 @@ class _IncidentReportEditorScreenState
       _followUpDetailsController.text = e.followUpDetails ?? '';
       _incidentType = e.incidentType;
       _severity = e.severity;
-      _occurredAt = e.occurredAt.toLocal();
+      _occurredAt = e.occurredAt.toUk();
       _policeNotified = e.policeNotified;
       _parentNotified = e.parentNotified;
       _managerNotified = e.managerNotified;

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
@@ -140,7 +141,7 @@ class _IncidentCard extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final severityColor = _severityColor(incident.severity);
     final dateStr = DateFormat('EEE d MMM · HH:mm', 'en_GB')
-        .format(incident.occurredAt.toLocal());
+        .format(incident.occurredAt.toUk());
     final shiftColor = switch (incident.shift) {
       ShiftType.morning => AppColors.amber,
       ShiftType.afternoon => AppColors.teal400,

@@ -8,6 +8,7 @@ import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../core/offline/sync_service.dart';
+import '../../../core/time/uk_time.dart';
 import '../domain/checklist_item.dart';
 import 'checklist_items_dao.dart';
 
@@ -209,10 +210,7 @@ class ChecklistItemsRepository implements SyncTarget {
   }) =>
       '${_homeId}_${childId ?? 'communal'}_${areaKey}_${taskKey}_${shift.name}_$date';
 
-  String _todayStr() {
-    final d = DateTime.now().toLocal();
-    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  }
+  String _todayStr() => UkTime.todayStr();
 
   ChecklistItem _toDomain(ChecklistItemRow row) => ChecklistItem(
         id: row.id,

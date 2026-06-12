@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -168,9 +169,9 @@ class _VisitorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final fmt = DateFormat('HH:mm', 'en_GB');
-    final arrivedStr = fmt.format(entry.arrivedAt.toLocal());
+    final arrivedStr = fmt.format(entry.arrivedAt.toUk());
     final departedStr = entry.departedAt != null
-        ? fmt.format(entry.departedAt!.toLocal())
+        ? fmt.format(entry.departedAt!.toUk())
         : null;
     final onSite = entry.departedAt == null;
 

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/behaviour/domain/behaviour_incident.dart';
 import '../../../features/behaviour/presentation/providers/behaviour_provider.dart';
 import '../../../features/children/domain/child.dart';
@@ -58,8 +59,7 @@ class _BehaviourPatternScreenState
               ? children
               : children.where((c) => c.id == _selectedChildId).toList();
 
-          final cutoff =
-              DateTime.now().subtract(Duration(days: _days)).toLocal();
+          final cutoff = UkTime.now().subtract(Duration(days: _days));
 
           final allIncidents = <BehaviourIncident>[];
           for (final child in targetChildren) {
@@ -67,7 +67,7 @@ class _BehaviourPatternScreenState
                 ref.watch(behaviourIncidentsProvider(child.id)).valueOrNull ??
                     [];
             allIncidents.addAll(
-                raw.where((b) => b.occurredAt.toLocal().isAfter(cutoff)));
+                raw.where((b) => b.occurredAt.toUk().isAfter(cutoff)));
           }
 
           return ListView(
@@ -284,12 +284,12 @@ class _TrendCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final now = DateTime.now();
+    final now = UkTime.now();
 
-    // Build a count map keyed by 'yyyy-MM-dd'.
+    // Build a count map keyed by 'yyyy-MM-dd' (London dates).
     final countByDay = <String, int>{};
     for (final b in incidents) {
-      final key = _dayKey(b.occurredAt.toLocal());
+      final key = _dayKey(b.occurredAt.toUk());
       countByDay[key] = (countByDay[key] ?? 0) + 1;
     }
 

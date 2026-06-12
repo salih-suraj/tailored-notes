@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/behaviour/domain/behaviour_incident.dart';
 import '../../../features/behaviour/presentation/providers/behaviour_provider.dart';
 import '../../../features/checklists/domain/bath_temp_record.dart';
@@ -32,8 +33,8 @@ class HandoverSummaryScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final childrenAsync = ref.watch(childrenProvider);
-    final shift = ShiftType.forTime(DateTime.now());
-    final now = DateTime.now();
+    final now = UkTime.now();
+    final shift = ShiftType.forTime(now);
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
@@ -173,19 +174,19 @@ class _ChildSummaryCard extends ConsumerWidget {
     final admins = adminsAsync.valueOrNull ?? [];
     final bathRecords = bathAsync.valueOrNull ?? [];
 
-    // Filter to current shift / today
+    // Filter to current shift / today (London time)
     final shiftNotes = notes
         .where((n) =>
-            n.shift == shift && _isSameDay(n.occurredAt.toLocal(), now))
+            n.shift == shift && _isSameDay(n.occurredAt.toUk(), now))
         .toList();
 
     final todayBehaviour = behaviour
         .where((b) =>
-            b.shift == shift && _isSameDay(b.occurredAt.toLocal(), now))
+            b.shift == shift && _isSameDay(b.occurredAt.toUk(), now))
         .toList();
 
     final todayIncidents = incidents
-        .where((i) => _isSameDay(i.occurredAt.toLocal(), now))
+        .where((i) => _isSameDay(i.occurredAt.toUk(), now))
         .toList();
 
     final scheduledMeds = meds.where((m) => !m.frequency.isPrn).toList();

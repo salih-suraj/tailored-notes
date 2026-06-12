@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
+import '../../../../core/time/uk_time.dart';
 import '../../../../shared/models/app_strings.dart';
 import '../../domain/daily_note.dart';
 
@@ -23,8 +24,8 @@ class DailyNoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final timeStr = DateFormat('HH:mm', 'en_GB').format(note.occurredAt.toLocal());
-    final dateStr = DateFormat('EEE d MMM', 'en_GB').format(note.occurredAt.toLocal());
+    final timeStr = DateFormat('HH:mm', 'en_GB').format(note.occurredAt.toUk());
+    final dateStr = DateFormat('EEE d MMM', 'en_GB').format(note.occurredAt.toUk());
 
     return Material(
       color: colors.surfaceContainerLow,

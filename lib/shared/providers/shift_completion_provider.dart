@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../core/time/uk_time.dart';
 import '../../features/checklists/presentation/providers/bath_temp_provider.dart';
 import '../../features/daily_notes/domain/daily_note.dart';
 import '../../features/daily_notes/presentation/providers/daily_notes_provider.dart';
@@ -23,11 +24,11 @@ ShiftCompletion shiftCompletion(Ref ref, String childId) {
   final meds = medsAsync.valueOrNull ?? [];
   final admins = adminsAsync.valueOrNull ?? [];
 
-  final now = DateTime.now();
+  final now = UkTime.now();
   final currentShift = ShiftType.forTime(now);
 
   final hasNoteToday = notes.any(
-    (n) => n.shift == currentShift && _isSameDay(n.occurredAt.toLocal(), now),
+    (n) => n.shift == currentShift && _isSameDay(n.occurredAt.toUk(), now),
   );
 
   final hasBathTempToday = bathRecords.isNotEmpty;

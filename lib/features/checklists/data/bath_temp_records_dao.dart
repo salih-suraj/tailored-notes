@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import '../../../core/offline/app_database.dart';
+import '../../../core/time/uk_time.dart';
 import 'bath_temp_records_table.dart';
 
 part 'bath_temp_records_dao.g.dart';
@@ -47,14 +48,11 @@ class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
       (select(bathTempRecordsTable)..where((t) => t.isSynced.equals(false)))
           .get();
 
-  // Matches rows where recorded_at falls on the given local date.
+  // Matches rows where recorded_at falls on the given London date.
   Expression<bool> _onDate(BathTempRecordsTable t, String date) {
-    final parts = date.split('-');
-    final year = int.parse(parts[0]);
-    final month = int.parse(parts[1]);
-    final day = int.parse(parts[2]);
-    final start = DateTime(year, month, day).toUtc();
-    final end = DateTime(year, month, day, 23, 59, 59).toUtc();
-    return t.recordedAt.isBetweenValues(start, end);
+    return t.recordedAt.isBetweenValues(
+      UkTime.dayStartUtc(date),
+      UkTime.dayEndUtc(date),
+    );
   }
 }

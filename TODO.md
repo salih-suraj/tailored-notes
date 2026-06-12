@@ -120,7 +120,7 @@ Every new feature added without them makes the retrofit harder.
 |---|------|--------|-------|
 | Q1 | `core/audit/` — AuditLogWriter built and called by all repositories | ✅ | Local Drift part done (I1). Backend `audit_log` table live (B4). **Sync wired 2026-06-12** as part of Q2: AuditLogWriter is a SyncTarget — pending audit rows re-push on every sweep, with 23505 duplicate-key reconciliation (insert-only RLS, no upsert). Dev-mode rows (non-uuid home_id) skipped. |
 | Q2 | Proper offline sync queue in `core/offline/` | 🔧 | **Sync engine built 2026-06-12** (`core/offline/sync_service.dart` + `sync_provider.dart`). SyncService sweeps all 15 SyncTargets (14 repos + audit log) on login and every 2 min while signed in: re-pushes every `isSynced = false` row (failed syncs, offline writes — also backfills history from before the 2026-06-12 backend fixes). **Deletes now propagate**: every repo's `delete()` pushes the `deleted_at` tombstone, and upsert payloads carry `deleted_at` (previously deleted records stayed visible in inspector/parent portals forever). Dev-mode rows (non-uuid home_id) skipped to avoid permanent retry spam. Conflict model: last-write-wins upsert. Still open: connectivity-triggered sweeps (timer-only now), per-row backoff, runtime verification on device. |
-| Q3 | Date/time — render in Europe/London timezone everywhere | ⬜ | Currently displaying UTC. Guide says: always UTC in storage, render in Europe/London. |
+| Q3 | Date/time — render in Europe/London timezone everywhere | ✅ | Done 2026-06-12. `core/time/uk_time.dart` (`timezone` package, tz db init in main): `UkTime.now()/fromUtc()/todayStr()/startOfTodayUtc()/dayStartUtc()` + `.toUk()` extension. Storage stays UTC. Fixed in one place each: `ShiftType.forTime` (all 14 shift call sites), all `_todayStr()` helpers, today-window queries (visitor log, med admins, bath temp DAO), shift completion, handover/dashboard/behaviour-pattern day bucketing, food editor meal auto-select, editor date defaults, and every display `.toLocal()` → `.toUk()`. Means records filed at 23:30 BST land on the correct UK date/shift even if the device timezone is wrong. Known remaining edge: editor date/time pickers construct device-naive DateTimes on save — only matters if staff record while the device is set to a non-UK timezone. |
 | Q4 | Riverpod `select()` — prevent unnecessary rebuilds | ⬜ | Currently using plain `watch()` everywhere. For large screens this will cause rebuild storms. |
 | Q5 | Unit tests — all domain models and repositories | ⬜ | 0 tests written. Guide specifies `test/unit/`. |
 | Q6 | Widget tests — all screens | ⬜ | 0 tests written. Guide specifies `test/widget/`. |
@@ -148,17 +148,19 @@ Every new feature added without them makes the retrofit harder.
 | Phase 5 — External | 2 of 3 | (29 + 30 done and verified; 31 remains) | 67% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
-| Quality / cross-cutting | 7 of 14 | (Q1, Q2, Q10–Q14 done; Q2 pending runtime verify) | 50% |
-| **Total** | **48 of 57** | | **84%** |
+| Quality / cross-cutting | 8 of 14 | (Q1–Q3, Q10–Q14 done; Q2 pending runtime verify) | 57% |
+| **Total** | **49 of 57** | | **86%** |
 
 ---
 
 ## Recommended build order from here
 
+*(Reordered 2026-06-12 at client direction: timezone → accessibility → AI summary → tests/CI)*
+
 1. ~~Verify item 29 end-to-end~~ ✅ Done 2026-06-12 — see item 29 / B3 / Q14 notes
 2. ~~Verify item 30 end-to-end~~ ✅ Done 2026-06-12
-3. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
-4. **I5** — Accessibility: semantic labels on all interactive elements
-5. ~~Q2 — offline sync engine~~ ✅ Built 2026-06-12 — verify on device: log in, watch the sweep backfill unsynced rows, delete a record and confirm it disappears from the inspector portal
-6. **Q3** — Timezone rendering (UTC → Europe/London)
-7. **Q-items** — Tests and CI pipeline — weave in throughout
+3. ~~Q2 — offline sync engine~~ ✅ Built 2026-06-12 — verify on device: log in, watch the sweep backfill unsynced rows, delete a record and confirm it disappears from the inspector portal
+4. ~~Q3 — Timezone rendering (UTC → Europe/London)~~ ✅ Done 2026-06-12
+5. **I5** — Accessibility: semantic labels on all interactive elements, 200% text scaling
+6. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
+7. **Q5–Q8** — Tests (unit/widget/integration) and CI pipeline

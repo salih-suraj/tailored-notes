@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
@@ -297,7 +298,7 @@ class _MedCard extends StatelessWidget {
                     if (latestAdmin != null) ...[
                       const SizedBox(height: AppSpacing.xs),
                       Text(
-                        '${outcome!.displayName} · ${DateFormat('HH:mm').format(latestAdmin!.administeredAt.toLocal())} · ${latestAdmin!.administeredByName}',
+                        '${outcome!.displayName} · ${DateFormat('HH:mm').format(latestAdmin!.administeredAt.toUk())} · ${latestAdmin!.administeredByName}',
                         style: AppTextStyles.small(outcomeColor),
                       ),
                     ],
@@ -407,7 +408,7 @@ class _PrnMedCard extends StatelessWidget {
               ),
               ...todayRecords.map(
                 (r) => Text(
-                  '${DateFormat('HH:mm').format(r.administeredAt.toLocal())} · ${r.outcome.displayName}${r.reason != null ? ' · ${r.reason}' : ''}',
+                  '${DateFormat('HH:mm').format(r.administeredAt.toUk())} · ${r.outcome.displayName}${r.reason != null ? ' · ${r.reason}' : ''}',
                   style: AppTextStyles.small(colors.onSurfaceVariant),
                 ),
               ),

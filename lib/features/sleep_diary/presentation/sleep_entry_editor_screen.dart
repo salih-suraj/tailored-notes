@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
@@ -40,7 +41,7 @@ class _SleepEntryEditorScreenState
   String? _bedTime;
   String? _settledTime;
   String? _wakeTime;
-  DateTime _date = DateTime.now();
+  DateTime _date = UkTime.now();
   bool _saving = false;
 
   @override
