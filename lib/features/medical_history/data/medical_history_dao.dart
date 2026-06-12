@@ -27,6 +27,11 @@ class MedicalHistoryDao extends DatabaseAccessor<AppDatabase>
   Future<void> upsertProfile(MedicalProfileTableCompanion profile) =>
       into(medicalProfileTable).insertOnConflictUpdate(profile);
 
+  /// One-shot list of profiles pending upload, for the sync sweep.
+  Future<List<MedicalProfileRow>> getUnsyncedProfiles() =>
+      (select(medicalProfileTable)..where((t) => t.isSynced.equals(false)))
+          .get();
+
   // ── Healthcare contacts ────────────────────────────────────────────────
 
   Stream<List<HealthcareContactRow>> watchContacts(String childId) =>
@@ -52,4 +57,9 @@ class MedicalHistoryDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of contacts pending upload, for the sync sweep.
+  Future<List<HealthcareContactRow>> getUnsyncedContacts() =>
+      (select(healthcareContactsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

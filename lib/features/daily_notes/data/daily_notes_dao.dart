@@ -42,4 +42,8 @@ class DailyNotesDao extends DatabaseAccessor<AppDatabase>
       (select(dailyNotesTable)
             ..where((t) => t.isSynced.equals(false)))
           .watch();
+
+  /// One-shot list of notes pending upload, for the sync sweep.
+  Future<List<DailyNoteRow>> getUnsynced() =>
+      (select(dailyNotesTable)..where((t) => t.isSynced.equals(false))).get();
 }

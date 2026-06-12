@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
+import '../../../core/offline/sync_service.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../domain/daily_note.dart';
 import 'daily_notes_dao.dart';
@@ -12,7 +13,7 @@ import 'daily_notes_dao.dart';
 /// Coordinates local Drift persistence and background Supabase sync.
 /// All writes go to Drift first — the app is fully functional offline.
 /// Every mutation is recorded in the audit log.
-class DailyNotesRepository {
+class DailyNotesRepository implements SyncTarget {
   DailyNotesRepository({
     required DailyNotesDao dao,
     required SupabaseClient? supabaseClient,
@@ -55,7 +56,9 @@ class DailyNotesRepository {
     _trySyncToSupabase(withUpdater);
   }
 
-  /// Soft-deletes the note locally, logs the deletion, and marks it for sync.
+  /// Soft-deletes the note locally, logs the deletion, and pushes the
+  /// tombstone (deleted_at) to Supabase so cloud readers (inspector and
+  /// parent portals) stop seeing the record.
   Future<void> delete(String id) async {
     final existing = await _dao.findById(id);
     await _dao.softDelete(id);
@@ -66,6 +69,25 @@ class DailyNotesRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findById(id);
+    if (deleted != null) _trySyncToSupabase(_toDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'daily_notes';
+
+  /// Re-pushes every locally-pending row (failed syncs, offline writes,
+  /// soft deletes). Called by SyncService on login and on a timer.
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final note = _toDomain(row);
+      if (!SyncService.isCloudSyncable(note.homeId)) continue;
+      await _trySyncToSupabase(note);
+    }
   }
 
   // ── Private helpers ────────────────────────────────────────────────────────
@@ -105,7 +127,7 @@ class DailyNotesRepository {
         isSynced: Value(note.isSynced),
       );
 
-  void _trySyncToSupabase(DailyNote note) async {
+  Future<void> _trySyncToSupabase(DailyNote note) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -122,6 +144,7 @@ class DailyNotesRepository {
         'updated_at': note.updatedAt.toUtc().toIso8601String(),
         'updated_by_id': note.updatedById,
         'updated_by_name': note.updatedByName,
+        'deleted_at': note.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(note.copyWith(isSynced: true)));
     } catch (e, st) {

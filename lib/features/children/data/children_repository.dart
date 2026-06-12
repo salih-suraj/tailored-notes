@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
+import '../../../core/offline/sync_service.dart';
 import '../../auth/domain/app_user.dart';
 import '../domain/child.dart';
 import 'children_dao.dart';
@@ -12,7 +13,7 @@ import 'children_dao.dart';
 /// Coordinates local Drift persistence and background Supabase sync for children.
 /// All writes go to Drift first — the app is fully functional offline.
 /// Every mutation is recorded in the audit log.
-class ChildrenRepository {
+class ChildrenRepository implements SyncTarget {
   ChildrenRepository({
     required ChildrenDao dao,
     required SupabaseClient? supabaseClient,
@@ -53,6 +54,20 @@ class ChildrenRepository {
     _trySyncToSupabase(withUpdater);
   }
 
+  @override
+  String get syncLabel => 'children';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final child = _toDomain(row);
+      if (!SyncService.isCloudSyncable(child.homeId)) continue;
+      await _trySyncToSupabase(child);
+    }
+  }
+
   // ── Private helpers ────────────────────────────────────────────────────────
 
   Child _toDomain(ChildRow row) => Child(
@@ -87,7 +102,7 @@ class ChildrenRepository {
         isSynced: Value(child.isSynced),
       );
 
-  void _trySyncToSupabase(Child child) async {
+  Future<void> _trySyncToSupabase(Child child) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -103,6 +118,7 @@ class ChildrenRepository {
         'updated_at': child.updatedAt.toUtc().toIso8601String(),
         'created_by_id': child.createdById,
         'updated_by_id': child.updatedById,
+        'deleted_at': child.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(child.copyWith(isSynced: true)));
     } catch (e, st) {

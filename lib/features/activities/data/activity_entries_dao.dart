@@ -36,4 +36,9 @@ class ActivityEntriesDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<ActivityEntryRow>> getUnsynced() =>
+      (select(activityEntriesTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

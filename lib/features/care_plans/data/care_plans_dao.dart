@@ -39,6 +39,10 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
         ),
       );
 
+  /// One-shot list of plans pending upload, for the sync sweep.
+  Future<List<CarePlanRow>> getUnsyncedPlans() =>
+      (select(carePlansTable)..where((t) => t.isSynced.equals(false))).get();
+
   // ── Goals ──────────────────────────────────────────────────────────────
 
   Stream<List<CarePlanGoalRow>> watchGoals(String carePlanId) =>
@@ -68,4 +72,9 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of goals pending upload, for the sync sweep.
+  Future<List<CarePlanGoalRow>> getUnsyncedGoals() =>
+      (select(carePlanGoalsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

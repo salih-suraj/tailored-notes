@@ -6,11 +6,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/healthcare_contact.dart';
 import '../domain/medical_profile.dart';
 import 'medical_history_dao.dart';
 
-class MedicalHistoryRepository {
+class MedicalHistoryRepository implements SyncTarget {
   MedicalHistoryRepository({
     required MedicalHistoryDao dao,
     required SupabaseClient? supabaseClient,
@@ -82,6 +83,27 @@ class MedicalHistoryRepository {
       recordId: id,
       before: existing != null ? _contactToDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findContactById(id);
+    if (deleted != null) _trySyncContact(_contactToDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'medical_history';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    for (final row in await _dao.getUnsyncedProfiles()) {
+      final profile = _profileToDomain(row);
+      if (!SyncService.isCloudSyncable(profile.homeId)) continue;
+      await _trySyncProfile(profile);
+    }
+    for (final row in await _dao.getUnsyncedContacts()) {
+      final contact = _contactToDomain(row);
+      if (!SyncService.isCloudSyncable(contact.homeId)) continue;
+      await _trySyncContact(contact);
+    }
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────
@@ -129,7 +151,9 @@ class MedicalHistoryRepository {
         updatedAt: Value(c.updatedAt.toUtc()), isSynced: Value(c.isSynced),
       );
 
-  void _trySyncProfile(MedicalProfile p) async {
+  // medical_profiles is one-row-per-child with no deleted_at column
+  // locally or in the cloud schema, so the payload stays as-is.
+  Future<void> _trySyncProfile(MedicalProfile p) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -148,7 +172,7 @@ class MedicalHistoryRepository {
     }
   }
 
-  void _trySyncContact(HealthcareContact c) async {
+  Future<void> _trySyncContact(HealthcareContact c) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -159,6 +183,7 @@ class MedicalHistoryRepository {
         'notes': c.notes, 'created_by_id': c.createdById,
         'updated_by_id': c.updatedById,
         'updated_at': c.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': c.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertContact(_contactToCompanion(c.copyWith(isSynced: true)));
     } catch (err, st) {

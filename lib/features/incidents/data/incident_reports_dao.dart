@@ -33,4 +33,9 @@ class IncidentReportsDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<IncidentReportRow>> getUnsynced() =>
+      (select(incidentReportsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

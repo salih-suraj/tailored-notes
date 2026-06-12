@@ -118,8 +118,8 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| Q1 | `core/audit/` — AuditLogWriter built and called by all repositories | 🔧 | Local Drift part done (same as I1). Backend `audit_log` Supabase table live (B4 done). Sync of local audit rows to Supabase not yet wired — part of Q2 offline sync work. |
-| Q2 | Proper offline sync queue in `core/offline/` | ⬜ | Current `_trySyncToSupabase()` is fire-and-forget with no retry, no queue, no conflict resolution. Needs a proper sync engine. Guide specifies "Drift offline sync engine" in `core/offline/`. |
+| Q1 | `core/audit/` — AuditLogWriter built and called by all repositories | ✅ | Local Drift part done (I1). Backend `audit_log` table live (B4). **Sync wired 2026-06-12** as part of Q2: AuditLogWriter is a SyncTarget — pending audit rows re-push on every sweep, with 23505 duplicate-key reconciliation (insert-only RLS, no upsert). Dev-mode rows (non-uuid home_id) skipped. |
+| Q2 | Proper offline sync queue in `core/offline/` | 🔧 | **Sync engine built 2026-06-12** (`core/offline/sync_service.dart` + `sync_provider.dart`). SyncService sweeps all 15 SyncTargets (14 repos + audit log) on login and every 2 min while signed in: re-pushes every `isSynced = false` row (failed syncs, offline writes — also backfills history from before the 2026-06-12 backend fixes). **Deletes now propagate**: every repo's `delete()` pushes the `deleted_at` tombstone, and upsert payloads carry `deleted_at` (previously deleted records stayed visible in inspector/parent portals forever). Dev-mode rows (non-uuid home_id) skipped to avoid permanent retry spam. Conflict model: last-write-wins upsert. Still open: connectivity-triggered sweeps (timer-only now), per-row backoff, runtime verification on device. |
 | Q3 | Date/time — render in Europe/London timezone everywhere | ⬜ | Currently displaying UTC. Guide says: always UTC in storage, render in Europe/London. |
 | Q4 | Riverpod `select()` — prevent unnecessary rebuilds | ⬜ | Currently using plain `watch()` everywhere. For large screens this will cause rebuild storms. |
 | Q5 | Unit tests — all domain models and repositories | ⬜ | 0 tests written. Guide specifies `test/unit/`. |
@@ -148,8 +148,8 @@ Every new feature added without them makes the retrofit harder.
 | Phase 5 — External | 2 of 3 | (29 + 30 done and verified; 31 remains) | 67% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
 | Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
-| Quality / cross-cutting | 5 of 14 | (Q10–Q14 done; Q1 partial) | 36% |
-| **Total** | **46 of 57** | | **81%** |
+| Quality / cross-cutting | 7 of 14 | (Q1, Q2, Q10–Q14 done; Q2 pending runtime verify) | 50% |
+| **Total** | **48 of 57** | | **84%** |
 
 ---
 
@@ -159,6 +159,6 @@ Every new feature added without them makes the retrofit harder.
 2. ~~Verify item 30 end-to-end~~ ✅ Done 2026-06-12
 3. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
 4. **I5** — Accessibility: semantic labels on all interactive elements
-5. **Q2** — Proper offline sync queue (critical before going live with real data — note the backend was silently rejecting every sync until the 2026-06-12 fixes; verify historical local data actually reaches Supabase)
+5. ~~Q2 — offline sync engine~~ ✅ Built 2026-06-12 — verify on device: log in, watch the sweep backfill unsynced rows, delete a record and confirm it disappears from the inspector portal
 6. **Q3** — Timezone rendering (UTC → Europe/London)
 7. **Q-items** — Tests and CI pipeline — weave in throughout

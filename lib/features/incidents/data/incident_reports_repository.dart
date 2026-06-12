@@ -5,11 +5,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
+import '../../../core/offline/sync_service.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../domain/incident_report.dart';
 import 'incident_reports_dao.dart';
 
-class IncidentReportsRepository {
+class IncidentReportsRepository implements SyncTarget {
   IncidentReportsRepository({
     required IncidentReportsDao dao,
     required SupabaseClient? supabaseClient,
@@ -55,6 +56,23 @@ class IncidentReportsRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findById(id);
+    if (deleted != null) _trySyncToSupabase(_toDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'incident_reports';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final report = _toDomain(row);
+      if (!SyncService.isCloudSyncable(report.homeId)) continue;
+      await _trySyncToSupabase(report);
+    }
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────
@@ -114,7 +132,7 @@ class IncidentReportsRepository {
         isSynced: Value(r.isSynced),
       );
 
-  void _trySyncToSupabase(IncidentReport r) async {
+  Future<void> _trySyncToSupabase(IncidentReport r) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -140,6 +158,7 @@ class IncidentReportsRepository {
         'created_by_id': r.createdById,
         'updated_by_id': r.updatedById,
         'updated_at': r.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': r.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(r.copyWith(isSynced: true)));
     } catch (err, st) {

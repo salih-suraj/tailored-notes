@@ -37,4 +37,9 @@ class SleepEntriesDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<SleepEntryRow>> getUnsynced() =>
+      (select(sleepEntriesTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

@@ -7,10 +7,11 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/food_entry.dart';
 import 'food_entries_dao.dart';
 
-class FoodEntriesRepository {
+class FoodEntriesRepository implements SyncTarget {
   FoodEntriesRepository({
     required FoodEntriesDao dao,
     required SupabaseClient? supabaseClient,
@@ -56,6 +57,23 @@ class FoodEntriesRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findById(id);
+    if (deleted != null) _trySyncToSupabase(_toDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'food_entries';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final entry = _toDomain(row);
+      if (!SyncService.isCloudSyncable(entry.homeId)) continue;
+      await _trySyncToSupabase(entry);
+    }
   }
 
   FoodEntry _toDomain(FoodEntryRow r) => FoodEntry(
@@ -101,7 +119,7 @@ class FoodEntriesRepository {
         isSynced: Value(e.isSynced),
       );
 
-  void _trySyncToSupabase(FoodEntry e) async {
+  Future<void> _trySyncToSupabase(FoodEntry e) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -114,6 +132,7 @@ class FoodEntriesRepository {
         'recorded_by_name': e.recordedByName,
         'created_by_id': e.createdById, 'updated_by_id': e.updatedById,
         'updated_at': e.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': e.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(e.copyWith(isSynced: true)));
     } catch (err, st) {

@@ -6,11 +6,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/care_plan.dart';
 import '../domain/care_plan_goal.dart';
 import 'care_plans_dao.dart';
 
-class CarePlansRepository {
+class CarePlansRepository implements SyncTarget {
   CarePlansRepository({
     required CarePlansDao dao,
     required SupabaseClient? supabaseClient,
@@ -58,6 +59,27 @@ class CarePlansRepository {
       recordId: id,
       before: existing != null ? _planToDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findPlanById(id);
+    if (deleted != null) _trySyncPlan(_planToDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'care_plans';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    for (final row in await _dao.getUnsyncedPlans()) {
+      final plan = _planToDomain(row);
+      if (!SyncService.isCloudSyncable(plan.homeId)) continue;
+      await _trySyncPlan(plan);
+    }
+    for (final row in await _dao.getUnsyncedGoals()) {
+      final goal = _goalToDomain(row);
+      if (!SyncService.isCloudSyncable(goal.homeId)) continue;
+      await _trySyncGoal(goal);
+    }
   }
 
   // ── Goals ──────────────────────────────────────────────────────────────
@@ -92,6 +114,9 @@ class CarePlansRepository {
       recordId: id,
       before: existing != null ? _goalToDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findGoalById(id);
+    if (deleted != null) _trySyncGoal(_goalToDomain(deleted));
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -182,7 +207,7 @@ class CarePlansRepository {
         isSynced: Value(g.isSynced),
       );
 
-  void _trySyncPlan(CarePlan p) async {
+  Future<void> _trySyncPlan(CarePlan p) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -202,6 +227,7 @@ class CarePlansRepository {
         'created_by_id': p.createdById,
         'updated_by_id': p.updatedById,
         'updated_at': p.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': p.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertPlan(_planToCompanion(p.copyWith(isSynced: true)));
     } catch (err, st) {
@@ -210,7 +236,7 @@ class CarePlansRepository {
     }
   }
 
-  void _trySyncGoal(CarePlanGoal g) async {
+  Future<void> _trySyncGoal(CarePlanGoal g) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -230,6 +256,7 @@ class CarePlansRepository {
         'created_by_id': g.createdById,
         'updated_by_id': g.updatedById,
         'updated_at': g.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': g.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertGoal(_goalToCompanion(g.copyWith(isSynced: true)));
     } catch (err, st) {

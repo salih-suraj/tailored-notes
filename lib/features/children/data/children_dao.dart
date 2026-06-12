@@ -31,4 +31,8 @@ class ChildrenDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<ChildRow>> getUnsynced() =>
+      (select(childrenTable)..where((t) => t.isSynced.equals(false))).get();
 }

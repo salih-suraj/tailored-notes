@@ -6,10 +6,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/visitor_log_entry.dart';
 import 'visitor_log_dao.dart';
 
-class VisitorLogRepository {
+class VisitorLogRepository implements SyncTarget {
   VisitorLogRepository({
     required VisitorLogDao dao,
     required SupabaseClient? supabaseClient,
@@ -85,6 +86,23 @@ class VisitorLogRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findById(id);
+    if (deleted != null) _trySyncToSupabase(_toDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'visitor_log';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final entry = _toDomain(row);
+      if (!SyncService.isCloudSyncable(entry.homeId)) continue;
+      await _trySyncToSupabase(entry);
+    }
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -130,7 +148,7 @@ class VisitorLogRepository {
         isSynced: Value(e.isSynced),
       );
 
-  void _trySyncToSupabase(VisitorLogEntry entry) async {
+  Future<void> _trySyncToSupabase(VisitorLogEntry entry) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -149,6 +167,7 @@ class VisitorLogRepository {
         'created_by_id': entry.createdById,
         'updated_by_id': entry.updatedById,
         'updated_at': entry.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': entry.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(entry.copyWith(isSynced: true)));
     } catch (err, st) {

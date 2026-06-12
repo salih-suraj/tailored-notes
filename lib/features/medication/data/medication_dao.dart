@@ -41,6 +41,11 @@ class MedicationDao extends DatabaseAccessor<AppDatabase>
         ),
       );
 
+  /// One-shot list of meds pending upload, for the sync sweep.
+  Future<List<PrescribedMedRow>> getUnsyncedMeds() =>
+      (select(prescribedMedsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
+
   // ── Administrations ────────────────────────────────────────────────────
 
   /// All administration records for [childId] on a given date window,
@@ -65,4 +70,9 @@ class MedicationDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> upsertAdmin(MedAdministrationsTableCompanion admin) =>
       into(medAdministrationsTable).insertOnConflictUpdate(admin);
+
+  /// One-shot list of administrations pending upload, for the sync sweep.
+  Future<List<MedAdministrationRow>> getUnsyncedAdmins() =>
+      (select(medAdministrationsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

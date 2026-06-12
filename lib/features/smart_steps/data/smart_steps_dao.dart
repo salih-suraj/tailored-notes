@@ -39,6 +39,10 @@ class SmartStepsDao extends DatabaseAccessor<AppDatabase>
         ),
       );
 
+  /// One-shot list of steps pending upload, for the sync sweep.
+  Future<List<SmartStepRow>> getUnsyncedSteps() =>
+      (select(smartStepsTable)..where((t) => t.isSynced.equals(false))).get();
+
   // ── Progress notes ─────────────────────────────────────────────────────
 
   /// All progress notes for [stepId], newest first.
@@ -54,6 +58,11 @@ class SmartStepsDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> upsertProgress(StepProgressTableCompanion progress) =>
       into(stepProgressTable).insertOnConflictUpdate(progress);
+
+  /// One-shot list of progress notes pending upload, for the sync sweep.
+  Future<List<StepProgressRow>> getUnsyncedProgress() =>
+      (select(stepProgressTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 
   /// Count of progress notes per step for the given child.
   Future<Map<String, int>> progressCountByChild(String childId) async {

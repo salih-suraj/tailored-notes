@@ -24,4 +24,11 @@ class AuditLogDao extends DatabaseAccessor<AppDatabase>
       (update(auditLogTable)..where((t) => t.id.equals(id))).write(
         const AuditLogTableCompanion(isSynced: Value(true)),
       );
+
+  /// One-shot list of unsynced entries (oldest first), for the sync sweep.
+  Future<List<AuditLogRow>> getUnsynced() =>
+      (select(auditLogTable)
+            ..where((t) => t.isSynced.equals(false))
+            ..orderBy([(t) => OrderingTerm.asc(t.timestamp)]))
+          .get();
 }

@@ -42,6 +42,11 @@ class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
         ),
       );
 
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<BathTempRow>> getUnsynced() =>
+      (select(bathTempRecordsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
+
   // Matches rows where recorded_at falls on the given local date.
   Expression<bool> _onDate(BathTempRecordsTable t, String date) {
     final parts = date.split('-');

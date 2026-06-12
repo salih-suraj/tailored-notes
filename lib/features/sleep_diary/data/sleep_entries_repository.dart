@@ -7,10 +7,11 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/sleep_entry.dart';
 import 'sleep_entries_dao.dart';
 
-class SleepEntriesRepository {
+class SleepEntriesRepository implements SyncTarget {
   SleepEntriesRepository({
     required SleepEntriesDao dao,
     required SupabaseClient? supabaseClient,
@@ -56,6 +57,23 @@ class SleepEntriesRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findById(id);
+    if (deleted != null) _trySyncToSupabase(_toDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'sleep_entries';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final entry = _toDomain(row);
+      if (!SyncService.isCloudSyncable(entry.homeId)) continue;
+      await _trySyncToSupabase(entry);
+    }
   }
 
   // ── Helpers ───────────────────────────────────────────────────────────
@@ -105,7 +123,7 @@ class SleepEntriesRepository {
         isSynced: Value(e.isSynced),
       );
 
-  void _trySyncToSupabase(SleepEntry e) async {
+  Future<void> _trySyncToSupabase(SleepEntry e) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -126,6 +144,7 @@ class SleepEntriesRepository {
         'created_by_id': e.createdById,
         'updated_by_id': e.updatedById,
         'updated_at': e.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': e.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(e.copyWith(isSynced: true)));
     } catch (err, st) {

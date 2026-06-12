@@ -7,11 +7,12 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/smart_step.dart';
 import '../domain/step_progress.dart';
 import 'smart_steps_dao.dart';
 
-class SmartStepsRepository {
+class SmartStepsRepository implements SyncTarget {
   SmartStepsRepository({
     required SmartStepsDao dao,
     required SupabaseClient? supabaseClient,
@@ -59,6 +60,27 @@ class SmartStepsRepository {
       recordId: id,
       before: existing != null ? _stepToDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findStepById(id);
+    if (deleted != null) _trySyncStep(_stepToDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'smart_steps';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    for (final row in await _dao.getUnsyncedSteps()) {
+      final step = _stepToDomain(row);
+      if (!SyncService.isCloudSyncable(step.homeId)) continue;
+      await _trySyncStep(step);
+    }
+    for (final row in await _dao.getUnsyncedProgress()) {
+      final progress = _progressToDomain(row);
+      if (!SyncService.isCloudSyncable(progress.homeId)) continue;
+      await _trySyncProgress(progress);
+    }
   }
 
   // ── Progress notes ────────────────────────────────────────────────────
@@ -175,7 +197,7 @@ class SmartStepsRepository {
         isSynced: Value(p.isSynced),
       );
 
-  void _trySyncStep(SmartStep s) async {
+  Future<void> _trySyncStep(SmartStep s) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -186,6 +208,7 @@ class SmartStepsRepository {
         'status': s.status.name, 'achieved_date': s.achievedDate,
         'created_by_id': s.createdById, 'updated_by_id': s.updatedById,
         'updated_at': s.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': s.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertStep(_stepToCompanion(s.copyWith(isSynced: true)));
     } catch (err, st) {
@@ -194,7 +217,7 @@ class SmartStepsRepository {
     }
   }
 
-  void _trySyncProgress(StepProgress p) async {
+  Future<void> _trySyncProgress(StepProgress p) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {

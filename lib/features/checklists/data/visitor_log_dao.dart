@@ -42,4 +42,8 @@ class VisitorLogDao extends DatabaseAccessor<AppDatabase>
           isSynced: const Value(false),
         ),
       );
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<VisitorLogRow>> getUnsynced() =>
+      (select(visitorLogTable)..where((t) => t.isSynced.equals(false))).get();
 }

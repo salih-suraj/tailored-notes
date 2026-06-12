@@ -7,13 +7,14 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/checklist_item.dart';
 import 'checklist_items_dao.dart';
 
 /// Coordinates local Drift persistence and background Supabase sync for
 /// cleaning checklists. All writes go to Drift first.
 /// Every toggle is recorded in the audit log.
-class ChecklistItemsRepository {
+class ChecklistItemsRepository implements SyncTarget {
   ChecklistItemsRepository({
     required ChecklistItemsDao dao,
     required SupabaseClient? supabaseClient,
@@ -86,6 +87,22 @@ class ChecklistItemsRepository {
     );
 
     _trySyncToSupabase(withCreator);
+  }
+
+  @override
+  String get syncLabel => 'checklist_items';
+
+  // Checklist items are toggle-only (no delete flow), so the sweep just
+  // re-pushes pending upserts.
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final item = _toDomain(row);
+      if (!SyncService.isCloudSyncable(item.homeId)) continue;
+      await _trySyncToSupabase(item);
+    }
   }
 
   // ── Private helpers ──────────────────────────────────────────────────────
@@ -238,7 +255,7 @@ class ChecklistItemsRepository {
         isSynced: Value(item.isSynced),
       );
 
-  void _trySyncToSupabase(ChecklistItem item) async {
+  Future<void> _trySyncToSupabase(ChecklistItem item) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {

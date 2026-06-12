@@ -7,10 +7,11 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/bath_temp_record.dart';
 import 'bath_temp_records_dao.dart';
 
-class BathTempRepository {
+class BathTempRepository implements SyncTarget {
   BathTempRepository({
     required BathTempRecordsDao dao,
     required SupabaseClient? supabaseClient,
@@ -59,6 +60,27 @@ class BathTempRepository {
       recordId: id,
       before: existing != null ? _toDomain(existing).toJson() : null,
     );
+
+    // BathTempRecord (domain) carries no deletedAt — pass the tombstone
+    // from the row explicitly so the cloud copy is marked deleted too.
+    final deleted = await _dao.findById(id);
+    if (deleted != null) {
+      _trySyncToSupabase(_toDomain(deleted), deletedAt: deleted.deletedAt);
+    }
+  }
+
+  @override
+  String get syncLabel => 'bath_temp_records';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    final rows = await _dao.getUnsynced();
+    for (final row in rows) {
+      final record = _toDomain(row);
+      if (!SyncService.isCloudSyncable(record.homeId)) continue;
+      await _trySyncToSupabase(record, deletedAt: row.deletedAt);
+    }
   }
 
   // ── Helpers ──────────────────────────────────────────────────────────────
@@ -103,7 +125,7 @@ class BathTempRepository {
         isSynced: Value(r.isSynced),
       );
 
-  void _trySyncToSupabase(BathTempRecord r) async {
+  Future<void> _trySyncToSupabase(BathTempRecord r, {DateTime? deletedAt}) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -120,6 +142,7 @@ class BathTempRepository {
         'created_by_id': r.createdById,
         'updated_by_id': r.updatedById,
         'updated_at': r.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(r.copyWith(isSynced: true)));
     } catch (e, st) {

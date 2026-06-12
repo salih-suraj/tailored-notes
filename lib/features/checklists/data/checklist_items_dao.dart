@@ -47,4 +47,9 @@ class ChecklistItemsDao extends DatabaseAccessor<AppDatabase>
 
   Future<void> upsert(ChecklistItemsTableCompanion item) =>
       into(checklistItemsTable).insertOnConflictUpdate(item);
+
+  /// One-shot list of rows pending upload, for the sync sweep.
+  Future<List<ChecklistItemRow>> getUnsynced() =>
+      (select(checklistItemsTable)..where((t) => t.isSynced.equals(false)))
+          .get();
 }

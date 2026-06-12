@@ -7,11 +7,12 @@ import '../../../core/audit/audit_log_writer.dart';
 import '../../../core/offline/app_database.dart';
 import '../../../features/auth/domain/app_user.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
+import '../../../core/offline/sync_service.dart';
 import '../domain/med_administration.dart';
 import '../domain/prescribed_med.dart';
 import 'medication_dao.dart';
 
-class MedicationRepository {
+class MedicationRepository implements SyncTarget {
   MedicationRepository({
     required MedicationDao dao,
     required SupabaseClient? supabaseClient,
@@ -61,6 +62,27 @@ class MedicationRepository {
       recordId: id,
       before: existing != null ? _medToDomain(existing).toJson() : null,
     );
+
+    final deleted = await _dao.findMedById(id);
+    if (deleted != null) _trySyncMed(_medToDomain(deleted));
+  }
+
+  @override
+  String get syncLabel => 'medication';
+
+  @override
+  Future<void> syncPending() async {
+    if (_supabaseClient == null) return;
+    for (final row in await _dao.getUnsyncedMeds()) {
+      final med = _medToDomain(row);
+      if (!SyncService.isCloudSyncable(med.homeId)) continue;
+      await _trySyncMed(med);
+    }
+    for (final row in await _dao.getUnsyncedAdmins()) {
+      final admin = _adminToDomain(row);
+      if (!SyncService.isCloudSyncable(admin.homeId)) continue;
+      await _trySyncAdmin(admin);
+    }
   }
 
   // ── Administrations ───────────────────────────────────────────────────
@@ -182,7 +204,7 @@ class MedicationRepository {
         isSynced: Value(a.isSynced),
       );
 
-  void _trySyncMed(PrescribedMed m) async {
+  Future<void> _trySyncMed(PrescribedMed m) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
@@ -195,6 +217,7 @@ class MedicationRepository {
         'is_active': m.isActive, 'created_by_id': m.createdById,
         'updated_by_id': m.updatedById,
         'updated_at': m.updatedAt.toUtc().toIso8601String(),
+        'deleted_at': m.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertMed(_medToCompanion(m.copyWith(isSynced: true)));
     } catch (err, st) {
@@ -203,7 +226,9 @@ class MedicationRepository {
     }
   }
 
-  void _trySyncAdmin(MedAdministration a) async {
+  // med_administrations is append-only — no deleted_at column locally or
+  // in the cloud schema, so the payload stays as-is.
+  Future<void> _trySyncAdmin(MedAdministration a) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {
