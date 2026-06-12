@@ -90,7 +90,10 @@ class _GrantCard extends StatelessWidget {
       expiryLabel = '${AppStrings.inspectorExpiresInPrefix} $days days';
     }
 
-    return Material(
+    return Semantics(
+      button: true,
+      label: 'Open review for ${grant.displayName}',
+      child: Material(
       color: colors.surfaceContainerLow,
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: InkWell(
@@ -133,6 +136,7 @@ class _GrantCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

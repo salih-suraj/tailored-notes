@@ -17,7 +17,11 @@ class ChecklistTaskTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
 
-    return InkWell(
+    return Semantics(
+      // Announce as a checkbox-style toggle: "<task>, checked/unchecked".
+      checked: item.isComplete,
+      label: item.taskLabel,
+      child: InkWell(
       onTap: () => ref
           .read(checklistItemsRepositoryProvider)
           .toggle(item),
@@ -62,6 +66,7 @@ class ChecklistTaskTile extends ConsumerWidget {
             ),
           ],
         ),
+      ),
       ),
     );
   }

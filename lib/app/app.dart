@@ -23,6 +23,18 @@ class TailorEdApp extends ConsumerWidget {
       darkTheme: AppTheme.dark,
       themeMode: ref.watch(themeModeNotifierProvider),
       routerConfig: router,
+      // I5: honour the system font-size setting up to 200% — beyond that,
+      // layouts degrade without adding accessibility value.
+      builder: (context, child) {
+        final mediaQuery = MediaQuery.of(context);
+        return MediaQuery(
+          data: mediaQuery.copyWith(
+            textScaler: mediaQuery.textScaler
+                .clamp(minScaleFactor: 1.0, maxScaleFactor: 2.0),
+          ),
+          child: child!,
+        );
+      },
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

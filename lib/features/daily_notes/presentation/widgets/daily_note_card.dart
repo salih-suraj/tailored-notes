@@ -27,7 +27,9 @@ class DailyNoteCard extends StatelessWidget {
     final timeStr = DateFormat('HH:mm', 'en_GB').format(note.occurredAt.toUk());
     final dateStr = DateFormat('EEE d MMM', 'en_GB').format(note.occurredAt.toUk());
 
-    return Material(
+    return Semantics(
+      button: onEdit != null,
+      child: Material(
       color: colors.surfaceContainerLow,
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: InkWell(
@@ -73,6 +75,7 @@ class DailyNoteCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

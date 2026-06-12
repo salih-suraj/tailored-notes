@@ -29,7 +29,7 @@ Every new feature added without them makes the retrofit harder.
 | I2 | Add `created_by` + `updated_by` to DailyNotesTable and ChecklistItemsTable | ✅ | `updated_by_id/name` on DailyNotesTable. `created_by_id/updated_by_id` on ChecklistItemsTable. Every new table must include these from day one. |
 | I3 | Fix AppStrings violations in all existing screens | ✅ | All 4 screens fixed. Added: childNotFound, careRecordSection, module labels/descs, checklist strings, observation strings. |
 | I4 | MFA for Manager and Inspector roles | ✅ | `MfaScreen` built — enrollment mode (first-time TOTP setup with manual secret key entry) + challenge mode (ongoing 6-digit code). Triggers automatically post-login via `needsMfaChallenge` on `AppUser`. Session upgrades to AAL2 on success. Supabase TOTP enabled platform-wide. |
-| I5 | Semantic labels on all interactive elements | ⬜ | Nav shell done. Module cards on profile screen, FABs, checklist task tiles, note cards — all missing Semantics wrappers or tooltip/semanticLabel properties. Guide: every interactive element labelled, text scales to 200%. |
+| I5 | Semantic labels on all interactive elements | 🔧 | Code complete 2026-06-12. Nav shell was done; added: `Semantics(button:)` on module cards (×11 via `_ModuleCard`), child list tiles, daily note cards, inspector grant cards, parent child cards; `Semantics(checked:)` toggle announcement on checklist task tiles; 200% text-scale support via `MediaQuery.textScaler.clamp(max: 2.0)` in the app builder. All extended FABs carry text labels (accessible natively); IconButtons audited — all have tooltips. Remaining record-card InkWells rely on InkWell's built-in tap semantics + merged text children (labelled, not explicitly role-announced). **Needs a TalkBack/VoiceOver + 200% font device pass to call done.** |
 
 ---
 
@@ -147,9 +147,9 @@ Every new feature added without them makes the retrofit harder.
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
 | Phase 5 — External | 2 of 3 | (29 + 30 done and verified; 31 remains) | 67% |
 | Backend / Supabase | 7 of 8 | (B8 Edge Function pending Phase 5 item 31) | 88% |
-| Infrastructure gaps | 4 of 5 | (I5 accessibility/semantics pending) | 80% |
+| Infrastructure gaps | 5 of 5 | (I5 code-complete; needs screen-reader device pass) | 100% |
 | Quality / cross-cutting | 8 of 14 | (Q1–Q3, Q10–Q14 done; Q2 pending runtime verify) | 57% |
-| **Total** | **49 of 57** | | **86%** |
+| **Total** | **50 of 57** | | **88%** |
 
 ---
 
@@ -161,6 +161,6 @@ Every new feature added without them makes the retrofit harder.
 2. ~~Verify item 30 end-to-end~~ ✅ Done 2026-06-12
 3. ~~Q2 — offline sync engine~~ ✅ Built 2026-06-12 — verify on device: log in, watch the sweep backfill unsynced rows, delete a record and confirm it disappears from the inspector portal
 4. ~~Q3 — Timezone rendering (UTC → Europe/London)~~ ✅ Done 2026-06-12
-5. **I5** — Accessibility: semantic labels on all interactive elements, 200% text scaling
+5. ~~I5 — Accessibility~~ 🔧 Code done 2026-06-12 — needs TalkBack + 200% font device pass
 6. **Phase 5 item 31** — AI-assisted shift summary (Anthropic API via Supabase Edge Function) → also completes B8
 7. **Q5–Q8** — Tests (unit/widget/integration) and CI pipeline

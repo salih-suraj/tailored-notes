@@ -263,7 +263,9 @@ class _ModuleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return Material(
+    return Semantics(
+      button: true,
+      child: Material(
         color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: InkWell(
@@ -307,6 +309,7 @@ class _ModuleCard extends StatelessWidget {
             ),
           ),
         ),
+      ),
     );
   }
 }

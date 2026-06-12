@@ -17,7 +17,10 @@ class ChildListTile extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
 
-    return Material(
+    return Semantics(
+      button: true,
+      label: 'Open ${child.name}\'s profile',
+      child: Material(
       color: colors.surfaceContainerLow,
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: InkWell(
@@ -72,6 +75,7 @@ class ChildListTile extends ConsumerWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

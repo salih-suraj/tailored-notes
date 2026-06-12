@@ -81,7 +81,10 @@ class _ChildCard extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final photoUrl = link.canViewPhotos ? link.childPhotoUrl : null;
 
-    return Material(
+    return Semantics(
+      button: true,
+      label: 'Open updates for ${link.displayName}',
+      child: Material(
       color: colors.surfaceContainerLow,
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: InkWell(
@@ -113,6 +116,7 @@ class _ChildCard extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }
