@@ -125,15 +125,23 @@ Deno.serve(async (req) => {
     }
     return json({ summary });
   } catch (error) {
+    // The real reason (low credit, invalid key, bad request, model id, …)
+    // is logged here for ops/admins. Dashboard → Edge Functions → Logs.
+    console.error("Anthropic call failed:", error);
+
+    // Rate limiting is the one case care staff can act on — wait and retry.
     if (error instanceof Anthropic.RateLimitError) {
-      return json({ error: "AI service is busy — try again in a minute" }, 429);
+      return json({
+        error: "The AI service is busy right now — please try again in a minute.",
+      }, 429);
     }
-    if (error instanceof Anthropic.AuthenticationError) {
-      return json({ error: "AI service key is invalid — check ANTHROPIC_API_KEY" }, 500);
-    }
-    if (error instanceof Anthropic.APIError) {
-      return json({ error: `AI service error (${error.status})` }, 502);
-    }
-    return json({ error: "Unexpected error generating the summary" }, 500);
+
+    // Auth, billing, and other config failures aren't staff-actionable.
+    // Show a generic line and point them at an administrator; the specific
+    // cause stays in the function logs above.
+    const status = error instanceof Anthropic.APIError ? 502 : 500;
+    return json({
+      error: "AI summary is temporarily unavailable. Please contact your administrator.",
+    }, status);
   }
 });
