@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-06-12
+> Last updated: 2026-06-13 (session 7 — paused for a break; see ▶ RESUME HERE)
 
 ---
 
@@ -95,7 +95,7 @@ Every new feature added without them makes the retrofit harder.
 |---|------|--------|-------|
 | 29 | Regulatory Inspector Access Portal | ✅ | v1 built + audited (session 5). Inspector Portal (`/inspector`) lists active grants, home access screen (children + module sections), generic read-only records viewer for Daily Notes, Care Plans, Incidents, Behaviour, Medication, Medical History, feedback editor (compliment/recommendation/requirement). Manager screen (`/dashboard/inspector-access`) for granting/revoking access and reviewing/resolving feedback. All inspector views + feedback writes logged to `audit_log` via `InspectorAuditService`. `'children'` scope auto-appended on grant creation (required by `inspectors_read_children` RLS). Backend SQL (`supabase_inspector_feedback.sql`, idempotent) run successfully 2026-06-11 — `inspector_feedback` table + RLS, 4 inspector read policies missing from base schema (care_plans, care_plan_goals, medical_profiles, healthcare_contacts), inspector `audit_log` INSERT policy, `user_profiles.email` column + backfill + sync trigger + manager search policy. **✅ Verified end-to-end 2026-06-12 with real manager + inspector accounts**: grant creation (email search), MFA login both roles, portal → home access → module records, feedback submission, manager feedback review, grant revoke, and `inspector_view`/`inspector_feedback` rows confirmed in `audit_log`. Required 3 fixes found during verification (see B3 + Q14 notes). Deferred to a follow-up (same pattern extends cleanly): sleep diary, food diary, activities, smart steps, visitor log, bath temp, cleaning checklists. |
 | 30 | Parent/Guardian Portal | ✅ | v1 built 2026-06-12, mirrors inspector portal architecture. `features/parent_portal/`: ParentLink (manual model), cloud-only repos (links + records), riverpod providers, Parent Portal screen (`/parent-portal`, linked children list), child feed screen (`/parent-portal/:linkId` — date-grouped activities with ⭐ reward + 🏆 achievement cards, read-only), manager Parent Access screen (`/dashboard/parent-access` — link parent↔child by email search, per-link photo permission toggle, revoke). Backend: `supabase_parent_portal.sql` (parent_links table + RLS, `parent_has_link()`, parent read policies on children + activity_entries only — no clinical tables, manager parent-search policy; JWT-claim policies per the 42P17 lesson). **✅ SQL run + verified end-to-end 2026-06-12** with a real parent_guardian account: manager link by email search, parent login (no MFA), linked child in portal, activity feed. Found during verification: missing/unknown `app_role` claim fell back to `UserRole.supportWorker` (staff tabs for a parent account) — `UserRole.fromString` fallback hardened to `parentGuardian` (least privilege). Deferred: photo storage RLS for signed URLs (photo gating is per-link `can_view_photos`, avatar only in v1), staff-authored wellbeing updates. |
-| 31 | AI-assisted shift summary | 🔧 | Built 2026-06-13. **Edge Function** `supabase/functions/ai-shift-summary/index.ts` (Deno + `npm:@anthropic-ai/sdk`, model `claude-opus-4-8`, `max_tokens` 4000): JWT-verified by platform + role-gated in code (team_leader/manager only; manager requires `aal2`), API key held in `ANTHROPIC_API_KEY` secret (never in app). System prompt enforces no-hallucination, safety-critical-first, per-child British-English brief. **Flutter:** `AiSummaryService` (calls `functions.invoke`, surfaces `FunctionException` details), `AiSummarySheet` (draggable sheet — gathers this shift's records from the same providers as the handover cards into compact JSON, calls the function, shows loading/error/retry, SelectableText output, copy-to-clipboard, AI disclaimer). ✨ button added to Handover Summary screen AppBar. Analyzer clean. **⚠ Not deployed yet — run `supabase functions deploy ai-shift-summary` + `supabase secrets set ANTHROPIC_API_KEY=...`, then test (see function README).** Completes B8. |
+| 31 | AI-assisted shift summary | 🔧 | Built + **deployed to prod 2026-06-13**. **Edge Function** `supabase/functions/ai-shift-summary/index.ts` (Deno + `npm:@anthropic-ai/sdk`, model `claude-opus-4-8`, `max_tokens` 4000): JWT-verified by platform + role-gated in code (team_leader/manager only; manager requires `aal2`), API key held in `ANTHROPIC_API_KEY` secret (never in app). System prompt enforces no-hallucination, safety-critical-first, per-child British-English brief. Errors are production-friendly (staff see "temporarily unavailable, contact administrator"; real cause logged via `console.error` → dashboard logs). **Flutter:** `AiSummaryService` (calls `functions.invoke`), `AiSummarySheet` (draggable sheet — gathers this shift's records from the same providers as the handover cards into compact JSON, loading/error/retry, SelectableText output, copy-to-clipboard, AI disclaimer). ✨ button on Handover Summary AppBar. **CLI deploy done** (`supabase login`/`link`/`secrets set`/`functions deploy` all succeeded; key rotated after an accidental paste). **⛔ ONLY BLOCKER: the Anthropic account has $0 credit — API returns 400 "credit balance too low".** Add credit at console.anthropic.com → Plans & Billing, then test: log a record for the current shift → Handover → ✨. No redeploy needed. Completes B8. |
 
 ---
 
@@ -110,7 +110,7 @@ Every new feature added without them makes the retrofit harder.
 | B5 | `inspector_grants` table — `(inspector_user_id, home_id, granted_by, expires_at, scope[])` | ✅ | Table created. `inspector_has_grant()` function + RLS policies ready for Phase 5. |
 | B6 | Supabase Auth — MFA (TOTP) enabled for Manager and Inspector roles | ✅ | TOTP enabled platform-wide. App-side enforcement via `needsMfaChallenge` on `AppUser` (reads `aal` JWT claim). **Honesty-audit finding 2026-06-12: enforcement was UI-only — RLS never checked `aal`, so a stolen manager/inspector password could bypass the app via the REST API at AAL1.** Fixed with `supabase_enforce_mfa_rls.sql` — restrictive `require_mfa_for_privileged_roles` policy on every public table (manager/inspector sessions denied all reads/writes until AAL2; other roles unaffected). Sync engine waits for MFA completion before sweeping. **✅ Script run in prod + verified 2026-06-13: manager login still loads dashboard/children/inspector/parent screens at AAL2.** MFA now enforced end-to-end at both UI and data layers. |
 | B7 | Storage bucket for child photos — EU region, private, access-controlled | ✅ | `child-photos` bucket. Private, 5 MB limit, jpeg/png/webp only. RLS policies in place. |
-| B8 | Supabase Edge Function for AI shift summary | 🔧 | Written 2026-06-13 — `supabase/functions/ai-shift-summary/` (see item 31). **⚠ Not deployed yet** — `supabase functions deploy ai-shift-summary` + set `ANTHROPIC_API_KEY` secret. |
+| B8 | Supabase Edge Function for AI shift summary | ✅ | Written + deployed to prod 2026-06-13. `ANTHROPIC_API_KEY` secret set. Function live and serving (returns correctly — current 400 is Anthropic billing, not the function). See item 31. |
 
 ---
 
@@ -145,23 +145,33 @@ Every new feature added without them makes the retrofit harder.
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
-| Phase 5 — External | 3 of 3 | (29 + 30 verified; 31 built — pending Edge Function deploy) | 100% |
-| Backend / Supabase | 8 of 8 | (B6 MFA-RLS verified; B8 Edge Function written — pending deploy) | 100% |
+| Phase 5 — External | 3 of 3 | (29 + 30 verified; 31 built + deployed — pending Anthropic credit to test) | 100% |
+| Backend / Supabase | 8 of 8 | (B6 MFA-RLS verified; B8 Edge Function deployed) | 100% |
 | Infrastructure gaps | 5 of 5 | (I5 code-complete; needs screen-reader device pass) | 100% |
 | Quality / cross-cutting | 8 of 14 | (Q1–Q3, Q10–Q14 done; Q2 pending runtime verify) | 57% |
 | **Total** | **52 of 57** | | **91%** |
 
 ---
 
-## Recommended build order from here
+## ▶ RESUME HERE (paused 2026-06-13 for a break)
 
-*(Reordered 2026-06-12 at client direction: timezone → accessibility → AI summary → tests/CI)*
+All 57 planned items are built. Nothing is half-written. Two kinds of work remain:
 
-1. ~~Verify item 29 end-to-end~~ ✅ Done 2026-06-12 — see item 29 / B3 / Q14 notes
-2. ~~Verify item 30 end-to-end~~ ✅ Done 2026-06-12
-3. ~~Q2 — offline sync engine~~ ✅ Built 2026-06-12 — verify on device: log in, watch the sweep backfill unsynced rows, delete a record and confirm it disappears from the inspector portal
-4. ~~Q3 — Timezone rendering (UTC → Europe/London)~~ ✅ Done 2026-06-12
-5. ~~I5 — Accessibility~~ 🔧 Code done 2026-06-12 — needs TalkBack + 200% font device pass
-6. ~~Phase 5 item 31 — AI-assisted shift summary~~ 🔧 Built 2026-06-13 — deploy the Edge Function (`supabase functions deploy ai-shift-summary` + set `ANTHROPIC_API_KEY`), then test from the handover screen
-7. **Q5–Q8** — Tests (unit/widget/integration) and CI pipeline ← only remaining work area
-8. **Device-verification sweep** — the three 🔧 items awaiting a real-device pass: Q2 sync/delete propagation, I5 TalkBack + 200% font, item 31 AI summary end-to-end
+**A. Quick confirmations (no coding, ~15 min total):**
+1. **Add Anthropic credit** → console.anthropic.com → Plans & Billing. Then test the AI summary (log a record for the current shift → Handover → ✨). This is the only thing blocking item 31 / B8 from ✅.
+2. **On-device pass** of the three 🔧 items: Q2 (log in → watch sync backfill; delete a record → confirm it vanishes from the inspector portal), I5 (TalkBack/VoiceOver + 200% font), item 31 (the AI summary above).
+
+**B. The one real remaining work area — tests + CI (Q5–Q8):**
+- Zero automated tests exist. This is the biggest risk: the 4 production bugs caught by hand this week (RLS recursion, missing grants, MFA redirect loop, role fallback) are exactly what tests would have caught.
+- Start with Q5 (unit tests for domain models + repositories), then Q6 (widget), Q7 (integration: offline→online sync, auth/MFA flow), Q8 (CI: `dart format` + `dart analyze` + test gate).
+
+*(Build order reordered 2026-06-12 at client direction: timezone → accessibility → AI summary → tests/CI — first three done.)*
+
+Completed in order:
+1. ~~Verify item 29 end-to-end~~ ✅ 2026-06-12
+2. ~~Verify item 30 end-to-end~~ ✅ 2026-06-12
+3. ~~Q2 — offline sync engine~~ 🔧 built 2026-06-12 (needs device pass — see A2)
+4. ~~Q3 — Timezone (UTC → Europe/London)~~ ✅ 2026-06-12
+5. ~~I5 — Accessibility~~ 🔧 code done 2026-06-12 (needs device pass — see A2)
+6. ~~Item 31 — AI shift summary~~ 🔧 built + deployed 2026-06-13 (needs Anthropic credit — see A1)
+7. **Q5–Q8 — Tests + CI** ← next coding work
