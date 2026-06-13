@@ -24,6 +24,7 @@ import '../../../shared/models/shift_completion.dart';
 import '../../../shared/providers/shift_completion_provider.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
+import 'widgets/ai_summary_sheet.dart';
 
 /// Auto-generated shift handover summary for Team Leaders and Managers.
 /// Reads live from Drift — no manual entry required.
@@ -38,7 +39,17 @@ class HandoverSummaryScreen extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.handoverSummaryTitle)),
+      appBar: AppBar(
+        title: const Text(AppStrings.handoverSummaryTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.auto_awesome),
+            tooltip: AppStrings.handoverAiTooltip,
+            onPressed: () =>
+                showAiSummarySheet(context, shift: shift, now: now),
+          ),
+        ],
+      ),
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(

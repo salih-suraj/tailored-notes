@@ -603,6 +603,16 @@ abstract final class AppStrings {
   static const managerFeedbackUpdated = 'Feedback updated';
   static const managerFeedbackFrom = 'From';
 
+  // AI shift summary (handover)
+  static const handoverAiTooltip = 'Generate AI summary';
+  static const handoverAiTitle = 'AI Shift Summary';
+  static const handoverAiGenerating = 'Writing the handover brief…';
+  static const handoverAiDisclaimer =
+      'AI-generated from this shift\'s records — review before sharing.';
+  static const handoverAiCopy = 'Copy summary';
+  static const handoverAiCopied = 'Summary copied';
+  static const handoverAiNoData = 'No records to summarise for this shift yet';
+
   // Parent Portal (parent/guardian role)
   static const parentPortalTitle = 'My Child';
   static const parentNoLinks = 'No children linked to your account yet';
