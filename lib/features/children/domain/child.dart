@@ -38,14 +38,16 @@ class Child with _$Child {
   }
 
   /// Age in whole years, computed from [dateOfBirth].
+  /// Returns 0 for an unparseable date rather than throwing — this getter
+  /// renders in the children list and profile, so it must never crash a row.
   int get ageYears {
     final parts = dateOfBirth.split('-');
     if (parts.length != 3) return 0;
-    final dob = DateTime(
-      int.parse(parts[0]),
-      int.parse(parts[1]),
-      int.parse(parts[2]),
-    );
+    final year = int.tryParse(parts[0]);
+    final month = int.tryParse(parts[1]);
+    final day = int.tryParse(parts[2]);
+    if (year == null || month == null || day == null) return 0;
+    final dob = DateTime(year, month, day);
     final now = DateTime.now();
     int age = now.year - dob.year;
     if (now.month < dob.month ||
