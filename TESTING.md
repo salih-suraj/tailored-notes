@@ -1,16 +1,17 @@
 # TailorEd Notes — Full Manual Test Plan
 
-Four testers, one role each, coordinating live. Tick every box. When a box
+Five testers, one role each, coordinating live. Tick every box. When a box
 fails, note: what you did, what you expected, what happened.
 
-## Role assignment (4 people, 5 roles)
+## Role assignment (5 people, 5 roles — one each)
 
-| Tester | Role(s) | Notes |
-|--------|---------|-------|
-| 1 | **Manager** | The linchpin — grants Inspector access and links Parents, so others depend on this person. |
+| Tester | Role | Notes |
+|--------|------|-------|
+| 1 | **Manager** | The linchpin — grants Inspector access and links Parents, so Testers 4 & 5 depend on this person acting first. |
 | 2 | **Support Worker** | Logs the bulk of the care data the others will view. |
 | 3 | **Team Leader** | Can do everything the Support Worker can, plus oversight/handover. |
-| 4 | **Inspector + Parent/Guardian** | Both are read-only and both depend on the Manager granting access — one person can cover both. |
+| 4 | **Inspector** | Read-only regulatory access; depends on the Manager granting a scoped, time-limited grant. |
+| 5 | **Parent/Guardian** | Read-only "My Child" portal; depends on the Manager linking a child. |
 
 ## Prerequisites before you start
 
@@ -89,7 +90,7 @@ Tabs expected: **Children · Daily Notes · Checklists · Settings**
 - [ ] Add an activity: category, title, optional duration.
 - [ ] Toggle **reward earned** (⭐) and add an **achievement** (🏆 badge on card).
 - [ ] Edit → persists. Delete → confirmation → removed.
-- [ ] **(Cross-role)** Tell Tester 4 to confirm this shows in the Parent feed.
+- [ ] **(Cross-role)** Tell Tester 5 to confirm this shows in the Parent feed.
 
 ### Smart Steps
 - [ ] Add a step: category, title, description, target date.
@@ -173,12 +174,12 @@ Tabs expected: **Children · Dashboard · Handover · Settings**
 - [ ] **Acknowledge** and **Resolve** a piece of feedback (add resolution notes).
 - [ ] **Revoke** the grant → tell Tester 4 to confirm they lose access.
 
-### Parent access (enables Tester 4)
+### Parent access (enables Tester 5)
 - [ ] Dashboard → **Parent Access** (family icon).
 - [ ] **Link a parent:** search the parent by **email**, pick the **child**, set the **photo-access toggle**, save.
 - [ ] The link appears with an **Active** badge and the photo-permission chip.
-- [ ] Tell **Tester 4 (Parent)** to confirm the child appears in their portal.
-- [ ] **Revoke** the link → tell Tester 4 to confirm they lose access.
+- [ ] Tell **Tester 5 (Parent)** to confirm the child appears in their portal.
+- [ ] **Revoke** the link → tell Tester 5 to confirm they lose access.
 
 ---
 
@@ -200,7 +201,7 @@ Tabs expected: **Inspector portal · Settings** (no Children tab)
 
 ---
 
-## F. PARENT / GUARDIAN — full checklist (Tester 4)
+## F. PARENT / GUARDIAN — full checklist (Tester 5)
 
 Tabs expected: **My Child · Settings** (no MFA, no clinical data)
 
@@ -221,10 +222,10 @@ Tabs expected: **My Child · Settings** (no MFA, no clinical data)
 These need two or more people. Coordinate live.
 
 - [ ] **Sync visibility:** Tester 2 adds a daily note → Testers 1 & 3 see it in oversight/dashboard within a minute (or after pulling to refresh).
-- [ ] **Activity → Parent:** Tester 2 logs an **activity with an achievement** → Tester 4 (Parent) sees it in the feed.
+- [ ] **Activity → Parent:** Tester 2 logs an **activity with an achievement** → Tester 5 (Parent) sees it in the feed.
 - [ ] **Safeguarding flag:** Tester 2 logs a **critical safeguarding incident** → it raises priority alerts on Tester 1's dashboard and a flag chip on Tester 3's handover.
 - [ ] **Med refusal flag:** Tester 2 records a medication as **refused** → shows as a flag on the dashboard/handover.
-- [ ] **Delete propagation (important):** Tester 2 **deletes a record** → confirm it disappears from Tester 4's Inspector view (for a granted module) and from the Parent feed (for an activity). *This is the fix where deletes used to never reach the portals.*
+- [ ] **Delete propagation (important):** Tester 2 **deletes a record** → confirm it disappears from Tester 4's Inspector view (for a granted module) and from Tester 5's Parent feed (for an activity). *This is the fix where deletes used to never reach the portals.*
 - [ ] **Inspector grant lifecycle:** Manager grants → Inspector sees it → Inspector reads records + leaves feedback → Manager sees & resolves feedback → Manager revokes → Inspector loses access.
 - [ ] **Parent link lifecycle:** Manager links → Parent sees child → Parent views feed → Manager revokes → Parent loses access.
 - [ ] **Scope enforcement:** Manager grants the Inspector **only some** modules → Inspector sees only those, not the others.
