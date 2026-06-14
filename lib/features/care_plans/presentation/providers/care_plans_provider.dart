@@ -13,11 +13,11 @@ part 'care_plans_provider.g.dart';
 
 @riverpod
 CarePlansRepository carePlansRepository(Ref ref) => CarePlansRepository(
-      dao: ref.watch(appDatabaseProvider).carePlansDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).carePlansDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of care plans for [childId], newest first.
 @riverpod

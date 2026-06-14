@@ -73,7 +73,10 @@ class HandoverSummaryScreen extends ConsumerWidget {
             itemBuilder: (context, index) {
               if (index == 0) {
                 return _HeaderCard(
-                    shift: shift, now: now, childCount: children.length);
+                  shift: shift,
+                  now: now,
+                  childCount: children.length,
+                );
               }
               if (index == 1) return const SizedBox(height: AppSpacing.lg);
               if (index == children.length + 2) {
@@ -187,13 +190,11 @@ class _ChildSummaryCard extends ConsumerWidget {
 
     // Filter to current shift / today (London time)
     final shiftNotes = notes
-        .where((n) =>
-            n.shift == shift && _isSameDay(n.occurredAt.toUk(), now))
+        .where((n) => n.shift == shift && _isSameDay(n.occurredAt.toUk(), now))
         .toList();
 
     final todayBehaviour = behaviour
-        .where((b) =>
-            b.shift == shift && _isSameDay(b.occurredAt.toUk(), now))
+        .where((b) => b.shift == shift && _isSameDay(b.occurredAt.toUk(), now))
         .toList();
 
     final todayIncidents = incidents
@@ -204,17 +205,24 @@ class _ChildSummaryCard extends ConsumerWidget {
     final shiftAdmins = admins.where((a) => a.shift == shift).toList();
 
     // Flags
-    final hasPhysicalIntervention =
-        todayBehaviour.any((b) => b.physicalIntervention);
-    final hasCriticalIncident = todayIncidents.any((i) =>
-        i.severity == IncidentSeverity.critical ||
-        i.severity == IncidentSeverity.high);
-    final hasSafeguarding = todayIncidents.any((i) =>
-        i.incidentType == IncidentType.safeguarding ||
-        i.incidentType == IncidentType.missingPerson);
-    final hasMedRefusal =
-        shiftAdmins.any((a) => a.outcome == AdminOutcome.refused);
-    final hasFlags = hasPhysicalIntervention ||
+    final hasPhysicalIntervention = todayBehaviour.any(
+      (b) => b.physicalIntervention,
+    );
+    final hasCriticalIncident = todayIncidents.any(
+      (i) =>
+          i.severity == IncidentSeverity.critical ||
+          i.severity == IncidentSeverity.high,
+    );
+    final hasSafeguarding = todayIncidents.any(
+      (i) =>
+          i.incidentType == IncidentType.safeguarding ||
+          i.incidentType == IncidentType.missingPerson,
+    );
+    final hasMedRefusal = shiftAdmins.any(
+      (a) => a.outcome == AdminOutcome.refused,
+    );
+    final hasFlags =
+        hasPhysicalIntervention ||
         hasCriticalIncident ||
         hasSafeguarding ||
         hasMedRefusal;
@@ -250,8 +258,10 @@ class _ChildSummaryCard extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(child.name,
-                          style: AppTextStyles.h3(colors.onSurface)),
+                      Text(
+                        child.name,
+                        style: AppTextStyles.h3(colors.onSurface),
+                      ),
                       Text(
                         'Room ${child.room} · Age ${child.ageYears}',
                         style: AppTextStyles.small(colors.onSurfaceVariant),
@@ -277,15 +287,25 @@ class _ChildSummaryCard extends ConsumerWidget {
                 runSpacing: AppSpacing.xs,
                 children: [
                   if (hasPhysicalIntervention)
-                    const _FlagChip(AppStrings.handoverFlagPhysical, AppColors.red),
+                    const _FlagChip(
+                      AppStrings.handoverFlagPhysical,
+                      AppColors.red,
+                    ),
                   if (hasSafeguarding)
                     const _FlagChip(
-                        AppStrings.handoverFlagSafeguarding, AppColors.red),
+                      AppStrings.handoverFlagSafeguarding,
+                      AppColors.red,
+                    ),
                   if (hasCriticalIncident)
-                    const _FlagChip(AppStrings.handoverFlagCritical, AppColors.red),
+                    const _FlagChip(
+                      AppStrings.handoverFlagCritical,
+                      AppColors.red,
+                    ),
                   if (hasMedRefusal)
                     const _FlagChip(
-                        AppStrings.handoverFlagMedRefusal, AppColors.amber),
+                      AppStrings.handoverFlagMedRefusal,
+                      AppColors.amber,
+                    ),
                 ],
               ),
             ],
@@ -299,8 +319,9 @@ class _ChildSummaryCard extends ConsumerWidget {
               icon: Icons.notes_outlined,
               label: AppStrings.handoverSectionNotes,
               value: _notesSummary(shiftNotes),
-              valueColor:
-                  shiftNotes.isEmpty ? colors.onSurfaceVariant : colors.onSurface,
+              valueColor: shiftNotes.isEmpty
+                  ? colors.onSurfaceVariant
+                  : colors.onSurface,
             ),
             const SizedBox(height: AppSpacing.sm),
 
@@ -335,8 +356,8 @@ class _ChildSummaryCard extends ConsumerWidget {
               valueColor: hasMedRefusal
                   ? AppColors.amber
                   : scheduledMeds.isEmpty
-                      ? colors.onSurfaceVariant
-                      : colors.onSurface,
+                  ? colors.onSurfaceVariant
+                  : colors.onSurface,
             ),
             const SizedBox(height: AppSpacing.sm),
 
@@ -346,8 +367,9 @@ class _ChildSummaryCard extends ConsumerWidget {
               value: bathRecords.isEmpty
                   ? AppStrings.handoverBathNotRecorded
                   : _bathSummary(bathRecords),
-              valueColor:
-                  bathRecords.isEmpty ? colors.onSurfaceVariant : colors.onSurface,
+              valueColor: bathRecords.isEmpty
+                  ? colors.onSurfaceVariant
+                  : colors.onSurface,
             ),
           ],
         ),
@@ -359,8 +381,9 @@ class _ChildSummaryCard extends ConsumerWidget {
     if (notes.isEmpty) return AppStrings.handoverNoNotes;
     final count = notes.length;
     final snippet = notes.last.content.split('\n').first.trim();
-    final truncated =
-        snippet.length > 60 ? '${snippet.substring(0, 60)}…' : snippet;
+    final truncated = snippet.length > 60
+        ? '${snippet.substring(0, 60)}…'
+        : snippet;
     return '$count ${count == 1 ? 'note' : 'notes'} · "$truncated"';
   }
 
@@ -369,14 +392,18 @@ class _ChildSummaryCard extends ConsumerWidget {
     final highest = incidents
         .map((i) => i.severity)
         .reduce((a, b) => a.index > b.index ? a : b);
-    final extra =
-        incidents.any((i) => i.physicalIntervention) ? ' · intervention' : '';
+    final extra = incidents.any((i) => i.physicalIntervention)
+        ? ' · intervention'
+        : '';
     return '$count ${count == 1 ? 'incident' : 'incidents'} · ${highest.displayName}$extra';
   }
 
   String _incidentSummary(List<IncidentReport> reports) {
     final count = reports.length;
-    final types = reports.map((r) => r.incidentType.displayName).toSet().join(', ');
+    final types = reports
+        .map((r) => r.incidentType.displayName)
+        .toSet()
+        .join(', ');
     final highest = reports
         .map((r) => r.severity)
         .reduce((a, b) => a.index > b.index ? a : b);
@@ -384,12 +411,16 @@ class _ChildSummaryCard extends ConsumerWidget {
   }
 
   String _medSummary(
-      List<PrescribedMed> scheduled, List<MedAdministration> admins) {
+    List<PrescribedMed> scheduled,
+    List<MedAdministration> admins,
+  ) {
     if (scheduled.isEmpty) return AppStrings.handoverNoMeds;
-    final given =
-        admins.where((a) => a.outcome == AdminOutcome.administered).length;
-    final refused =
-        admins.where((a) => a.outcome == AdminOutcome.refused).length;
+    final given = admins
+        .where((a) => a.outcome == AdminOutcome.administered)
+        .length;
+    final refused = admins
+        .where((a) => a.outcome == AdminOutcome.refused)
+        .length;
     final held = admins.where((a) => a.outcome == AdminOutcome.held).length;
     if (refused == 0 && held == 0 && given == scheduled.length) {
       return 'All administered (${scheduled.length})';
@@ -403,7 +434,8 @@ class _ChildSummaryCard extends ConsumerWidget {
 
   String _bathSummary(List<BathTempRecord> records) {
     final latest = records.reduce(
-        (a, b) => a.recordedAt.isAfter(b.recordedAt) ? a : b);
+      (a, b) => a.recordedAt.isAfter(b.recordedAt) ? a : b,
+    );
     final status = bathTempStatus(latest.temperatureCelsius);
     final label = switch (status) {
       BathTempStatus.safe => 'Safe',
@@ -470,9 +502,7 @@ class _SectionRow extends StatelessWidget {
             style: AppTextStyles.small(colors.onSurfaceVariant),
           ),
         ),
-        Expanded(
-          child: Text(value, style: AppTextStyles.small(valueColor)),
-        ),
+        Expanded(child: Text(value, style: AppTextStyles.small(valueColor))),
       ],
     );
   }

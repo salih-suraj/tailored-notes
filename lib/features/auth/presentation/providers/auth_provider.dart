@@ -53,15 +53,15 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> signIn({required String email, required String password}) async {
     final client = ref.read(supabaseClientProvider);
     if (client == null) {
-      state = AsyncError('No Supabase connection — run with credentials.', StackTrace.current);
+      state = AsyncError(
+        'No Supabase connection — run with credentials.',
+        StackTrace.current,
+      );
       return;
     }
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      await client.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
+      await client.auth.signInWithPassword(email: email, password: password);
     });
   }
 

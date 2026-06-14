@@ -30,8 +30,11 @@ class OfflineBanner extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.cloud_off_outlined,
-                size: 16, color: AppColors.white),
+            const Icon(
+              Icons.cloud_off_outlined,
+              size: 16,
+              color: AppColors.white,
+            ),
             const SizedBox(width: AppSpacing.sm),
             Flexible(
               child: Text(

@@ -31,10 +31,11 @@ class _InspectorHomeAccessScreenState
   void _logViewOnce(InspectorGrant grant) {
     if (_viewLogged) return;
     _viewLogged = true;
-    Future.microtask(() => ref.read(inspectorAuditServiceProvider).recordView(
-          homeId: grant.homeId,
-          entityTable: 'children',
-        ));
+    Future.microtask(
+      () => ref
+          .read(inspectorAuditServiceProvider)
+          .recordView(homeId: grant.homeId, entityTable: 'children'),
+    );
   }
 
   @override
@@ -71,26 +72,31 @@ class _InspectorHomeAccessScreenState
 
           final modules = [
             for (final scopeKey in grant.scope)
-              if (InspectorModule.fromScopeKey(scopeKey) case final m?) m,
+              ?InspectorModule.fromScopeKey(scopeKey),
           ];
-          final childrenAsync =
-              ref.watch(inspectorChildrenProvider(grant.homeId));
+          final childrenAsync = ref.watch(
+            inspectorChildrenProvider(grant.homeId),
+          );
 
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
               _ExpiryBanner(grant: grant),
               const SizedBox(height: AppSpacing.xl),
-              Text(AppStrings.inspectorChildrenSection,
-                  style: AppTextStyles.h2(colors.onSurface)),
+              Text(
+                AppStrings.inspectorChildrenSection,
+                style: AppTextStyles.h2(colors.onSurface),
+              ),
               const SizedBox(height: AppSpacing.sm),
               childrenAsync.when(
                 loading: () => const LoadingSkeleton(itemCount: 2),
                 error: (e, _) => ErrorView(message: e.toString()),
                 data: (children) {
                   if (children.isEmpty) {
-                    return Text(AppStrings.inspectorNoRecords,
-                        style: AppTextStyles.small(colors.onSurfaceVariant));
+                    return Text(
+                      AppStrings.inspectorNoRecords,
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    );
                   }
                   return Column(
                     children: [
@@ -100,23 +106,27 @@ class _InspectorHomeAccessScreenState
                           onTap: modules.isEmpty
                               ? null
                               : () => _showChildSections(
-                                    context,
-                                    grantId: widget.grantId,
-                                    child: child,
-                                    modules: modules,
-                                  ),
+                                  context,
+                                  grantId: widget.grantId,
+                                  child: child,
+                                  modules: modules,
+                                ),
                         ),
                     ],
                   );
                 },
               ),
               const SizedBox(height: AppSpacing.xl),
-              Text(AppStrings.inspectorSectionsLabel,
-                  style: AppTextStyles.h2(colors.onSurface)),
+              Text(
+                AppStrings.inspectorSectionsLabel,
+                style: AppTextStyles.h2(colors.onSurface),
+              ),
               const SizedBox(height: AppSpacing.sm),
               if (modules.isEmpty)
-                Text(AppStrings.inspectorNoRecords,
-                    style: AppTextStyles.small(colors.onSurfaceVariant))
+                Text(
+                  AppStrings.inspectorNoRecords,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                )
               else
                 Column(
                   children: [
@@ -152,9 +162,12 @@ class _InspectorHomeAccessScreenState
           children: [
             Padding(
               padding: const EdgeInsets.all(AppSpacing.lg),
-              child: Text(name,
-                  style: AppTextStyles.h3(
-                      Theme.of(sheetContext).colorScheme.onSurface)),
+              child: Text(
+                name,
+                style: AppTextStyles.h3(
+                  Theme.of(sheetContext).colorScheme.onSurface,
+                ),
+              ),
             ),
             for (final module in modules)
               ListTile(
@@ -201,7 +214,7 @@ class _ExpiryBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(Icons.timer_outlined, color: AppColors.roleInspector),
+          const Icon(Icons.timer_outlined, color: AppColors.roleInspector),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Text(
@@ -271,9 +284,10 @@ class _ChildTile extends StatelessWidget {
                     children: [
                       Text(name, style: AppTextStyles.h3(colors.onSurface)),
                       if (subtitle.isNotEmpty)
-                        Text(subtitle,
-                            style:
-                                AppTextStyles.small(colors.onSurfaceVariant)),
+                        Text(
+                          subtitle,
+                          style: AppTextStyles.small(colors.onSurfaceVariant),
+                        ),
                     ],
                   ),
                 ),
@@ -312,8 +326,10 @@ class _SectionTile extends StatelessWidget {
                 Icon(module.icon, color: AppColors.roleInspector),
                 const SizedBox(width: AppSpacing.md),
                 Expanded(
-                  child: Text(module.displayName,
-                      style: AppTextStyles.h3(colors.onSurface)),
+                  child: Text(
+                    module.displayName,
+                    style: AppTextStyles.h3(colors.onSurface),
+                  ),
                 ),
                 Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
               ],

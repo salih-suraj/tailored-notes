@@ -17,10 +17,10 @@ class CarePlansRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final CarePlansDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -29,8 +29,9 @@ class CarePlansRepository implements SyncTarget {
 
   // ── Care plans ─────────────────────────────────────────────────────────
 
-  Stream<List<CarePlan>> watchByChild(String childId) =>
-      _dao.watchByChild(childId).map((rows) => rows.map(_planToDomain).toList());
+  Stream<List<CarePlan>> watchByChild(String childId) => _dao
+      .watchByChild(childId)
+      .map((rows) => rows.map(_planToDomain).toList());
 
   Future<void> savePlan(CarePlan plan) async {
     final existing = await _dao.findPlanById(plan.id);
@@ -84,8 +85,9 @@ class CarePlansRepository implements SyncTarget {
 
   // ── Goals ──────────────────────────────────────────────────────────────
 
-  Stream<List<CarePlanGoal>> watchGoals(String carePlanId) =>
-      _dao.watchGoals(carePlanId).map((rows) => rows.map(_goalToDomain).toList());
+  Stream<List<CarePlanGoal>> watchGoals(String carePlanId) => _dao
+      .watchGoals(carePlanId)
+      .map((rows) => rows.map(_goalToDomain).toList());
 
   Future<void> saveGoal(CarePlanGoal goal) async {
     final existing = await _dao.findGoalById(goal.id);
@@ -122,25 +124,25 @@ class CarePlansRepository implements SyncTarget {
   // ── Helpers ──────────────────────────────────────────────────────────────
 
   CarePlan _planToDomain(CarePlanRow r) => CarePlan(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        title: r.title,
-        status: CarePlanStatus.values.byName(r.status),
-        reviewDate: r.reviewDate,
-        notes: r.notes,
-        authorId: r.authorId,
-        authorName: r.authorName,
-        approvedById: r.approvedById,
-        approvedByName: r.approvedByName,
-        approvedAt: r.approvedAt,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    title: r.title,
+    status: CarePlanStatus.values.byName(r.status),
+    reviewDate: r.reviewDate,
+    notes: r.notes,
+    authorId: r.authorId,
+    authorName: r.authorName,
+    approvedById: r.approvedById,
+    approvedByName: r.approvedByName,
+    approvedAt: r.approvedAt,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   CarePlansTableCompanion _planToCompanion(CarePlan p) =>
       CarePlansTableCompanion(
@@ -165,25 +167,25 @@ class CarePlansRepository implements SyncTarget {
       );
 
   CarePlanGoal _goalToDomain(CarePlanGoalRow r) => CarePlanGoal(
-        id: r.id,
-        carePlanId: r.carePlanId,
-        homeId: r.homeId,
-        childId: r.childId,
-        category: GoalCategory.values.byName(r.category),
-        title: r.title,
-        description: r.description,
-        strategy: r.strategy,
-        targetDate: r.targetDate,
-        status: GoalStatus.values.byName(r.status),
-        progressNotes: r.progressNotes,
-        sortOrder: r.sortOrder,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    carePlanId: r.carePlanId,
+    homeId: r.homeId,
+    childId: r.childId,
+    category: GoalCategory.values.byName(r.category),
+    title: r.title,
+    description: r.description,
+    strategy: r.strategy,
+    targetDate: r.targetDate,
+    status: GoalStatus.values.byName(r.status),
+    progressNotes: r.progressNotes,
+    sortOrder: r.sortOrder,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   CarePlanGoalsTableCompanion _goalToCompanion(CarePlanGoal g) =>
       CarePlanGoalsTableCompanion(
@@ -231,8 +233,12 @@ class CarePlansRepository implements SyncTarget {
       });
       await _dao.upsertPlan(_planToCompanion(p.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Supabase sync failed for care plan ${p.id}',
-          error: err, stackTrace: st, name: 'CarePlansRepository');
+      log(
+        'Supabase sync failed for care plan ${p.id}',
+        error: err,
+        stackTrace: st,
+        name: 'CarePlansRepository',
+      );
     }
   }
 
@@ -260,8 +266,12 @@ class CarePlansRepository implements SyncTarget {
       });
       await _dao.upsertGoal(_goalToCompanion(g.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Supabase sync failed for goal ${g.id}',
-          error: err, stackTrace: st, name: 'CarePlansRepository');
+      log(
+        'Supabase sync failed for goal ${g.id}',
+        error: err,
+        stackTrace: st,
+        name: 'CarePlansRepository',
+      );
     }
   }
 }

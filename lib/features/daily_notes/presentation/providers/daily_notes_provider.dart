@@ -13,11 +13,11 @@ part 'daily_notes_provider.g.dart';
 /// Provides a [DailyNotesRepository] wired to the current DAO, client, user, and audit writer.
 @riverpod
 DailyNotesRepository dailyNotesRepository(Ref ref) => DailyNotesRepository(
-      dao: ref.watch(appDatabaseProvider).dailyNotesDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).dailyNotesDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of notes for [childId].
 @riverpod

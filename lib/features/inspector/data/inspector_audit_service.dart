@@ -17,8 +17,8 @@ class InspectorAuditService {
   InspectorAuditService({
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
-  })  : _supabaseClient = supabaseClient,
-        _currentUser = currentUser;
+  }) : _supabaseClient = supabaseClient,
+       _currentUser = currentUser;
 
   final SupabaseClient? _supabaseClient;
   final AppUser? _currentUser;
@@ -29,21 +29,20 @@ class InspectorAuditService {
     required String homeId,
     required String entityTable,
     String? recordId,
-  }) =>
-      _write(
-        homeId: homeId,
-        action: 'inspector_view',
-        entityTable: entityTable,
-        recordId: recordId ?? homeId,
-      );
+  }) => _write(
+    homeId: homeId,
+    action: 'inspector_view',
+    entityTable: entityTable,
+    recordId: recordId ?? homeId,
+  );
 
   /// Logs that the signed-in inspector submitted [feedback].
   Future<void> recordFeedbackSubmitted(InspectorFeedback feedback) => _write(
-        homeId: feedback.homeId,
-        action: 'inspector_feedback',
-        entityTable: 'inspector_feedback',
-        recordId: feedback.id,
-      );
+    homeId: feedback.homeId,
+    action: 'inspector_feedback',
+    entityTable: 'inspector_feedback',
+    recordId: feedback.id,
+  );
 
   Future<void> _write({
     required String homeId,

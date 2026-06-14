@@ -16,13 +16,15 @@ void main() {
     // found during item 30 verification, 2026-06-12). The fallback must be
     // the LEAST-privileged role so a misconfigured account sees the empty
     // read-only portal, never staff screens.
-    test('falls back to parentGuardian for unknown values (least privilege)',
-        () {
-      expect(UserRole.fromString(''), UserRole.parentGuardian);
-      expect(UserRole.fromString('admin'), UserRole.parentGuardian);
-      expect(UserRole.fromString('SUPPORT_WORKER'), UserRole.parentGuardian);
-      expect(UserRole.fromString('superuser'), UserRole.parentGuardian);
-    });
+    test(
+      'falls back to parentGuardian for unknown values (least privilege)',
+      () {
+        expect(UserRole.fromString(''), UserRole.parentGuardian);
+        expect(UserRole.fromString('admin'), UserRole.parentGuardian);
+        expect(UserRole.fromString('SUPPORT_WORKER'), UserRole.parentGuardian);
+        expect(UserRole.fromString('superuser'), UserRole.parentGuardian);
+      },
+    );
   });
 
   group('UserRole.toJson', () {
@@ -36,8 +38,11 @@ void main() {
 
     test('round-trips through fromString for all real roles', () {
       for (final role in UserRole.values) {
-        expect(UserRole.fromString(role.toJson()), role,
-            reason: '${role.name} should survive a toJson/fromString round-trip');
+        expect(
+          UserRole.fromString(role.toJson()),
+          role,
+          reason: '${role.name} should survive a toJson/fromString round-trip',
+        );
       }
     });
   });

@@ -13,10 +13,7 @@ class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
 
   /// Live stream of non-deleted records for [childId] on [date] ('YYYY-MM-DD'),
   /// newest first.
-  Stream<List<BathTempRow>> watchByChildAndDate(
-    String childId,
-    String date,
-  ) =>
+  Stream<List<BathTempRow>> watchByChildAndDate(String childId, String date) =>
       (select(bathTempRecordsTable)
             ..where(
               (t) =>
@@ -27,9 +24,9 @@ class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([(t) => OrderingTerm.desc(t.recordedAt)]))
           .watch();
 
-  Future<BathTempRow?> findById(String id) =>
-      (select(bathTempRecordsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<BathTempRow?> findById(String id) => (select(
+    bathTempRecordsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(BathTempRecordsTableCompanion entry) =>
       into(bathTempRecordsTable).insertOnConflictUpdate(entry);
@@ -44,9 +41,9 @@ class BathTempRecordsDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of rows pending upload, for the sync sweep.
-  Future<List<BathTempRow>> getUnsynced() =>
-      (select(bathTempRecordsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<BathTempRow>> getUnsynced() => (select(
+    bathTempRecordsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 
   // Matches rows where recorded_at falls on the given London date.
   Expression<bool> _onDate(BathTempRecordsTable t, String date) {

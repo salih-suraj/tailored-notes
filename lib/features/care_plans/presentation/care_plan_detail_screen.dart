@@ -1,4 +1,4 @@
-﻿import 'dart:developer';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,10 +18,7 @@ import '../domain/care_plan_goal.dart';
 import 'providers/care_plans_provider.dart';
 
 class CarePlanDetailScreen extends ConsumerWidget {
-  const CarePlanDetailScreen({
-    super.key,
-    required this.plan,
-  });
+  const CarePlanDetailScreen({super.key, required this.plan});
 
   final CarePlan plan;
 
@@ -130,13 +127,12 @@ class CarePlanDetailScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref, {
     CarePlanGoal? goal,
-  }) =>
-      showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (_) => _GoalEditorSheet(plan: plan, existing: goal),
-      );
+  }) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (_) => _GoalEditorSheet(plan: plan, existing: goal),
+  );
 
   Future<void> _confirmDeleteGoal(
     BuildContext context,
@@ -242,17 +238,20 @@ class _PlanHeader extends StatelessWidget {
   }
 
   Color _statusColor(CarePlanStatus s) => switch (s) {
-        CarePlanStatus.active => AppColors.green,
-        CarePlanStatus.draft => AppColors.amber,
-        CarePlanStatus.underReview => AppColors.blue,
-        CarePlanStatus.archived => AppColors.slate400,
-      };
+    CarePlanStatus.active => AppColors.green,
+    CarePlanStatus.draft => AppColors.amber,
+    CarePlanStatus.underReview => AppColors.blue,
+    CarePlanStatus.archived => AppColors.slate400,
+  };
 
   String _formatDate(String d) {
     final parts = d.split('-');
     if (parts.length != 3) return d;
     final dt = DateTime(
-        int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+      int.parse(parts[0]),
+      int.parse(parts[1]),
+      int.parse(parts[2]),
+    );
     return DateFormat('d MMM yyyy').format(dt);
   }
 }
@@ -291,14 +290,14 @@ class _GoalCard extends StatelessWidget {
                 children: [
                   _Chip(label: goal.category.displayName, color: catColor),
                   const SizedBox(width: AppSpacing.sm),
-                  _Chip(
-                    label: goal.status.displayName,
-                    color: statusColor,
-                  ),
+                  _Chip(label: goal.status.displayName, color: statusColor),
                   const Spacer(),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert,
-                        size: 18, color: colors.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.more_vert,
+                      size: 18,
+                      color: colors.onSurfaceVariant,
+                    ),
                     tooltip: AppStrings.recordOptions,
                     onSelected: (v) {
                       if (v == 'edit') onTap();
@@ -306,11 +305,13 @@ class _GoalCard extends StatelessWidget {
                     },
                     itemBuilder: (_) => [
                       const PopupMenuItem(
-                          value: 'edit',
-                          child: Text(AppStrings.edit)),
+                        value: 'edit',
+                        child: Text(AppStrings.edit),
+                      ),
                       const PopupMenuItem(
-                          value: 'delete',
-                          child: Text(AppStrings.delete)),
+                        value: 'delete',
+                        child: Text(AppStrings.delete),
+                      ),
                     ],
                   ),
                 ],
@@ -344,11 +345,11 @@ class _GoalCard extends StatelessWidget {
   }
 
   Color _goalStatusColor(GoalStatus s) => switch (s) {
-        GoalStatus.notStarted => AppColors.slate400,
-        GoalStatus.inProgress => AppColors.amber,
-        GoalStatus.achieved => AppColors.green,
-        GoalStatus.discontinued => AppColors.red,
-      };
+    GoalStatus.notStarted => AppColors.slate400,
+    GoalStatus.inProgress => AppColors.amber,
+    GoalStatus.achieved => AppColors.green,
+    GoalStatus.discontinued => AppColors.red,
+  };
 }
 
 class _Chip extends StatelessWidget {
@@ -358,16 +359,13 @@ class _Chip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: 2,
-        ),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
 
 // ── Goal editor sheet ─────────────────────────────────────────────────────────
@@ -455,8 +453,9 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
       log('Goal save failed', error: e, stackTrace: st, name: 'GoalSheet');
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -544,11 +543,15 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
             const SizedBox(height: AppSpacing.sm),
             SegmentedButton<GoalStatus>(
               segments: GoalStatus.values
-                  .map((s) => ButtonSegment(
-                        value: s,
-                        label: Text(s.displayName,
-                            style: const TextStyle(fontSize: 11)),
-                      ))
+                  .map(
+                    (s) => ButtonSegment(
+                      value: s,
+                      label: Text(
+                        s.displayName,
+                        style: const TextStyle(fontSize: 11),
+                      ),
+                    ),
+                  )
                   .toList(),
               selected: {_status},
               onSelectionChanged: (v) => setState(() => _status = v.first),
@@ -561,9 +564,7 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
             TextField(
               controller: _progressController,
               maxLines: 2,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-              ),
+              decoration: const InputDecoration(border: OutlineInputBorder()),
             ),
             const SizedBox(height: AppSpacing.xl),
 
@@ -578,7 +579,9 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
                       width: 20,
                       height: 20,
                       child: CircularProgressIndicator(
-                          strokeWidth: 2, color: AppColors.white),
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
                     )
                   : const Text(AppStrings.save),
             ),
@@ -588,4 +591,3 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
     );
   }
 }
-

@@ -19,8 +19,8 @@ class ParentLinksRepository {
   ParentLinksRepository({
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
-  })  : _supabaseClient = supabaseClient,
-        _currentUser = currentUser;
+  }) : _supabaseClient = supabaseClient,
+       _currentUser = currentUser;
 
   final SupabaseClient? _supabaseClient;
   final AppUser? _currentUser;
@@ -63,8 +63,10 @@ class ParentLinksRepository {
     final links = (rows as List).cast<Map<String, dynamic>>();
     if (links.isEmpty) return [];
 
-    final parentIds =
-        links.map((l) => l['parent_user_id'] as String).toSet().toList();
+    final parentIds = links
+        .map((l) => l['parent_user_id'] as String)
+        .toSet()
+        .toList();
     final emailById = <String, String>{};
     try {
       final profiles = await client
@@ -79,10 +81,12 @@ class ParentLinksRepository {
     }
 
     return links
-        .map((l) => ParentLink.fromJson({
-              ...l,
-              'users': {'email': emailById[l['parent_user_id']]},
-            }))
+        .map(
+          (l) => ParentLink.fromJson({
+            ...l,
+            'users': {'email': emailById[l['parent_user_id']]},
+          }),
+        )
         .toList();
   }
 
@@ -98,10 +102,10 @@ class ParentLinksRepository {
         .limit(10);
     return (rows as List)
         .cast<Map<String, dynamic>>()
-        .map((r) => ParentAccount(
-              id: r['id'] as String,
-              email: r['email'] as String,
-            ))
+        .map(
+          (r) =>
+              ParentAccount(id: r['id'] as String, email: r['email'] as String),
+        )
         .toList();
   }
 

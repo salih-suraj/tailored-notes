@@ -26,8 +26,10 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
     final shift = ShiftType.forTime(DateTime.now());
-    final dateStr =
-        DateFormat('EEEE d MMMM yyyy', 'en_GB').format(DateTime.now());
+    final dateStr = DateFormat(
+      'EEEE d MMMM yyyy',
+      'en_GB',
+    ).format(DateTime.now());
 
     return Scaffold(
       appBar: AppBar(
@@ -68,11 +70,13 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
 
           final needsAttention = children
               .where(
-                  (c) => completions[c.id]!.status != CompletionStatus.complete)
+                (c) => completions[c.id]!.status != CompletionStatus.complete,
+              )
               .toList();
           final fullyDocumented = children
               .where(
-                  (c) => completions[c.id]!.status == CompletionStatus.complete)
+                (c) => completions[c.id]!.status == CompletionStatus.complete,
+              )
               .toList();
 
           return ListView(
@@ -92,14 +96,16 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
                   style: AppTextStyles.label(AppColors.amber),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                ...needsAttention.map((c) => Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                      child: _ChildOversightCard(
-                        child: c,
-                        completion: completions[c.id]!,
-                        onTap: () => context.push('/children/${c.id}'),
-                      ),
-                    )),
+                ...needsAttention.map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                    child: _ChildOversightCard(
+                      child: c,
+                      completion: completions[c.id]!,
+                      onTap: () => context.push('/children/${c.id}'),
+                    ),
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.lg),
               ],
 
@@ -109,14 +115,16 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
                   style: AppTextStyles.label(AppColors.green),
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                ...fullyDocumented.map((c) => Padding(
-                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-                      child: _ChildOversightCard(
-                        child: c,
-                        completion: completions[c.id]!,
-                        onTap: () => context.push('/children/${c.id}'),
-                      ),
-                    )),
+                ...fullyDocumented.map(
+                  (c) => Padding(
+                    padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                    child: _ChildOversightCard(
+                      child: c,
+                      completion: completions[c.id]!,
+                      onTap: () => context.push('/children/${c.id}'),
+                    ),
+                  ),
+                ),
               ],
 
               const SizedBox(height: 80),
@@ -171,8 +179,7 @@ class _ShiftHeaderCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
-            Text(dateStr,
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(dateStr, style: AppTextStyles.small(colors.onSurfaceVariant)),
             const SizedBox(height: AppSpacing.md),
             ClipRRect(
               borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -217,8 +224,7 @@ class _ChildOversightCard extends StatelessWidget {
       CompletionStatus.partial => AppColors.amber,
       CompletionStatus.none => AppColors.red,
     };
-    final incomplete =
-        completion.sections.where((s) => !s.complete).toList();
+    final incomplete = completion.sections.where((s) => !s.complete).toList();
 
     return Material(
       color: colors.surfaceContainerLow,
@@ -245,13 +251,14 @@ class _ChildOversightCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(child.name,
-                              style: AppTextStyles.h3(colors.onSurface)),
+                          child: Text(
+                            child.name,
+                            style: AppTextStyles.h3(colors.onSurface),
+                          ),
                         ),
                         Text(
                           'Room ${child.room}',
-                          style:
-                              AppTextStyles.small(colors.onSurfaceVariant),
+                          style: AppTextStyles.small(colors.onSurfaceVariant),
                         ),
                       ],
                     ),
@@ -266,8 +273,11 @@ class _ChildOversightCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: AppSpacing.sm),
-              Icon(Icons.chevron_right,
-                  color: colors.onSurfaceVariant, size: 18),
+              Icon(
+                Icons.chevron_right,
+                color: colors.onSurfaceVariant,
+                size: 18,
+              ),
             ],
           ),
         ),

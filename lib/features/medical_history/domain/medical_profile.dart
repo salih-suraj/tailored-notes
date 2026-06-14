@@ -13,8 +13,10 @@ class MedicalProfile with _$MedicalProfile {
     required String childId,
     String? nhsNumber,
     String? bloodType,
+
     /// Free-text list of diagnoses and conditions (e.g. "ASD, ADHD, Epilepsy")
     String? conditions,
+
     /// Free-text allergies and adverse reactions — treated as critical information
     String? allergies,
     String? immunisationNotes,

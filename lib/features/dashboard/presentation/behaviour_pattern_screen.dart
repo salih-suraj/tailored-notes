@@ -49,8 +49,10 @@ class _BehaviourPatternScreenState
         data: (children) {
           if (children.isEmpty) {
             return Center(
-              child: Text(AppStrings.noChildren,
-                  style: AppTextStyles.body(colors.onSurfaceVariant)),
+              child: Text(
+                AppStrings.noChildren,
+                style: AppTextStyles.body(colors.onSurfaceVariant),
+              ),
             );
           }
 
@@ -65,9 +67,10 @@ class _BehaviourPatternScreenState
           for (final child in targetChildren) {
             final raw =
                 ref.watch(behaviourIncidentsProvider(child.id)).valueOrNull ??
-                    [];
+                [];
             allIncidents.addAll(
-                raw.where((b) => b.occurredAt.toUk().isAfter(cutoff)));
+              raw.where((b) => b.occurredAt.toUk().isAfter(cutoff)),
+            );
           }
 
           return ListView(
@@ -87,8 +90,9 @@ class _BehaviourPatternScreenState
               if (allIncidents.isEmpty)
                 Center(
                   child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: AppSpacing.xl),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: AppSpacing.xl,
+                    ),
                     child: Text(
                       AppStrings.behaviourPatternsNoData,
                       style: AppTextStyles.body(colors.onSurfaceVariant),
@@ -116,7 +120,9 @@ class _BehaviourPatternScreenState
                 // ── Per-child breakdown (only when "all children") ─────────
                 if (_selectedChildId == null && children.length > 1) ...[
                   _ChildBreakdownCard(
-                      incidents: allIncidents, children: children),
+                    incidents: allIncidents,
+                    children: children,
+                  ),
                   const SizedBox(height: AppSpacing.md),
                 ],
 
@@ -174,7 +180,9 @@ class _FiltersRow extends StatelessWidget {
           // Child filter dropdown
           Container(
             padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.md, vertical: 2),
+              horizontal: AppSpacing.md,
+              vertical: 2,
+            ),
             decoration: BoxDecoration(
               border: Border.all(color: colors.outline),
               borderRadius: BorderRadius.circular(AppRadius.input),
@@ -188,10 +196,12 @@ class _FiltersRow extends StatelessWidget {
                   value: null,
                   child: Text(AppStrings.behaviourPatternsAllChildren),
                 ),
-                ...children.map((c) => DropdownMenuItem<String?>(
-                      value: c.id,
-                      child: Text(c.name),
-                    )),
+                ...children.map(
+                  (c) => DropdownMenuItem<String?>(
+                    value: c.id,
+                    child: Text(c.name),
+                  ),
+                ),
               ],
               onChanged: onChildChanged,
             ),
@@ -202,10 +212,10 @@ class _FiltersRow extends StatelessWidget {
   }
 
   String _daysLabel(int d) => switch (d) {
-        7 => AppStrings.behaviourPatternsDays7,
-        14 => AppStrings.behaviourPatternsDays14,
-        _ => AppStrings.behaviourPatternsDays30,
-      };
+    7 => AppStrings.behaviourPatternsDays7,
+    14 => AppStrings.behaviourPatternsDays14,
+    _ => AppStrings.behaviourPatternsDays30,
+  };
 }
 
 // ── Summary stat row ──────────────────────────────────────────────────────────
@@ -216,37 +226,45 @@ class _SummaryRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final interventions =
-        incidents.where((b) => b.physicalIntervention).length;
+    final interventions = incidents.where((b) => b.physicalIntervention).length;
     final injuries = incidents.where((b) => b.injuryOccurred).length;
 
     return Row(
       children: [
         Expanded(
-            child: _StatBox(
-                label: AppStrings.behaviourPatternsTotalLabel,
-                value: '${incidents.length}',
-                color: AppColors.amber)),
+          child: _StatBox(
+            label: AppStrings.behaviourPatternsTotalLabel,
+            value: '${incidents.length}',
+            color: AppColors.amber,
+          ),
+        ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
-            child: _StatBox(
-                label: AppStrings.behaviourPatternsInterventionsLabel,
-                value: '$interventions',
-                color: interventions > 0 ? AppColors.red : AppColors.green)),
+          child: _StatBox(
+            label: AppStrings.behaviourPatternsInterventionsLabel,
+            value: '$interventions',
+            color: interventions > 0 ? AppColors.red : AppColors.green,
+          ),
+        ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
-            child: _StatBox(
-                label: AppStrings.behaviourPatternsInjuriesLabel,
-                value: '$injuries',
-                color: injuries > 0 ? AppColors.red : AppColors.green)),
+          child: _StatBox(
+            label: AppStrings.behaviourPatternsInjuriesLabel,
+            value: '$injuries',
+            color: injuries > 0 ? AppColors.red : AppColors.green,
+          ),
+        ),
       ],
     );
   }
 }
 
 class _StatBox extends StatelessWidget {
-  const _StatBox(
-      {required this.label, required this.value, required this.color});
+  const _StatBox({
+    required this.label,
+    required this.value,
+    required this.color,
+  });
   final String label;
   final String value;
   final Color color;
@@ -259,14 +277,18 @@ class _StatBox extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            vertical: AppSpacing.md, horizontal: AppSpacing.sm),
+          vertical: AppSpacing.md,
+          horizontal: AppSpacing.sm,
+        ),
         child: Column(
           children: [
             Text(value, style: AppTextStyles.h1(color)),
             const SizedBox(height: AppSpacing.xs),
-            Text(label,
-                style: AppTextStyles.small(colors.onSurfaceVariant),
-                textAlign: TextAlign.center),
+            Text(
+              label,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+              textAlign: TextAlign.center,
+            ),
           ],
         ),
       ),
@@ -306,10 +328,8 @@ class _TrendCard extends StatelessWidget {
               show: true,
               drawVerticalLine: false,
               horizontalInterval: 1,
-              getDrawingHorizontalLine: (_) => FlLine(
-                color: colors.outlineVariant,
-                strokeWidth: 1,
-              ),
+              getDrawingHorizontalLine: (_) =>
+                  FlLine(color: colors.outlineVariant, strokeWidth: 1),
             ),
             borderData: FlBorderData(show: false),
             titlesData: FlTitlesData(
@@ -319,8 +339,10 @@ class _TrendCard extends StatelessWidget {
                   interval: 1,
                   reservedSize: 24,
                   getTitlesWidget: (v, _) => v == v.roundToDouble() && v > 0
-                      ? Text(v.toInt().toString(),
-                          style: AppTextStyles.small(colors.onSurfaceVariant))
+                      ? Text(
+                          v.toInt().toString(),
+                          style: AppTextStyles.small(colors.onSurfaceVariant),
+                        )
                       : const SizedBox.shrink(),
                 ),
               ),
@@ -328,12 +350,15 @@ class _TrendCard extends StatelessWidget {
                 sideTitles: SideTitles(
                   showTitles: true,
                   reservedSize: 22,
-                  interval: days <= 7 ? 1 : days <= 14 ? 2 : 5,
+                  interval: days <= 7
+                      ? 1
+                      : days <= 14
+                      ? 2
+                      : 5,
                   getTitlesWidget: (v, _) {
                     final idx = v.toInt();
                     if (idx < 0 || idx >= days) return const SizedBox.shrink();
-                    final date =
-                        now.subtract(Duration(days: days - 1 - idx));
+                    final date = now.subtract(Duration(days: days - 1 - idx));
                     return Text(
                       DateFormat('d/M').format(date),
                       style: AppTextStyles.small(colors.onSurfaceVariant),
@@ -341,10 +366,12 @@ class _TrendCard extends StatelessWidget {
                   },
                 ),
               ),
-              topTitles:
-                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-              rightTitles:
-                  const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+              topTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
+              rightTitles: const AxisTitles(
+                sideTitles: SideTitles(showTitles: false),
+              ),
             ),
             barGroups: List.generate(days, (i) {
               final date = now.subtract(Duration(days: days - 1 - i));
@@ -354,10 +381,12 @@ class _TrendCard extends StatelessWidget {
                 barRods: [
                   BarChartRodData(
                     toY: count.toDouble(),
-                    color: count == 0
-                        ? colors.outlineVariant
-                        : AppColors.amber,
-                    width: days <= 7 ? 18 : days <= 14 ? 12 : 6,
+                    color: count == 0 ? colors.outlineVariant : AppColors.amber,
+                    width: days <= 7
+                        ? 18
+                        : days <= 14
+                        ? 12
+                        : 6,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 ],
@@ -444,8 +473,7 @@ class _SeverityBreakdownCard extends StatelessWidget {
 // ── Per-child breakdown card ──────────────────────────────────────────────────
 
 class _ChildBreakdownCard extends StatelessWidget {
-  const _ChildBreakdownCard(
-      {required this.incidents, required this.children});
+  const _ChildBreakdownCard({required this.incidents, required this.children});
   final List<BehaviourIncident> incidents;
   final List<Child> children;
 
@@ -458,9 +486,7 @@ class _ChildBreakdownCard extends StatelessWidget {
     }
 
     // Sort children by incident count descending; show top 8.
-    final sorted = children
-        .where((c) => (byChild[c.id] ?? 0) > 0)
-        .toList()
+    final sorted = children.where((c) => (byChild[c.id] ?? 0) > 0).toList()
       ..sort((a, b) => (byChild[b.id] ?? 0).compareTo(byChild[a.id] ?? 0));
     final display = sorted.take(8).toList();
 

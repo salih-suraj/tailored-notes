@@ -42,23 +42,41 @@ part 'app_database.g.dart';
 
 @DriftDatabase(
   tables: [
-    DailyNotesTable, ChecklistItemsTable, AuditLogTable,
-    BathTempRecordsTable, VisitorLogTable,
-    CarePlansTable, CarePlanGoalsTable,
-    PrescribedMedsTable, MedAdministrationsTable,
-    MedicalProfileTable, HealthcareContactsTable,
-    BehaviourIncidentsTable, SleepEntriesTable,
-    FoodEntriesTable, ActivityEntriesTable,
-    SmartStepsTable, StepProgressTable,
+    DailyNotesTable,
+    ChecklistItemsTable,
+    AuditLogTable,
+    BathTempRecordsTable,
+    VisitorLogTable,
+    CarePlansTable,
+    CarePlanGoalsTable,
+    PrescribedMedsTable,
+    MedAdministrationsTable,
+    MedicalProfileTable,
+    HealthcareContactsTable,
+    BehaviourIncidentsTable,
+    SleepEntriesTable,
+    FoodEntriesTable,
+    ActivityEntriesTable,
+    SmartStepsTable,
+    StepProgressTable,
     IncidentReportsTable,
     ChildrenTable,
   ],
   daos: [
-    DailyNotesDao, ChecklistItemsDao, AuditLogDao,
-    BathTempRecordsDao, VisitorLogDao, CarePlansDao,
-    MedicationDao, MedicalHistoryDao, BehaviourIncidentsDao,
-    SleepEntriesDao, FoodEntriesDao, ActivityEntriesDao,
-    SmartStepsDao, IncidentReportsDao,
+    DailyNotesDao,
+    ChecklistItemsDao,
+    AuditLogDao,
+    BathTempRecordsDao,
+    VisitorLogDao,
+    CarePlansDao,
+    MedicationDao,
+    MedicalHistoryDao,
+    BehaviourIncidentsDao,
+    SleepEntriesDao,
+    FoodEntriesDao,
+    ActivityEntriesDao,
+    SmartStepsDao,
+    IncidentReportsDao,
     ChildrenDao,
   ],
 )
@@ -70,45 +88,49 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onUpgrade: (m, from, to) async {
-          if (from < 2) await m.createTable(checklistItemsTable);
-          if (from < 3) {
-            await m.createTable(auditLogTable);
-            await m.addColumn(dailyNotesTable, dailyNotesTable.updatedById);
-            await m.addColumn(dailyNotesTable, dailyNotesTable.updatedByName);
-            if (from >= 2) {
-              await m.addColumn(
-                  checklistItemsTable, checklistItemsTable.createdById);
-              await m.addColumn(
-                  checklistItemsTable, checklistItemsTable.updatedById);
-            }
-          }
-          if (from < 4) await m.createTable(bathTempRecordsTable);
-          if (from < 5) await m.createTable(visitorLogTable);
-          if (from < 6) {
-            await m.createTable(carePlansTable);
-            await m.createTable(carePlanGoalsTable);
-          }
-          if (from < 7) {
-            await m.createTable(prescribedMedsTable);
-            await m.createTable(medAdministrationsTable);
-          }
-          if (from < 8) {
-            await m.createTable(medicalProfileTable);
-            await m.createTable(healthcareContactsTable);
-          }
-          if (from < 9) await m.createTable(behaviourIncidentsTable);
-          if (from < 10) await m.createTable(sleepEntriesTable);
-          if (from < 11) await m.createTable(foodEntriesTable);
-          if (from < 12) await m.createTable(activityEntriesTable);
-          if (from < 13) {
-            await m.createTable(smartStepsTable);
-            await m.createTable(stepProgressTable);
-          }
-          if (from < 14) await m.createTable(incidentReportsTable);
-          if (from < 15) await m.createTable(childrenTable);
-        },
-      );
+    onUpgrade: (m, from, to) async {
+      if (from < 2) await m.createTable(checklistItemsTable);
+      if (from < 3) {
+        await m.createTable(auditLogTable);
+        await m.addColumn(dailyNotesTable, dailyNotesTable.updatedById);
+        await m.addColumn(dailyNotesTable, dailyNotesTable.updatedByName);
+        if (from >= 2) {
+          await m.addColumn(
+            checklistItemsTable,
+            checklistItemsTable.createdById,
+          );
+          await m.addColumn(
+            checklistItemsTable,
+            checklistItemsTable.updatedById,
+          );
+        }
+      }
+      if (from < 4) await m.createTable(bathTempRecordsTable);
+      if (from < 5) await m.createTable(visitorLogTable);
+      if (from < 6) {
+        await m.createTable(carePlansTable);
+        await m.createTable(carePlanGoalsTable);
+      }
+      if (from < 7) {
+        await m.createTable(prescribedMedsTable);
+        await m.createTable(medAdministrationsTable);
+      }
+      if (from < 8) {
+        await m.createTable(medicalProfileTable);
+        await m.createTable(healthcareContactsTable);
+      }
+      if (from < 9) await m.createTable(behaviourIncidentsTable);
+      if (from < 10) await m.createTable(sleepEntriesTable);
+      if (from < 11) await m.createTable(foodEntriesTable);
+      if (from < 12) await m.createTable(activityEntriesTable);
+      if (from < 13) {
+        await m.createTable(smartStepsTable);
+        await m.createTable(stepProgressTable);
+      }
+      if (from < 14) await m.createTable(incidentReportsTable);
+      if (from < 15) await m.createTable(childrenTable);
+    },
+  );
 
   static QueryExecutor _openConnection() =>
       driftDatabase(name: 'tailored_notes_db');

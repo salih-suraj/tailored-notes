@@ -13,11 +13,11 @@ part 'smart_steps_provider.g.dart';
 
 @riverpod
 SmartStepsRepository smartStepsRepository(Ref ref) => SmartStepsRepository(
-      dao: ref.watch(appDatabaseProvider).smartStepsDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).smartStepsDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of Smart Steps for [childId].
 @riverpod

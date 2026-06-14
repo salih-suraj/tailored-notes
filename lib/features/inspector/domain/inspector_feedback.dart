@@ -8,27 +8,33 @@ part 'inspector_feedback.freezed.dart';
 part 'inspector_feedback.g.dart';
 
 enum FeedbackSeverity {
-  @JsonValue('compliment') compliment,
-  @JsonValue('recommendation') recommendation,
-  @JsonValue('requirement') requirement;
+  @JsonValue('compliment')
+  compliment,
+  @JsonValue('recommendation')
+  recommendation,
+  @JsonValue('requirement')
+  requirement;
 
   String get displayName => switch (this) {
-        FeedbackSeverity.compliment => 'Compliment',
-        FeedbackSeverity.recommendation => 'Recommendation',
-        FeedbackSeverity.requirement => 'Requirement',
-      };
+    FeedbackSeverity.compliment => 'Compliment',
+    FeedbackSeverity.recommendation => 'Recommendation',
+    FeedbackSeverity.requirement => 'Requirement',
+  };
 }
 
 enum FeedbackStatus {
-  @JsonValue('open') open,
-  @JsonValue('acknowledged') acknowledged,
-  @JsonValue('resolved') resolved;
+  @JsonValue('open')
+  open,
+  @JsonValue('acknowledged')
+  acknowledged,
+  @JsonValue('resolved')
+  resolved;
 
   String get displayName => switch (this) {
-        FeedbackStatus.open => 'Open',
-        FeedbackStatus.acknowledged => 'Acknowledged',
-        FeedbackStatus.resolved => 'Resolved',
-      };
+    FeedbackStatus.open => 'Open',
+    FeedbackStatus.acknowledged => 'Acknowledged',
+    FeedbackStatus.resolved => 'Resolved',
+  };
 }
 
 /// A feedback or recommendation entry left by an inspector for a home,

@@ -18,10 +18,10 @@ class BathTempRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final BathTempRecordsDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -29,10 +29,9 @@ class BathTempRepository implements SyncTarget {
   final AuditLogWriter _audit;
 
   /// Live stream of today's bath temp records for [childId], newest first.
-  Stream<List<BathTempRecord>> watchToday(String childId) =>
-      _dao
-          .watchByChildAndDate(childId, _todayStr())
-          .map((rows) => rows.map(_toDomain).toList());
+  Stream<List<BathTempRecord>> watchToday(String childId) => _dao
+      .watchByChildAndDate(childId, _todayStr())
+      .map((rows) => rows.map(_toDomain).toList());
 
   Future<void> save(BathTempRecord record) async {
     final existing = await _dao.findById(record.id);
@@ -89,21 +88,21 @@ class BathTempRepository implements SyncTarget {
   String _todayStr() => UkTime.todayStr();
 
   BathTempRecord _toDomain(BathTempRow row) => BathTempRecord(
-        id: row.id,
-        homeId: row.homeId,
-        childId: row.childId,
-        temperatureCelsius: row.temperatureCelsius,
-        shift: ShiftType.values.byName(row.shift),
-        recordedAt: row.recordedAt,
-        recordedById: row.recordedById,
-        recordedByName: row.recordedByName,
-        notes: row.notes,
-        createdById: row.createdById,
-        updatedById: row.updatedById,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isSynced: row.isSynced,
-      );
+    id: row.id,
+    homeId: row.homeId,
+    childId: row.childId,
+    temperatureCelsius: row.temperatureCelsius,
+    shift: ShiftType.values.byName(row.shift),
+    recordedAt: row.recordedAt,
+    recordedById: row.recordedById,
+    recordedByName: row.recordedByName,
+    notes: row.notes,
+    createdById: row.createdById,
+    updatedById: row.updatedById,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    isSynced: row.isSynced,
+  );
 
   BathTempRecordsTableCompanion _toCompanion(BathTempRecord r) =>
       BathTempRecordsTableCompanion(
@@ -123,7 +122,10 @@ class BathTempRepository implements SyncTarget {
         isSynced: Value(r.isSynced),
       );
 
-  Future<void> _trySyncToSupabase(BathTempRecord r, {DateTime? deletedAt}) async {
+  Future<void> _trySyncToSupabase(
+    BathTempRecord r, {
+    DateTime? deletedAt,
+  }) async {
     final client = _supabaseClient;
     if (client == null) return;
     try {

@@ -27,9 +27,9 @@ class VisitorLogDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([(t) => OrderingTerm.desc(t.arrivedAt)]))
           .watch();
 
-  Future<VisitorLogRow?> findById(String id) =>
-      (select(visitorLogTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<VisitorLogRow?> findById(String id) => (select(
+    visitorLogTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(VisitorLogTableCompanion entry) =>
       into(visitorLogTable).insertOnConflictUpdate(entry);

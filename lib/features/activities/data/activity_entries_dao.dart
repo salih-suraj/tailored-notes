@@ -12,18 +12,16 @@ class ActivityEntriesDao extends DatabaseAccessor<AppDatabase>
 
   Stream<List<ActivityEntryRow>> watchByChild(String childId) =>
       (select(activityEntriesTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([
               (t) => OrderingTerm.desc(t.date),
               (t) => OrderingTerm.desc(t.createdAt),
             ]))
           .watch();
 
-  Future<ActivityEntryRow?> findById(String id) =>
-      (select(activityEntriesTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<ActivityEntryRow?> findById(String id) => (select(
+    activityEntriesTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(ActivityEntriesTableCompanion entry) =>
       into(activityEntriesTable).insertOnConflictUpdate(entry);
@@ -38,7 +36,7 @@ class ActivityEntriesDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of rows pending upload, for the sync sweep.
-  Future<List<ActivityEntryRow>> getUnsynced() =>
-      (select(activityEntriesTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<ActivityEntryRow>> getUnsynced() => (select(
+    activityEntriesTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

@@ -15,7 +15,7 @@ import '../domain/inspector_module.dart';
 /// wired to local Drift + camelCase JSON).
 class InspectorRecordsRepository {
   InspectorRecordsRepository({required SupabaseClient? supabaseClient})
-      : _supabaseClient = supabaseClient;
+    : _supabaseClient = supabaseClient;
 
   final SupabaseClient? _supabaseClient;
 

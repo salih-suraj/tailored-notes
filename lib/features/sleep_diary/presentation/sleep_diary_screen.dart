@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +25,8 @@ class SleepDiaryScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -38,8 +39,10 @@ class SleepDiaryScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.sleepDiaryTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
       ),
@@ -55,14 +58,21 @@ class SleepDiaryScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.bedtime_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.bedtime_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text(AppStrings.sleepNoEntries,
-                      style: AppTextStyles.body(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.sleepNoEntries,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(AppStrings.sleepNoEntriesHint,
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.sleepNoEntriesHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
             );
@@ -70,23 +80,20 @@ class SleepDiaryScreen extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.lg),
             itemCount: entries.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) => _SleepCard(
               entry: entries[i],
               onEdit: () => context.push(
                 '/children/$childId/sleep-diary/${entries[i].id}/edit',
                 extra: entries[i],
               ),
-              onDelete: () =>
-                  _confirmDelete(context, ref, entries[i].id),
+              onDelete: () => _confirmDelete(context, ref, entries[i].id),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            context.push('/children/$childId/sleep-diary/new'),
+        onPressed: () => context.push('/children/$childId/sleep-diary/new'),
         backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
@@ -96,7 +103,10 @@ class SleepDiaryScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -109,7 +119,9 @@ class SleepDiaryScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -148,8 +160,12 @@ class _SleepCard extends StatelessWidget {
     final parts = entry.date.split('-');
     final dateStr = parts.length == 3
         ? DateFormat('EEE d MMM').format(
-            DateTime(int.parse(parts[0]), int.parse(parts[1]),
-                int.parse(parts[2])))
+            DateTime(
+              int.parse(parts[0]),
+              int.parse(parts[1]),
+              int.parse(parts[2]),
+            ),
+          )
         : entry.date;
 
     return Material(
@@ -167,16 +183,16 @@ class _SleepCard extends StatelessWidget {
                 children: [
                   _Badge(label: dateStr, color: colors.onSurfaceVariant),
                   const SizedBox(width: AppSpacing.sm),
-                  _Badge(
-                      label: entry.shift.displayName, color: shiftColor),
+                  _Badge(label: entry.shift.displayName, color: shiftColor),
                   const SizedBox(width: AppSpacing.sm),
-                  _Badge(
-                      label: entry.quality.displayName,
-                      color: qualityColor),
+                  _Badge(label: entry.quality.displayName, color: qualityColor),
                   const Spacer(),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert,
-                        size: 18, color: colors.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.more_vert,
+                      size: 18,
+                      color: colors.onSurfaceVariant,
+                    ),
                     tooltip: AppStrings.recordOptions,
                     onSelected: (v) {
                       if (v == 'edit') onEdit();
@@ -184,10 +200,13 @@ class _SleepCard extends StatelessWidget {
                     },
                     itemBuilder: (_) => [
                       const PopupMenuItem(
-                          value: 'edit', child: Text(AppStrings.edit)),
+                        value: 'edit',
+                        child: Text(AppStrings.edit),
+                      ),
                       const PopupMenuItem(
-                          value: 'delete',
-                          child: Text(AppStrings.delete)),
+                        value: 'delete',
+                        child: Text(AppStrings.delete),
+                      ),
                     ],
                   ),
                 ],
@@ -196,26 +215,40 @@ class _SleepCard extends StatelessWidget {
               Row(
                 children: [
                   if (entry.bedTime != null) ...[
-                    Icon(Icons.bedtime_outlined,
-                        size: 14, color: colors.onSurfaceVariant),
+                    Icon(
+                      Icons.bedtime_outlined,
+                      size: 14,
+                      color: colors.onSurfaceVariant,
+                    ),
                     const SizedBox(width: AppSpacing.xs),
-                    Text(entry.bedTime!,
-                        style: AppTextStyles.body(colors.onSurface)),
+                    Text(
+                      entry.bedTime!,
+                      style: AppTextStyles.body(colors.onSurface),
+                    ),
                   ],
                   if (entry.bedTime != null && entry.wakeTime != null) ...[
                     Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: AppSpacing.sm),
-                      child: Icon(Icons.arrow_forward,
-                          size: 12, color: colors.onSurfaceVariant),
+                        horizontal: AppSpacing.sm,
+                      ),
+                      child: Icon(
+                        Icons.arrow_forward,
+                        size: 12,
+                        color: colors.onSurfaceVariant,
+                      ),
                     ),
                   ],
                   if (entry.wakeTime != null) ...[
-                    const Icon(Icons.wb_sunny_outlined,
-                        size: 14, color: AppColors.amber),
+                    const Icon(
+                      Icons.wb_sunny_outlined,
+                      size: 14,
+                      color: AppColors.amber,
+                    ),
                     const SizedBox(width: AppSpacing.xs),
-                    Text(entry.wakeTime!,
-                        style: AppTextStyles.body(colors.onSurface)),
+                    Text(
+                      entry.wakeTime!,
+                      style: AppTextStyles.body(colors.onSurface),
+                    ),
                   ],
                   if (entry.numberOfWakings > 0) ...[
                     const SizedBox(width: AppSpacing.md),
@@ -228,14 +261,18 @@ class _SleepCard extends StatelessWidget {
               ),
               if (entry.notes != null && entry.notes!.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.xs),
-                Text(entry.notes!,
-                    style: AppTextStyles.small(colors.onSurfaceVariant),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
+                Text(
+                  entry.notes!,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
               const SizedBox(height: AppSpacing.xs),
-              Text(entry.recordedByName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                entry.recordedByName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
             ],
           ),
         ),
@@ -244,10 +281,10 @@ class _SleepCard extends StatelessWidget {
   }
 
   Color _qualityColor(SleepQuality q) => switch (q) {
-        SleepQuality.good => AppColors.green,
-        SleepQuality.fair => AppColors.amber,
-        SleepQuality.poor => AppColors.red,
-      };
+    SleepQuality.good => AppColors.green,
+    SleepQuality.fair => AppColors.amber,
+    SleepQuality.poor => AppColors.red,
+  };
 }
 
 class _Badge extends StatelessWidget {
@@ -257,13 +294,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
-

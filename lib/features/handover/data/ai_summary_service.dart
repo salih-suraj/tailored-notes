@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// API key server-side and returns a written handover brief for the shift.
 class AiSummaryService {
   AiSummaryService({required SupabaseClient? supabaseClient})
-      : _supabaseClient = supabaseClient;
+    : _supabaseClient = supabaseClient;
 
   final SupabaseClient? _supabaseClient;
 

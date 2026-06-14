@@ -13,16 +13,13 @@ class BehaviourIncidentsDao extends DatabaseAccessor<AppDatabase>
   /// Non-deleted incidents for [childId], newest first.
   Stream<List<BehaviourIncidentRow>> watchByChild(String childId) =>
       (select(behaviourIncidentsTable)
-            ..where(
-              (t) =>
-                  t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([(t) => OrderingTerm.desc(t.occurredAt)]))
           .watch();
 
-  Future<BehaviourIncidentRow?> findById(String id) =>
-      (select(behaviourIncidentsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<BehaviourIncidentRow?> findById(String id) => (select(
+    behaviourIncidentsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(BehaviourIncidentsTableCompanion incident) =>
       into(behaviourIncidentsTable).insertOnConflictUpdate(incident);
@@ -37,7 +34,7 @@ class BehaviourIncidentsDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of rows pending upload, for the sync sweep.
-  Future<List<BehaviourIncidentRow>> getUnsynced() =>
-      (select(behaviourIncidentsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<BehaviourIncidentRow>> getUnsynced() => (select(
+    behaviourIncidentsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

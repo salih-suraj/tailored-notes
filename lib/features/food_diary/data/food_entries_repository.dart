@@ -17,10 +17,10 @@ class FoodEntriesRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final FoodEntriesDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -77,25 +77,25 @@ class FoodEntriesRepository implements SyncTarget {
   }
 
   FoodEntry _toDomain(FoodEntryRow r) => FoodEntry(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        date: r.date,
-        shift: ShiftType.values.byName(r.shift),
-        mealType: MealType.values.byName(r.mealType),
-        description: r.description,
-        appetite: Appetite.values.byName(r.appetite),
-        concerns: r.concerns,
-        notes: r.notes,
-        recordedById: r.recordedById,
-        recordedByName: r.recordedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    date: r.date,
+    shift: ShiftType.values.byName(r.shift),
+    mealType: MealType.values.byName(r.mealType),
+    description: r.description,
+    appetite: Appetite.values.byName(r.appetite),
+    concerns: r.concerns,
+    notes: r.notes,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   FoodEntriesTableCompanion _toCompanion(FoodEntry e) =>
       FoodEntriesTableCompanion(
@@ -124,20 +124,31 @@ class FoodEntriesRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('food_entries').upsert({
-        'id': e.id, 'home_id': e.homeId, 'child_id': e.childId,
-        'date': e.date, 'shift': e.shift.name,
-        'meal_type': e.mealType.name, 'description': e.description,
-        'appetite': e.appetite.name, 'concerns': e.concerns,
-        'notes': e.notes, 'recorded_by_id': e.recordedById,
+        'id': e.id,
+        'home_id': e.homeId,
+        'child_id': e.childId,
+        'date': e.date,
+        'shift': e.shift.name,
+        'meal_type': e.mealType.name,
+        'description': e.description,
+        'appetite': e.appetite.name,
+        'concerns': e.concerns,
+        'notes': e.notes,
+        'recorded_by_id': e.recordedById,
         'recorded_by_name': e.recordedByName,
-        'created_by_id': e.createdById, 'updated_by_id': e.updatedById,
+        'created_by_id': e.createdById,
+        'updated_by_id': e.updatedById,
         'updated_at': e.updatedAt.toUtc().toIso8601String(),
         'deleted_at': e.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(e.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for food entry ${e.id}',
-          error: err, stackTrace: st, name: 'FoodEntriesRepository');
+      log(
+        'Sync failed for food entry ${e.id}',
+        error: err,
+        stackTrace: st,
+        name: 'FoodEntriesRepository',
+      );
     }
   }
 }

@@ -35,17 +35,21 @@ class _IncompleteDocsBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.warning_amber_rounded,
-              color: AppColors.amber, size: 18),
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: AppColors.amber,
+            size: 18,
+          ),
           const SizedBox(width: AppSpacing.sm),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.alertIncompleteTitle,
-                    style: AppTextStyles.label(AppColors.amber)),
-                Text(subtitle,
-                    style: AppTextStyles.small(AppColors.amber)),
+                Text(
+                  AppStrings.alertIncompleteTitle,
+                  style: AppTextStyles.label(AppColors.amber),
+                ),
+                Text(subtitle, style: AppTextStyles.small(AppColors.amber)),
               ],
             ),
           ),
@@ -115,7 +119,11 @@ class ChildrenListScreen extends ConsumerWidget {
               if (incomplete.isNotEmpty)
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
-                      AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, 0),
+                    AppSpacing.lg,
+                    AppSpacing.lg,
+                    AppSpacing.lg,
+                    0,
+                  ),
                   child: _IncompleteDocsBanner(incomplete: incomplete),
                 ),
               Expanded(

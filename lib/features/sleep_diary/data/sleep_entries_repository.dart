@@ -17,10 +17,10 @@ class SleepEntriesRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final SleepEntriesDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -79,26 +79,26 @@ class SleepEntriesRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   SleepEntry _toDomain(SleepEntryRow r) => SleepEntry(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        date: r.date,
-        shift: ShiftType.values.byName(r.shift),
-        bedTime: r.bedTime,
-        settledTime: r.settledTime,
-        wakeTime: r.wakeTime,
-        numberOfWakings: r.numberOfWakings,
-        quality: SleepQuality.values.byName(r.quality),
-        notes: r.notes,
-        recordedById: r.recordedById,
-        recordedByName: r.recordedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    date: r.date,
+    shift: ShiftType.values.byName(r.shift),
+    bedTime: r.bedTime,
+    settledTime: r.settledTime,
+    wakeTime: r.wakeTime,
+    numberOfWakings: r.numberOfWakings,
+    quality: SleepQuality.values.byName(r.quality),
+    notes: r.notes,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   SleepEntriesTableCompanion _toCompanion(SleepEntry e) =>
       SleepEntriesTableCompanion(
@@ -148,8 +148,12 @@ class SleepEntriesRepository implements SyncTarget {
       });
       await _dao.upsert(_toCompanion(e.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for sleep entry ${e.id}',
-          error: err, stackTrace: st, name: 'SleepEntriesRepository');
+      log(
+        'Sync failed for sleep entry ${e.id}',
+        error: err,
+        stackTrace: st,
+        name: 'SleepEntriesRepository',
+      );
     }
   }
 }

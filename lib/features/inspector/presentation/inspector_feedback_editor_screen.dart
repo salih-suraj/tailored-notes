@@ -40,16 +40,16 @@ class _InspectorFeedbackEditorScreenState
   }
 
   Color _severityColor(FeedbackSeverity severity) => switch (severity) {
-        FeedbackSeverity.compliment => AppColors.green,
-        FeedbackSeverity.recommendation => AppColors.blue,
-        FeedbackSeverity.requirement => AppColors.red,
-      };
+    FeedbackSeverity.compliment => AppColors.green,
+    FeedbackSeverity.recommendation => AppColors.blue,
+    FeedbackSeverity.requirement => AppColors.red,
+  };
 
   IconData _severityIcon(FeedbackSeverity severity) => switch (severity) {
-        FeedbackSeverity.compliment => Icons.thumb_up_outlined,
-        FeedbackSeverity.recommendation => Icons.lightbulb_outline,
-        FeedbackSeverity.requirement => Icons.warning_amber_outlined,
-      };
+    FeedbackSeverity.compliment => Icons.thumb_up_outlined,
+    FeedbackSeverity.recommendation => Icons.lightbulb_outline,
+    FeedbackSeverity.requirement => Icons.warning_amber_outlined,
+  };
 
   Future<void> _submit({
     required String homeId,
@@ -79,15 +79,16 @@ class _InspectorFeedbackEditorScreenState
     }
 
     try {
-      final feedback =
-          await ref.read(inspectorFeedbackRepositoryProvider).submitFeedback(
-                homeId: homeId,
-                module: module,
-                severity: _severity,
-                content: content,
-                childId: _childId,
-                childName: childName,
-              );
+      final feedback = await ref
+          .read(inspectorFeedbackRepositoryProvider)
+          .submitFeedback(
+            homeId: homeId,
+            module: module,
+            severity: _severity,
+            content: content,
+            childId: _childId,
+            childName: childName,
+          );
       await ref
           .read(inspectorAuditServiceProvider)
           .recordFeedbackSubmitted(feedback);
@@ -121,19 +122,22 @@ class _InspectorFeedbackEditorScreenState
 
           final modules = [
             for (final scopeKey in grant.scope)
-              if (InspectorModule.fromScopeKey(scopeKey) case final m?) m,
+              ?InspectorModule.fromScopeKey(scopeKey),
           ];
           _module ??= modules.isNotEmpty ? modules.first : null;
 
-          final childrenAsync =
-              ref.watch(inspectorChildrenProvider(grant.homeId));
+          final childrenAsync = ref.watch(
+            inspectorChildrenProvider(grant.homeId),
+          );
           final children = childrenAsync.valueOrNull ?? const [];
 
           return ListView(
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
-              Text(AppStrings.inspectorFeedbackModuleLabel,
-                  style: AppTextStyles.label(colors.onSurfaceVariant)),
+              Text(
+                AppStrings.inspectorFeedbackModuleLabel,
+                style: AppTextStyles.label(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.xs),
               DropdownButtonFormField<InspectorModule>(
                 initialValue: _module,
@@ -145,8 +149,10 @@ class _InspectorFeedbackEditorScreenState
                 onChanged: (v) => setState(() => _module = v),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Text(AppStrings.inspectorFeedbackChildLabel,
-                  style: AppTextStyles.label(colors.onSurfaceVariant)),
+              Text(
+                AppStrings.inspectorFeedbackChildLabel,
+                style: AppTextStyles.label(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.xs),
               DropdownButtonFormField<String?>(
                 initialValue: _childId,
@@ -165,8 +171,10 @@ class _InspectorFeedbackEditorScreenState
                 onChanged: (v) => setState(() => _childId = v),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Text(AppStrings.inspectorFeedbackSeverityLabel,
-                  style: AppTextStyles.label(colors.onSurfaceVariant)),
+              Text(
+                AppStrings.inspectorFeedbackSeverityLabel,
+                style: AppTextStyles.label(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.xs),
               SegmentedButton<FeedbackSeverity>(
                 segments: [
@@ -174,17 +182,20 @@ class _InspectorFeedbackEditorScreenState
                     ButtonSegment(
                       value: severity,
                       label: Text(severity.displayName),
-                      icon: Icon(_severityIcon(severity),
-                          color: _severityColor(severity)),
+                      icon: Icon(
+                        _severityIcon(severity),
+                        color: _severityColor(severity),
+                      ),
                     ),
                 ],
                 selected: {_severity},
-                onSelectionChanged: (s) =>
-                    setState(() => _severity = s.first),
+                onSelectionChanged: (s) => setState(() => _severity = s.first),
               ),
               const SizedBox(height: AppSpacing.lg),
-              Text(AppStrings.inspectorFeedbackContentLabel,
-                  style: AppTextStyles.label(colors.onSurfaceVariant)),
+              Text(
+                AppStrings.inspectorFeedbackContentLabel,
+                style: AppTextStyles.label(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.xs),
               TextField(
                 controller: _contentController,

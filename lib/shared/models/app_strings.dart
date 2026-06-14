@@ -112,8 +112,7 @@ abstract final class AppStrings {
 
   // Checklists hub
   static const checklistsHubVisitorDesc = 'Log visitor arrivals and departures';
-  static const checklistsHubCleaningDesc =
-      'Communal areas and all bedrooms';
+  static const checklistsHubCleaningDesc = 'Communal areas and all bedrooms';
 
   // Cleaning screen
   static const checklistsTitle = 'Cleaning';
@@ -140,15 +139,12 @@ abstract final class AppStrings {
   static const smartStepsNoProgress = 'No progress logged yet';
   static const smartStepsLogProgress = 'Log progress';
   static const smartStepsNoteLabel = 'Progress note';
-  static const smartStepsNoteHint =
-      'What happened? What did the child do?';
+  static const smartStepsNoteHint = 'What happened? What did the child do?';
   static const smartStepsNoteRequired = 'Please enter a progress note';
-  static const smartStepsAchievedNote =
-      'This will mark the step as Achieved';
+  static const smartStepsAchievedNote = 'This will mark the step as Achieved';
   static const smartStepsCategory = 'CATEGORY';
   static const smartStepsStepTitle = 'STEP / GOAL';
-  static const smartStepsStepTitleHint =
-      'e.g. Can pour a drink independently';
+  static const smartStepsStepTitleHint = 'e.g. Can pour a drink independently';
   static const smartStepsTitleRequired = 'Step title is required';
   static const smartStepsDescription = 'DESCRIPTION (OPTIONAL)';
   static const smartStepsDescriptionHint =
@@ -174,8 +170,7 @@ abstract final class AppStrings {
   static const activitiesTitleHint = 'e.g. Trip to the park, Baked a cake';
   static const activitiesTitleRequired = 'Activity title is required';
   static const activitiesDescription = 'DETAILS (OPTIONAL)';
-  static const activitiesDescriptionHint =
-      'More detail about what happened';
+  static const activitiesDescriptionHint = 'More detail about what happened';
   static const activitiesDuration = 'DURATION (OPTIONAL)';
   static const activitiesDurationUnit = 'mins';
   static const activitiesRewardEarned = 'Reward point earned';
@@ -232,8 +227,7 @@ abstract final class AppStrings {
   static const behaviourNewIncident = 'Log Behaviour Incident';
   static const behaviourEditIncident = 'Edit Incident';
   static const behaviourNoIncidents = 'No behaviour incidents recorded';
-  static const behaviourNoIncidentsHint =
-      'Tap + to log a behaviour incident';
+  static const behaviourNoIncidentsHint = 'Tap + to log a behaviour incident';
   static const behaviourDeleteTitle = 'Delete incident?';
   static const behaviourDeleteConfirm =
       'This behaviour incident record will be permanently removed.';
@@ -242,8 +236,7 @@ abstract final class AppStrings {
   static const behaviourAntecedentHint =
       'What happened before? Environment, triggers, activity';
   static const behaviourBehaviour = 'Behaviour';
-  static const behaviourBehaviourHint =
-      'Describe exactly what the child did';
+  static const behaviourBehaviourHint = 'Describe exactly what the child did';
   static const behaviourConsequence = 'Consequence';
   static const behaviourConsequenceHint =
       'How did staff respond? What happened after?';
@@ -312,8 +305,7 @@ abstract final class AppStrings {
   static const medOutcome = 'OUTCOME';
   static const medReasonLabel = 'REASON (REQUIRED)';
   static const medReasonOptional = 'REASON (OPTIONAL)';
-  static const medReasonRequired =
-      'Please enter a reason for this outcome';
+  static const medReasonRequired = 'Please enter a reason for this outcome';
   static const medAddPrescribed = 'Add medication';
   static const medEditPrescribed = 'Edit medication';
   static const medName = 'MEDICATION NAME';
@@ -325,8 +317,7 @@ abstract final class AppStrings {
   static const medFrequency = 'FREQUENCY';
   static const medStartDate = 'START DATE';
   static const medInstructions = 'SPECIAL INSTRUCTIONS (OPTIONAL)';
-  static const medInstructionsHint =
-      'e.g. Take with food, Do not crush';
+  static const medInstructionsHint = 'e.g. Take with food, Do not crush';
   static const medPrescribedBy = 'PRESCRIBED BY (OPTIONAL)';
   static const medPrescribedByHint = 'GP or prescriber name';
 
@@ -427,8 +418,7 @@ abstract final class AppStrings {
   static const incidentDescriptionHint =
       'Full account of the incident — what was observed, who was present';
   static const incidentImmediateActionLabel = 'IMMEDIATE ACTION TAKEN';
-  static const incidentImmediateActionHint =
-      'What did staff do in response?';
+  static const incidentImmediateActionHint = 'What did staff do in response?';
   static const incidentInjuryDetails = 'INJURY DETAILS (OPTIONAL)';
   static const incidentInjuryDetailsHint =
       'Describe any injuries sustained by child or staff';
@@ -500,7 +490,8 @@ abstract final class AppStrings {
   static const behaviourPatternsDays7 = '7 days';
   static const behaviourPatternsDays14 = '14 days';
   static const behaviourPatternsDays30 = '30 days';
-  static const behaviourPatternsNoData = 'No behaviour incidents in this period';
+  static const behaviourPatternsNoData =
+      'No behaviour incidents in this period';
   static const behaviourPatternsTotalLabel = 'Total';
   static const behaviourPatternsInterventionsLabel = 'Interventions';
   static const behaviourPatternsInjuriesLabel = 'Injuries';
@@ -532,7 +523,8 @@ abstract final class AppStrings {
   static const settingsThemeDark = 'Dark';
   static const settingsSignOut = 'Sign out';
   static const settingsSignOutTitle = 'Sign out?';
-  static const settingsSignOutBody = 'You will be returned to the login screen.';
+  static const settingsSignOutBody =
+      'You will be returned to the login screen.';
 
   // Common
   static const loading = 'Loading…';

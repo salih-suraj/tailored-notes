@@ -3,13 +3,13 @@ import 'package:tailored_notes/shared/models/shift_completion.dart';
 import 'package:tailored_notes/shared/models/shift_type.dart';
 
 ShiftCompletion _completion(List<bool> done) => ShiftCompletion(
-      childId: 'c1',
-      shift: ShiftType.morning,
-      sections: [
-        for (var i = 0; i < done.length; i++)
-          ShiftSection('s$i', complete: done[i]),
-      ],
-    );
+  childId: 'c1',
+  shift: ShiftType.morning,
+  sections: [
+    for (var i = 0; i < done.length; i++)
+      ShiftSection('s$i', complete: done[i]),
+  ],
+);
 
 void main() {
   group('ShiftCompletion.status', () {
@@ -18,7 +18,10 @@ void main() {
     });
 
     test('some complete is partial', () {
-      expect(_completion([true, false, false]).status, CompletionStatus.partial);
+      expect(
+        _completion([true, false, false]).status,
+        CompletionStatus.partial,
+      );
       expect(_completion([true, true, false]).status, CompletionStatus.partial);
     });
 

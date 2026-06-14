@@ -11,15 +11,13 @@ part 'parent_portal_provider.g.dart';
 
 @riverpod
 ParentLinksRepository parentLinksRepository(Ref ref) => ParentLinksRepository(
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-    );
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+);
 
 @riverpod
 ParentRecordsRepository parentRecordsRepository(Ref ref) =>
-    ParentRecordsRepository(
-      supabaseClient: ref.watch(supabaseClientProvider),
-    );
+    ParentRecordsRepository(supabaseClient: ref.watch(supabaseClientProvider));
 
 /// Active child links for the signed-in parent.
 @riverpod
@@ -51,8 +49,7 @@ Future<List<ParentAccount>> parentSearch(Ref ref, String query) =>
 Future<List<Map<String, dynamic>>> parentChildActivities(
   Ref ref,
   String childId,
-) =>
-    ref.watch(parentRecordsRepositoryProvider).fetchActivities(childId);
+) => ref.watch(parentRecordsRepositoryProvider).fetchActivities(childId);
 
 /// Children of [homeId] for the manager's link form.
 @riverpod

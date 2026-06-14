@@ -6,23 +6,30 @@ part 'activity_entry.freezed.dart';
 part 'activity_entry.g.dart';
 
 enum ActivityCategory {
-  @JsonValue('physical') physical,
-  @JsonValue('creative') creative,
-  @JsonValue('educational') educational,
-  @JsonValue('social') social,
-  @JsonValue('community') community,
-  @JsonValue('life_skills') lifeSkills,
-  @JsonValue('other') other;
+  @JsonValue('physical')
+  physical,
+  @JsonValue('creative')
+  creative,
+  @JsonValue('educational')
+  educational,
+  @JsonValue('social')
+  social,
+  @JsonValue('community')
+  community,
+  @JsonValue('life_skills')
+  lifeSkills,
+  @JsonValue('other')
+  other;
 
   String get displayName => switch (this) {
-        ActivityCategory.physical => 'Physical',
-        ActivityCategory.creative => 'Creative',
-        ActivityCategory.educational => 'Educational',
-        ActivityCategory.social => 'Social',
-        ActivityCategory.community => 'Community',
-        ActivityCategory.lifeSkills => 'Life Skills',
-        ActivityCategory.other => 'Other',
-      };
+    ActivityCategory.physical => 'Physical',
+    ActivityCategory.creative => 'Creative',
+    ActivityCategory.educational => 'Educational',
+    ActivityCategory.social => 'Social',
+    ActivityCategory.community => 'Community',
+    ActivityCategory.lifeSkills => 'Life Skills',
+    ActivityCategory.other => 'Other',
+  };
 }
 
 /// A single activity, reward, or achievement record for a child.

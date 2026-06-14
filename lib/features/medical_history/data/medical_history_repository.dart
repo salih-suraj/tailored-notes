@@ -17,10 +17,10 @@ class MedicalHistoryRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final MedicalHistoryDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -29,8 +29,9 @@ class MedicalHistoryRepository implements SyncTarget {
 
   // ── Profile ───────────────────────────────────────────────────────────
 
-  Stream<MedicalProfile?> watchProfile(String childId) =>
-      _dao.watchProfile(childId).map((r) => r != null ? _profileToDomain(r) : null);
+  Stream<MedicalProfile?> watchProfile(String childId) => _dao
+      .watchProfile(childId)
+      .map((r) => r != null ? _profileToDomain(r) : null);
 
   Future<void> saveProfile(MedicalProfile profile) async {
     final existing = await _dao.findProfile(profile.childId);
@@ -52,9 +53,9 @@ class MedicalHistoryRepository implements SyncTarget {
 
   // ── Contacts ──────────────────────────────────────────────────────────
 
-  Stream<List<HealthcareContact>> watchContacts(String childId) =>
-      _dao.watchContacts(childId)
-          .map((rows) => rows.map(_contactToDomain).toList());
+  Stream<List<HealthcareContact>> watchContacts(String childId) => _dao
+      .watchContacts(childId)
+      .map((rows) => rows.map(_contactToDomain).toList());
 
   Future<void> saveContact(HealthcareContact contact) async {
     final existing = await _dao.findContactById(contact.id);
@@ -109,46 +110,78 @@ class MedicalHistoryRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   MedicalProfile _profileToDomain(MedicalProfileRow r) => MedicalProfile(
-        id: r.id, homeId: r.homeId, childId: r.childId,
-        nhsNumber: r.nhsNumber, bloodType: r.bloodType,
-        conditions: r.conditions, allergies: r.allergies,
-        immunisationNotes: r.immunisationNotes, notes: r.notes,
-        createdById: r.createdById, updatedById: r.updatedById,
-        createdAt: r.createdAt, updatedAt: r.updatedAt, isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    nhsNumber: r.nhsNumber,
+    bloodType: r.bloodType,
+    conditions: r.conditions,
+    allergies: r.allergies,
+    immunisationNotes: r.immunisationNotes,
+    notes: r.notes,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   MedicalProfileTableCompanion _profileToCompanion(MedicalProfile p) =>
       MedicalProfileTableCompanion(
-        id: Value(p.id), homeId: Value(p.homeId), childId: Value(p.childId),
-        nhsNumber: Value(p.nhsNumber), bloodType: Value(p.bloodType),
-        conditions: Value(p.conditions), allergies: Value(p.allergies),
-        immunisationNotes: Value(p.immunisationNotes), notes: Value(p.notes),
-        createdById: Value(p.createdById), updatedById: Value(p.updatedById),
+        id: Value(p.id),
+        homeId: Value(p.homeId),
+        childId: Value(p.childId),
+        nhsNumber: Value(p.nhsNumber),
+        bloodType: Value(p.bloodType),
+        conditions: Value(p.conditions),
+        allergies: Value(p.allergies),
+        immunisationNotes: Value(p.immunisationNotes),
+        notes: Value(p.notes),
+        createdById: Value(p.createdById),
+        updatedById: Value(p.updatedById),
         createdAt: Value(p.createdAt.toUtc()),
-        updatedAt: Value(p.updatedAt.toUtc()), isSynced: Value(p.isSynced),
+        updatedAt: Value(p.updatedAt.toUtc()),
+        isSynced: Value(p.isSynced),
       );
 
   HealthcareContact _contactToDomain(HealthcareContactRow r) =>
       HealthcareContact(
-        id: r.id, homeId: r.homeId, childId: r.childId,
+        id: r.id,
+        homeId: r.homeId,
+        childId: r.childId,
         contactType: ContactType.values.byName(r.contactType),
-        name: r.name, role: r.role, phone: r.phone, email: r.email,
-        address: r.address, notes: r.notes,
-        createdById: r.createdById, updatedById: r.updatedById,
+        name: r.name,
+        role: r.role,
+        phone: r.phone,
+        email: r.email,
+        address: r.address,
+        notes: r.notes,
+        createdById: r.createdById,
+        updatedById: r.updatedById,
         deletedAt: r.deletedAt,
-        createdAt: r.createdAt, updatedAt: r.updatedAt, isSynced: r.isSynced,
+        createdAt: r.createdAt,
+        updatedAt: r.updatedAt,
+        isSynced: r.isSynced,
       );
 
   HealthcareContactsTableCompanion _contactToCompanion(HealthcareContact c) =>
       HealthcareContactsTableCompanion(
-        id: Value(c.id), homeId: Value(c.homeId), childId: Value(c.childId),
+        id: Value(c.id),
+        homeId: Value(c.homeId),
+        childId: Value(c.childId),
         contactType: Value(c.contactType.name),
-        name: Value(c.name), role: Value(c.role), phone: Value(c.phone),
-        email: Value(c.email), address: Value(c.address), notes: Value(c.notes),
-        createdById: Value(c.createdById), updatedById: Value(c.updatedById),
+        name: Value(c.name),
+        role: Value(c.role),
+        phone: Value(c.phone),
+        email: Value(c.email),
+        address: Value(c.address),
+        notes: Value(c.notes),
+        createdById: Value(c.createdById),
+        updatedById: Value(c.updatedById),
         deletedAt: Value(c.deletedAt?.toUtc()),
         createdAt: Value(c.createdAt.toUtc()),
-        updatedAt: Value(c.updatedAt.toUtc()), isSynced: Value(c.isSynced),
+        updatedAt: Value(c.updatedAt.toUtc()),
+        isSynced: Value(c.isSynced),
       );
 
   // medical_profiles is one-row-per-child with no deleted_at column
@@ -158,17 +191,27 @@ class MedicalHistoryRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('medical_profiles').upsert({
-        'id': p.id, 'home_id': p.homeId, 'child_id': p.childId,
-        'nhs_number': p.nhsNumber, 'blood_type': p.bloodType,
-        'conditions': p.conditions, 'allergies': p.allergies,
-        'immunisation_notes': p.immunisationNotes, 'notes': p.notes,
-        'created_by_id': p.createdById, 'updated_by_id': p.updatedById,
+        'id': p.id,
+        'home_id': p.homeId,
+        'child_id': p.childId,
+        'nhs_number': p.nhsNumber,
+        'blood_type': p.bloodType,
+        'conditions': p.conditions,
+        'allergies': p.allergies,
+        'immunisation_notes': p.immunisationNotes,
+        'notes': p.notes,
+        'created_by_id': p.createdById,
+        'updated_by_id': p.updatedById,
         'updated_at': p.updatedAt.toUtc().toIso8601String(),
       });
       await _dao.upsertProfile(_profileToCompanion(p.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for medical profile ${p.id}',
-          error: err, stackTrace: st, name: 'MedicalHistoryRepository');
+      log(
+        'Sync failed for medical profile ${p.id}',
+        error: err,
+        stackTrace: st,
+        name: 'MedicalHistoryRepository',
+      );
     }
   }
 
@@ -177,18 +220,29 @@ class MedicalHistoryRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('healthcare_contacts').upsert({
-        'id': c.id, 'home_id': c.homeId, 'child_id': c.childId,
-        'contact_type': c.contactType.name, 'name': c.name, 'role': c.role,
-        'phone': c.phone, 'email': c.email, 'address': c.address,
-        'notes': c.notes, 'created_by_id': c.createdById,
+        'id': c.id,
+        'home_id': c.homeId,
+        'child_id': c.childId,
+        'contact_type': c.contactType.name,
+        'name': c.name,
+        'role': c.role,
+        'phone': c.phone,
+        'email': c.email,
+        'address': c.address,
+        'notes': c.notes,
+        'created_by_id': c.createdById,
         'updated_by_id': c.updatedById,
         'updated_at': c.updatedAt.toUtc().toIso8601String(),
         'deleted_at': c.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertContact(_contactToCompanion(c.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for contact ${c.id}',
-          error: err, stackTrace: st, name: 'MedicalHistoryRepository');
+      log(
+        'Sync failed for contact ${c.id}',
+        error: err,
+        stackTrace: st,
+        name: 'MedicalHistoryRepository',
+      );
     }
   }
 }

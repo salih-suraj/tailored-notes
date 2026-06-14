@@ -88,8 +88,13 @@ List<_NavItem> _destinationsForRole(UserRole role) {
 
   return switch (role) {
     UserRole.supportWorker => [children, dailyNotes, checklists, settings],
-    UserRole.teamLeader =>
-      [children, dailyNotes, checklists, handover, settings],
+    UserRole.teamLeader => [
+      children,
+      dailyNotes,
+      checklists,
+      handover,
+      settings,
+    ],
     UserRole.manager => [children, dashboard, handover, settings],
     // Inspectors only reach children through an access grant in the portal,
     // where every view is audit-logged — never via the home-scoped tab.
@@ -171,10 +176,7 @@ class _MobileShell extends StatelessWidget {
         destinations: destinations
             .map(
               (d) => NavigationDestination(
-                icon: Semantics(
-                  label: d.semanticLabel,
-                  child: Icon(d.icon),
-                ),
+                icon: Semantics(label: d.semanticLabel, child: Icon(d.icon)),
                 selectedIcon: Icon(d.activeIcon, color: AppColors.teal600),
                 label: d.label,
               ),
@@ -229,11 +231,7 @@ class _TabletShell extends StatelessWidget {
                 )
                 .toList(),
           ),
-          VerticalDivider(
-            width: 1,
-            thickness: 1,
-            color: colors.outline,
-          ),
+          VerticalDivider(width: 1, thickness: 1, color: colors.outline),
           Expanded(
             child: Column(
               children: [

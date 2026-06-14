@@ -37,8 +37,11 @@ class InspectorPortalScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.verified_user_outlined,
-                        size: 56, color: colors.onSurfaceVariant),
+                    Icon(
+                      Icons.verified_user_outlined,
+                      size: 56,
+                      color: colors.onSurfaceVariant,
+                    ),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
                       AppStrings.inspectorNoGrants,
@@ -94,49 +97,53 @@ class _GrantCard extends StatelessWidget {
       button: true,
       label: 'Open review for ${grant.displayName}',
       child: Material(
-      color: colors.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: InkWell(
-        onTap: onTap,
+        color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.home_work_outlined,
-                      color: AppColors.roleInspector),
-                  const SizedBox(width: AppSpacing.sm),
-                  Expanded(
-                    child: Text(
-                      grant.displayName,
-                      style: AppTextStyles.h3(colors.onSurface),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.home_work_outlined,
+                      color: AppColors.roleInspector,
                     ),
-                  ),
-                  Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
-                ],
-              ),
-              const SizedBox(height: AppSpacing.xs),
-              Text(expiryLabel,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
-              const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                spacing: AppSpacing.xs,
-                runSpacing: AppSpacing.xs,
-                children: [
-                  for (final scopeKey in grant.scope)
-                    if (InspectorModule.fromScopeKey(scopeKey) case final m?)
-                      _ScopeChip(module: m),
-                ],
-              ),
-            ],
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Text(
+                        grant.displayName,
+                        style: AppTextStyles.h3(colors.onSurface),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  expiryLabel,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Wrap(
+                  spacing: AppSpacing.xs,
+                  runSpacing: AppSpacing.xs,
+                  children: [
+                    for (final scopeKey in grant.scope)
+                      if (InspectorModule.fromScopeKey(scopeKey) case final m?)
+                        _ScopeChip(module: m),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -149,14 +156,15 @@ class _ScopeChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: AppColors.roleInspector.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: AppColors.roleInspector.withAlpha(60)),
-        ),
-        child: Text(module.displayName,
-            style: AppTextStyles.label(AppColors.roleInspector)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: AppColors.roleInspector.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      border: Border.all(color: AppColors.roleInspector.withAlpha(60)),
+    ),
+    child: Text(
+      module.displayName,
+      style: AppTextStyles.label(AppColors.roleInspector),
+    ),
+  );
 }

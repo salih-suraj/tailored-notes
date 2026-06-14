@@ -62,8 +62,9 @@ class _BehaviourIncidentEditorScreenState
       _interventionDetailsController.text = e.interventionDetails ?? '';
       _injuryDetailsController.text = e.injuryDetails ?? '';
       _notesController.text = e.notes ?? '';
-      _durationController.text =
-          e.durationMinutes != null ? '${e.durationMinutes}' : '';
+      _durationController.text = e.durationMinutes != null
+          ? '${e.durationMinutes}'
+          : '';
       _shift = e.shift;
       _severity = e.severity;
       _physicalIntervention = e.physicalIntervention;
@@ -91,7 +92,9 @@ class _BehaviourIncidentEditorScreenState
   }
 
   Future<DateTime?> showDateTimePicker(
-      BuildContext context, DateTime initial) async {
+    BuildContext context,
+    DateTime initial,
+  ) async {
     final date = await showDatePicker(
       context: context,
       initialDate: initial,
@@ -104,8 +107,7 @@ class _BehaviourIncidentEditorScreenState
       initialTime: TimeOfDay.fromDateTime(initial),
     );
     if (time == null) return null;
-    return DateTime(
-        date.year, date.month, date.day, time.hour, time.minute);
+    return DateTime(date.year, date.month, date.day, time.hour, time.minute);
   }
 
   Future<void> _save() async {
@@ -140,20 +142,19 @@ class _BehaviourIncidentEditorScreenState
         physicalIntervention: _physicalIntervention,
         interventionDetails:
             _physicalIntervention &&
-                    _interventionDetailsController.text.trim().isNotEmpty
-                ? _interventionDetailsController.text.trim()
-                : null,
+                _interventionDetailsController.text.trim().isNotEmpty
+            ? _interventionDetailsController.text.trim()
+            : null,
         injuryOccurred: _injuryOccurred,
-        injuryDetails: _injuryOccurred &&
-                _injuryDetailsController.text.trim().isNotEmpty
+        injuryDetails:
+            _injuryOccurred && _injuryDetailsController.text.trim().isNotEmpty
             ? _injuryDetailsController.text.trim()
             : null,
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
         recordedById: user?.id ?? 'dev-user-001',
-        recordedByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -161,12 +162,17 @@ class _BehaviourIncidentEditorScreenState
       await ref.read(behaviourRepositoryProvider).save(incident);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Behaviour save failed', error: e, stackTrace: st,
-          name: 'BehaviourEditor');
+      log(
+        'Behaviour save failed',
+        error: e,
+        stackTrace: st,
+        name: 'BehaviourEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -179,23 +185,28 @@ class _BehaviourIncidentEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.behaviourEditIncident
-            : AppStrings.behaviourNewIncident),
+        title: Text(
+          isEditing
+              ? AppStrings.behaviourEditIncident
+              : AppStrings.behaviourNewIncident,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -208,28 +219,30 @@ class _BehaviourIncidentEditorScreenState
               Expanded(
                 child: InkWell(
                   onTap: _pickTime,
-                  borderRadius:
-                      BorderRadius.circular(AppRadius.input),
+                  borderRadius: BorderRadius.circular(AppRadius.input),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md,
-                        vertical: AppSpacing.sm),
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.sm,
+                    ),
                     decoration: BoxDecoration(
                       border: Border.all(color: colors.outline),
-                      borderRadius:
-                          BorderRadius.circular(AppRadius.input),
+                      borderRadius: BorderRadius.circular(AppRadius.input),
                     ),
                     child: Row(
                       children: [
-                        Icon(Icons.access_time,
-                            size: 18,
-                            color: colors.onSurfaceVariant),
+                        Icon(
+                          Icons.access_time,
+                          size: 18,
+                          color: colors.onSurfaceVariant,
+                        ),
                         const SizedBox(width: AppSpacing.sm),
                         Text(
-                          DateFormat('d MMM · HH:mm', 'en_GB')
-                              .format(_occurredAt),
-                          style:
-                              AppTextStyles.body(colors.onSurface),
+                          DateFormat(
+                            'd MMM · HH:mm',
+                            'en_GB',
+                          ).format(_occurredAt),
+                          style: AppTextStyles.body(colors.onSurface),
                         ),
                       ],
                     ),
@@ -256,8 +269,7 @@ class _BehaviourIncidentEditorScreenState
               return FilterChip(
                 label: Text(s.displayName),
                 selected: sel,
-                onSelected: (_) =>
-                    setState(() => _severity = s),
+                onSelected: (_) => setState(() => _severity = s),
                 selectedColor: col.withAlpha(40),
                 checkmarkColor: col,
               );
@@ -300,13 +312,11 @@ class _BehaviourIncidentEditorScreenState
                     TextField(
                       controller: _durationController,
                       keyboardType: TextInputType.number,
-                      inputFormatters: [
-                        FilteringTextInputFormatter.digitsOnly
-                      ],
-                      decoration: InputDecoration(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      decoration: const InputDecoration(
                         hintText: AppStrings.behaviourDurationHint,
                         suffixText: AppStrings.behaviourDurationUnit,
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ],
@@ -321,10 +331,9 @@ class _BehaviourIncidentEditorScreenState
                     const SizedBox(height: AppSpacing.sm),
                     TextField(
                       controller: _locationController,
-                      decoration: InputDecoration(
-                        hintText:
-                            AppStrings.behaviourLocationHint,
-                        border: const OutlineInputBorder(),
+                      decoration: const InputDecoration(
+                        hintText: AppStrings.behaviourLocationHint,
+                        border: OutlineInputBorder(),
                       ),
                     ),
                   ],
@@ -340,8 +349,7 @@ class _BehaviourIncidentEditorScreenState
             subtitle: AppStrings.behaviourPhysicalInterventionSubtitle,
             value: _physicalIntervention,
             color: AppColors.red,
-            onChanged: (v) =>
-                setState(() => _physicalIntervention = v),
+            onChanged: (v) => setState(() => _physicalIntervention = v),
           ),
           if (_physicalIntervention) ...[
             const SizedBox(height: AppSpacing.sm),
@@ -351,8 +359,7 @@ class _BehaviourIncidentEditorScreenState
               decoration: InputDecoration(
                 labelText: AppStrings.behaviourInterventionDetails,
                 border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: AppColors.red.withAlpha(120)),
+                  borderSide: BorderSide(color: AppColors.red.withAlpha(120)),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.red),
@@ -368,8 +375,7 @@ class _BehaviourIncidentEditorScreenState
             subtitle: AppStrings.behaviourInjurySubtitle,
             value: _injuryOccurred,
             color: AppColors.red,
-            onChanged: (v) =>
-                setState(() => _injuryOccurred = v),
+            onChanged: (v) => setState(() => _injuryOccurred = v),
           ),
           if (_injuryOccurred) ...[
             const SizedBox(height: AppSpacing.sm),
@@ -379,8 +385,7 @@ class _BehaviourIncidentEditorScreenState
               decoration: InputDecoration(
                 labelText: AppStrings.behaviourInjuryDetails,
                 border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: AppColors.red.withAlpha(120)),
+                  borderSide: BorderSide(color: AppColors.red.withAlpha(120)),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.red),
@@ -396,9 +401,7 @@ class _BehaviourIncidentEditorScreenState
           TextField(
             controller: _notesController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.xxl),
 
@@ -406,16 +409,17 @@ class _BehaviourIncidentEditorScreenState
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.amber,
-              minimumSize:
-                  const Size.fromHeight(AppTapTarget.min),
+              minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: _saving
                 ? const SizedBox(
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppColors.white))
+                      strokeWidth: 2,
+                      color: AppColors.white,
+                    ),
+                  )
                 : const Text(AppStrings.save),
           ),
         ],
@@ -424,10 +428,10 @@ class _BehaviourIncidentEditorScreenState
   }
 
   Color _severityColor(BehaviourSeverity s) => switch (s) {
-        BehaviourSeverity.mild => AppColors.amber,
-        BehaviourSeverity.moderate => AppColors.orange,
-        BehaviourSeverity.severe => AppColors.red,
-      };
+    BehaviourSeverity.mild => AppColors.amber,
+    BehaviourSeverity.moderate => AppColors.orange,
+    BehaviourSeverity.severe => AppColors.red,
+  };
 }
 
 // ── Sub-widgets ───────────────────────────────────────────────────────────────
@@ -457,24 +461,25 @@ class _AbcField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(label,
-              style: AppTextStyles.label(color)),
-          const SizedBox(height: AppSpacing.sm),
-          TextField(
-            controller: controller,
-            maxLines: 3,
-            decoration: InputDecoration(
-              hintText: hint,
-              border: OutlineInputBorder(
-                  borderSide: BorderSide(color: color.withAlpha(80))),
-              focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: color)),
-            ),
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text(label, style: AppTextStyles.label(color)),
+      const SizedBox(height: AppSpacing.sm),
+      TextField(
+        controller: controller,
+        maxLines: 3,
+        decoration: InputDecoration(
+          hintText: hint,
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: color.withAlpha(80)),
           ),
-        ],
-      );
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: color),
+          ),
+        ),
+      ),
+    ],
+  );
 }
 
 class _SafetyToggle extends StatelessWidget {
@@ -494,32 +499,38 @@ class _SafetyToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          color: value ? color.withAlpha(15) : null,
-          border: Border.all(
-              color: value
-                  ? color.withAlpha(80)
-                  : Theme.of(context).colorScheme.outline),
-          borderRadius: BorderRadius.circular(AppRadius.card),
+    decoration: BoxDecoration(
+      color: value ? color.withAlpha(15) : null,
+      border: Border.all(
+        color: value
+            ? color.withAlpha(80)
+            : Theme.of(context).colorScheme.outline,
+      ),
+      borderRadius: BorderRadius.circular(AppRadius.card),
+    ),
+    child: SwitchListTile(
+      value: value,
+      onChanged: onChanged,
+      title: Text(
+        title,
+        style: AppTextStyles.body(
+          value ? color : Theme.of(context).colorScheme.onSurface,
         ),
-        child: SwitchListTile(
-          value: value,
-          onChanged: onChanged,
-          title: Text(title,
-              style: AppTextStyles.body(
-                  value ? color : Theme.of(context).colorScheme.onSurface)),
-          subtitle: Text(subtitle,
-              style: AppTextStyles.small(
-                  Theme.of(context).colorScheme.onSurfaceVariant)),
-          activeThumbColor: color,
-          dense: true,
+      ),
+      subtitle: Text(
+        subtitle,
+        style: AppTextStyles.small(
+          Theme.of(context).colorScheme.onSurfaceVariant,
         ),
-      );
+      ),
+      activeThumbColor: color,
+      dense: true,
+    ),
+  );
 }
 
 class _ShiftSelector extends StatelessWidget {
-  const _ShiftSelector(
-      {required this.selected, required this.onChanged});
+  const _ShiftSelector({required this.selected, required this.onChanged});
 
   final ShiftType selected;
   final ValueChanged<ShiftType> onChanged;
@@ -528,8 +539,7 @@ class _ShiftSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
       decoration: BoxDecoration(
         border: Border.all(color: colors.outline),
         borderRadius: BorderRadius.circular(AppRadius.input),
@@ -538,13 +548,19 @@ class _ShiftSelector extends StatelessWidget {
         value: selected,
         underline: const SizedBox(),
         items: ShiftType.values
-            .map((s) => DropdownMenuItem(
-                  value: s,
-                  child: Text(s.displayName,
-                      style: AppTextStyles.small(colors.onSurface)),
-                ))
+            .map(
+              (s) => DropdownMenuItem(
+                value: s,
+                child: Text(
+                  s.displayName,
+                  style: AppTextStyles.small(colors.onSurface),
+                ),
+              ),
+            )
             .toList(),
-        onChanged: (v) { if (v != null) onChanged(v); },
+        onChanged: (v) {
+          if (v != null) onChanged(v);
+        },
       ),
     );
   }

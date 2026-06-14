@@ -29,23 +29,25 @@ part 'sync_provider.g.dart';
 /// rows written offline or before the backend fixes of 2026-06-12.
 @Riverpod(keepAlive: true)
 SyncService syncService(Ref ref) {
-  final service = SyncService(targets: [
-    ref.watch(childrenRepositoryProvider),
-    ref.watch(dailyNotesRepositoryProvider),
-    ref.watch(checklistItemsRepositoryProvider),
-    ref.watch(bathTempRepositoryProvider),
-    ref.watch(visitorLogRepositoryProvider),
-    ref.watch(carePlansRepositoryProvider),
-    ref.watch(medicationRepositoryProvider),
-    ref.watch(medicalHistoryRepositoryProvider),
-    ref.watch(behaviourRepositoryProvider),
-    ref.watch(sleepEntriesRepositoryProvider),
-    ref.watch(foodEntriesRepositoryProvider),
-    ref.watch(activityEntriesRepositoryProvider),
-    ref.watch(smartStepsRepositoryProvider),
-    ref.watch(incidentReportsRepositoryProvider),
-    ref.watch(auditLogWriterProvider),
-  ]);
+  final service = SyncService(
+    targets: [
+      ref.watch(childrenRepositoryProvider),
+      ref.watch(dailyNotesRepositoryProvider),
+      ref.watch(checklistItemsRepositoryProvider),
+      ref.watch(bathTempRepositoryProvider),
+      ref.watch(visitorLogRepositoryProvider),
+      ref.watch(carePlansRepositoryProvider),
+      ref.watch(medicationRepositoryProvider),
+      ref.watch(medicalHistoryRepositoryProvider),
+      ref.watch(behaviourRepositoryProvider),
+      ref.watch(sleepEntriesRepositoryProvider),
+      ref.watch(foodEntriesRepositoryProvider),
+      ref.watch(activityEntriesRepositoryProvider),
+      ref.watch(smartStepsRepositoryProvider),
+      ref.watch(incidentReportsRepositoryProvider),
+      ref.watch(auditLogWriterProvider),
+    ],
+  );
   // Wait for the MFA challenge to complete before sweeping: the
   // require_mfa_for_privileged_roles restrictive RLS policy denies
   // manager/inspector sessions at AAL1, so sweeping earlier would only

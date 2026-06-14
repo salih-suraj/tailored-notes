@@ -58,8 +58,7 @@ class DailyNotesHubScreen extends ConsumerWidget {
               final child = children[index];
               return ChildListTile(
                 child: child,
-                onTap: () =>
-                    context.push('/children/${child.id}/daily-notes'),
+                onTap: () => context.push('/children/${child.id}/daily-notes'),
               );
             },
           );

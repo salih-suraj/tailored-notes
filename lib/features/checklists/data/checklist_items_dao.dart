@@ -16,13 +16,12 @@ class ChecklistItemsDao extends DatabaseAccessor<AppDatabase>
     String shift,
     String date,
   ) =>
-      (select(checklistItemsTable)
-            ..where(
-              (t) =>
-                  t.childId.equals(childId) &
-                  t.shift.equals(shift) &
-                  t.date.equals(date),
-            ))
+      (select(checklistItemsTable)..where(
+            (t) =>
+                t.childId.equals(childId) &
+                t.shift.equals(shift) &
+                t.date.equals(date),
+          ))
           .watch();
 
   /// All communal (no child) task rows for a home + shift + date.
@@ -31,25 +30,24 @@ class ChecklistItemsDao extends DatabaseAccessor<AppDatabase>
     String shift,
     String date,
   ) =>
-      (select(checklistItemsTable)
-            ..where(
-              (t) =>
-                  t.homeId.equals(homeId) &
-                  t.childId.isNull() &
-                  t.shift.equals(shift) &
-                  t.date.equals(date),
-            ))
+      (select(checklistItemsTable)..where(
+            (t) =>
+                t.homeId.equals(homeId) &
+                t.childId.isNull() &
+                t.shift.equals(shift) &
+                t.date.equals(date),
+          ))
           .watch();
 
-  Future<ChecklistItemRow?> findById(String id) =>
-      (select(checklistItemsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<ChecklistItemRow?> findById(String id) => (select(
+    checklistItemsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(ChecklistItemsTableCompanion item) =>
       into(checklistItemsTable).insertOnConflictUpdate(item);
 
   /// One-shot list of rows pending upload, for the sync sweep.
-  Future<List<ChecklistItemRow>> getUnsynced() =>
-      (select(checklistItemsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<ChecklistItemRow>> getUnsynced() => (select(
+    checklistItemsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

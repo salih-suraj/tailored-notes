@@ -8,8 +8,7 @@ class BathTempRecordsTable extends Table {
   TextColumn get id => text()();
   TextColumn get homeId => text().named('home_id')();
   TextColumn get childId => text().named('child_id')();
-  RealColumn get temperatureCelsius =>
-      real().named('temperature_celsius')();
+  RealColumn get temperatureCelsius => real().named('temperature_celsius')();
   TextColumn get shift => text()();
   DateTimeColumn get recordedAt => dateTime().named('recorded_at')();
   TextColumn get recordedById => text().named('recorded_by_id')();

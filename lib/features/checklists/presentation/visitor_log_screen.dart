@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -66,8 +66,7 @@ class VisitorLogScreen extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.lg),
             itemCount: entries.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) => _VisitorCard(
               entry: entries[i],
               onEdit: () => context.push(
@@ -247,10 +246,7 @@ class _VisitorCard extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: AppSpacing.xs),
-              Text(
-                entry.purpose,
-                style: AppTextStyles.body(colors.onSurface),
-              ),
+              Text(entry.purpose, style: AppTextStyles.body(colors.onSurface)),
               const SizedBox(height: AppSpacing.sm),
               Row(
                 children: [
@@ -302,4 +298,3 @@ class _VisitorCard extends StatelessWidget {
     );
   }
 }
-

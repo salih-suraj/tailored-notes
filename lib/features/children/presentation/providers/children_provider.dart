@@ -13,11 +13,11 @@ part 'children_provider.g.dart';
 
 @riverpod
 ChildrenRepository childrenRepository(Ref ref) => ChildrenRepository(
-      dao: ref.watch(appDatabaseProvider).childrenDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).childrenDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 @riverpod
 Stream<List<Child>> children(Ref ref) {

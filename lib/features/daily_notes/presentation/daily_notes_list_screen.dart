@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -25,8 +25,7 @@ class DailyNotesListScreen extends ConsumerStatefulWidget {
       _DailyNotesListScreenState();
 }
 
-class _DailyNotesListScreenState
-    extends ConsumerState<DailyNotesListScreen> {
+class _DailyNotesListScreenState extends ConsumerState<DailyNotesListScreen> {
   ShiftType? _filterShift; // null = show all
 
   @override
@@ -60,8 +59,9 @@ class _DailyNotesListScreenState
           // Shift filter chips
           _ShiftFilter(
             selected: _filterShift,
-            onSelected: (shift) =>
-                setState(() => _filterShift = _filterShift == shift ? null : shift),
+            onSelected: (shift) => setState(
+              () => _filterShift = _filterShift == shift ? null : shift,
+            ),
           ),
           const Divider(height: 1),
           Expanded(
@@ -69,7 +69,8 @@ class _DailyNotesListScreenState
               loading: () => const LoadingSkeleton(),
               error: (e, _) => ErrorView(
                 message: e.toString(),
-                onRetry: () => ref.invalidate(dailyNotesProvider(widget.childId)),
+                onRetry: () =>
+                    ref.invalidate(dailyNotesProvider(widget.childId)),
               ),
               data: (notes) {
                 final filtered = _filterShift == null
@@ -158,9 +159,7 @@ class _DailyNotesListScreenState
       ),
     );
     if (confirmed == true && mounted) {
-      await ref
-          .read(dailyNotesRepositoryProvider)
-          .delete(note.id);
+      await ref.read(dailyNotesRepositoryProvider).delete(note.id);
     }
   }
 }
@@ -200,4 +199,3 @@ class _ShiftFilter extends StatelessWidget {
     );
   }
 }
-

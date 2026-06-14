@@ -17,8 +17,7 @@ class ChildrenDao extends DatabaseAccessor<AppDatabase>
           .watch();
 
   Future<ChildRow?> findById(String id) =>
-      (select(childrenTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+      (select(childrenTable)..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(ChildrenTableCompanion child) =>
       into(childrenTable).insertOnConflictUpdate(child);

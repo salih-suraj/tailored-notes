@@ -17,15 +17,13 @@ class SmartStepsDao extends DatabaseAccessor<AppDatabase>
   /// then not_started, then achieved.
   Stream<List<SmartStepRow>> watchByChild(String childId) =>
       (select(smartStepsTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([(t) => OrderingTerm.asc(t.status)]))
           .watch();
 
-  Future<SmartStepRow?> findStepById(String id) =>
-      (select(smartStepsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<SmartStepRow?> findStepById(String id) => (select(
+    smartStepsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertStep(SmartStepsTableCompanion step) =>
       into(smartStepsTable).insertOnConflictUpdate(step);
@@ -52,23 +50,22 @@ class SmartStepsDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([(t) => OrderingTerm.desc(t.createdAt)]))
           .watch();
 
-  Future<StepProgressRow?> findProgressById(String id) =>
-      (select(stepProgressTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<StepProgressRow?> findProgressById(String id) => (select(
+    stepProgressTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertProgress(StepProgressTableCompanion progress) =>
       into(stepProgressTable).insertOnConflictUpdate(progress);
 
   /// One-shot list of progress notes pending upload, for the sync sweep.
   Future<List<StepProgressRow>> getUnsyncedProgress() =>
-      (select(stepProgressTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+      (select(stepProgressTable)..where((t) => t.isSynced.equals(false))).get();
 
   /// Count of progress notes per step for the given child.
   Future<Map<String, int>> progressCountByChild(String childId) async {
-    final rows = await (select(stepProgressTable)
-          ..where((t) => t.childId.equals(childId)))
-        .get();
+    final rows = await (select(
+      stepProgressTable,
+    )..where((t) => t.childId.equals(childId))).get();
     final counts = <String, int>{};
     for (final r in rows) {
       counts[r.stepId] = (counts[r.stepId] ?? 0) + 1;

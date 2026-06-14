@@ -15,8 +15,7 @@ class MedAdministrationsTable extends Table {
   TextColumn get shift => text()(); // ShiftType.name
   DateTimeColumn get administeredAt => dateTime().named('administered_at')();
   TextColumn get administeredById => text().named('administered_by_id')();
-  TextColumn get administeredByName =>
-      text().named('administered_by_name')();
+  TextColumn get administeredByName => text().named('administered_by_name')();
   TextColumn get reason => text().nullable()();
   TextColumn get notes => text().nullable()();
   TextColumn get createdById => text().named('created_by_id').nullable()();

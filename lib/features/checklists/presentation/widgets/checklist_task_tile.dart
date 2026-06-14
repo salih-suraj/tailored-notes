@@ -22,51 +22,49 @@ class ChecklistTaskTile extends ConsumerWidget {
       checked: item.isComplete,
       label: item.taskLabel,
       child: InkWell(
-      onTap: () => ref
-          .read(checklistItemsRepositoryProvider)
-          .toggle(item),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.md,
-        ),
-        child: Row(
-          children: [
-            Icon(
-              item.isComplete
-                  ? Icons.check_circle
-                  : Icons.radio_button_unchecked,
-              color: item.isComplete ? AppColors.green : colors.outline,
-              size: 22,
-            ),
-            const SizedBox(width: AppSpacing.lg),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    item.taskLabel,
-                    style: AppTextStyles.body(colors.onSurface).copyWith(
-                      decoration: item.isComplete
-                          ? TextDecoration.lineThrough
-                          : null,
-                      decorationColor: colors.onSurfaceVariant,
-                      color: item.isComplete
-                          ? colors.onSurfaceVariant
-                          : colors.onSurface,
-                    ),
-                  ),
-                  if (item.isComplete && item.completedByName != null)
-                    Text(
-                      item.completedByName!,
-                      style: AppTextStyles.small(colors.onSurfaceVariant),
-                    ),
-                ],
+        onTap: () => ref.read(checklistItemsRepositoryProvider).toggle(item),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.md,
+          ),
+          child: Row(
+            children: [
+              Icon(
+                item.isComplete
+                    ? Icons.check_circle
+                    : Icons.radio_button_unchecked,
+                color: item.isComplete ? AppColors.green : colors.outline,
+                size: 22,
               ),
-            ),
-          ],
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      item.taskLabel,
+                      style: AppTextStyles.body(colors.onSurface).copyWith(
+                        decoration: item.isComplete
+                            ? TextDecoration.lineThrough
+                            : null,
+                        decorationColor: colors.onSurfaceVariant,
+                        color: item.isComplete
+                            ? colors.onSurfaceVariant
+                            : colors.onSurface,
+                      ),
+                    ),
+                    if (item.isComplete && item.completedByName != null)
+                      Text(
+                        item.completedByName!,
+                        style: AppTextStyles.small(colors.onSurfaceVariant),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
       ),
     );
   }

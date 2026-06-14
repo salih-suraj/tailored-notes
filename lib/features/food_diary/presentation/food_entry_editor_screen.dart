@@ -30,8 +30,7 @@ class FoodEntryEditorScreen extends ConsumerStatefulWidget {
       _FoodEntryEditorScreenState();
 }
 
-class _FoodEntryEditorScreenState
-    extends ConsumerState<FoodEntryEditorScreen> {
+class _FoodEntryEditorScreenState extends ConsumerState<FoodEntryEditorScreen> {
   final _descriptionController = TextEditingController();
   final _concernsController = TextEditingController();
   final _notesController = TextEditingController();
@@ -56,7 +55,10 @@ class _FoodEntryEditorScreenState
       final parts = e.date.split('-');
       if (parts.length == 3) {
         _date = DateTime(
-            int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+          int.parse(parts[0]),
+          int.parse(parts[1]),
+          int.parse(parts[2]),
+        );
       }
     } else {
       // Default meal type based on UK time of day
@@ -64,10 +66,10 @@ class _FoodEntryEditorScreenState
       _mealType = hour < 10
           ? MealType.breakfast
           : hour < 14
-              ? MealType.lunch
-              : hour < 18
-                  ? MealType.afternoonSnack
-                  : MealType.dinner;
+          ? MealType.lunch
+          : hour < 18
+          ? MealType.afternoonSnack
+          : MealType.dinner;
     }
   }
 
@@ -96,8 +98,7 @@ class _FoodEntryEditorScreenState
     final description = _descriptionController.text.trim();
     if (description.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text(AppStrings.foodDescriptionRequired)),
+        const SnackBar(content: Text(AppStrings.foodDescriptionRequired)),
       );
       return;
     }
@@ -122,8 +123,7 @@ class _FoodEntryEditorScreenState
             ? null
             : _notesController.text.trim(),
         recordedById: user?.id ?? 'dev-user-001',
-        recordedByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -131,12 +131,17 @@ class _FoodEntryEditorScreenState
       await ref.read(foodEntriesRepositoryProvider).save(entry);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Food entry save failed',
-          error: e, stackTrace: st, name: 'FoodEntryEditor');
+      log(
+        'Food entry save failed',
+        error: e,
+        stackTrace: st,
+        name: 'FoodEntryEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -149,21 +154,25 @@ class _FoodEntryEditorScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-            isEditing ? AppStrings.foodEditEntry : AppStrings.foodNewEntry),
+          isEditing ? AppStrings.foodEditEntry : AppStrings.foodNewEntry,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -183,8 +192,7 @@ class _FoodEntryEditorScreenState
               ),
               const SizedBox(width: AppSpacing.sm),
               Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
                 decoration: BoxDecoration(
                   border: Border.all(color: colors.outline),
                   borderRadius: BorderRadius.circular(AppRadius.input),
@@ -193,12 +201,15 @@ class _FoodEntryEditorScreenState
                   value: _shift,
                   underline: const SizedBox(),
                   items: ShiftType.values
-                      .map((s) => DropdownMenuItem(
-                            value: s,
-                            child: Text(s.displayName,
-                                style: AppTextStyles.small(
-                                    colors.onSurface)),
-                          ))
+                      .map(
+                        (s) => DropdownMenuItem(
+                          value: s,
+                          child: Text(
+                            s.displayName,
+                            style: AppTextStyles.small(colors.onSurface),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (v) {
                     if (v != null) setState(() => _shift = v);
@@ -281,9 +292,7 @@ class _FoodEntryEditorScreenState
           TextField(
             controller: _notesController,
             maxLines: 2,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.xxl),
 
@@ -301,20 +310,20 @@ class _FoodEntryEditorScreenState
   }
 
   Color _mealColor(MealType m) => switch (m) {
-        MealType.breakfast => AppColors.amber,
-        MealType.morningSnack => AppColors.darkAmber,
-        MealType.lunch => AppColors.teal400,
-        MealType.afternoonSnack => AppColors.blue,
-        MealType.dinner => AppColors.green,
-        MealType.eveningSnack => AppColors.roleSupportWorker,
-        MealType.other => AppColors.slate400,
-      };
+    MealType.breakfast => AppColors.amber,
+    MealType.morningSnack => AppColors.darkAmber,
+    MealType.lunch => AppColors.teal400,
+    MealType.afternoonSnack => AppColors.blue,
+    MealType.dinner => AppColors.green,
+    MealType.eveningSnack => AppColors.roleSupportWorker,
+    MealType.other => AppColors.slate400,
+  };
 
   Color _appetiteColor(Appetite a) => switch (a) {
-        Appetite.good => AppColors.green,
-        Appetite.fair => AppColors.amber,
-        Appetite.poor => AppColors.red,
-      };
+    Appetite.good => AppColors.green,
+    Appetite.fair => AppColors.amber,
+    Appetite.poor => AppColors.red,
+  };
 }
 
 class _Label extends StatelessWidget {
@@ -341,23 +350,24 @@ class _PickerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(AppRadius.input),
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: colors.outline),
         borderRadius: BorderRadius.circular(AppRadius.input),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-          decoration: BoxDecoration(
-            border: Border.all(color: colors.outline),
-            borderRadius: BorderRadius.circular(AppRadius.input),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 16, color: colors.onSurfaceVariant),
-              const SizedBox(width: AppSpacing.sm),
-              Text(label,
-                  style: AppTextStyles.small(colors.onSurface)),
-            ],
-          ),
-        ),
-      );
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: colors.onSurfaceVariant),
+          const SizedBox(width: AppSpacing.sm),
+          Text(label, style: AppTextStyles.small(colors.onSurface)),
+        ],
+      ),
+    ),
+  );
 }

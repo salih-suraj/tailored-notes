@@ -12,11 +12,11 @@ part 'bath_temp_provider.g.dart';
 
 @riverpod
 BathTempRepository bathTempRepository(Ref ref) => BathTempRepository(
-      dao: ref.watch(appDatabaseProvider).bathTempRecordsDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).bathTempRecordsDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of today's bath temp records for [childId].
 @riverpod

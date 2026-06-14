@@ -55,7 +55,10 @@ class _PrescribedMedEditorScreenState
         final parts = m.startDate.split('-');
         if (parts.length == 3) {
           _startDate = DateTime(
-              int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+            int.parse(parts[0]),
+            int.parse(parts[1]),
+            int.parse(parts[2]),
+          );
         }
       }
     }
@@ -120,12 +123,17 @@ class _PrescribedMedEditorScreenState
       await ref.read(medicationRepositoryProvider).saveMed(med);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Med save failed', error: e, stackTrace: st,
-          name: 'PrescribedMedEditor');
+      log(
+        'Med save failed',
+        error: e,
+        stackTrace: st,
+        name: 'PrescribedMedEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -137,22 +145,28 @@ class _PrescribedMedEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.medEditPrescribed
-            : AppStrings.medAddPrescribed),
+        title: Text(
+          isEditing
+              ? AppStrings.medEditPrescribed
+              : AppStrings.medAddPrescribed,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20, height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -211,21 +225,30 @@ class _PrescribedMedEditorScreenState
             borderRadius: BorderRadius.circular(AppRadius.input),
             child: Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.md,
+              ),
               decoration: BoxDecoration(
                 border: Border.all(color: colors.outline),
                 borderRadius: BorderRadius.circular(AppRadius.input),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.event_outlined,
-                      color: colors.onSurfaceVariant, size: 20),
+                  Icon(
+                    Icons.event_outlined,
+                    color: colors.onSurfaceVariant,
+                    size: 20,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
-                  Text(DateFormat('d MMM yyyy').format(_startDate),
-                      style: AppTextStyles.body(colors.onSurface)),
+                  Text(
+                    DateFormat('d MMM yyyy').format(_startDate),
+                    style: AppTextStyles.body(colors.onSurface),
+                  ),
                   const Spacer(),
-                  Text(AppStrings.change,
-                      style: AppTextStyles.small(colors.primary)),
+                  Text(
+                    AppStrings.change,
+                    style: AppTextStyles.small(colors.primary),
+                  ),
                 ],
               ),
             ),
@@ -276,10 +299,8 @@ class _Label extends StatelessWidget {
   final ColorScheme colors;
 
   @override
-  Widget build(BuildContext context) => Text(
-        text,
-        style: AppTextStyles.label(colors.onSurfaceVariant),
-      );
+  Widget build(BuildContext context) =>
+      Text(text, style: AppTextStyles.label(colors.onSurfaceVariant));
 }
 
 class _StyledDropdown<T> extends StatelessWidget {
@@ -299,25 +320,24 @@ class _StyledDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.lg,
-          vertical: AppSpacing.xs,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(color: colors.outline),
-          borderRadius: BorderRadius.circular(AppRadius.input),
-        ),
-        child: DropdownButton<T>(
-          value: value,
-          isExpanded: true,
-          underline: const SizedBox(),
-          items: items
-              .map((i) => DropdownMenuItem<T>(
-                    value: i,
-                    child: Text(labelOf(i)),
-                  ))
-              .toList(),
-          onChanged: (v) { if (v != null) onChanged(v); },
-        ),
-      );
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.lg,
+      vertical: AppSpacing.xs,
+    ),
+    decoration: BoxDecoration(
+      border: Border.all(color: colors.outline),
+      borderRadius: BorderRadius.circular(AppRadius.input),
+    ),
+    child: DropdownButton<T>(
+      value: value,
+      isExpanded: true,
+      underline: const SizedBox(),
+      items: items
+          .map((i) => DropdownMenuItem<T>(value: i, child: Text(labelOf(i))))
+          .toList(),
+      onChanged: (v) {
+        if (v != null) onChanged(v);
+      },
+    ),
+  );
 }

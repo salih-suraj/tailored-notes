@@ -80,8 +80,11 @@ class _ActivityFeed extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.celebration_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.celebration_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
                     AppStrings.parentNoActivities,
@@ -180,10 +183,7 @@ class _ActivityCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(
-                    title,
-                    style: AppTextStyles.h3(colors.onSurface),
-                  ),
+                  child: Text(title, style: AppTextStyles.h3(colors.onSurface)),
                 ),
                 if (rewardEarned)
                   const Tooltip(
@@ -197,8 +197,7 @@ class _ActivityCard extends StatelessWidget {
               spacing: AppSpacing.xs,
               runSpacing: AppSpacing.xs,
               children: [
-                if (category != null)
-                  _Chip(label: _categoryLabel(category)),
+                if (category != null) _Chip(label: _categoryLabel(category)),
                 if (durationMinutes != null)
                   _Chip(
                     label:
@@ -252,14 +251,14 @@ class _ActivityCard extends StatelessWidget {
   /// Cloud rows carry the raw category key; map to the same display names
   /// as ActivityCategory without coupling to the Drift-wired domain model.
   String _categoryLabel(String key) => switch (key) {
-        'physical' => 'Physical',
-        'creative' => 'Creative',
-        'educational' => 'Educational',
-        'social' => 'Social',
-        'community' => 'Community',
-        'life_skills' => 'Life Skills',
-        _ => 'Other',
-      };
+    'physical' => 'Physical',
+    'creative' => 'Creative',
+    'educational' => 'Educational',
+    'social' => 'Social',
+    'community' => 'Community',
+    'life_skills' => 'Life Skills',
+    _ => 'Other',
+  };
 }
 
 class _Chip extends StatelessWidget {
@@ -271,8 +270,10 @@ class _Chip extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
-      padding:
-          const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: AppColors.roleParent.withAlpha(20),
         borderRadius: BorderRadius.circular(AppRadius.pill),

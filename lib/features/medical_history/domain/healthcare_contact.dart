@@ -4,25 +4,33 @@ part 'healthcare_contact.freezed.dart';
 part 'healthcare_contact.g.dart';
 
 enum ContactType {
-  @JsonValue('gp') gp,
-  @JsonValue('specialist') specialist,
-  @JsonValue('camhs') camhs,
-  @JsonValue('dentist') dentist,
-  @JsonValue('optician') optician,
-  @JsonValue('physiotherapist') physiotherapist,
-  @JsonValue('speech_therapy') speechTherapy,
-  @JsonValue('other') other;
+  @JsonValue('gp')
+  gp,
+  @JsonValue('specialist')
+  specialist,
+  @JsonValue('camhs')
+  camhs,
+  @JsonValue('dentist')
+  dentist,
+  @JsonValue('optician')
+  optician,
+  @JsonValue('physiotherapist')
+  physiotherapist,
+  @JsonValue('speech_therapy')
+  speechTherapy,
+  @JsonValue('other')
+  other;
 
   String get displayName => switch (this) {
-        ContactType.gp => 'GP / Doctor',
-        ContactType.specialist => 'Specialist',
-        ContactType.camhs => 'CAMHS',
-        ContactType.dentist => 'Dentist',
-        ContactType.optician => 'Optician',
-        ContactType.physiotherapist => 'Physiotherapist',
-        ContactType.speechTherapy => 'Speech Therapy',
-        ContactType.other => 'Other',
-      };
+    ContactType.gp => 'GP / Doctor',
+    ContactType.specialist => 'Specialist',
+    ContactType.camhs => 'CAMHS',
+    ContactType.dentist => 'Dentist',
+    ContactType.optician => 'Optician',
+    ContactType.physiotherapist => 'Physiotherapist',
+    ContactType.speechTherapy => 'Speech Therapy',
+    ContactType.other => 'Other',
+  };
 }
 
 /// A single healthcare professional or service linked to a child.

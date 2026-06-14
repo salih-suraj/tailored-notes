@@ -12,27 +12,27 @@ enum UserRole {
   /// role. A missing `app_role` claim means a misconfigured account
   /// (no user_profiles row, or a stale pre-profile session).
   static UserRole fromString(String value) => switch (value) {
-        'support_worker' => supportWorker,
-        'team_leader' => teamLeader,
-        'manager' => manager,
-        'inspector' => inspector,
-        'parent_guardian' => parentGuardian,
-        _ => parentGuardian,
-      };
+    'support_worker' => supportWorker,
+    'team_leader' => teamLeader,
+    'manager' => manager,
+    'inspector' => inspector,
+    'parent_guardian' => parentGuardian,
+    _ => parentGuardian,
+  };
 
   String toJson() => switch (this) {
-        supportWorker => 'support_worker',
-        teamLeader => 'team_leader',
-        manager => 'manager',
-        inspector => 'inspector',
-        parentGuardian => 'parent_guardian',
-      };
+    supportWorker => 'support_worker',
+    teamLeader => 'team_leader',
+    manager => 'manager',
+    inspector => 'inspector',
+    parentGuardian => 'parent_guardian',
+  };
 
   String get displayName => switch (this) {
-        supportWorker => 'Support Worker',
-        teamLeader => 'Team Leader',
-        manager => 'Manager',
-        inspector => 'Inspector',
-        parentGuardian => 'Parent / Guardian',
-      };
+    supportWorker => 'Support Worker',
+    teamLeader => 'Team Leader',
+    manager => 'Manager',
+    inspector => 'Inspector',
+    parentGuardian => 'Parent / Guardian',
+  };
 }

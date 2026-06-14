@@ -31,8 +31,7 @@ class DailyNoteEditorScreen extends ConsumerStatefulWidget {
       _DailyNoteEditorScreenState();
 }
 
-class _DailyNoteEditorScreenState
-    extends ConsumerState<DailyNoteEditorScreen> {
+class _DailyNoteEditorScreenState extends ConsumerState<DailyNoteEditorScreen> {
   // late: both assigned unconditionally in initState before first use.
   late final TextEditingController _content;
   late ShiftType _shift;
@@ -185,7 +184,9 @@ class _DailyNoteEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing ? AppStrings.editObservation : AppStrings.newObservation),
+        title: Text(
+          isEditing ? AppStrings.editObservation : AppStrings.newObservation,
+        ),
         actions: [
           if (_isSaving)
             const Padding(
@@ -252,14 +253,16 @@ class _DailyNoteEditorScreenState
       floatingActionButton: _speechAvailable
           ? FloatingActionButton(
               onPressed: _isSaving ? null : _toggleListening,
-              backgroundColor:
-                  _isListening ? AppColors.red : AppColors.teal400,
-              tooltip: _isListening ? AppStrings.stopVoiceInput : AppStrings.startVoiceInput,
+              backgroundColor: _isListening ? AppColors.red : AppColors.teal400,
+              tooltip: _isListening
+                  ? AppStrings.stopVoiceInput
+                  : AppStrings.startVoiceInput,
               child: Icon(
                 _isListening ? Icons.mic : Icons.mic_none,
                 color: AppColors.white,
-                semanticLabel:
-                    _isListening ? AppStrings.stopVoiceInput : AppStrings.startVoiceInput,
+                semanticLabel: _isListening
+                    ? AppStrings.stopVoiceInput
+                    : AppStrings.startVoiceInput,
               ),
             )
           : null,
@@ -280,12 +283,7 @@ class _ShiftSelector extends StatelessWidget {
 
     return SegmentedButton<ShiftType>(
       segments: ShiftType.values
-          .map(
-            (s) => ButtonSegment(
-              value: s,
-              label: Text(s.displayName),
-            ),
-          )
+          .map((s) => ButtonSegment(value: s, label: Text(s.displayName)))
           .toList(),
       selected: {selected},
       onSelectionChanged: (set) => onChanged(set.first),

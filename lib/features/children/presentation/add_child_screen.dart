@@ -91,7 +91,12 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
       await ref.read(childrenRepositoryProvider).save(child);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('AddChild save failed', error: e, stackTrace: st, name: 'AddChildScreen');
+      log(
+        'AddChild save failed',
+        error: e,
+        stackTrace: st,
+        name: 'AddChildScreen',
+      );
       if (mounted) {
         setState(() => _isSaving = false);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -143,17 +148,14 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
               textCapitalization: TextCapitalization.words,
               style: AppTextStyles.body(colors.onSurface),
               decoration: _inputDecoration(AppStrings.addChildNameHint, colors),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? AppStrings.addChildNameRequired : null,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? AppStrings.addChildNameRequired
+                  : null,
             ),
             const SizedBox(height: AppSpacing.lg),
             _label(AppStrings.addChildDobLabel, colors),
             const SizedBox(height: AppSpacing.xs),
-            _DobField(
-              dob: _dob,
-              onTap: _pickDob,
-              colors: colors,
-            ),
+            _DobField(dob: _dob, onTap: _pickDob, colors: colors),
             const SizedBox(height: AppSpacing.lg),
             _label(AppStrings.addChildRoomLabel, colors),
             const SizedBox(height: AppSpacing.xs),
@@ -162,8 +164,9 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
               textCapitalization: TextCapitalization.characters,
               style: AppTextStyles.body(colors.onSurface),
               decoration: _inputDecoration(AppStrings.addChildRoomHint, colors),
-              validator: (v) =>
-                  (v == null || v.trim().isEmpty) ? AppStrings.addChildRoomRequired : null,
+              validator: (v) => (v == null || v.trim().isEmpty)
+                  ? AppStrings.addChildRoomRequired
+                  : null,
             ),
             const SizedBox(height: AppSpacing.lg),
             _label(AppStrings.addChildNotesLabel, colors),
@@ -172,7 +175,10 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
               controller: _notes,
               maxLines: 4,
               style: AppTextStyles.body(colors.onSurface),
-              decoration: _inputDecoration(AppStrings.addChildNotesHint, colors),
+              decoration: _inputDecoration(
+                AppStrings.addChildNotesHint,
+                colors,
+              ),
             ),
           ],
         ),
@@ -180,10 +186,8 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
     );
   }
 
-  Widget _label(String text, ColorScheme colors) => Text(
-        text,
-        style: AppTextStyles.label(colors.onSurfaceVariant),
-      );
+  Widget _label(String text, ColorScheme colors) =>
+      Text(text, style: AppTextStyles.label(colors.onSurfaceVariant));
 
   InputDecoration _inputDecoration(String hint, ColorScheme colors) =>
       InputDecoration(
@@ -203,7 +207,11 @@ class _AddChildScreenState extends ConsumerState<AddChildScreen> {
 }
 
 class _DobField extends StatelessWidget {
-  const _DobField({required this.dob, required this.onTap, required this.colors});
+  const _DobField({
+    required this.dob,
+    required this.onTap,
+    required this.colors,
+  });
 
   final DateTime? dob;
   final VoidCallback onTap;
@@ -211,8 +219,8 @@ class _DobField extends StatelessWidget {
 
   String get _label => dob != null
       ? '${dob!.day.toString().padLeft(2, '0')} / '
-        '${dob!.month.toString().padLeft(2, '0')} / '
-        '${dob!.year}'
+            '${dob!.month.toString().padLeft(2, '0')} / '
+            '${dob!.year}'
       : AppStrings.addChildSelectDob;
 
   @override
@@ -238,8 +246,11 @@ class _DobField extends StatelessWidget {
                     : AppTextStyles.body(colors.onSurfaceVariant),
               ),
             ),
-            Icon(Icons.calendar_today_outlined,
-                size: 18, color: colors.onSurfaceVariant),
+            Icon(
+              Icons.calendar_today_outlined,
+              size: 18,
+              color: colors.onSurfaceVariant,
+            ),
           ],
         ),
       ),

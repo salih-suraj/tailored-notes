@@ -33,15 +33,13 @@ class DailyNotesDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// Returns the current row for [id], or null if it doesn't exist.
-  Future<DailyNoteRow?> findById(String id) =>
-      (select(dailyNotesTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<DailyNoteRow?> findById(String id) => (select(
+    dailyNotesTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   /// Notes pending upload to Supabase.
   Stream<List<DailyNoteRow>> watchUnsynced() =>
-      (select(dailyNotesTable)
-            ..where((t) => t.isSynced.equals(false)))
-          .watch();
+      (select(dailyNotesTable)..where((t) => t.isSynced.equals(false))).watch();
 
   /// One-shot list of notes pending upload, for the sync sweep.
   Future<List<DailyNoteRow>> getUnsynced() =>

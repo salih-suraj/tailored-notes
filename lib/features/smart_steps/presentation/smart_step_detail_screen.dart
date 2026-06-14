@@ -32,16 +32,17 @@ class SmartStepDetailScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(step.title,
-            overflow: TextOverflow.ellipsis),
+        title: Text(step.title, overflow: TextOverflow.ellipsis),
         actions: [
           TextButton(
             onPressed: () => context.push(
               '/children/${step.childId}/smart-steps/${step.id}/edit',
               extra: step,
             ),
-            child: Text(AppStrings.edit,
-                style: AppTextStyles.button(colors.primary)),
+            child: Text(
+              AppStrings.edit,
+              style: AppTextStyles.button(colors.primary),
+            ),
           ),
         ],
       ),
@@ -49,8 +50,7 @@ class SmartStepDetailScreen extends ConsumerWidget {
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
           message: e.toString(),
-          onRetry: () =>
-              ref.invalidate(stepProgressNotesProvider(step.id)),
+          onRetry: () => ref.invalidate(stepProgressNotesProvider(step.id)),
         ),
         data: (notes) => CustomScrollView(
           slivers: [
@@ -63,18 +63,22 @@ class SmartStepDetailScreen extends ConsumerWidget {
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.lg, AppSpacing.lg,
-                  AppSpacing.lg, AppSpacing.xs,
+                  AppSpacing.lg,
+                  AppSpacing.lg,
+                  AppSpacing.lg,
+                  AppSpacing.xs,
                 ),
                 child: Row(
                   children: [
-                    Text(AppStrings.smartStepsProgress,
-                        style: AppTextStyles.label(
-                            colors.onSurfaceVariant)),
+                    Text(
+                      AppStrings.smartStepsProgress,
+                      style: AppTextStyles.label(colors.onSurfaceVariant),
+                    ),
                     const Spacer(),
-                    Text('${notes.length}',
-                        style: AppTextStyles.small(
-                            colors.onSurfaceVariant)),
+                    Text(
+                      '${notes.length}',
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    ),
                   ],
                 ),
               ),
@@ -85,22 +89,26 @@ class SmartStepDetailScreen extends ConsumerWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(AppSpacing.xl),
                   child: Center(
-                    child: Text(AppStrings.smartStepsNoProgress,
-                        style: AppTextStyles.body(
-                            colors.onSurfaceVariant)),
+                    child: Text(
+                      AppStrings.smartStepsNoProgress,
+                      style: AppTextStyles.body(colors.onSurfaceVariant),
+                    ),
                   ),
                 ),
               )
             else
               SliverPadding(
                 padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg, 0, AppSpacing.lg, AppSpacing.xl),
+                  AppSpacing.lg,
+                  0,
+                  AppSpacing.lg,
+                  AppSpacing.xl,
+                ),
                 sliver: SliverList.separated(
                   itemCount: notes.length,
                   separatorBuilder: (_, _) =>
                       const SizedBox(height: AppSpacing.sm),
-                  itemBuilder: (_, i) =>
-                      _ProgressCard(progress: notes[i]),
+                  itemBuilder: (_, i) => _ProgressCard(progress: notes[i]),
                 ),
               ),
             const SliverToBoxAdapter(child: SizedBox(height: 80)),
@@ -120,13 +128,12 @@ class SmartStepDetailScreen extends ConsumerWidget {
   }
 
   Color _statusColor(StepStatus s) => switch (s) {
-        StepStatus.notStarted => AppColors.slate400,
-        StepStatus.inProgress => AppColors.amber,
-        StepStatus.achieved => AppColors.green,
-      };
+    StepStatus.notStarted => AppColors.slate400,
+    StepStatus.inProgress => AppColors.amber,
+    StepStatus.achieved => AppColors.green,
+  };
 
-  Future<void> _showProgressSheet(
-      BuildContext context, WidgetRef ref) =>
+  Future<void> _showProgressSheet(BuildContext context, WidgetRef ref) =>
       showModalBottomSheet<void>(
         context: context,
         isScrollControlled: true,
@@ -152,35 +159,34 @@ class _StepHeader extends StatelessWidget {
       decoration: BoxDecoration(
         color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border(
-          left: BorderSide(color: statusColor, width: 4),
-        ),
+        border: Border(left: BorderSide(color: statusColor, width: 4)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              _Badge(
-                  label: step.status.displayName,
-                  color: statusColor),
+              _Badge(label: step.status.displayName, color: statusColor),
               const SizedBox(width: AppSpacing.sm),
-              _Badge(
-                  label: step.category.displayName,
-                  color: AppColors.blue),
+              _Badge(label: step.category.displayName, color: AppColors.blue),
             ],
           ),
           if (step.description != null && step.description!.isNotEmpty) ...[
             const SizedBox(height: AppSpacing.sm),
-            Text(step.description!,
-                style: AppTextStyles.body(colors.onSurface)),
+            Text(
+              step.description!,
+              style: AppTextStyles.body(colors.onSurface),
+            ),
           ],
           if (step.targetDate != null) ...[
             const SizedBox(height: AppSpacing.sm),
             Row(
               children: [
-                Icon(Icons.flag_outlined,
-                    size: 14, color: colors.onSurfaceVariant),
+                Icon(
+                  Icons.flag_outlined,
+                  size: 14,
+                  color: colors.onSurfaceVariant,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   '${AppStrings.smartStepsTarget}: ${_fmtDate(step.targetDate!)}',
@@ -193,8 +199,11 @@ class _StepHeader extends StatelessWidget {
             const SizedBox(height: AppSpacing.xs),
             Row(
               children: [
-                const Icon(Icons.emoji_events,
-                    size: 14, color: AppColors.green),
+                const Icon(
+                  Icons.emoji_events,
+                  size: 14,
+                  color: AppColors.green,
+                ),
                 const SizedBox(width: AppSpacing.xs),
                 Text(
                   '${AppStrings.smartStepsAchievedOn}: ${_fmtDate(step.achievedDate!)}',
@@ -212,8 +221,8 @@ class _StepHeader extends StatelessWidget {
     final parts = d.split('-');
     if (parts.length != 3) return d;
     return DateFormat('d MMM yyyy').format(
-        DateTime(int.parse(parts[0]), int.parse(parts[1]),
-            int.parse(parts[2])));
+      DateTime(int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2])),
+    );
   }
 }
 
@@ -224,14 +233,13 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
 
 // ── Progress card ─────────────────────────────────────────────────────────────
@@ -250,9 +258,13 @@ class _ProgressCard extends StatelessWidget {
     };
     final parts = progress.date.split('-');
     final dateStr = parts.length == 3
-        ? DateFormat('EEE d MMM').format(DateTime(
-            int.parse(parts[0]), int.parse(parts[1]),
-            int.parse(parts[2])))
+        ? DateFormat('EEE d MMM').format(
+            DateTime(
+              int.parse(parts[0]),
+              int.parse(parts[1]),
+              int.parse(parts[2]),
+            ),
+          )
         : progress.date;
 
     return Material(
@@ -266,25 +278,28 @@ class _ProgressCard extends StatelessWidget {
             Row(
               children: [
                 _Badge(
-                    label: progress.outcome.displayName,
-                    color: outcomeColor),
+                  label: progress.outcome.displayName,
+                  color: outcomeColor,
+                ),
                 const SizedBox(width: AppSpacing.sm),
-                Text(dateStr,
-                    style: AppTextStyles.small(
-                        colors.onSurfaceVariant)),
+                Text(
+                  dateStr,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                ),
                 const SizedBox(width: AppSpacing.sm),
-                Text(progress.shift.displayName,
-                    style: AppTextStyles.small(
-                        colors.onSurfaceVariant)),
+                Text(
+                  progress.shift.displayName,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
-            Text(progress.note,
-                style: AppTextStyles.body(colors.onSurface)),
+            Text(progress.note, style: AppTextStyles.body(colors.onSurface)),
             const SizedBox(height: AppSpacing.xs),
-            Text(progress.recordedByName,
-                style: AppTextStyles.small(
-                    colors.onSurfaceVariant)),
+            Text(
+              progress.recordedByName,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
       ),
@@ -299,8 +314,7 @@ class _ProgressSheet extends ConsumerStatefulWidget {
   final SmartStep step;
 
   @override
-  ConsumerState<_ProgressSheet> createState() =>
-      _ProgressSheetState();
+  ConsumerState<_ProgressSheet> createState() => _ProgressSheetState();
 }
 
 class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
@@ -321,8 +335,7 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
     final note = _noteController.text.trim();
     if (note.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text(AppStrings.smartStepsNoteRequired)),
+        const SnackBar(content: Text(AppStrings.smartStepsNoteRequired)),
       );
       return;
     }
@@ -340,23 +353,25 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
         outcome: _outcome,
         note: note,
         recordedById: user?.id ?? 'dev-user-001',
-        recordedByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
         createdById: user?.id,
         createdAt: now,
         updatedAt: now,
       );
-      await ref
-          .read(smartStepsRepositoryProvider)
-          .logProgress(progress);
+      await ref.read(smartStepsRepositoryProvider).logProgress(progress);
       if (mounted) Navigator.of(context).pop();
     } catch (e, st) {
-      log('Progress save failed',
-          error: e, stackTrace: st, name: 'ProgressSheet');
+      log(
+        'Progress save failed',
+        error: e,
+        stackTrace: st,
+        name: 'ProgressSheet',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -370,8 +385,7 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
         left: AppSpacing.lg,
         right: AppSpacing.lg,
         top: AppSpacing.lg,
-        bottom:
-            MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
+        bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -379,8 +393,10 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
         children: [
           Row(
             children: [
-              Text(AppStrings.smartStepsLogProgress,
-                  style: AppTextStyles.h3(colors.onSurface)),
+              Text(
+                AppStrings.smartStepsLogProgress,
+                style: AppTextStyles.h3(colors.onSurface),
+              ),
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.close),
@@ -407,8 +423,7 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
                     return FilterChip(
                       label: Text(o.displayName),
                       selected: sel,
-                      onSelected: (_) =>
-                          setState(() => _outcome = o),
+                      onSelected: (_) => setState(() => _outcome = o),
                       selectedColor: col.withAlpha(40),
                       checkmarkColor: col,
                     );
@@ -440,11 +455,16 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.emoji_events,
-                      size: 16, color: AppColors.green),
+                  const Icon(
+                    Icons.emoji_events,
+                    size: 16,
+                    color: AppColors.green,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
-                  Text(AppStrings.smartStepsAchievedNote,
-                      style: AppTextStyles.small(AppColors.green)),
+                  Text(
+                    AppStrings.smartStepsAchievedNote,
+                    style: AppTextStyles.small(AppColors.green),
+                  ),
                 ],
               ),
             ),
@@ -459,9 +479,13 @@ class _ProgressSheetState extends ConsumerState<_ProgressSheet> {
             ),
             child: _saving
                 ? const SizedBox(
-                    width: 20, height: 20,
+                    width: 20,
+                    height: 20,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: AppColors.white))
+                      strokeWidth: 2,
+                      color: AppColors.white,
+                    ),
+                  )
                 : const Text(AppStrings.save),
           ),
         ],

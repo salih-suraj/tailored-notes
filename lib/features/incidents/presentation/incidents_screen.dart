@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -25,7 +25,8 @@ class IncidentsScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -38,8 +39,10 @@ class IncidentsScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.incidentsTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
       ),
@@ -55,14 +58,21 @@ class IncidentsScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.report_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.report_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text(AppStrings.incidentNoReports,
-                      style: AppTextStyles.body(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.incidentNoReports,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(AppStrings.incidentNoReportsHint,
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.incidentNoReportsHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
             );
@@ -70,16 +80,14 @@ class IncidentsScreen extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.lg),
             itemCount: reports.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) => _IncidentCard(
               report: reports[i],
               onEdit: () => context.push(
                 '/children/$childId/incidents/${reports[i].id}/edit',
                 extra: reports[i],
               ),
-              onDelete: () =>
-                  _confirmDelete(context, ref, reports[i].id),
+              onDelete: () => _confirmDelete(context, ref, reports[i].id),
             ),
           );
         },
@@ -95,7 +103,10 @@ class IncidentsScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -108,7 +119,9 @@ class IncidentsScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -138,8 +151,10 @@ class _IncidentCard extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final typeColor = _typeColor(report.incidentType);
     final severityColor = _severityColor(report.severity);
-    final dateStr = DateFormat('EEE d MMM · HH:mm', 'en_GB')
-        .format(report.occurredAt.toUk());
+    final dateStr = DateFormat(
+      'EEE d MMM · HH:mm',
+      'en_GB',
+    ).format(report.occurredAt.toUk());
 
     return Material(
       color: colors.surfaceContainerLow,
@@ -156,36 +171,45 @@ class _IncidentCard extends StatelessWidget {
               Row(
                 children: [
                   _Badge(
-                      label: report.incidentType.displayName,
-                      color: typeColor),
+                    label: report.incidentType.displayName,
+                    color: typeColor,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   _Badge(
-                      label: report.severity.displayName,
-                      color: severityColor),
+                    label: report.severity.displayName,
+                    color: severityColor,
+                  ),
                   const Spacer(),
                   if (report.followUpRequired)
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: AppSpacing.sm),
+                    const Padding(
+                      padding: EdgeInsets.only(right: AppSpacing.sm),
                       child: Tooltip(
                         message: AppStrings.incidentFollowUpRequired,
-                        child: Icon(Icons.pending_actions,
-                            color: AppColors.amber, size: 16),
+                        child: Icon(
+                          Icons.pending_actions,
+                          color: AppColors.amber,
+                          size: 16,
+                        ),
                       ),
                     ),
                   if (report.policeNotified)
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(right: AppSpacing.sm),
+                    const Padding(
+                      padding: EdgeInsets.only(right: AppSpacing.sm),
                       child: Tooltip(
                         message: AppStrings.incidentPoliceNotified,
-                        child: Icon(Icons.local_police_outlined,
-                            color: AppColors.blue, size: 16),
+                        child: Icon(
+                          Icons.local_police_outlined,
+                          color: AppColors.blue,
+                          size: 16,
+                        ),
                       ),
                     ),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert,
-                        size: 18, color: colors.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.more_vert,
+                      size: 18,
+                      color: colors.onSurfaceVariant,
+                    ),
                     tooltip: AppStrings.recordOptions,
                     onSelected: (v) {
                       if (v == 'edit') onEdit();
@@ -193,9 +217,13 @@ class _IncidentCard extends StatelessWidget {
                     },
                     itemBuilder: (_) => [
                       const PopupMenuItem(
-                          value: 'edit', child: Text(AppStrings.edit)),
+                        value: 'edit',
+                        child: Text(AppStrings.edit),
+                      ),
                       const PopupMenuItem(
-                          value: 'delete', child: Text(AppStrings.delete)),
+                        value: 'delete',
+                        child: Text(AppStrings.delete),
+                      ),
                     ],
                   ),
                 ],
@@ -203,15 +231,19 @@ class _IncidentCard extends StatelessWidget {
               const SizedBox(height: AppSpacing.sm),
 
               // Title
-              Text(report.title,
-                  style: AppTextStyles.h3(colors.onSurface),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis),
+              Text(
+                report.title,
+                style: AppTextStyles.h3(colors.onSurface),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
               const SizedBox(height: AppSpacing.xs),
 
               // Date + reporter
-              Text(dateStr,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                dateStr,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.xs),
 
               // Description snippet
@@ -239,20 +271,20 @@ class _IncidentCard extends StatelessWidget {
   }
 
   Color _typeColor(IncidentType t) => switch (t) {
-        IncidentType.behaviour => AppColors.amber,
-        IncidentType.medical => AppColors.blue,
-        IncidentType.accident => AppColors.orange,
-        IncidentType.propertyDamage => AppColors.slate400,
-        IncidentType.missingPerson => AppColors.red,
-        IncidentType.safeguarding => AppColors.roleInspector,
-      };
+    IncidentType.behaviour => AppColors.amber,
+    IncidentType.medical => AppColors.blue,
+    IncidentType.accident => AppColors.orange,
+    IncidentType.propertyDamage => AppColors.slate400,
+    IncidentType.missingPerson => AppColors.red,
+    IncidentType.safeguarding => AppColors.roleInspector,
+  };
 
   Color _severityColor(IncidentSeverity s) => switch (s) {
-        IncidentSeverity.low => AppColors.green,
-        IncidentSeverity.medium => AppColors.amber,
-        IncidentSeverity.high => AppColors.orange,
-        IncidentSeverity.critical => AppColors.red,
-      };
+    IncidentSeverity.low => AppColors.green,
+    IncidentSeverity.medium => AppColors.amber,
+    IncidentSeverity.high => AppColors.orange,
+    IncidentSeverity.critical => AppColors.red,
+  };
 }
 
 class _NotificationRow extends StatelessWidget {
@@ -271,11 +303,11 @@ class _NotificationRow extends StatelessWidget {
       spacing: AppSpacing.xs,
       children: [
         if (report.policeNotified)
-          _MiniChip(label: 'Police notified', color: AppColors.blue),
+          const _MiniChip(label: 'Police notified', color: AppColors.blue),
         if (report.parentNotified)
-          _MiniChip(label: 'Parent notified', color: AppColors.teal400),
+          const _MiniChip(label: 'Parent notified', color: AppColors.teal400),
         if (report.managerNotified)
-          _MiniChip(label: 'Manager notified', color: AppColors.slate400),
+          const _MiniChip(label: 'Manager notified', color: AppColors.slate400),
       ],
     );
   }
@@ -289,19 +321,17 @@ class _MiniChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: color.withAlpha(60)),
-        ),
-        child: Text(label,
-            style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
-                color: color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      border: Border.all(color: color.withAlpha(60)),
+    ),
+    child: Text(
+      label,
+      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: color),
+    ),
+  );
 }
 
 class _Badge extends StatelessWidget {
@@ -311,13 +341,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
-

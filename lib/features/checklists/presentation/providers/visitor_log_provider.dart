@@ -12,11 +12,11 @@ part 'visitor_log_provider.g.dart';
 
 @riverpod
 VisitorLogRepository visitorLogRepository(Ref ref) => VisitorLogRepository(
-      dao: ref.watch(appDatabaseProvider).visitorLogDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).visitorLogDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of today's visitor log entries for the home.
 @riverpod

@@ -86,15 +86,18 @@ class ManagerDashboardScreen extends ConsumerWidget {
             final incidents =
                 ref.watch(incidentReportsProvider(child.id)).valueOrNull ?? [];
             final behaviour =
-                ref.watch(behaviourIncidentsProvider(child.id)).valueOrNull ?? [];
+                ref.watch(behaviourIncidentsProvider(child.id)).valueOrNull ??
+                [];
             final admins =
                 ref.watch(todayAdminsProvider(child.id)).valueOrNull ?? [];
             final completion = ref.watch(shiftCompletionProvider(child.id));
 
             allTodayIncidents.addAll(
-                incidents.where((i) => _isSameDay(i.occurredAt.toUk(), now)));
+              incidents.where((i) => _isSameDay(i.occurredAt.toUk(), now)),
+            );
             allTodayBehaviour.addAll(
-                behaviour.where((b) => _isSameDay(b.occurredAt.toUk(), now)));
+              behaviour.where((b) => _isSameDay(b.occurredAt.toUk(), now)),
+            );
             completions[child.id] = completion;
 
             for (final admin in admins) {
@@ -106,30 +109,38 @@ class ManagerDashboardScreen extends ConsumerWidget {
 
           // Derive alert lists.
           final safeguardingItems = allTodayIncidents
-              .where((i) =>
-                  i.incidentType == IncidentType.safeguarding ||
-                  i.incidentType == IncidentType.missingPerson)
+              .where(
+                (i) =>
+                    i.incidentType == IncidentType.safeguarding ||
+                    i.incidentType == IncidentType.missingPerson,
+              )
               .toList();
 
           final criticalItems = allTodayIncidents
-              .where((i) =>
-                  i.severity == IncidentSeverity.critical ||
-                  i.severity == IncidentSeverity.high)
+              .where(
+                (i) =>
+                    i.severity == IncidentSeverity.critical ||
+                    i.severity == IncidentSeverity.high,
+              )
               // Avoid double-listing safeguarding as both critical and safeguarding.
-              .where((i) =>
-                  i.incidentType != IncidentType.safeguarding &&
-                  i.incidentType != IncidentType.missingPerson)
+              .where(
+                (i) =>
+                    i.incidentType != IncidentType.safeguarding &&
+                    i.incidentType != IncidentType.missingPerson,
+              )
               .toList();
 
-          final physicalItems =
-              allTodayBehaviour.where((b) => b.physicalIntervention).toList();
+          final physicalItems = allTodayBehaviour
+              .where((b) => b.physicalIntervention)
+              .toList();
 
           final completeCount = completions.values
               .where((c) => c.status == CompletionStatus.complete)
               .length;
           final needsAttention = children
-              .where((c) =>
-                  completions[c.id]!.status != CompletionStatus.complete)
+              .where(
+                (c) => completions[c.id]!.status != CompletionStatus.complete,
+              )
               .toList();
 
           return ListView(
@@ -150,9 +161,11 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   title: AppStrings.dashboardAlertSafeguarding,
                   color: AppColors.red,
                   items: safeguardingItems
-                      .map((i) =>
-                          '${childById[i.childId]?.name ?? ''} · '
-                          '${i.incidentType.displayName} · ${i.title}')
+                      .map(
+                        (i) =>
+                            '${childById[i.childId]?.name ?? ''} · '
+                            '${i.incidentType.displayName} · ${i.title}',
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -165,9 +178,11 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   title: AppStrings.dashboardAlertCritical,
                   color: AppColors.red,
                   items: criticalItems
-                      .map((i) =>
-                          '${childById[i.childId]?.name ?? ''} · '
-                          '${i.severity.displayName} · ${i.incidentType.displayName}')
+                      .map(
+                        (i) =>
+                            '${childById[i.childId]?.name ?? ''} · '
+                            '${i.severity.displayName} · ${i.incidentType.displayName}',
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -180,10 +195,12 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   title: AppStrings.dashboardAlertIntervention,
                   color: AppColors.red,
                   items: physicalItems
-                      .map((b) =>
-                          '${childById[b.childId]?.name ?? ''} · '
-                          '${b.severity.displayName}'
-                          '${b.injuryOccurred ? ' · injury recorded' : ''}')
+                      .map(
+                        (b) =>
+                            '${childById[b.childId]?.name ?? ''} · '
+                            '${b.severity.displayName}'
+                            '${b.injuryOccurred ? ' · injury recorded' : ''}',
+                      )
                       .toList(),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -196,8 +213,7 @@ class ManagerDashboardScreen extends ConsumerWidget {
                   title: AppStrings.dashboardAlertMedRefusal,
                   color: AppColors.amber,
                   items: medRefusals
-                      .map((r) =>
-                          '${r.child.name} · ${r.admin.medicationName}')
+                      .map((r) => '${r.child.name} · ${r.admin.medicationName}')
                       .toList(),
                 ),
                 const SizedBox(height: AppSpacing.md),
@@ -345,17 +361,20 @@ class _AlertCard extends StatelessWidget {
               children: [
                 Icon(icon, size: 16, color: color),
                 const SizedBox(width: AppSpacing.xs),
-                Expanded(
-                    child: Text(title, style: AppTextStyles.label(color))),
+                Expanded(child: Text(title, style: AppTextStyles.label(color))),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm, vertical: 2),
+                    horizontal: AppSpacing.sm,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: color.withAlpha(40),
                     borderRadius: BorderRadius.circular(AppRadius.pill),
                   ),
-                  child: Text('${items.length}',
-                      style: AppTextStyles.small(color)),
+                  child: Text(
+                    '${items.length}',
+                    style: AppTextStyles.small(color),
+                  ),
                 ),
               ],
             ),
@@ -371,14 +390,19 @@ class _AlertCard extends StatelessWidget {
                       child: Container(
                         width: 4,
                         height: 4,
-                        decoration:
-                            BoxDecoration(color: color, shape: BoxShape.circle),
+                        decoration: BoxDecoration(
+                          color: color,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.sm),
                     Expanded(
-                        child: Text(item,
-                            style: AppTextStyles.small(colors.onSurface))),
+                      child: Text(
+                        item,
+                        style: AppTextStyles.small(colors.onSurface),
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -423,21 +447,31 @@ class _DocumentationCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(Icons.assignment_outlined,
-                      size: 16, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.assignment_outlined,
+                    size: 16,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
-                    child: Text(AppStrings.dashboardDocumentation,
-                        style: AppTextStyles.label(colors.onSurface)),
+                    child: Text(
+                      AppStrings.dashboardDocumentation,
+                      style: AppTextStyles.label(colors.onSurface),
+                    ),
                   ),
-                  Icon(Icons.chevron_right,
-                      size: 16, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.chevron_right,
+                    size: 16,
+                    color: colors.onSurfaceVariant,
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
               if (allDone)
-                Text(AppStrings.dashboardAllDocumented,
-                    style: AppTextStyles.small(AppColors.green))
+                Text(
+                  AppStrings.dashboardAllDocumented,
+                  style: AppTextStyles.small(AppColors.green),
+                )
               else ...[
                 Text(
                   '${needsAttention.length} '
@@ -506,15 +540,22 @@ class _IncidentsSummaryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.report_outlined,
-                    size: 16, color: colors.onSurfaceVariant),
+                Icon(
+                  Icons.report_outlined,
+                  size: 16,
+                  color: colors.onSurfaceVariant,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: Text(AppStrings.dashboardIncidents,
-                      style: AppTextStyles.label(colors.onSurface)),
+                  child: Text(
+                    AppStrings.dashboardIncidents,
+                    style: AppTextStyles.label(colors.onSurface),
+                  ),
                 ),
-                Text('${incidents.length} today',
-                    style: AppTextStyles.small(headerColor)),
+                Text(
+                  '${incidents.length} today',
+                  style: AppTextStyles.small(headerColor),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -524,14 +565,15 @@ class _IncidentsSummaryCard extends StatelessWidget {
               children: IncidentSeverity.values.reversed
                   .where((s) => (bySeverity[s] ?? 0) > 0)
                   .map((s) {
-                final c = switch (s) {
-                  IncidentSeverity.critical || IncidentSeverity.high =>
-                    AppColors.red,
-                  IncidentSeverity.medium => AppColors.amber,
-                  IncidentSeverity.low => colors.onSurface,
-                };
-                return _StatChip('${bySeverity[s]} ${s.displayName}', c);
-              }).toList(),
+                    final c = switch (s) {
+                      IncidentSeverity.critical ||
+                      IncidentSeverity.high => AppColors.red,
+                      IncidentSeverity.medium => AppColors.amber,
+                      IncidentSeverity.low => colors.onSurface,
+                    };
+                    return _StatChip('${bySeverity[s]} ${s.displayName}', c);
+                  })
+                  .toList(),
             ),
           ],
         ),
@@ -559,8 +601,7 @@ class _BehaviourSummaryCard extends StatelessWidget {
       );
     }
 
-    final interventions =
-        behaviour.where((b) => b.physicalIntervention).length;
+    final interventions = behaviour.where((b) => b.physicalIntervention).length;
     final highest = behaviour
         .map((b) => b.severity)
         .reduce((a, b) => a.index > b.index ? a : b);
@@ -580,15 +621,22 @@ class _BehaviourSummaryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.psychology_outlined,
-                    size: 16, color: colors.onSurfaceVariant),
+                Icon(
+                  Icons.psychology_outlined,
+                  size: 16,
+                  color: colors.onSurfaceVariant,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
-                  child: Text(AppStrings.dashboardBehaviour,
-                      style: AppTextStyles.label(colors.onSurface)),
+                  child: Text(
+                    AppStrings.dashboardBehaviour,
+                    style: AppTextStyles.label(colors.onSurface),
+                  ),
                 ),
-                Text('${behaviour.length} today',
-                    style: AppTextStyles.small(headerColor)),
+                Text(
+                  '${behaviour.length} today',
+                  style: AppTextStyles.small(headerColor),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.sm),
@@ -643,10 +691,12 @@ class _EmptySummaryRow extends StatelessWidget {
             Icon(icon, size: 16, color: colors.onSurfaceVariant),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
-                child: Text(title,
-                    style: AppTextStyles.label(colors.onSurface))),
-            Text(emptyText,
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+              child: Text(title, style: AppTextStyles.label(colors.onSurface)),
+            ),
+            Text(
+              emptyText,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
       ),
@@ -662,7 +712,10 @@ class _NameChip extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: colors.surfaceContainerHigh,
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -680,7 +733,10 @@ class _StatChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: color.withAlpha(20),
         borderRadius: BorderRadius.circular(AppRadius.pill),

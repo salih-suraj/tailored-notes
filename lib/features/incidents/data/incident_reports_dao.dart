@@ -12,15 +12,13 @@ class IncidentReportsDao extends DatabaseAccessor<AppDatabase>
 
   Stream<List<IncidentReportRow>> watchByChild(String childId) =>
       (select(incidentReportsTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([(t) => OrderingTerm.desc(t.occurredAt)]))
           .watch();
 
-  Future<IncidentReportRow?> findById(String id) =>
-      (select(incidentReportsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<IncidentReportRow?> findById(String id) => (select(
+    incidentReportsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(IncidentReportsTableCompanion report) =>
       into(incidentReportsTable).insertOnConflictUpdate(report);
@@ -35,7 +33,7 @@ class IncidentReportsDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of rows pending upload, for the sync sweep.
-  Future<List<IncidentReportRow>> getUnsynced() =>
-      (select(incidentReportsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<IncidentReportRow>> getUnsynced() => (select(
+    incidentReportsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

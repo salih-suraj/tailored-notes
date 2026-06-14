@@ -23,8 +23,7 @@ class ShiftCompletion {
   int get completedCount => sections.where((s) => s.complete).length;
   int get totalCount => sections.length;
 
-  double get progress =>
-      totalCount > 0 ? completedCount / totalCount : 0.0;
+  double get progress => totalCount > 0 ? completedCount / totalCount : 0.0;
 
   CompletionStatus get status {
     if (completedCount == 0) return CompletionStatus.none;

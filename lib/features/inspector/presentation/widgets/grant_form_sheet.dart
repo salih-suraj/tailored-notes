@@ -93,7 +93,9 @@ class _GrantFormSheetState extends ConsumerState<GrantFormSheet> {
     );
 
     try {
-      await ref.read(inspectorGrantsRepositoryProvider).createGrant(
+      await ref
+          .read(inspectorGrantsRepositoryProvider)
+          .createGrant(
             inspectorUserId: selected.id,
             homeId: widget.homeId,
             expiresAt: endOfDay,
@@ -132,11 +134,15 @@ class _GrantFormSheetState extends ConsumerState<GrantFormSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppStrings.managerGrantFormTitle,
-                style: AppTextStyles.h2(colors.onSurface)),
+            Text(
+              AppStrings.managerGrantFormTitle,
+              style: AppTextStyles.h2(colors.onSurface),
+            ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.managerGrantFormSearchLabel,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.managerGrantFormSearchLabel,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.xs),
             TextField(
               controller: _searchController,
@@ -156,12 +162,16 @@ class _GrantFormSheetState extends ConsumerState<GrantFormSheet> {
                   padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: LinearProgressIndicator(),
                 ),
-                error: (e, _) => Text(e.toString(),
-                    style: AppTextStyles.small(colors.error)),
+                error: (e, _) => Text(
+                  e.toString(),
+                  style: AppTextStyles.small(colors.error),
+                ),
                 data: (results) {
                   if (results.isEmpty) {
-                    return Text(AppStrings.managerGrantFormNoResults,
-                        style: AppTextStyles.small(colors.onSurfaceVariant));
+                    return Text(
+                      AppStrings.managerGrantFormNoResults,
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    );
                   }
                   return Column(
                     children: [
@@ -180,8 +190,10 @@ class _GrantFormSheetState extends ConsumerState<GrantFormSheet> {
                 },
               ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.managerGrantFormScopeLabel,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.managerGrantFormScopeLabel,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.xs),
             Wrap(
               spacing: AppSpacing.xs,
@@ -202,8 +214,10 @@ class _GrantFormSheetState extends ConsumerState<GrantFormSheet> {
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.managerGrantFormExpiryLabel,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.managerGrantFormExpiryLabel,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.xs),
             OutlinedButton.icon(
               onPressed: _pickExpiry,
@@ -242,13 +256,15 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-        decoration: BoxDecoration(
-          color: color.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: color.withAlpha(60)),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.sm,
+      vertical: AppSpacing.xs,
+    ),
+    decoration: BoxDecoration(
+      color: color.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      border: Border.all(color: color.withAlpha(60)),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }

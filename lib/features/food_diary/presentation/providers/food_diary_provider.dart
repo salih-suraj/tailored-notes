@@ -11,13 +11,12 @@ import '../../domain/food_entry.dart';
 part 'food_diary_provider.g.dart';
 
 @riverpod
-FoodEntriesRepository foodEntriesRepository(Ref ref) =>
-    FoodEntriesRepository(
-      dao: ref.watch(appDatabaseProvider).foodEntriesDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+FoodEntriesRepository foodEntriesRepository(Ref ref) => FoodEntriesRepository(
+  dao: ref.watch(appDatabaseProvider).foodEntriesDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Live stream of food entries for [childId], newest first.
 @riverpod

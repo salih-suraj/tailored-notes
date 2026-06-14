@@ -36,8 +36,11 @@ class ParentPortalScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.child_care_outlined,
-                        size: 56, color: colors.onSurfaceVariant),
+                    Icon(
+                      Icons.child_care_outlined,
+                      size: 56,
+                      color: colors.onSurfaceVariant,
+                    ),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
                       AppStrings.parentNoLinks,
@@ -85,38 +88,42 @@ class _ChildCard extends StatelessWidget {
       button: true,
       label: 'Open updates for ${link.displayName}',
       child: Material(
-      color: colors.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(AppRadius.card),
-      child: InkWell(
-        onTap: onTap,
+        color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadius.card),
-        child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.lg),
-          child: Row(
-            children: [
-              CircleAvatar(
-                radius: 24,
-                backgroundColor: AppColors.roleParent.withAlpha(25),
-                backgroundImage:
-                    photoUrl == null ? null : NetworkImage(photoUrl),
-                child: photoUrl == null
-                    ? const Icon(Icons.child_care, color: AppColors.roleParent)
-                    : null,
-              ),
-              const SizedBox(width: AppSpacing.md),
-              Expanded(
-                child: Text(
-                  link.displayName,
-                  style: AppTextStyles.h3(colors.onSurface),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          child: Padding(
+            padding: const EdgeInsets.all(AppSpacing.lg),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  radius: 24,
+                  backgroundColor: AppColors.roleParent.withAlpha(25),
+                  backgroundImage: photoUrl == null
+                      ? null
+                      : NetworkImage(photoUrl),
+                  child: photoUrl == null
+                      ? const Icon(
+                          Icons.child_care,
+                          color: AppColors.roleParent,
+                        )
+                      : null,
                 ),
-              ),
-              Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
-            ],
+                const SizedBox(width: AppSpacing.md),
+                Expanded(
+                  child: Text(
+                    link.displayName,
+                    style: AppTextStyles.h3(colors.onSurface),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+                Icon(Icons.chevron_right, color: colors.onSurfaceVariant),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }

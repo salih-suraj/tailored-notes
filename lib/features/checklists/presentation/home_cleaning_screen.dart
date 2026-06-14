@@ -44,16 +44,21 @@ class HomeCleaningScreen extends ConsumerWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm, vertical: 1),
+                    horizontal: AppSpacing.sm,
+                    vertical: 1,
+                  ),
                   decoration: BoxDecoration(
                     color: shiftColor.withAlpha(30),
                     borderRadius: BorderRadius.circular(4),
                   ),
-                  child: Text(shift.displayName,
-                      style: TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w600,
-                          color: shiftColor)),
+                  child: Text(
+                    shift.displayName,
+                    style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.w600,
+                      color: shiftColor,
+                    ),
+                  ),
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Text(
@@ -66,21 +71,20 @@ class HomeCleaningScreen extends ConsumerWidget {
         ),
       ),
       body: switch ((childrenAsync, communalAsync)) {
-        (AsyncError(:final error), _) || (_, AsyncError(:final error)) =>
-          ErrorView(
-            message: error.toString(),
-            onRetry: () {
-              ref.invalidate(childrenProvider);
-              ref.invalidate(communalChecklistProvider);
-            },
-          ),
+        (AsyncError(:final error), _) ||
+        (_, AsyncError(:final error)) => ErrorView(
+          message: error.toString(),
+          onRetry: () {
+            ref.invalidate(childrenProvider);
+            ref.invalidate(communalChecklistProvider);
+          },
+        ),
         (AsyncLoading(), _) || (_, AsyncLoading()) => const LoadingSkeleton(),
-        (AsyncData(value: final children),
-            AsyncData(value: final communalItems)) =>
-          _CleaningBody(
-            children: children,
-            communalItems: communalItems,
-          ),
+        (
+          AsyncData(value: final children),
+          AsyncData(value: final communalItems),
+        ) =>
+          _CleaningBody(children: children, communalItems: communalItems),
         _ => const LoadingSkeleton(),
       },
     );
@@ -90,10 +94,7 @@ class HomeCleaningScreen extends ConsumerWidget {
 // ── Body ──────────────────────────────────────────────────────────────────────
 
 class _CleaningBody extends StatelessWidget {
-  const _CleaningBody({
-    required this.children,
-    required this.communalItems,
-  });
+  const _CleaningBody({required this.children, required this.communalItems});
 
   final List<Child> children;
   final List<ChecklistItem> communalItems;
@@ -115,12 +116,8 @@ class _CleaningBody extends StatelessWidget {
         const SizedBox(height: AppSpacing.lg),
 
         // ── Children's bedrooms ────────────────────────────────────────
-        _SectionHeader(
-          label: AppStrings.cleaningBedrooms,
-          colors: colors,
-        ),
-        for (final child in children)
-          _RoomSection(child: child),
+        _SectionHeader(label: AppStrings.cleaningBedrooms, colors: colors),
+        for (final child in children) _RoomSection(child: child),
 
         const SizedBox(height: AppSpacing.xl),
       ],
@@ -132,8 +129,7 @@ class _CleaningBody extends StatelessWidget {
     CommunalArea area,
     List<ChecklistItem> allCommunal,
   ) {
-    final areaItems =
-        allCommunal.where((i) => i.areaKey == area.key).toList();
+    final areaItems = allCommunal.where((i) => i.areaKey == area.key).toList();
     if (areaItems.isEmpty) return [];
     final colors = Theme.of(context).colorScheme;
     return [
@@ -143,8 +139,10 @@ class _CleaningBody extends StatelessWidget {
           top: AppSpacing.sm,
           bottom: AppSpacing.xs,
         ),
-        child: Text(area.label,
-            style: AppTextStyles.label(colors.onSurfaceVariant)),
+        child: Text(
+          area.label,
+          style: AppTextStyles.label(colors.onSurfaceVariant),
+        ),
       ),
       ...areaItems.map((item) => ChecklistTaskTile(item: item)),
     ];
@@ -211,13 +209,12 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.lg,
-          AppSpacing.lg,
-          AppSpacing.lg,
-          AppSpacing.xs,
-        ),
-        child: Text(label,
-            style: AppTextStyles.label(colors.onSurfaceVariant)),
-      );
+    padding: const EdgeInsets.fromLTRB(
+      AppSpacing.lg,
+      AppSpacing.lg,
+      AppSpacing.lg,
+      AppSpacing.xs,
+    ),
+    child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+  );
 }

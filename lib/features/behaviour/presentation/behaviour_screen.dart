@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -26,7 +26,8 @@ class BehaviourScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -39,8 +40,10 @@ class BehaviourScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.behaviourTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
       ),
@@ -48,8 +51,7 @@ class BehaviourScreen extends ConsumerWidget {
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
           message: e.toString(),
-          onRetry: () =>
-              ref.invalidate(behaviourIncidentsProvider(childId)),
+          onRetry: () => ref.invalidate(behaviourIncidentsProvider(childId)),
         ),
         data: (incidents) {
           if (incidents.isEmpty) {
@@ -57,14 +59,21 @@ class BehaviourScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.show_chart,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.show_chart,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text(AppStrings.behaviourNoIncidents,
-                      style: AppTextStyles.body(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.behaviourNoIncidents,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(AppStrings.behaviourNoIncidentsHint,
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.behaviourNoIncidentsHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
             );
@@ -72,23 +81,20 @@ class BehaviourScreen extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.lg),
             itemCount: incidents.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) => _IncidentCard(
               incident: incidents[i],
               onEdit: () => context.push(
                 '/children/$childId/behaviour/${incidents[i].id}/edit',
                 extra: incidents[i],
               ),
-              onDelete: () =>
-                  _confirmDelete(context, ref, incidents[i].id),
+              onDelete: () => _confirmDelete(context, ref, incidents[i].id),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            context.push('/children/$childId/behaviour/new'),
+        onPressed: () => context.push('/children/$childId/behaviour/new'),
         backgroundColor: AppColors.amber,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
@@ -98,7 +104,10 @@ class BehaviourScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -111,7 +120,9 @@ class BehaviourScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -140,8 +151,10 @@ class _IncidentCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final severityColor = _severityColor(incident.severity);
-    final dateStr = DateFormat('EEE d MMM · HH:mm', 'en_GB')
-        .format(incident.occurredAt.toUk());
+    final dateStr = DateFormat(
+      'EEE d MMM · HH:mm',
+      'en_GB',
+    ).format(incident.occurredAt.toUk());
     final shiftColor = switch (incident.shift) {
       ShiftType.morning => AppColors.amber,
       ShiftType.afternoon => AppColors.teal400,
@@ -163,34 +176,42 @@ class _IncidentCard extends StatelessWidget {
               Row(
                 children: [
                   _Badge(
-                      label: incident.severity.displayName,
-                      color: severityColor),
+                    label: incident.severity.displayName,
+                    color: severityColor,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
-                  _Badge(
-                      label: incident.shift.displayName,
-                      color: shiftColor),
+                  _Badge(label: incident.shift.displayName, color: shiftColor),
                   const Spacer(),
                   if (incident.physicalIntervention)
-                    Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.sm),
+                    const Padding(
+                      padding: EdgeInsets.only(right: AppSpacing.sm),
                       child: Tooltip(
                         message: AppStrings.behaviourPhysicalIntervention,
-                        child: Icon(Icons.warning_amber_rounded,
-                            color: AppColors.red, size: 16),
+                        child: Icon(
+                          Icons.warning_amber_rounded,
+                          color: AppColors.red,
+                          size: 16,
+                        ),
                       ),
                     ),
                   if (incident.injuryOccurred)
-                    Padding(
-                      padding: const EdgeInsets.only(right: AppSpacing.sm),
+                    const Padding(
+                      padding: EdgeInsets.only(right: AppSpacing.sm),
                       child: Tooltip(
                         message: AppStrings.behaviourInjury,
-                        child: Icon(Icons.personal_injury_outlined,
-                            color: AppColors.red, size: 16),
+                        child: Icon(
+                          Icons.personal_injury_outlined,
+                          color: AppColors.red,
+                          size: 16,
+                        ),
                       ),
                     ),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert,
-                        size: 18, color: colors.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.more_vert,
+                      size: 18,
+                      color: colors.onSurfaceVariant,
+                    ),
                     tooltip: AppStrings.recordOptions,
                     onSelected: (v) {
                       if (v == 'edit') onEdit();
@@ -198,32 +219,41 @@ class _IncidentCard extends StatelessWidget {
                     },
                     itemBuilder: (_) => [
                       const PopupMenuItem(
-                          value: 'edit', child: Text(AppStrings.edit)),
+                        value: 'edit',
+                        child: Text(AppStrings.edit),
+                      ),
                       const PopupMenuItem(
-                          value: 'delete', child: Text(AppStrings.delete)),
+                        value: 'delete',
+                        child: Text(AppStrings.delete),
+                      ),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.xs),
-              Text(dateStr,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                dateStr,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
               const SizedBox(height: AppSpacing.sm),
               // ABC summary
               _AbcRow(
-                  label: AppStrings.behaviourAbcA,
-                  color: AppColors.blue,
-                  text: incident.antecedent),
+                label: AppStrings.behaviourAbcA,
+                color: AppColors.blue,
+                text: incident.antecedent,
+              ),
               const SizedBox(height: AppSpacing.xs),
               _AbcRow(
-                  label: AppStrings.behaviourAbcB,
-                  color: severityColor,
-                  text: incident.behaviour),
+                label: AppStrings.behaviourAbcB,
+                color: severityColor,
+                text: incident.behaviour,
+              ),
               const SizedBox(height: AppSpacing.xs),
               _AbcRow(
-                  label: AppStrings.behaviourAbcC,
-                  color: AppColors.green,
-                  text: incident.consequence),
+                label: AppStrings.behaviourAbcC,
+                color: AppColors.green,
+                text: incident.consequence,
+              ),
               if (incident.location != null) ...[
                 const SizedBox(height: AppSpacing.xs),
                 Text(
@@ -231,8 +261,10 @@ class _IncidentCard extends StatelessWidget {
                   style: AppTextStyles.small(colors.onSurfaceVariant),
                 ),
               ],
-              Text(incident.recordedByName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                incident.recordedByName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
             ],
           ),
         ),
@@ -241,15 +273,14 @@ class _IncidentCard extends StatelessWidget {
   }
 
   Color _severityColor(BehaviourSeverity s) => switch (s) {
-        BehaviourSeverity.mild => AppColors.amber,
-        BehaviourSeverity.moderate => AppColors.orange,
-        BehaviourSeverity.severe => AppColors.red,
-      };
+    BehaviourSeverity.mild => AppColors.amber,
+    BehaviourSeverity.moderate => AppColors.orange,
+    BehaviourSeverity.severe => AppColors.red,
+  };
 }
 
 class _AbcRow extends StatelessWidget {
-  const _AbcRow(
-      {required this.label, required this.color, required this.text});
+  const _AbcRow({required this.label, required this.color, required this.text});
 
   final String label;
   final Color color;
@@ -269,11 +300,14 @@ class _AbcRow extends StatelessWidget {
             color: color.withAlpha(25),
             borderRadius: BorderRadius.circular(4),
           ),
-          child: Text(label,
-              style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w700,
-                  color: color)),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
@@ -296,13 +330,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
-

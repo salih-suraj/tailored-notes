@@ -10,8 +10,8 @@ class InspectorFeedbackRepository {
   InspectorFeedbackRepository({
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
-  })  : _supabaseClient = supabaseClient,
-        _currentUser = currentUser;
+  }) : _supabaseClient = supabaseClient,
+       _currentUser = currentUser;
 
   final SupabaseClient? _supabaseClient;
   final AppUser? _currentUser;
@@ -99,6 +99,9 @@ class InspectorFeedbackRepository {
     if (resolutionNotes != null) {
       update['resolution_notes'] = resolutionNotes;
     }
-    await _requireClient().from('inspector_feedback').update(update).eq('id', id);
+    await _requireClient()
+        .from('inspector_feedback')
+        .update(update)
+        .eq('id', id);
   }
 }

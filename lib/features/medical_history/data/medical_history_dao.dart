@@ -14,37 +14,33 @@ class MedicalHistoryDao extends DatabaseAccessor<AppDatabase>
   // ── Medical profile ────────────────────────────────────────────────────
 
   /// Stream of the profile for [childId] — emits null if none exists yet.
-  Stream<MedicalProfileRow?> watchProfile(String childId) =>
-      (select(medicalProfileTable)
-            ..where((t) => t.childId.equals(childId)))
-          .watchSingleOrNull();
+  Stream<MedicalProfileRow?> watchProfile(String childId) => (select(
+    medicalProfileTable,
+  )..where((t) => t.childId.equals(childId))).watchSingleOrNull();
 
-  Future<MedicalProfileRow?> findProfile(String childId) =>
-      (select(medicalProfileTable)
-            ..where((t) => t.childId.equals(childId)))
-          .getSingleOrNull();
+  Future<MedicalProfileRow?> findProfile(String childId) => (select(
+    medicalProfileTable,
+  )..where((t) => t.childId.equals(childId))).getSingleOrNull();
 
   Future<void> upsertProfile(MedicalProfileTableCompanion profile) =>
       into(medicalProfileTable).insertOnConflictUpdate(profile);
 
   /// One-shot list of profiles pending upload, for the sync sweep.
-  Future<List<MedicalProfileRow>> getUnsyncedProfiles() =>
-      (select(medicalProfileTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<MedicalProfileRow>> getUnsyncedProfiles() => (select(
+    medicalProfileTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 
   // ── Healthcare contacts ────────────────────────────────────────────────
 
   Stream<List<HealthcareContactRow>> watchContacts(String childId) =>
       (select(healthcareContactsTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([(t) => OrderingTerm.asc(t.contactType)]))
           .watch();
 
-  Future<HealthcareContactRow?> findContactById(String id) =>
-      (select(healthcareContactsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<HealthcareContactRow?> findContactById(String id) => (select(
+    healthcareContactsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertContact(HealthcareContactsTableCompanion contact) =>
       into(healthcareContactsTable).insertOnConflictUpdate(contact);
@@ -59,7 +55,7 @@ class MedicalHistoryDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of contacts pending upload, for the sync sweep.
-  Future<List<HealthcareContactRow>> getUnsyncedContacts() =>
-      (select(healthcareContactsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<HealthcareContactRow>> getUnsyncedContacts() => (select(
+    healthcareContactsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
@@ -24,7 +24,8 @@ class ActivitiesScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -37,8 +38,10 @@ class ActivitiesScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.activitiesTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
       ),
@@ -46,8 +49,7 @@ class ActivitiesScreen extends ConsumerWidget {
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
           message: e.toString(),
-          onRetry: () =>
-              ref.invalidate(activityEntriesProvider(childId)),
+          onRetry: () => ref.invalidate(activityEntriesProvider(childId)),
         ),
         data: (entries) {
           if (entries.isEmpty) {
@@ -55,14 +57,21 @@ class ActivitiesScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.star_outline,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.star_outline,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text(AppStrings.activitiesNoEntries,
-                      style: AppTextStyles.body(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.activitiesNoEntries,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(AppStrings.activitiesNoEntriesHint,
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.activitiesNoEntriesHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
             );
@@ -70,23 +79,20 @@ class ActivitiesScreen extends ConsumerWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(AppSpacing.lg),
             itemCount: entries.length,
-            separatorBuilder: (_, _) =>
-                const SizedBox(height: AppSpacing.sm),
+            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
             itemBuilder: (_, i) => _ActivityCard(
               entry: entries[i],
               onEdit: () => context.push(
                 '/children/$childId/activities/${entries[i].id}/edit',
                 extra: entries[i],
               ),
-              onDelete: () =>
-                  _confirmDelete(context, ref, entries[i].id),
+              onDelete: () => _confirmDelete(context, ref, entries[i].id),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            context.push('/children/$childId/activities/new'),
+        onPressed: () => context.push('/children/$childId/activities/new'),
         backgroundColor: AppColors.amber,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
@@ -96,7 +102,10 @@ class ActivitiesScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -109,7 +118,9 @@ class ActivitiesScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -141,8 +152,13 @@ class _ActivityCard extends StatelessWidget {
 
     final parts = entry.date.split('-');
     final dateStr = parts.length == 3
-        ? DateFormat('EEE d MMM').format(DateTime(
-            int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2])))
+        ? DateFormat('EEE d MMM').format(
+            DateTime(
+              int.parse(parts[0]),
+              int.parse(parts[1]),
+              int.parse(parts[2]),
+            ),
+          )
         : entry.date;
 
     return Material(
@@ -158,33 +174,31 @@ class _ActivityCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _Badge(
-                      label: entry.category.displayName,
-                      color: catColor),
+                  _Badge(label: entry.category.displayName, color: catColor),
                   const SizedBox(width: AppSpacing.sm),
-                  Text(dateStr,
-                      style: AppTextStyles.small(
-                          colors.onSurfaceVariant)),
+                  Text(
+                    dateStr,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                   if (entry.durationMinutes != null) ...[
                     const SizedBox(width: AppSpacing.sm),
                     Text(
                       '${entry.durationMinutes}min',
-                      style: AppTextStyles.small(
-                          colors.onSurfaceVariant),
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
                     ),
                   ],
                   const Spacer(),
                   if (entry.rewardEarned)
                     const Padding(
-                      padding:
-                          EdgeInsets.only(right: AppSpacing.xs),
-                      child: Icon(Icons.star,
-                          color: AppColors.amber, size: 16),
+                      padding: EdgeInsets.only(right: AppSpacing.xs),
+                      child: Icon(Icons.star, color: AppColors.amber, size: 16),
                     ),
                   PopupMenuButton<String>(
-                    icon: Icon(Icons.more_vert,
-                        size: 18,
-                        color: colors.onSurfaceVariant),
+                    icon: Icon(
+                      Icons.more_vert,
+                      size: 18,
+                      color: colors.onSurfaceVariant,
+                    ),
                     tooltip: AppStrings.recordOptions,
                     onSelected: (v) {
                       if (v == 'edit') onEdit();
@@ -192,50 +206,54 @@ class _ActivityCard extends StatelessWidget {
                     },
                     itemBuilder: (_) => [
                       const PopupMenuItem(
-                          value: 'edit',
-                          child: Text(AppStrings.edit)),
+                        value: 'edit',
+                        child: Text(AppStrings.edit),
+                      ),
                       const PopupMenuItem(
-                          value: 'delete',
-                          child: Text(AppStrings.delete)),
+                        value: 'delete',
+                        child: Text(AppStrings.delete),
+                      ),
                     ],
                   ),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
-              Text(entry.title,
-                  style: AppTextStyles.h3(colors.onSurface)),
+              Text(entry.title, style: AppTextStyles.h3(colors.onSurface)),
               if (entry.description != null &&
                   entry.description!.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.xs),
-                Text(entry.description!,
-                    style: AppTextStyles.small(
-                        colors.onSurfaceVariant),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
+                Text(
+                  entry.description!,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ],
               if (entry.achievement != null &&
                   entry.achievement!.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.sm),
                 Container(
                   padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.sm,
-                      vertical: AppSpacing.xs),
+                    horizontal: AppSpacing.sm,
+                    vertical: AppSpacing.xs,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.green.withAlpha(20),
-                    borderRadius:
-                        BorderRadius.circular(AppRadius.button),
+                    borderRadius: BorderRadius.circular(AppRadius.button),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.emoji_events_outlined,
-                          size: 14, color: AppColors.green),
+                      const Icon(
+                        Icons.emoji_events_outlined,
+                        size: 14,
+                        color: AppColors.green,
+                      ),
                       const SizedBox(width: AppSpacing.xs),
                       Flexible(
                         child: Text(
                           entry.achievement!,
-                          style: AppTextStyles.small(
-                              AppColors.green),
+                          style: AppTextStyles.small(AppColors.green),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -245,9 +263,10 @@ class _ActivityCard extends StatelessWidget {
                 ),
               ],
               const SizedBox(height: AppSpacing.xs),
-              Text(entry.recordedByName,
-                  style: AppTextStyles.small(
-                      colors.onSurfaceVariant)),
+              Text(
+                entry.recordedByName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
             ],
           ),
         ),
@@ -256,14 +275,14 @@ class _ActivityCard extends StatelessWidget {
   }
 
   Color _categoryColor(ActivityCategory c) => switch (c) {
-        ActivityCategory.physical => AppColors.green,
-        ActivityCategory.creative => AppColors.blue,
-        ActivityCategory.educational => AppColors.teal400,
-        ActivityCategory.social => AppColors.amber,
-        ActivityCategory.community => AppColors.roleSupportWorker,
-        ActivityCategory.lifeSkills => AppColors.purple,
-        ActivityCategory.other => AppColors.slate400,
-      };
+    ActivityCategory.physical => AppColors.green,
+    ActivityCategory.creative => AppColors.blue,
+    ActivityCategory.educational => AppColors.teal400,
+    ActivityCategory.social => AppColors.amber,
+    ActivityCategory.community => AppColors.roleSupportWorker,
+    ActivityCategory.lifeSkills => AppColors.purple,
+    ActivityCategory.other => AppColors.slate400,
+  };
 }
 
 class _Badge extends StatelessWidget {
@@ -273,13 +292,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
-

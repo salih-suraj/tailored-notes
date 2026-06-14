@@ -19,10 +19,10 @@ class DailyNotesRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final DailyNotesDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -93,21 +93,21 @@ class DailyNotesRepository implements SyncTarget {
   // ── Private helpers ────────────────────────────────────────────────────────
 
   DailyNote _toDomain(DailyNoteRow row) => DailyNote(
-        id: row.id,
-        homeId: row.homeId,
-        childId: row.childId,
-        authorId: row.authorId,
-        authorName: row.authorName,
-        shift: ShiftType.values.byName(row.shift),
-        content: row.content,
-        occurredAt: row.occurredAt,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        deletedAt: row.deletedAt,
-        updatedById: row.updatedById,
-        updatedByName: row.updatedByName,
-        isSynced: row.isSynced,
-      );
+    id: row.id,
+    homeId: row.homeId,
+    childId: row.childId,
+    authorId: row.authorId,
+    authorName: row.authorName,
+    shift: ShiftType.values.byName(row.shift),
+    content: row.content,
+    occurredAt: row.occurredAt,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    deletedAt: row.deletedAt,
+    updatedById: row.updatedById,
+    updatedByName: row.updatedByName,
+    isSynced: row.isSynced,
+  );
 
   DailyNotesTableCompanion _toCompanion(DailyNote note) =>
       DailyNotesTableCompanion(

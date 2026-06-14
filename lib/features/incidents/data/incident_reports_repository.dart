@@ -16,10 +16,10 @@ class IncidentReportsRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final IncidentReportsDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -78,31 +78,31 @@ class IncidentReportsRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   IncidentReport _toDomain(IncidentReportRow r) => IncidentReport(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        incidentType: IncidentType.values.byName(r.incidentType),
-        severity: IncidentSeverity.values.byName(r.severity),
-        title: r.title,
-        occurredAt: r.occurredAt,
-        location: r.location,
-        description: r.description,
-        immediateAction: r.immediateAction,
-        injuryDetails: r.injuryDetails,
-        policeNotified: r.policeNotified,
-        parentNotified: r.parentNotified,
-        managerNotified: r.managerNotified,
-        followUpRequired: r.followUpRequired,
-        followUpDetails: r.followUpDetails,
-        reportedById: r.reportedById,
-        reportedByName: r.reportedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    incidentType: IncidentType.values.byName(r.incidentType),
+    severity: IncidentSeverity.values.byName(r.severity),
+    title: r.title,
+    occurredAt: r.occurredAt,
+    location: r.location,
+    description: r.description,
+    immediateAction: r.immediateAction,
+    injuryDetails: r.injuryDetails,
+    policeNotified: r.policeNotified,
+    parentNotified: r.parentNotified,
+    managerNotified: r.managerNotified,
+    followUpRequired: r.followUpRequired,
+    followUpDetails: r.followUpDetails,
+    reportedById: r.reportedById,
+    reportedByName: r.reportedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   IncidentReportsTableCompanion _toCompanion(IncidentReport r) =>
       IncidentReportsTableCompanion(
@@ -162,8 +162,12 @@ class IncidentReportsRepository implements SyncTarget {
       });
       await _dao.upsert(_toCompanion(r.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for incident report ${r.id}',
-          error: err, stackTrace: st, name: 'IncidentReportsRepository');
+      log(
+        'Sync failed for incident report ${r.id}',
+        error: err,
+        stackTrace: st,
+        name: 'IncidentReportsRepository',
+      );
     }
   }
 }

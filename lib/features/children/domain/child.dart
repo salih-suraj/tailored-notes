@@ -25,8 +25,7 @@ class Child with _$Child {
     @Default(false) bool isSynced,
   }) = _Child;
 
-  factory Child.fromJson(Map<String, dynamic> json) =>
-      _$ChildFromJson(json);
+  factory Child.fromJson(Map<String, dynamic> json) => _$ChildFromJson(json);
 
   /// Up to two initials for the avatar.
   String get initials {

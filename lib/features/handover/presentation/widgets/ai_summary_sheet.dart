@@ -65,28 +65,31 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
 
     for (final child in children) {
       final notes = (ref.read(dailyNotesProvider(child.id)).valueOrNull ?? [])
-          .where((n) =>
-              n.shift == widget.shift &&
-              _isSameDay(n.occurredAt.toUk(), widget.now))
+          .where(
+            (n) =>
+                n.shift == widget.shift &&
+                _isSameDay(n.occurredAt.toUk(), widget.now),
+          )
           .toList();
       final behaviour =
           (ref.read(behaviourIncidentsProvider(child.id)).valueOrNull ?? [])
-              .where((b) =>
-                  b.shift == widget.shift &&
-                  _isSameDay(b.occurredAt.toUk(), widget.now))
+              .where(
+                (b) =>
+                    b.shift == widget.shift &&
+                    _isSameDay(b.occurredAt.toUk(), widget.now),
+              )
               .toList();
       final incidents =
           (ref.read(incidentReportsProvider(child.id)).valueOrNull ?? [])
               .where((i) => _isSameDay(i.occurredAt.toUk(), widget.now))
               .toList();
-      final admins = (ref.read(todayAdminsProvider(child.id)).valueOrNull ??
-              [])
+      final admins = (ref.read(todayAdminsProvider(child.id)).valueOrNull ?? [])
           .where((a) => a.shift == widget.shift)
           .toList();
-      final baths = (ref.read(bathTempTodayProvider(child.id)).valueOrNull ??
-              [])
-          .where((b) => b.shift == widget.shift)
-          .toList();
+      final baths =
+          (ref.read(bathTempTodayProvider(child.id)).valueOrNull ?? [])
+              .where((b) => b.shift == widget.shift)
+              .toList();
 
       if (notes.isEmpty &&
           behaviour.isEmpty &&
@@ -160,8 +163,7 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
     });
 
     final payload = _buildPayload();
-    final hasAnyRecords =
-        payload.any((c) => c['noRecordsThisShift'] != true);
+    final hasAnyRecords = payload.any((c) => c['noRecordsThisShift'] != true);
     if (!hasAnyRecords) {
       setState(() {
         _loading = false;
@@ -198,9 +200,9 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
     if (summary == null) return;
     await Clipboard.setData(ClipboardData(text: summary));
     if (!mounted) return;
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text(AppStrings.handoverAiCopied)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text(AppStrings.handoverAiCopied)));
   }
 
   @override
@@ -251,40 +253,42 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
                           const SizedBox(height: AppSpacing.lg),
                           Text(
                             AppStrings.handoverAiGenerating,
-                            style:
-                                AppTextStyles.body(colors.onSurfaceVariant),
+                            style: AppTextStyles.body(colors.onSurfaceVariant),
                           ),
                         ],
                       ),
                     )
                   : _error != null
-                      ? Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.error_outline,
-                                  size: 40, color: colors.error),
-                              const SizedBox(height: AppSpacing.md),
-                              Text(
-                                _error!,
-                                style: AppTextStyles.body(colors.onSurface),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: AppSpacing.lg),
-                              FilledButton(
-                                onPressed: _generate,
-                                child: const Text(AppStrings.retry),
-                              ),
-                            ],
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.error_outline,
+                            size: 40,
+                            color: colors.error,
                           ),
-                        )
-                      : SingleChildScrollView(
-                          controller: scrollController,
-                          child: SelectableText(
-                            _summary ?? '',
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            _error!,
                             style: AppTextStyles.body(colors.onSurface),
+                            textAlign: TextAlign.center,
                           ),
-                        ),
+                          const SizedBox(height: AppSpacing.lg),
+                          FilledButton(
+                            onPressed: _generate,
+                            child: const Text(AppStrings.retry),
+                          ),
+                        ],
+                      ),
+                    )
+                  : SingleChildScrollView(
+                      controller: scrollController,
+                      child: SelectableText(
+                        _summary ?? '',
+                        style: AppTextStyles.body(colors.onSurface),
+                      ),
+                    ),
             ),
           ],
         ),

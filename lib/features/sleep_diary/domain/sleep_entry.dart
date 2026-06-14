@@ -6,15 +6,18 @@ part 'sleep_entry.freezed.dart';
 part 'sleep_entry.g.dart';
 
 enum SleepQuality {
-  @JsonValue('poor') poor,
-  @JsonValue('fair') fair,
-  @JsonValue('good') good;
+  @JsonValue('poor')
+  poor,
+  @JsonValue('fair')
+  fair,
+  @JsonValue('good')
+  good;
 
   String get displayName => switch (this) {
-        SleepQuality.poor => 'Poor',
-        SleepQuality.fair => 'Fair',
-        SleepQuality.good => 'Good',
-      };
+    SleepQuality.poor => 'Poor',
+    SleepQuality.fair => 'Fair',
+    SleepQuality.good => 'Good',
+  };
 }
 
 /// A single sleep record for a child covering one shift period.

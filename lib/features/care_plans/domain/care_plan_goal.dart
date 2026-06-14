@@ -4,37 +4,48 @@ part 'care_plan_goal.freezed.dart';
 part 'care_plan_goal.g.dart';
 
 enum GoalCategory {
-  @JsonValue('communication') communication,
-  @JsonValue('independence') independence,
-  @JsonValue('behaviour') behaviour,
-  @JsonValue('health') health,
-  @JsonValue('education') education,
-  @JsonValue('social') social,
-  @JsonValue('other') other;
+  @JsonValue('communication')
+  communication,
+  @JsonValue('independence')
+  independence,
+  @JsonValue('behaviour')
+  behaviour,
+  @JsonValue('health')
+  health,
+  @JsonValue('education')
+  education,
+  @JsonValue('social')
+  social,
+  @JsonValue('other')
+  other;
 
   String get displayName => switch (this) {
-        GoalCategory.communication => 'Communication',
-        GoalCategory.independence => 'Independence & Daily Living',
-        GoalCategory.behaviour => 'Behaviour & Emotional Wellbeing',
-        GoalCategory.health => 'Health & Medical',
-        GoalCategory.education => 'Education & Learning',
-        GoalCategory.social => 'Social & Relationships',
-        GoalCategory.other => 'Other',
-      };
+    GoalCategory.communication => 'Communication',
+    GoalCategory.independence => 'Independence & Daily Living',
+    GoalCategory.behaviour => 'Behaviour & Emotional Wellbeing',
+    GoalCategory.health => 'Health & Medical',
+    GoalCategory.education => 'Education & Learning',
+    GoalCategory.social => 'Social & Relationships',
+    GoalCategory.other => 'Other',
+  };
 }
 
 enum GoalStatus {
-  @JsonValue('not_started') notStarted,
-  @JsonValue('in_progress') inProgress,
-  @JsonValue('achieved') achieved,
-  @JsonValue('discontinued') discontinued;
+  @JsonValue('not_started')
+  notStarted,
+  @JsonValue('in_progress')
+  inProgress,
+  @JsonValue('achieved')
+  achieved,
+  @JsonValue('discontinued')
+  discontinued;
 
   String get displayName => switch (this) {
-        GoalStatus.notStarted => 'Not Started',
-        GoalStatus.inProgress => 'In Progress',
-        GoalStatus.achieved => 'Achieved',
-        GoalStatus.discontinued => 'Discontinued',
-      };
+    GoalStatus.notStarted => 'Not Started',
+    GoalStatus.inProgress => 'In Progress',
+    GoalStatus.achieved => 'Achieved',
+    GoalStatus.discontinued => 'Discontinued',
+  };
 }
 
 /// A single goal within a care plan.

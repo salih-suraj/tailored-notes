@@ -6,15 +6,18 @@ part 'step_progress.freezed.dart';
 part 'step_progress.g.dart';
 
 enum ProgressOutcome {
-  @JsonValue('attempted') attempted,
-  @JsonValue('progressed') progressed,
-  @JsonValue('achieved') achieved;
+  @JsonValue('attempted')
+  attempted,
+  @JsonValue('progressed')
+  progressed,
+  @JsonValue('achieved')
+  achieved;
 
   String get displayName => switch (this) {
-        ProgressOutcome.attempted => 'Attempted',
-        ProgressOutcome.progressed => 'Progressed',
-        ProgressOutcome.achieved => 'Achieved',
-      };
+    ProgressOutcome.attempted => 'Attempted',
+    ProgressOutcome.progressed => 'Progressed',
+    ProgressOutcome.achieved => 'Achieved',
+  };
 }
 
 /// A single progress note recorded by staff against a Smart Step.

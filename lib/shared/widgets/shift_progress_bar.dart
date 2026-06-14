@@ -71,10 +71,10 @@ class ShiftProgressBar extends ConsumerWidget {
   }
 
   Color _colorFor(CompletionStatus status) => switch (status) {
-        CompletionStatus.none => AppColors.red,
-        CompletionStatus.partial => AppColors.amber,
-        CompletionStatus.complete => AppColors.green,
-      };
+    CompletionStatus.none => AppColors.red,
+    CompletionStatus.partial => AppColors.amber,
+    CompletionStatus.complete => AppColors.green,
+  };
 }
 
 class _SectionChip extends StatelessWidget {

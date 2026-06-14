@@ -19,10 +19,10 @@ class SmartStepsRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final SmartStepsDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -31,8 +31,9 @@ class SmartStepsRepository implements SyncTarget {
 
   // ── Steps ─────────────────────────────────────────────────────────────
 
-  Stream<List<SmartStep>> watchByChild(String childId) =>
-      _dao.watchByChild(childId).map((rows) => rows.map(_stepToDomain).toList());
+  Stream<List<SmartStep>> watchByChild(String childId) => _dao
+      .watchByChild(childId)
+      .map((rows) => rows.map(_stepToDomain).toList());
 
   Future<void> saveStep(SmartStep step) async {
     final existing = await _dao.findStepById(step.id);
@@ -86,9 +87,9 @@ class SmartStepsRepository implements SyncTarget {
 
   // ── Progress notes ────────────────────────────────────────────────────
 
-  Stream<List<StepProgress>> watchProgress(String stepId) =>
-      _dao.watchProgressByStep(stepId)
-          .map((rows) => rows.map(_progressToDomain).toList());
+  Stream<List<StepProgress>> watchProgress(String stepId) => _dao
+      .watchProgressByStep(stepId)
+      .map((rows) => rows.map(_progressToDomain).toList());
 
   Future<Map<String, int>> getProgressCounts(String childId) =>
       _dao.progressCountByChild(childId);
@@ -118,14 +119,16 @@ class SmartStepsRepository implements SyncTarget {
         final now = DateTime.now().toUtc();
         final todayStr = _todayStr();
         final before = _stepToDomain(step);
-        await _dao.upsertStep(SmartStepsTableCompanion(
-          id: Value(step.id),
-          status: const Value('achieved'),
-          achievedDate: Value(todayStr),
-          updatedById: Value(_currentUser?.id),
-          updatedAt: Value(now),
-          isSynced: const Value(false),
-        ));
+        await _dao.upsertStep(
+          SmartStepsTableCompanion(
+            id: Value(step.id),
+            status: const Value('achieved'),
+            achievedDate: Value(todayStr),
+            updatedById: Value(_currentUser?.id),
+            updatedAt: Value(now),
+            isSynced: const Value(false),
+          ),
+        );
         final after = before.copyWith(
           status: StepStatus.achieved,
           achievedDate: todayStr,
@@ -150,48 +153,76 @@ class SmartStepsRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   SmartStep _stepToDomain(SmartStepRow r) => SmartStep(
-        id: r.id, homeId: r.homeId, childId: r.childId,
-        category: StepCategory.values.byName(r.category),
-        title: r.title, description: r.description,
-        targetDate: r.targetDate,
-        status: StepStatus.values.byName(r.status),
-        achievedDate: r.achievedDate,
-        createdById: r.createdById, updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt, updatedAt: r.updatedAt, isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    category: StepCategory.values.byName(r.category),
+    title: r.title,
+    description: r.description,
+    targetDate: r.targetDate,
+    status: StepStatus.values.byName(r.status),
+    achievedDate: r.achievedDate,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   SmartStepsTableCompanion _stepToCompanion(SmartStep s) =>
       SmartStepsTableCompanion(
-        id: Value(s.id), homeId: Value(s.homeId), childId: Value(s.childId),
-        category: Value(s.category.name), title: Value(s.title),
-        description: Value(s.description), targetDate: Value(s.targetDate),
-        status: Value(s.status.name), achievedDate: Value(s.achievedDate),
-        createdById: Value(s.createdById), updatedById: Value(s.updatedById),
+        id: Value(s.id),
+        homeId: Value(s.homeId),
+        childId: Value(s.childId),
+        category: Value(s.category.name),
+        title: Value(s.title),
+        description: Value(s.description),
+        targetDate: Value(s.targetDate),
+        status: Value(s.status.name),
+        achievedDate: Value(s.achievedDate),
+        createdById: Value(s.createdById),
+        updatedById: Value(s.updatedById),
         deletedAt: Value(s.deletedAt?.toUtc()),
         createdAt: Value(s.createdAt.toUtc()),
-        updatedAt: Value(s.updatedAt.toUtc()), isSynced: Value(s.isSynced),
+        updatedAt: Value(s.updatedAt.toUtc()),
+        isSynced: Value(s.isSynced),
       );
 
   StepProgress _progressToDomain(StepProgressRow r) => StepProgress(
-        id: r.id, homeId: r.homeId, childId: r.childId, stepId: r.stepId,
-        date: r.date,
-        shift: ShiftType.values.byName(r.shift),
-        outcome: ProgressOutcome.values.byName(r.outcome),
-        note: r.note,
-        recordedById: r.recordedById, recordedByName: r.recordedByName,
-        createdById: r.createdById, updatedById: r.updatedById,
-        createdAt: r.createdAt, updatedAt: r.updatedAt, isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    stepId: r.stepId,
+    date: r.date,
+    shift: ShiftType.values.byName(r.shift),
+    outcome: ProgressOutcome.values.byName(r.outcome),
+    note: r.note,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   StepProgressTableCompanion _progressToCompanion(StepProgress p) =>
       StepProgressTableCompanion(
-        id: Value(p.id), homeId: Value(p.homeId), childId: Value(p.childId),
-        stepId: Value(p.stepId), date: Value(p.date), shift: Value(p.shift.name),
-        outcome: Value(p.outcome.name), note: Value(p.note),
-        recordedById: Value(p.recordedById), recordedByName: Value(p.recordedByName),
-        createdById: Value(p.createdById), updatedById: Value(p.updatedById),
-        createdAt: Value(p.createdAt.toUtc()), updatedAt: Value(p.updatedAt.toUtc()),
+        id: Value(p.id),
+        homeId: Value(p.homeId),
+        childId: Value(p.childId),
+        stepId: Value(p.stepId),
+        date: Value(p.date),
+        shift: Value(p.shift.name),
+        outcome: Value(p.outcome.name),
+        note: Value(p.note),
+        recordedById: Value(p.recordedById),
+        recordedByName: Value(p.recordedByName),
+        createdById: Value(p.createdById),
+        updatedById: Value(p.updatedById),
+        createdAt: Value(p.createdAt.toUtc()),
+        updatedAt: Value(p.updatedAt.toUtc()),
         isSynced: Value(p.isSynced),
       );
 
@@ -200,18 +231,28 @@ class SmartStepsRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('smart_steps').upsert({
-        'id': s.id, 'home_id': s.homeId, 'child_id': s.childId,
-        'category': s.category.name, 'title': s.title,
-        'description': s.description, 'target_date': s.targetDate,
-        'status': s.status.name, 'achieved_date': s.achievedDate,
-        'created_by_id': s.createdById, 'updated_by_id': s.updatedById,
+        'id': s.id,
+        'home_id': s.homeId,
+        'child_id': s.childId,
+        'category': s.category.name,
+        'title': s.title,
+        'description': s.description,
+        'target_date': s.targetDate,
+        'status': s.status.name,
+        'achieved_date': s.achievedDate,
+        'created_by_id': s.createdById,
+        'updated_by_id': s.updatedById,
         'updated_at': s.updatedAt.toUtc().toIso8601String(),
         'deleted_at': s.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertStep(_stepToCompanion(s.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for smart step ${s.id}',
-          error: err, stackTrace: st, name: 'SmartStepsRepository');
+      log(
+        'Sync failed for smart step ${s.id}',
+        error: err,
+        stackTrace: st,
+        name: 'SmartStepsRepository',
+      );
     }
   }
 
@@ -220,17 +261,30 @@ class SmartStepsRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('step_progress').upsert({
-        'id': p.id, 'home_id': p.homeId, 'child_id': p.childId,
-        'step_id': p.stepId, 'date': p.date, 'shift': p.shift.name,
-        'outcome': p.outcome.name, 'note': p.note,
-        'recorded_by_id': p.recordedById, 'recorded_by_name': p.recordedByName,
-        'created_by_id': p.createdById, 'updated_by_id': p.updatedById,
+        'id': p.id,
+        'home_id': p.homeId,
+        'child_id': p.childId,
+        'step_id': p.stepId,
+        'date': p.date,
+        'shift': p.shift.name,
+        'outcome': p.outcome.name,
+        'note': p.note,
+        'recorded_by_id': p.recordedById,
+        'recorded_by_name': p.recordedByName,
+        'created_by_id': p.createdById,
+        'updated_by_id': p.updatedById,
         'updated_at': p.updatedAt.toUtc().toIso8601String(),
       });
-      await _dao.upsertProgress(_progressToCompanion(p.copyWith(isSynced: true)));
+      await _dao.upsertProgress(
+        _progressToCompanion(p.copyWith(isSynced: true)),
+      );
     } catch (err, st) {
-      log('Sync failed for step progress ${p.id}',
-          error: err, stackTrace: st, name: 'SmartStepsRepository');
+      log(
+        'Sync failed for step progress ${p.id}',
+        error: err,
+        stackTrace: st,
+        name: 'SmartStepsRepository',
+      );
     }
   }
 }

@@ -24,7 +24,8 @@ class CarePlansScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -90,8 +91,7 @@ class CarePlansScreen extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            context.push('/children/$childId/care-plans/new'),
+        onPressed: () => context.push('/children/$childId/care-plans/new'),
         backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
@@ -144,8 +144,7 @@ class _CarePlanCard extends StatelessWidget {
                           const SizedBox(width: 3),
                           Text(
                             _formatDate(plan.reviewDate!),
-                            style:
-                                AppTextStyles.small(colors.onSurfaceVariant),
+                            style: AppTextStyles.small(colors.onSurfaceVariant),
                           ),
                         ],
                       ],
@@ -171,11 +170,11 @@ class _CarePlanCard extends StatelessWidget {
   }
 
   Color _statusColor(CarePlanStatus s) => switch (s) {
-        CarePlanStatus.active => AppColors.green,
-        CarePlanStatus.draft => AppColors.amber,
-        CarePlanStatus.underReview => AppColors.blue,
-        CarePlanStatus.archived => AppColors.slate400,
-      };
+    CarePlanStatus.active => AppColors.green,
+    CarePlanStatus.draft => AppColors.amber,
+    CarePlanStatus.underReview => AppColors.blue,
+    CarePlanStatus.archived => AppColors.slate400,
+  };
 
   String _formatDate(String d) {
     final parts = d.split('-');
@@ -196,14 +195,11 @@ class _StatusBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: 2,
-        ),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }

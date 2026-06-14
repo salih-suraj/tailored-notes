@@ -4,45 +4,60 @@ part 'prescribed_med.freezed.dart';
 part 'prescribed_med.g.dart';
 
 enum MedRoute {
-  @JsonValue('oral') oral,
-  @JsonValue('topical') topical,
-  @JsonValue('inhaler') inhaler,
-  @JsonValue('subcutaneous') subcutaneous,
-  @JsonValue('transdermal') transdermal,
-  @JsonValue('rectal') rectal,
-  @JsonValue('other') other;
+  @JsonValue('oral')
+  oral,
+  @JsonValue('topical')
+  topical,
+  @JsonValue('inhaler')
+  inhaler,
+  @JsonValue('subcutaneous')
+  subcutaneous,
+  @JsonValue('transdermal')
+  transdermal,
+  @JsonValue('rectal')
+  rectal,
+  @JsonValue('other')
+  other;
 
   String get displayName => switch (this) {
-        MedRoute.oral => 'Oral',
-        MedRoute.topical => 'Topical',
-        MedRoute.inhaler => 'Inhaler / Nebuliser',
-        MedRoute.subcutaneous => 'Subcutaneous',
-        MedRoute.transdermal => 'Transdermal (patch)',
-        MedRoute.rectal => 'Rectal',
-        MedRoute.other => 'Other',
-      };
+    MedRoute.oral => 'Oral',
+    MedRoute.topical => 'Topical',
+    MedRoute.inhaler => 'Inhaler / Nebuliser',
+    MedRoute.subcutaneous => 'Subcutaneous',
+    MedRoute.transdermal => 'Transdermal (patch)',
+    MedRoute.rectal => 'Rectal',
+    MedRoute.other => 'Other',
+  };
 }
 
 enum MedFrequency {
-  @JsonValue('morning') morning,
-  @JsonValue('evening') evening,
-  @JsonValue('night') night,
-  @JsonValue('morning_evening') morningEvening,
-  @JsonValue('three_times_daily') threeTimesDaily,
-  @JsonValue('four_times_daily') fourTimesDaily,
-  @JsonValue('prn') prn,
-  @JsonValue('other') other;
+  @JsonValue('morning')
+  morning,
+  @JsonValue('evening')
+  evening,
+  @JsonValue('night')
+  night,
+  @JsonValue('morning_evening')
+  morningEvening,
+  @JsonValue('three_times_daily')
+  threeTimesDaily,
+  @JsonValue('four_times_daily')
+  fourTimesDaily,
+  @JsonValue('prn')
+  prn,
+  @JsonValue('other')
+  other;
 
   String get displayName => switch (this) {
-        MedFrequency.morning => 'Morning',
-        MedFrequency.evening => 'Evening',
-        MedFrequency.night => 'Night',
-        MedFrequency.morningEvening => 'Morning & Evening',
-        MedFrequency.threeTimesDaily => 'Three Times Daily',
-        MedFrequency.fourTimesDaily => 'Four Times Daily',
-        MedFrequency.prn => 'PRN (As Required)',
-        MedFrequency.other => 'Other',
-      };
+    MedFrequency.morning => 'Morning',
+    MedFrequency.evening => 'Evening',
+    MedFrequency.night => 'Night',
+    MedFrequency.morningEvening => 'Morning & Evening',
+    MedFrequency.threeTimesDaily => 'Three Times Daily',
+    MedFrequency.fourTimesDaily => 'Four Times Daily',
+    MedFrequency.prn => 'PRN (As Required)',
+    MedFrequency.other => 'Other',
+  };
 
   bool get isPrn => this == MedFrequency.prn;
 }

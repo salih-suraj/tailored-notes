@@ -28,9 +28,12 @@ void main() {
       }
     });
 
-    test("'children' is NOT a module (it is the auto-appended grant scope)", () {
-      expect(InspectorModule.fromScopeKey('children'), isNull);
-    });
+    test(
+      "'children' is NOT a module (it is the auto-appended grant scope)",
+      () {
+        expect(InspectorModule.fromScopeKey('children'), isNull);
+      },
+    );
 
     test('unknown keys return null', () {
       expect(InspectorModule.fromScopeKey('sleep_diary'), isNull);

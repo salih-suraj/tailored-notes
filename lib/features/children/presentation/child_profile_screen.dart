@@ -67,7 +67,9 @@ class ChildProfileScreen extends ConsumerWidget {
                       child: child.photoUrl == null
                           ? Text(
                               child.initials,
-                              style: AppTextStyles.h1(colors.onPrimaryContainer),
+                              style: AppTextStyles.h1(
+                                colors.onPrimaryContainer,
+                              ),
                             )
                           : null,
                     ),
@@ -128,8 +130,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleMedication,
                 description: AppStrings.moduleMedicationDesc,
                 color: AppColors.blue,
-                onTap: () =>
-                    context.push('/children/$childId/medication'),
+                onTap: () => context.push('/children/$childId/medication'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -137,8 +138,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleMedicalHistory,
                 description: AppStrings.moduleMedicalHistoryDesc,
                 color: AppColors.red,
-                onTap: () =>
-                    context.push('/children/$childId/medical-history'),
+                onTap: () => context.push('/children/$childId/medical-history'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -146,8 +146,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleBehaviour,
                 description: AppStrings.moduleBehaviourDesc,
                 color: AppColors.amber,
-                onTap: () =>
-                    context.push('/children/$childId/behaviour'),
+                onTap: () => context.push('/children/$childId/behaviour'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -155,8 +154,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleSleepDiary,
                 description: AppStrings.moduleSleepDiaryDesc,
                 color: AppColors.roleSupportWorker,
-                onTap: () =>
-                    context.push('/children/$childId/sleep-diary'),
+                onTap: () => context.push('/children/$childId/sleep-diary'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -164,8 +162,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleFoodDiary,
                 description: AppStrings.moduleFoodDiaryDesc,
                 color: AppColors.green,
-                onTap: () =>
-                    context.push('/children/$childId/food-diary'),
+                onTap: () => context.push('/children/$childId/food-diary'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -173,8 +170,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleActivities,
                 description: AppStrings.moduleActivitiesDesc,
                 color: AppColors.amber,
-                onTap: () =>
-                    context.push('/children/$childId/activities'),
+                onTap: () => context.push('/children/$childId/activities'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -182,8 +178,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleSmartSteps,
                 description: AppStrings.moduleSmartStepsDesc,
                 color: AppColors.teal400,
-                onTap: () =>
-                    context.push('/children/$childId/smart-steps'),
+                onTap: () => context.push('/children/$childId/smart-steps'),
               ),
               const SizedBox(height: AppSpacing.sm),
               _ModuleCard(
@@ -191,8 +186,7 @@ class ChildProfileScreen extends ConsumerWidget {
                 label: AppStrings.moduleIncidents,
                 description: AppStrings.moduleIncidentsDesc,
                 color: AppColors.red,
-                onTap: () =>
-                    context.push('/children/$childId/incidents'),
+                onTap: () => context.push('/children/$childId/incidents'),
               ),
             ],
           ),
@@ -209,8 +203,7 @@ class _IncompleteDocsAlert extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final incomplete =
-        completion.sections.where((s) => !s.complete).toList();
+    final incomplete = completion.sections.where((s) => !s.complete).toList();
     final color = completion.status == CompletionStatus.none
         ? AppColors.red
         : AppColors.amber;
@@ -231,10 +224,11 @@ class _IncompleteDocsAlert extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppStrings.alertNotRecordedThisShift,
-                    style: AppTextStyles.label(color)),
-                Text(sectionNames,
-                    style: AppTextStyles.small(color)),
+                Text(
+                  AppStrings.alertNotRecordedThisShift,
+                  style: AppTextStyles.label(color),
+                ),
+                Text(sectionNames, style: AppTextStyles.small(color)),
               ],
             ),
           ),

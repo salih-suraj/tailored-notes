@@ -105,8 +105,11 @@ class _GrantsTab extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.fact_check_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.fact_check_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
                     AppStrings.managerNoGrants,
@@ -149,7 +152,8 @@ class _GrantTile extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error),
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.managerRevokeGrant),
           ),
         ],
@@ -167,7 +171,7 @@ class _GrantTile extends ConsumerWidget {
     final isActive = grant.isActive;
     final modules = [
       for (final scopeKey in grant.scope)
-        if (InspectorModule.fromScopeKey(scopeKey) case final m?) m,
+        ?InspectorModule.fromScopeKey(scopeKey),
     ];
 
     return Material(
@@ -180,7 +184,10 @@ class _GrantTile extends ConsumerWidget {
           children: [
             Row(
               children: [
-                Icon(Icons.person_outline, color: AppColors.roleInspector),
+                const Icon(
+                  Icons.person_outline,
+                  color: AppColors.roleInspector,
+                ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
                   child: Text(
@@ -257,8 +264,11 @@ class _FeedbackTab extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.rate_review_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.rate_review_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
                   Text(
                     AppStrings.managerNoFeedback,
@@ -274,7 +284,8 @@ class _FeedbackTab extends ConsumerWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           itemCount: items.length,
           separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-          itemBuilder: (_, i) => _FeedbackTile(feedback: items[i], homeId: homeId),
+          itemBuilder: (_, i) =>
+              _FeedbackTile(feedback: items[i], homeId: homeId),
         );
       },
     );
@@ -288,16 +299,16 @@ class _FeedbackTile extends ConsumerWidget {
   final String homeId;
 
   Color _severityColor(FeedbackSeverity severity) => switch (severity) {
-        FeedbackSeverity.compliment => AppColors.green,
-        FeedbackSeverity.recommendation => AppColors.blue,
-        FeedbackSeverity.requirement => AppColors.red,
-      };
+    FeedbackSeverity.compliment => AppColors.green,
+    FeedbackSeverity.recommendation => AppColors.blue,
+    FeedbackSeverity.requirement => AppColors.red,
+  };
 
   Color _statusColor(FeedbackStatus status) => switch (status) {
-        FeedbackStatus.open => AppColors.amber,
-        FeedbackStatus.acknowledged => AppColors.blue,
-        FeedbackStatus.resolved => AppColors.green,
-      };
+    FeedbackStatus.open => AppColors.amber,
+    FeedbackStatus.acknowledged => AppColors.blue,
+    FeedbackStatus.resolved => AppColors.green,
+  };
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -320,15 +331,19 @@ class _FeedbackTile extends ConsumerWidget {
               Row(
                 children: [
                   _Badge(
-                      label: feedback.severity.displayName,
-                      color: _severityColor(feedback.severity)),
+                    label: feedback.severity.displayName,
+                    color: _severityColor(feedback.severity),
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   _Badge(
-                      label: feedback.status.displayName,
-                      color: _statusColor(feedback.status)),
+                    label: feedback.status.displayName,
+                    color: _statusColor(feedback.status),
+                  ),
                   const Spacer(),
-                  Text(_dateFormat.format(feedback.createdAt.toUk()),
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    _dateFormat.format(feedback.createdAt.toUk()),
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -337,10 +352,15 @@ class _FeedbackTile extends ConsumerWidget {
                 style: AppTextStyles.label(colors.onSurfaceVariant),
               ),
               if (feedback.childName != null)
-                Text(feedback.childName!,
-                    style: AppTextStyles.small(colors.onSurfaceVariant)),
+                Text(
+                  feedback.childName!,
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                ),
               const SizedBox(height: AppSpacing.xs),
-              Text(feedback.content, style: AppTextStyles.body(colors.onSurface)),
+              Text(
+                feedback.content,
+                style: AppTextStyles.body(colors.onSurface),
+              ),
               const SizedBox(height: AppSpacing.xs),
               Text(
                 '${AppStrings.managerFeedbackFrom} ${feedback.inspectorEmail}',
@@ -355,8 +375,10 @@ class _FeedbackTile extends ConsumerWidget {
                     color: colors.surface,
                     borderRadius: BorderRadius.circular(AppRadius.input),
                   ),
-                  child: Text(feedback.resolutionNotes!,
-                      style: AppTextStyles.small(colors.onSurface)),
+                  child: Text(
+                    feedback.resolutionNotes!,
+                    style: AppTextStyles.small(colors.onSurface),
+                  ),
                 ),
               ],
             ],
@@ -399,7 +421,9 @@ class _FeedbackStatusSheetState extends ConsumerState<_FeedbackStatusSheet> {
   Future<void> _update(FeedbackStatus status) async {
     setState(() => _submitting = true);
     try {
-      await ref.read(inspectorFeedbackRepositoryProvider).updateStatus(
+      await ref
+          .read(inspectorFeedbackRepositoryProvider)
+          .updateStatus(
             widget.feedback.id,
             status,
             resolutionNotes: _notesController.text.trim().isEmpty
@@ -414,9 +438,9 @@ class _FeedbackStatusSheetState extends ConsumerState<_FeedbackStatusSheet> {
       Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(e.toString())));
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -436,10 +460,15 @@ class _FeedbackStatusSheetState extends ConsumerState<_FeedbackStatusSheet> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(widget.feedback.content, style: AppTextStyles.body(colors.onSurface)),
+          Text(
+            widget.feedback.content,
+            style: AppTextStyles.body(colors.onSurface),
+          ),
           const SizedBox(height: AppSpacing.lg),
-          Text(AppStrings.managerFeedbackResolutionLabel,
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.managerFeedbackResolutionLabel,
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.xs),
           TextField(
             controller: _notesController,
@@ -462,8 +491,9 @@ class _FeedbackStatusSheetState extends ConsumerState<_FeedbackStatusSheet> {
                 const SizedBox(width: AppSpacing.sm),
               Expanded(
                 child: FilledButton(
-                  onPressed:
-                      _submitting ? null : () => _update(FeedbackStatus.resolved),
+                  onPressed: _submitting
+                      ? null
+                      : () => _update(FeedbackStatus.resolved),
                   child: _submitting
                       ? const SizedBox(
                           width: 20,
@@ -489,12 +519,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }

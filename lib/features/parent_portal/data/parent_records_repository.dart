@@ -13,7 +13,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 /// InspectorRecordsRepository.
 class ParentRecordsRepository {
   ParentRecordsRepository({required SupabaseClient? supabaseClient})
-      : _supabaseClient = supabaseClient;
+    : _supabaseClient = supabaseClient;
 
   final SupabaseClient? _supabaseClient;
 

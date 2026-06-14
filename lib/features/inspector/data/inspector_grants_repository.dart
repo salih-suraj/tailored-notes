@@ -19,8 +19,8 @@ class InspectorGrantsRepository {
   InspectorGrantsRepository({
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
-  })  : _supabaseClient = supabaseClient,
-        _currentUser = currentUser;
+  }) : _supabaseClient = supabaseClient,
+       _currentUser = currentUser;
 
   final SupabaseClient? _supabaseClient;
   final AppUser? _currentUser;
@@ -62,8 +62,10 @@ class InspectorGrantsRepository {
     final grants = (rows as List).cast<Map<String, dynamic>>();
     if (grants.isEmpty) return [];
 
-    final inspectorIds =
-        grants.map((g) => g['inspector_user_id'] as String).toSet().toList();
+    final inspectorIds = grants
+        .map((g) => g['inspector_user_id'] as String)
+        .toSet()
+        .toList();
     final emailById = <String, String>{};
     try {
       final profiles = await client
@@ -78,10 +80,12 @@ class InspectorGrantsRepository {
     }
 
     return grants
-        .map((g) => InspectorGrant.fromJson({
-              ...g,
-              'users': {'email': emailById[g['inspector_user_id']]},
-            }))
+        .map(
+          (g) => InspectorGrant.fromJson({
+            ...g,
+            'users': {'email': emailById[g['inspector_user_id']]},
+          }),
+        )
         .toList();
   }
 
@@ -97,10 +101,12 @@ class InspectorGrantsRepository {
         .limit(10);
     return (rows as List)
         .cast<Map<String, dynamic>>()
-        .map((r) => InspectorAccount(
-              id: r['id'] as String,
-              email: r['email'] as String,
-            ))
+        .map(
+          (r) => InspectorAccount(
+            id: r['id'] as String,
+            email: r['email'] as String,
+          ),
+        )
         .toList();
   }
 

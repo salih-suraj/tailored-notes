@@ -17,10 +17,10 @@ class VisitorLogRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final VisitorLogDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -110,24 +110,24 @@ class VisitorLogRepository implements SyncTarget {
   // ── Helpers ──────────────────────────────────────────────────────────────
 
   VisitorLogEntry _toDomain(VisitorLogRow r) => VisitorLogEntry(
-        id: r.id,
-        homeId: r.homeId,
-        visitorName: r.visitorName,
-        relation: r.relation,
-        purpose: r.purpose,
-        authorisedBy: r.authorisedBy,
-        arrivedAt: r.arrivedAt,
-        departedAt: r.departedAt,
-        notes: r.notes,
-        recordedById: r.recordedById,
-        recordedByName: r.recordedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    visitorName: r.visitorName,
+    relation: r.relation,
+    purpose: r.purpose,
+    authorisedBy: r.authorisedBy,
+    arrivedAt: r.arrivedAt,
+    departedAt: r.departedAt,
+    notes: r.notes,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   VisitorLogTableCompanion _toCompanion(VisitorLogEntry e) =>
       VisitorLogTableCompanion(

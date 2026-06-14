@@ -17,10 +17,10 @@ class BehaviourIncidentsRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final BehaviourIncidentsDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -79,31 +79,31 @@ class BehaviourIncidentsRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   BehaviourIncident _toDomain(BehaviourIncidentRow r) => BehaviourIncident(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        shift: ShiftType.values.byName(r.shift),
-        occurredAt: r.occurredAt,
-        severity: BehaviourSeverity.values.byName(r.severity),
-        antecedent: r.antecedent,
-        behaviour: r.behaviour,
-        consequence: r.consequence,
-        durationMinutes: r.durationMinutes,
-        location: r.location,
-        physicalIntervention: r.physicalIntervention,
-        interventionDetails: r.interventionDetails,
-        injuryOccurred: r.injuryOccurred,
-        injuryDetails: r.injuryDetails,
-        notes: r.notes,
-        recordedById: r.recordedById,
-        recordedByName: r.recordedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    shift: ShiftType.values.byName(r.shift),
+    occurredAt: r.occurredAt,
+    severity: BehaviourSeverity.values.byName(r.severity),
+    antecedent: r.antecedent,
+    behaviour: r.behaviour,
+    consequence: r.consequence,
+    durationMinutes: r.durationMinutes,
+    location: r.location,
+    physicalIntervention: r.physicalIntervention,
+    interventionDetails: r.interventionDetails,
+    injuryOccurred: r.injuryOccurred,
+    injuryDetails: r.injuryDetails,
+    notes: r.notes,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   BehaviourIncidentsTableCompanion _toCompanion(BehaviourIncident i) =>
       BehaviourIncidentsTableCompanion(
@@ -163,8 +163,12 @@ class BehaviourIncidentsRepository implements SyncTarget {
       });
       await _dao.upsert(_toCompanion(i.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for behaviour incident ${i.id}',
-          error: err, stackTrace: st, name: 'BehaviourIncidentsRepository');
+      log(
+        'Sync failed for behaviour incident ${i.id}',
+        error: err,
+        stackTrace: st,
+        name: 'BehaviourIncidentsRepository',
+      );
     }
   }
 }

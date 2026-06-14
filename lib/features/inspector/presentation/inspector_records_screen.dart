@@ -63,11 +63,15 @@ class _InspectorRecordsScreenState
   void _logViewOnce(String homeId, InspectorModule module) {
     if (_viewLogged) return;
     _viewLogged = true;
-    Future.microtask(() => ref.read(inspectorAuditServiceProvider).recordView(
-          homeId: homeId,
-          entityTable: module.scopeKey,
-          recordId: widget.childId,
-        ));
+    Future.microtask(
+      () => ref
+          .read(inspectorAuditServiceProvider)
+          .recordView(
+            homeId: homeId,
+            entityTable: module.scopeKey,
+            recordId: widget.childId,
+          ),
+    );
   }
 
   @override
@@ -99,8 +103,9 @@ class _InspectorRecordsScreenState
             loading: () => const LoadingSkeleton(),
             error: (e, _) => ErrorView(
               message: e.toString(),
-              onRetry: () => ref.invalidate(inspectorRecordsProvider(
-                  grant.homeId, module, widget.childId)),
+              onRetry: () => ref.invalidate(
+                inspectorRecordsProvider(grant.homeId, module, widget.childId),
+              ),
             ),
             data: (records) {
               _logViewOnce(grant.homeId, module);
@@ -111,12 +116,17 @@ class _InspectorRecordsScreenState
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(module.icon,
-                            size: 56, color: colors.onSurfaceVariant),
+                        Icon(
+                          module.icon,
+                          size: 56,
+                          color: colors.onSurfaceVariant,
+                        ),
                         const SizedBox(height: AppSpacing.lg),
-                        Text(AppStrings.inspectorNoRecords,
-                            style: AppTextStyles.body(colors.onSurfaceVariant),
-                            textAlign: TextAlign.center),
+                        Text(
+                          AppStrings.inspectorNoRecords,
+                          style: AppTextStyles.body(colors.onSurfaceVariant),
+                          textAlign: TextAlign.center,
+                        ),
                       ],
                     ),
                   ),
@@ -189,16 +199,22 @@ class _DailyNoteCard extends StatelessWidget {
           children: [
             _Badge(label: _label(record['shift']), color: AppColors.teal400),
             const Spacer(),
-            Text(_fmtDateTime(record['occurred_at']),
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(
+              _fmtDateTime(record['occurred_at']),
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        Text(record['content'] as String? ?? '',
-            style: AppTextStyles.body(colors.onSurface)),
+        Text(
+          record['content'] as String? ?? '',
+          style: AppTextStyles.body(colors.onSurface),
+        ),
         const SizedBox(height: AppSpacing.xs),
-        Text('${AppStrings.managerFeedbackFrom} ${record['author_name'] ?? ''}',
-            style: AppTextStyles.small(colors.onSurfaceVariant)),
+        Text(
+          '${AppStrings.managerFeedbackFrom} ${record['author_name'] ?? ''}',
+          style: AppTextStyles.small(colors.onSurfaceVariant),
+        ),
       ],
     );
   }
@@ -212,18 +228,18 @@ class _CarePlanCard extends StatelessWidget {
   final Map<String, dynamic> record;
 
   Color _statusColor(String? status) => switch (status) {
-        'active' => AppColors.green,
-        'under_review' => AppColors.amber,
-        'archived' => AppColors.slate400,
-        _ => AppColors.blue, // draft
-      };
+    'active' => AppColors.green,
+    'under_review' => AppColors.amber,
+    'archived' => AppColors.slate400,
+    _ => AppColors.blue, // draft
+  };
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final goals =
         (record['care_plan_goals'] as List?)?.cast<Map<String, dynamic>>() ??
-            const [];
+        const [];
     final reviewDate = record['review_date'];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -231,8 +247,10 @@ class _CarePlanCard extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Text(record['title'] as String? ?? '',
-                  style: AppTextStyles.h3(colors.onSurface)),
+              child: Text(
+                record['title'] as String? ?? '',
+                style: AppTextStyles.h3(colors.onSurface),
+              ),
             ),
             _Badge(
               label: _label(record['status']),
@@ -242,18 +260,24 @@ class _CarePlanCard extends StatelessWidget {
         ),
         if (reviewDate != null) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text('Review date: ${_fmtDate(reviewDate)}',
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text(
+            'Review date: ${_fmtDate(reviewDate)}',
+            style: AppTextStyles.small(colors.onSurfaceVariant),
+          ),
         ],
         if ((record['notes'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
-          Text(record['notes'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            record['notes'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         if (goals.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.md),
-          Text(AppStrings.inspectorGoalsLabel,
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.inspectorGoalsLabel,
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.xs),
           for (final goal in goals) _GoalTile(goal: goal),
         ],
@@ -268,11 +292,11 @@ class _GoalTile extends StatelessWidget {
   final Map<String, dynamic> goal;
 
   Color _statusColor(String? status) => switch (status) {
-        'achieved' => AppColors.green,
-        'in_progress' => AppColors.blue,
-        'discontinued' => AppColors.slate400,
-        _ => AppColors.amber, // not_started
-      };
+    'achieved' => AppColors.green,
+    'in_progress' => AppColors.blue,
+    'discontinued' => AppColors.slate400,
+    _ => AppColors.amber, // not_started
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -291,8 +315,10 @@ class _GoalTile extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text(goal['title'] as String? ?? '',
-                      style: AppTextStyles.h3(colors.onSurface)),
+                  child: Text(
+                    goal['title'] as String? ?? '',
+                    style: AppTextStyles.h3(colors.onSurface),
+                  ),
                 ),
                 _Badge(
                   label: _label(goal['status']),
@@ -304,13 +330,17 @@ class _GoalTile extends StatelessWidget {
             _MiniChip(label: _label(goal['category']), color: AppColors.purple),
             if ((goal['strategy'] as String? ?? '').isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
-              Text(goal['strategy'] as String,
-                  style: AppTextStyles.small(colors.onSurface)),
+              Text(
+                goal['strategy'] as String,
+                style: AppTextStyles.small(colors.onSurface),
+              ),
             ],
             if ((goal['progress_notes'] as String? ?? '').isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
-              Text(goal['progress_notes'] as String,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                goal['progress_notes'] as String,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
             ],
           ],
         ),
@@ -327,22 +357,22 @@ class _IncidentCard extends StatelessWidget {
   final Map<String, dynamic> record;
 
   Color _typeColor(String? type) => switch (type) {
-        'behaviour' => AppColors.amber,
-        'medical' => AppColors.blue,
-        'accident' => AppColors.orange,
-        'property_damage' => AppColors.slate400,
-        'missing_person' => AppColors.red,
-        'safeguarding' => AppColors.roleInspector,
-        _ => AppColors.slate400,
-      };
+    'behaviour' => AppColors.amber,
+    'medical' => AppColors.blue,
+    'accident' => AppColors.orange,
+    'property_damage' => AppColors.slate400,
+    'missing_person' => AppColors.red,
+    'safeguarding' => AppColors.roleInspector,
+    _ => AppColors.slate400,
+  };
 
   Color _severityColor(String? severity) => switch (severity) {
-        'low' => AppColors.green,
-        'medium' => AppColors.amber,
-        'high' => AppColors.orange,
-        'critical' => AppColors.red,
-        _ => AppColors.slate400,
-      };
+    'low' => AppColors.green,
+    'medium' => AppColors.amber,
+    'high' => AppColors.orange,
+    'critical' => AppColors.red,
+    _ => AppColors.slate400,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -353,32 +383,46 @@ class _IncidentCard extends StatelessWidget {
         Row(
           children: [
             _Badge(
-                label: _label(record['incident_type']),
-                color: _typeColor(record['incident_type'] as String?)),
+              label: _label(record['incident_type']),
+              color: _typeColor(record['incident_type'] as String?),
+            ),
             const SizedBox(width: AppSpacing.sm),
             _Badge(
-                label: _label(record['severity']),
-                color: _severityColor(record['severity'] as String?)),
+              label: _label(record['severity']),
+              color: _severityColor(record['severity'] as String?),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
-        Text(record['title'] as String? ?? '',
-            style: AppTextStyles.h3(colors.onSurface)),
+        Text(
+          record['title'] as String? ?? '',
+          style: AppTextStyles.h3(colors.onSurface),
+        ),
         const SizedBox(height: AppSpacing.xs),
-        Text(_fmtDateTime(record['occurred_at']),
-            style: AppTextStyles.small(colors.onSurfaceVariant)),
+        Text(
+          _fmtDateTime(record['occurred_at']),
+          style: AppTextStyles.small(colors.onSurfaceVariant),
+        ),
         if ((record['location'] as String? ?? '').isNotEmpty)
-          Text('Location: ${record['location']}',
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text(
+            'Location: ${record['location']}',
+            style: AppTextStyles.small(colors.onSurfaceVariant),
+          ),
         const SizedBox(height: AppSpacing.sm),
-        Text(record['description'] as String? ?? '',
-            style: AppTextStyles.body(colors.onSurface)),
+        Text(
+          record['description'] as String? ?? '',
+          style: AppTextStyles.body(colors.onSurface),
+        ),
         if ((record['immediate_action'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
-          Text('Immediate action:',
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
-          Text(record['immediate_action'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Immediate action:',
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
+          Text(
+            record['immediate_action'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         const SizedBox(height: AppSpacing.sm),
         Wrap(
@@ -386,13 +430,22 @@ class _IncidentCard extends StatelessWidget {
           runSpacing: AppSpacing.xs,
           children: [
             if (record['police_notified'] == true)
-              _MiniChip(label: 'Police notified', color: AppColors.blue),
+              const _MiniChip(label: 'Police notified', color: AppColors.blue),
             if (record['parent_notified'] == true)
-              _MiniChip(label: 'Parent notified', color: AppColors.teal400),
+              const _MiniChip(
+                label: 'Parent notified',
+                color: AppColors.teal400,
+              ),
             if (record['manager_notified'] == true)
-              _MiniChip(label: 'Manager notified', color: AppColors.slate400),
+              const _MiniChip(
+                label: 'Manager notified',
+                color: AppColors.slate400,
+              ),
             if (record['follow_up_required'] == true)
-              _MiniChip(label: 'Follow-up required', color: AppColors.amber),
+              const _MiniChip(
+                label: 'Follow-up required',
+                color: AppColors.amber,
+              ),
           ],
         ),
         const SizedBox(height: AppSpacing.xs),
@@ -413,11 +466,11 @@ class _BehaviourCard extends StatelessWidget {
   final Map<String, dynamic> record;
 
   Color _severityColor(String? severity) => switch (severity) {
-        'mild' => AppColors.green,
-        'moderate' => AppColors.amber,
-        'severe' => AppColors.red,
-        _ => AppColors.slate400,
-      };
+    'mild' => AppColors.green,
+    'moderate' => AppColors.amber,
+    'severe' => AppColors.red,
+    _ => AppColors.slate400,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -429,45 +482,66 @@ class _BehaviourCard extends StatelessWidget {
         Row(
           children: [
             _Badge(
-                label: _label(record['severity']),
-                color: _severityColor(record['severity'] as String?)),
+              label: _label(record['severity']),
+              color: _severityColor(record['severity'] as String?),
+            ),
             const SizedBox(width: AppSpacing.sm),
             _Badge(label: _label(record['shift']), color: AppColors.teal400),
             const Spacer(),
-            Text(_fmtDateTime(record['occurred_at']),
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(
+              _fmtDateTime(record['occurred_at']),
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
         const SizedBox(height: AppSpacing.sm),
         Text('Antecedent', style: AppTextStyles.label(colors.onSurfaceVariant)),
-        Text(record['antecedent'] as String? ?? '',
-            style: AppTextStyles.small(colors.onSurface)),
+        Text(
+          record['antecedent'] as String? ?? '',
+          style: AppTextStyles.small(colors.onSurface),
+        ),
         const SizedBox(height: AppSpacing.xs),
         Text('Behaviour', style: AppTextStyles.label(colors.onSurfaceVariant)),
-        Text(record['behaviour'] as String? ?? '',
-            style: AppTextStyles.small(colors.onSurface)),
+        Text(
+          record['behaviour'] as String? ?? '',
+          style: AppTextStyles.small(colors.onSurface),
+        ),
         const SizedBox(height: AppSpacing.xs),
-        Text('Consequence', style: AppTextStyles.label(colors.onSurfaceVariant)),
-        Text(record['consequence'] as String? ?? '',
-            style: AppTextStyles.small(colors.onSurface)),
+        Text(
+          'Consequence',
+          style: AppTextStyles.label(colors.onSurfaceVariant),
+        ),
+        Text(
+          record['consequence'] as String? ?? '',
+          style: AppTextStyles.small(colors.onSurface),
+        ),
         const SizedBox(height: AppSpacing.sm),
         Wrap(
           spacing: AppSpacing.xs,
           runSpacing: AppSpacing.xs,
           children: [
-            if (duration != null) _MiniChip(label: '$duration min', color: AppColors.slate400),
+            if (duration != null)
+              _MiniChip(label: '$duration min', color: AppColors.slate400),
             if ((record['location'] as String? ?? '').isNotEmpty)
-              _MiniChip(label: record['location'] as String, color: AppColors.slate400),
+              _MiniChip(
+                label: record['location'] as String,
+                color: AppColors.slate400,
+              ),
             if (record['physical_intervention'] == true)
-              _MiniChip(label: 'Physical intervention', color: AppColors.orange),
+              const _MiniChip(
+                label: 'Physical intervention',
+                color: AppColors.orange,
+              ),
             if (record['injury_occurred'] == true)
-              _MiniChip(label: 'Injury occurred', color: AppColors.red),
+              const _MiniChip(label: 'Injury occurred', color: AppColors.red),
           ],
         ),
         if ((record['notes'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.sm),
-          Text(record['notes'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            record['notes'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         const SizedBox(height: AppSpacing.xs),
         Text(
@@ -487,11 +561,11 @@ class _MedicationCard extends StatelessWidget {
   final Map<String, dynamic> record;
 
   Color _outcomeColor(String? outcome) => switch (outcome) {
-        'administered' => AppColors.green,
-        'refused' => AppColors.red,
-        'held' => AppColors.amber,
-        _ => AppColors.slate400,
-      };
+    'administered' => AppColors.green,
+    'refused' => AppColors.red,
+    'held' => AppColors.amber,
+    _ => AppColors.slate400,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -503,26 +577,37 @@ class _MedicationCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(record['medication_name'] as String? ?? '',
-                    style: AppTextStyles.h3(colors.onSurface)),
+                child: Text(
+                  record['medication_name'] as String? ?? '',
+                  style: AppTextStyles.h3(colors.onSurface),
+                ),
               ),
               _Badge(
-                  label: _label(record['outcome']),
-                  color: _outcomeColor(record['outcome'] as String?)),
+                label: _label(record['outcome']),
+                color: _outcomeColor(record['outcome'] as String?),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.xs),
-          Text('Dose: ${record['dose'] ?? ''}',
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Dose: ${record['dose'] ?? ''}',
+            style: AppTextStyles.small(colors.onSurface),
+          ),
           const SizedBox(height: AppSpacing.xs),
-          Text(_fmtDateTime(record['administered_at']),
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text(
+            _fmtDateTime(record['administered_at']),
+            style: AppTextStyles.small(colors.onSurfaceVariant),
+          ),
           if ((record['reason'] as String? ?? '').isNotEmpty)
-            Text('Reason: ${record['reason']}',
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              'Reason: ${record['reason']}',
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           if ((record['notes'] as String? ?? '').isNotEmpty)
-            Text(record['notes'] as String,
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              record['notes'] as String,
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           const SizedBox(height: AppSpacing.xs),
           Text(
             '${AppStrings.managerFeedbackFrom} ${record['administered_by_name'] ?? ''}',
@@ -540,8 +625,10 @@ class _MedicationCard extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: Text(record['medication_name'] as String? ?? '',
-                  style: AppTextStyles.h3(colors.onSurface)),
+              child: Text(
+                record['medication_name'] as String? ?? '',
+                style: AppTextStyles.h3(colors.onSurface),
+              ),
             ),
             _Badge(
               label: isActive ? 'Active' : 'Inactive',
@@ -556,8 +643,10 @@ class _MedicationCard extends StatelessWidget {
         ),
         if ((record['instructions'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text(record['instructions'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            record['instructions'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         const SizedBox(height: AppSpacing.xs),
         Text(
@@ -566,8 +655,10 @@ class _MedicationCard extends StatelessWidget {
           style: AppTextStyles.small(colors.onSurfaceVariant),
         ),
         if ((record['prescribed_by'] as String? ?? '').isNotEmpty)
-          Text('Prescribed by ${record['prescribed_by']}',
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text(
+            'Prescribed by ${record['prescribed_by']}',
+            style: AppTextStyles.small(colors.onSurfaceVariant),
+          ),
       ],
     );
   }
@@ -590,31 +681,44 @@ class _MedicalHistoryCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(record['name'] as String? ?? '',
-                    style: AppTextStyles.h3(colors.onSurface)),
+                child: Text(
+                  record['name'] as String? ?? '',
+                  style: AppTextStyles.h3(colors.onSurface),
+                ),
               ),
               _Badge(
-                  label: _label(record['contact_type']),
-                  color: AppColors.blue),
+                label: _label(record['contact_type']),
+                color: AppColors.blue,
+              ),
             ],
           ),
           if ((record['role'] as String? ?? '').isNotEmpty)
-            Text(record['role'] as String,
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(
+              record['role'] as String,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           const SizedBox(height: AppSpacing.xs),
           if ((record['phone'] as String? ?? '').isNotEmpty)
-            Text('Phone: ${record['phone']}',
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              'Phone: ${record['phone']}',
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           if ((record['email'] as String? ?? '').isNotEmpty)
-            Text('Email: ${record['email']}',
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              'Email: ${record['email']}',
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           if ((record['address'] as String? ?? '').isNotEmpty)
-            Text(record['address'] as String,
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              record['address'] as String,
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           if ((record['notes'] as String? ?? '').isNotEmpty) ...[
             const SizedBox(height: AppSpacing.xs),
-            Text(record['notes'] as String,
-                style: AppTextStyles.small(colors.onSurface)),
+            Text(
+              record['notes'] as String,
+              style: AppTextStyles.small(colors.onSurface),
+            ),
           ],
         ],
       );
@@ -627,33 +731,54 @@ class _MedicalHistoryCard extends StatelessWidget {
         Text('Medical Profile', style: AppTextStyles.h3(colors.onSurface)),
         const SizedBox(height: AppSpacing.sm),
         if ((record['nhs_number'] as String? ?? '').isNotEmpty)
-          Text('NHS number: ${record['nhs_number']}',
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'NHS number: ${record['nhs_number']}',
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         if ((record['blood_type'] as String? ?? '').isNotEmpty)
-          Text('Blood type: ${record['blood_type']}',
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Blood type: ${record['blood_type']}',
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         if ((record['allergies'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text('Allergies', style: AppTextStyles.label(colors.onSurfaceVariant)),
-          Text(record['allergies'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Allergies',
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
+          Text(
+            record['allergies'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         if ((record['conditions'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text('Conditions', style: AppTextStyles.label(colors.onSurfaceVariant)),
-          Text(record['conditions'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Conditions',
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
+          Text(
+            record['conditions'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         if ((record['immunisation_notes'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text('Immunisations', style: AppTextStyles.label(colors.onSurfaceVariant)),
-          Text(record['immunisation_notes'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            'Immunisations',
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
+          Text(
+            record['immunisation_notes'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
         if ((record['notes'] as String? ?? '').isNotEmpty) ...[
           const SizedBox(height: AppSpacing.xs),
-          Text(record['notes'] as String,
-              style: AppTextStyles.small(colors.onSurface)),
+          Text(
+            record['notes'] as String,
+            style: AppTextStyles.small(colors.onSurface),
+          ),
         ],
       ],
     );
@@ -670,14 +795,13 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
 
 class _MiniChip extends StatelessWidget {
@@ -688,15 +812,15 @@ class _MiniChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding:
-            const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: color.withAlpha(60)),
-        ),
-        child: Text(label,
-            style: TextStyle(
-                fontSize: 10, fontWeight: FontWeight.w600, color: color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      border: Border.all(color: color.withAlpha(60)),
+    ),
+    child: Text(
+      label,
+      style: TextStyle(fontSize: 10, fontWeight: FontWeight.w600, color: color),
+    ),
+  );
 }

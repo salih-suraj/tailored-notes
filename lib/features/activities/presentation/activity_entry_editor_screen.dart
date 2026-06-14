@@ -51,8 +51,9 @@ class _ActivityEntryEditorScreenState
     if (e != null) {
       _titleController.text = e.title;
       _descriptionController.text = e.description ?? '';
-      _durationController.text =
-          e.durationMinutes != null ? '${e.durationMinutes}' : '';
+      _durationController.text = e.durationMinutes != null
+          ? '${e.durationMinutes}'
+          : '';
       _achievementController.text = e.achievement ?? '';
       _shift = e.shift;
       _category = e.category;
@@ -60,7 +61,10 @@ class _ActivityEntryEditorScreenState
       final parts = e.date.split('-');
       if (parts.length == 3) {
         _date = DateTime(
-            int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+          int.parse(parts[0]),
+          int.parse(parts[1]),
+          int.parse(parts[2]),
+        );
       }
     }
   }
@@ -111,15 +115,13 @@ class _ActivityEntryEditorScreenState
         description: _descriptionController.text.trim().isEmpty
             ? null
             : _descriptionController.text.trim(),
-        durationMinutes:
-            int.tryParse(_durationController.text.trim()),
+        durationMinutes: int.tryParse(_durationController.text.trim()),
         rewardEarned: _rewardEarned,
         achievement: _achievementController.text.trim().isEmpty
             ? null
             : _achievementController.text.trim(),
         recordedById: user?.id ?? 'dev-user-001',
-        recordedByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -127,12 +129,17 @@ class _ActivityEntryEditorScreenState
       await ref.read(activityEntriesRepositoryProvider).save(entry);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Activity save failed',
-          error: e, stackTrace: st, name: 'ActivityEditor');
+      log(
+        'Activity save failed',
+        error: e,
+        stackTrace: st,
+        name: 'ActivityEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -144,23 +151,28 @@ class _ActivityEntryEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.activitiesEditEntry
-            : AppStrings.activitiesNewEntry),
+        title: Text(
+          isEditing
+              ? AppStrings.activitiesEditEntry
+              : AppStrings.activitiesNewEntry,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -180,23 +192,24 @@ class _ActivityEntryEditorScreenState
               ),
               const SizedBox(width: AppSpacing.sm),
               Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: AppSpacing.xs),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xs),
                 decoration: BoxDecoration(
                   border: Border.all(color: colors.outline),
-                  borderRadius:
-                      BorderRadius.circular(AppRadius.input),
+                  borderRadius: BorderRadius.circular(AppRadius.input),
                 ),
                 child: DropdownButton<ShiftType>(
                   value: _shift,
                   underline: const SizedBox(),
                   items: ShiftType.values
-                      .map((s) => DropdownMenuItem(
-                            value: s,
-                            child: Text(s.displayName,
-                                style: AppTextStyles.small(
-                                    colors.onSurface)),
-                          ))
+                      .map(
+                        (s) => DropdownMenuItem(
+                          value: s,
+                          child: Text(
+                            s.displayName,
+                            style: AppTextStyles.small(colors.onSurface),
+                          ),
+                        ),
+                      )
                       .toList(),
                   onChanged: (v) {
                     if (v != null) setState(() => _shift = v);
@@ -260,9 +273,7 @@ class _ActivityEntryEditorScreenState
           TextField(
             controller: _durationController,
             keyboardType: TextInputType.number,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly
-            ],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: const InputDecoration(
               hintText: '30',
               suffixText: AppStrings.activitiesDurationUnit,
@@ -274,35 +285,33 @@ class _ActivityEntryEditorScreenState
           // Reward earned toggle
           Container(
             decoration: BoxDecoration(
-              color: _rewardEarned
-                  ? AppColors.amber.withAlpha(15)
-                  : null,
+              color: _rewardEarned ? AppColors.amber.withAlpha(15) : null,
               border: Border.all(
-                  color: _rewardEarned
-                      ? AppColors.amber.withAlpha(80)
-                      : colors.outline),
-              borderRadius:
-                  BorderRadius.circular(AppRadius.card),
+                color: _rewardEarned
+                    ? AppColors.amber.withAlpha(80)
+                    : colors.outline,
+              ),
+              borderRadius: BorderRadius.circular(AppRadius.card),
             ),
             child: SwitchListTile(
               value: _rewardEarned,
-              onChanged: (v) =>
-                  setState(() => _rewardEarned = v),
+              onChanged: (v) => setState(() => _rewardEarned = v),
               title: Text(
                 AppStrings.activitiesRewardEarned,
-                style: AppTextStyles.body(_rewardEarned
-                    ? AppColors.amber
-                    : colors.onSurface),
+                style: AppTextStyles.body(
+                  _rewardEarned ? AppColors.amber : colors.onSurface,
+                ),
               ),
               subtitle: Text(
                 AppStrings.activitiesRewardSubtitle,
-                style: AppTextStyles.small(
-                    colors.onSurfaceVariant),
+                style: AppTextStyles.small(colors.onSurfaceVariant),
               ),
-              secondary: Icon(Icons.star,
-                  color: _rewardEarned
-                      ? AppColors.amber
-                      : colors.onSurfaceVariant),
+              secondary: Icon(
+                Icons.star,
+                color: _rewardEarned
+                    ? AppColors.amber
+                    : colors.onSurfaceVariant,
+              ),
               activeThumbColor: AppColors.amber,
               dense: true,
             ),
@@ -326,8 +335,7 @@ class _ActivityEntryEditorScreenState
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
               backgroundColor: AppColors.amber,
-              minimumSize:
-                  const Size.fromHeight(AppTapTarget.min),
+              minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: const Text(AppStrings.save),
           ),
@@ -337,14 +345,14 @@ class _ActivityEntryEditorScreenState
   }
 
   Color _categoryColor(ActivityCategory c) => switch (c) {
-        ActivityCategory.physical => AppColors.green,
-        ActivityCategory.creative => AppColors.blue,
-        ActivityCategory.educational => AppColors.teal400,
-        ActivityCategory.social => AppColors.amber,
-        ActivityCategory.community => AppColors.roleSupportWorker,
-        ActivityCategory.lifeSkills => AppColors.purple,
-        ActivityCategory.other => AppColors.slate400,
-      };
+    ActivityCategory.physical => AppColors.green,
+    ActivityCategory.creative => AppColors.blue,
+    ActivityCategory.educational => AppColors.teal400,
+    ActivityCategory.social => AppColors.amber,
+    ActivityCategory.community => AppColors.roleSupportWorker,
+    ActivityCategory.lifeSkills => AppColors.purple,
+    ActivityCategory.other => AppColors.slate400,
+  };
 }
 
 class _Label extends StatelessWidget {
@@ -371,25 +379,24 @@ class _PickerTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(AppRadius.input),
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: colors.outline),
         borderRadius: BorderRadius.circular(AppRadius.input),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-          decoration: BoxDecoration(
-            border: Border.all(color: colors.outline),
-            borderRadius:
-                BorderRadius.circular(AppRadius.input),
-          ),
-          child: Row(
-            children: [
-              Icon(icon,
-                  size: 16, color: colors.onSurfaceVariant),
-              const SizedBox(width: AppSpacing.sm),
-              Text(label,
-                  style: AppTextStyles.small(colors.onSurface)),
-            ],
-          ),
-        ),
-      );
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: colors.onSurfaceVariant),
+          const SizedBox(width: AppSpacing.sm),
+          Text(label, style: AppTextStyles.small(colors.onSurface)),
+        ],
+      ),
+    ),
+  );
 }

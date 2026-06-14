@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -23,7 +23,8 @@ class SmartStepsScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -36,8 +37,10 @@ class SmartStepsScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.smartStepsTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
       ),
@@ -53,14 +56,21 @@ class SmartStepsScreen extends ConsumerWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.stairs_outlined,
-                      size: 56, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.stairs_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text(AppStrings.smartStepsNoSteps,
-                      style: AppTextStyles.body(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.smartStepsNoSteps,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                  ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(AppStrings.smartStepsNoStepsHint,
-                      style: AppTextStyles.small(colors.onSurfaceVariant)),
+                  Text(
+                    AppStrings.smartStepsNoStepsHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                  ),
                 ],
               ),
             );
@@ -86,14 +96,16 @@ class SmartStepsScreen extends ConsumerWidget {
                   count: inProgress.length,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                ...inProgress.map((s) => _StepCard(
-                      step: s,
-                      onTap: () => context.push(
-                        '/children/$childId/smart-steps/${s.id}',
-                        extra: s,
-                      ),
-                      onDelete: () => _confirmDelete(context, ref, s.id),
-                    )),
+                ...inProgress.map(
+                  (s) => _StepCard(
+                    step: s,
+                    onTap: () => context.push(
+                      '/children/$childId/smart-steps/${s.id}',
+                      extra: s,
+                    ),
+                    onDelete: () => _confirmDelete(context, ref, s.id),
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.lg),
               ],
               if (notStarted.isNotEmpty) ...[
@@ -103,14 +115,16 @@ class SmartStepsScreen extends ConsumerWidget {
                   count: notStarted.length,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                ...notStarted.map((s) => _StepCard(
-                      step: s,
-                      onTap: () => context.push(
-                        '/children/$childId/smart-steps/${s.id}',
-                        extra: s,
-                      ),
-                      onDelete: () => _confirmDelete(context, ref, s.id),
-                    )),
+                ...notStarted.map(
+                  (s) => _StepCard(
+                    step: s,
+                    onTap: () => context.push(
+                      '/children/$childId/smart-steps/${s.id}',
+                      extra: s,
+                    ),
+                    onDelete: () => _confirmDelete(context, ref, s.id),
+                  ),
+                ),
                 const SizedBox(height: AppSpacing.lg),
               ],
               if (achieved.isNotEmpty) ...[
@@ -120,14 +134,16 @@ class SmartStepsScreen extends ConsumerWidget {
                   count: achieved.length,
                 ),
                 const SizedBox(height: AppSpacing.sm),
-                ...achieved.map((s) => _StepCard(
-                      step: s,
-                      onTap: () => context.push(
-                        '/children/$childId/smart-steps/${s.id}',
-                        extra: s,
-                      ),
-                      onDelete: () => _confirmDelete(context, ref, s.id),
-                    )),
+                ...achieved.map(
+                  (s) => _StepCard(
+                    step: s,
+                    onTap: () => context.push(
+                      '/children/$childId/smart-steps/${s.id}',
+                      extra: s,
+                    ),
+                    onDelete: () => _confirmDelete(context, ref, s.id),
+                  ),
+                ),
               ],
               const SizedBox(height: 80),
             ],
@@ -135,8 +151,7 @@ class SmartStepsScreen extends ConsumerWidget {
         },
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            context.push('/children/$childId/smart-steps/new'),
+        onPressed: () => context.push('/children/$childId/smart-steps/new'),
         backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
@@ -146,7 +161,10 @@ class SmartStepsScreen extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -159,7 +177,9 @@ class SmartStepsScreen extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -183,14 +203,17 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Row(
-        children: [
-          Text(label, style: AppTextStyles.label(color)),
-          const Spacer(),
-          Text('$count',
-              style: AppTextStyles.small(
-                  Theme.of(context).colorScheme.onSurfaceVariant)),
-        ],
-      );
+    children: [
+      Text(label, style: AppTextStyles.label(color)),
+      const Spacer(),
+      Text(
+        '$count',
+        style: AppTextStyles.small(
+          Theme.of(context).colorScheme.onSurfaceVariant,
+        ),
+      ),
+    ],
+  );
 }
 
 class _StepCard extends StatelessWidget {
@@ -238,39 +261,51 @@ class _StepCard extends StatelessWidget {
                       Row(
                         children: [
                           _Badge(
-                              label: step.category.displayName,
-                              color: catColor),
+                            label: step.category.displayName,
+                            color: catColor,
+                          ),
                           if (step.status == StepStatus.achieved) ...[
                             const SizedBox(width: AppSpacing.sm),
-                            const Icon(Icons.emoji_events,
-                                size: 14, color: AppColors.green),
+                            const Icon(
+                              Icons.emoji_events,
+                              size: 14,
+                              color: AppColors.green,
+                            ),
                           ],
                         ],
                       ),
                       const SizedBox(height: AppSpacing.xs),
-                      Text(step.title,
-                          style: AppTextStyles.h3(colors.onSurface)),
+                      Text(
+                        step.title,
+                        style: AppTextStyles.h3(colors.onSurface),
+                      ),
                       if (step.description != null) ...[
                         const SizedBox(height: 2),
-                        Text(step.description!,
-                            style: AppTextStyles.small(
-                                colors.onSurfaceVariant),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis),
+                        Text(
+                          step.description!,
+                          style: AppTextStyles.small(colors.onSurfaceVariant),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     ],
                   ),
                 ),
                 PopupMenuButton<String>(
-                  icon: Icon(Icons.more_vert,
-                      size: 18, color: colors.onSurfaceVariant),
+                  icon: Icon(
+                    Icons.more_vert,
+                    size: 18,
+                    color: colors.onSurfaceVariant,
+                  ),
                   tooltip: AppStrings.recordOptions,
                   onSelected: (v) {
                     if (v == 'delete') onDelete();
                   },
                   itemBuilder: (_) => [
                     const PopupMenuItem(
-                        value: 'delete', child: Text(AppStrings.delete)),
+                      value: 'delete',
+                      child: Text(AppStrings.delete),
+                    ),
                   ],
                 ),
               ],
@@ -282,21 +317,21 @@ class _StepCard extends StatelessWidget {
   }
 
   Color _statusColor(StepStatus s) => switch (s) {
-        StepStatus.notStarted => AppColors.slate400,
-        StepStatus.inProgress => AppColors.amber,
-        StepStatus.achieved => AppColors.green,
-      };
+    StepStatus.notStarted => AppColors.slate400,
+    StepStatus.inProgress => AppColors.amber,
+    StepStatus.achieved => AppColors.green,
+  };
 
   Color _categoryColor(StepCategory c) => switch (c) {
-        StepCategory.communication => AppColors.blue,
-        StepCategory.selfCare => AppColors.teal400,
-        StepCategory.independence => AppColors.green,
-        StepCategory.social => AppColors.amber,
-        StepCategory.emotional => AppColors.purple,
-        StepCategory.learning => AppColors.roleSupportWorker,
-        StepCategory.physical => AppColors.orange,
-        StepCategory.other => AppColors.slate400,
-      };
+    StepCategory.communication => AppColors.blue,
+    StepCategory.selfCare => AppColors.teal400,
+    StepCategory.independence => AppColors.green,
+    StepCategory.social => AppColors.amber,
+    StepCategory.emotional => AppColors.purple,
+    StepCategory.learning => AppColors.roleSupportWorker,
+    StepCategory.physical => AppColors.orange,
+    StepCategory.other => AppColors.slate400,
+  };
 }
 
 class _Badge extends StatelessWidget {
@@ -306,13 +341,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
-

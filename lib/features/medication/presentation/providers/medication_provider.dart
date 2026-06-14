@@ -13,11 +13,11 @@ part 'medication_provider.g.dart';
 
 @riverpod
 MedicationRepository medicationRepository(Ref ref) => MedicationRepository(
-      dao: ref.watch(appDatabaseProvider).medicationDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-      auditWriter: ref.watch(auditLogWriterProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).medicationDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+  auditWriter: ref.watch(auditLogWriterProvider),
+);
 
 /// Active prescribed meds for [childId].
 @riverpod

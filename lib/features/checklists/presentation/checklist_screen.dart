@@ -64,21 +64,24 @@ class ChecklistScreen extends ConsumerWidget {
       ),
       body: switch ((roomAsync, communalAsync)) {
         (AsyncError(:final error), _) => ErrorView(
-            message: error.toString(),
-            onRetry: () {
-              ref.invalidate(roomChecklistProvider(childId));
-              ref.invalidate(communalChecklistProvider);
-            },
-          ),
+          message: error.toString(),
+          onRetry: () {
+            ref.invalidate(roomChecklistProvider(childId));
+            ref.invalidate(communalChecklistProvider);
+          },
+        ),
         (_, AsyncError(:final error)) => ErrorView(
-            message: error.toString(),
-            onRetry: () {
-              ref.invalidate(roomChecklistProvider(childId));
-              ref.invalidate(communalChecklistProvider);
-            },
-          ),
+          message: error.toString(),
+          onRetry: () {
+            ref.invalidate(roomChecklistProvider(childId));
+            ref.invalidate(communalChecklistProvider);
+          },
+        ),
         (AsyncLoading(), _) || (_, AsyncLoading()) => const LoadingSkeleton(),
-        (AsyncData(value: final roomItems), AsyncData(value: final communalItems)) =>
+        (
+          AsyncData(value: final roomItems),
+          AsyncData(value: final communalItems),
+        ) =>
           _ChecklistBody(
             roomItems: roomItems,
             communalItems: communalItems,
@@ -127,8 +130,7 @@ class _ChecklistBody extends StatelessWidget {
     CommunalArea area,
     List<ChecklistItem> allCommunal,
   ) {
-    final areaItems =
-        allCommunal.where((i) => i.areaKey == area.key).toList();
+    final areaItems = allCommunal.where((i) => i.areaKey == area.key).toList();
     if (areaItems.isEmpty) return [];
     final colors = Theme.of(context).colorScheme;
     return [
@@ -149,11 +151,7 @@ class _ChecklistBody extends StatelessWidget {
 }
 
 class _SectionHeader extends StatelessWidget {
-  const _SectionHeader({
-    required this.label,
-    this.doneCount,
-    this.totalCount,
-  });
+  const _SectionHeader({required this.label, this.doneCount, this.totalCount});
 
   final String label;
   final int? doneCount;
@@ -177,7 +175,9 @@ class _SectionHeader extends StatelessWidget {
             Text(
               '$doneCount / $totalCount',
               style: AppTextStyles.small(
-                doneCount == totalCount ? AppColors.green : colors.onSurfaceVariant,
+                doneCount == totalCount
+                    ? AppColors.green
+                    : colors.onSurfaceVariant,
               ),
             ),
           ],

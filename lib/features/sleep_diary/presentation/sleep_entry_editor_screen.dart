@@ -50,8 +50,9 @@ class _SleepEntryEditorScreenState
     final e = widget.existing;
     if (e != null) {
       _notesController.text = e.notes ?? '';
-      _wakingsController.text =
-          e.numberOfWakings > 0 ? '${e.numberOfWakings}' : '';
+      _wakingsController.text = e.numberOfWakings > 0
+          ? '${e.numberOfWakings}'
+          : '';
       _shift = e.shift;
       _quality = e.quality;
       _bedTime = e.bedTime;
@@ -60,7 +61,10 @@ class _SleepEntryEditorScreenState
       final parts = e.date.split('-');
       if (parts.length == 3) {
         _date = DateTime(
-            int.parse(parts[0]), int.parse(parts[1]), int.parse(parts[2]));
+          int.parse(parts[0]),
+          int.parse(parts[1]),
+          int.parse(parts[2]),
+        );
       }
     } else {
       _shift = ShiftType.forTime(DateTime.now());
@@ -91,17 +95,21 @@ class _SleepEntryEditorScreenState
   }
 
   Future<void> _pickTime(
-      String label, String? current, ValueSetter<String?> onPicked) async {
+    String label,
+    String? current,
+    ValueSetter<String?> onPicked,
+  ) async {
     TimeOfDay initial = TimeOfDay.now();
     if (current != null) {
       final parts = current.split(':');
       if (parts.length == 2) {
         initial = TimeOfDay(
-            hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+          hour: int.parse(parts[0]),
+          minute: int.parse(parts[1]),
+        );
       }
     }
-    final picked =
-        await showTimePicker(context: context, initialTime: initial);
+    final picked = await showTimePicker(context: context, initialTime: initial);
     if (picked != null && mounted) onPicked(_timeStr(picked));
   }
 
@@ -120,15 +128,13 @@ class _SleepEntryEditorScreenState
         bedTime: _bedTime,
         settledTime: _settledTime,
         wakeTime: _wakeTime,
-        numberOfWakings:
-            int.tryParse(_wakingsController.text.trim()) ?? 0,
+        numberOfWakings: int.tryParse(_wakingsController.text.trim()) ?? 0,
         quality: _quality,
         notes: _notesController.text.trim().isEmpty
             ? null
             : _notesController.text.trim(),
         recordedById: user?.id ?? 'dev-user-001',
-        recordedByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -136,12 +142,17 @@ class _SleepEntryEditorScreenState
       await ref.read(sleepEntriesRepositoryProvider).save(entry);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Sleep entry save failed',
-          error: e, stackTrace: st, name: 'SleepEntryEditor');
+      log(
+        'Sleep entry save failed',
+        error: e,
+        stackTrace: st,
+        name: 'SleepEntryEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -153,23 +164,26 @@ class _SleepEntryEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.sleepEditEntry
-            : AppStrings.sleepNewEntry),
+        title: Text(
+          isEditing ? AppStrings.sleepEditEntry : AppStrings.sleepNewEntry,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -182,7 +196,8 @@ class _SleepEntryEditorScreenState
               Expanded(
                 child: _PickerRow(
                   icon: Icons.calendar_today_outlined,
-                  label: _date.day == DateTime.now().day &&
+                  label:
+                      _date.day == DateTime.now().day &&
                           _date.month == DateTime.now().month
                       ? AppStrings.sleepTonight
                       : '${_date.day}/${_date.month}/${_date.year}',
@@ -226,8 +241,10 @@ class _SleepEntryEditorScreenState
             label: AppStrings.sleepBedTime,
             value: _bedTime,
             onTap: () => _pickTime(
-                AppStrings.sleepBedTime, _bedTime,
-                (t) => setState(() => _bedTime = t)),
+              AppStrings.sleepBedTime,
+              _bedTime,
+              (t) => setState(() => _bedTime = t),
+            ),
             onClear: _bedTime != null
                 ? () => setState(() => _bedTime = null)
                 : null,
@@ -239,8 +256,10 @@ class _SleepEntryEditorScreenState
             label: AppStrings.sleepSettledTime,
             value: _settledTime,
             onTap: () => _pickTime(
-                AppStrings.sleepSettledTime, _settledTime,
-                (t) => setState(() => _settledTime = t)),
+              AppStrings.sleepSettledTime,
+              _settledTime,
+              (t) => setState(() => _settledTime = t),
+            ),
             onClear: _settledTime != null
                 ? () => setState(() => _settledTime = null)
                 : null,
@@ -252,8 +271,10 @@ class _SleepEntryEditorScreenState
             label: AppStrings.sleepWakeTime,
             value: _wakeTime,
             onTap: () => _pickTime(
-                AppStrings.sleepWakeTime, _wakeTime,
-                (t) => setState(() => _wakeTime = t)),
+              AppStrings.sleepWakeTime,
+              _wakeTime,
+              (t) => setState(() => _wakeTime = t),
+            ),
             onClear: _wakeTime != null
                 ? () => setState(() => _wakeTime = null)
                 : null,
@@ -282,9 +303,7 @@ class _SleepEntryEditorScreenState
           TextField(
             controller: _notesController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.xxl),
 
@@ -302,10 +321,10 @@ class _SleepEntryEditorScreenState
   }
 
   Color _qualityColor(SleepQuality q) => switch (q) {
-        SleepQuality.good => AppColors.green,
-        SleepQuality.fair => AppColors.amber,
-        SleepQuality.poor => AppColors.red,
-      };
+    SleepQuality.good => AppColors.green,
+    SleepQuality.fair => AppColors.amber,
+    SleepQuality.poor => AppColors.red,
+  };
 }
 
 // ── Sub-widgets ───────────────────────────────────────────────────────────────
@@ -334,25 +353,26 @@ class _PickerRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(AppRadius.input),
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: colors.outline),
         borderRadius: BorderRadius.circular(AppRadius.input),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.md, vertical: AppSpacing.sm),
-          decoration: BoxDecoration(
-            border: Border.all(color: colors.outline),
-            borderRadius: BorderRadius.circular(AppRadius.input),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 16, color: colors.onSurfaceVariant),
-              const SizedBox(width: AppSpacing.sm),
-              Text(label,
-                  style: AppTextStyles.small(colors.onSurface)),
-            ],
-          ),
-        ),
-      );
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 16, color: colors.onSurfaceVariant),
+          const SizedBox(width: AppSpacing.sm),
+          Text(label, style: AppTextStyles.small(colors.onSurface)),
+        ],
+      ),
+    ),
+  );
 }
 
 class _TimeRow extends StatelessWidget {
@@ -373,45 +393,49 @@ class _TimeRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
-        onTap: onTap,
+    onTap: onTap,
+    borderRadius: BorderRadius.circular(AppRadius.input),
+    child: Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.lg,
+        vertical: AppSpacing.md,
+      ),
+      decoration: BoxDecoration(
+        border: Border.all(color: colors.outline),
         borderRadius: BorderRadius.circular(AppRadius.input),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.lg, vertical: AppSpacing.md),
-          decoration: BoxDecoration(
-            border: Border.all(color: colors.outline),
-            borderRadius: BorderRadius.circular(AppRadius.input),
-          ),
-          child: Row(
-            children: [
-              Icon(icon, size: 18, color: colors.onSurfaceVariant),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, size: 18, color: colors.onSurfaceVariant),
+          const SizedBox(width: AppSpacing.sm),
+          Text(label, style: AppTextStyles.small(colors.onSurfaceVariant)),
+          const Spacer(),
+          if (value != null) ...[
+            Text(value!, style: AppTextStyles.body(colors.onSurface)),
+            if (onClear != null) ...[
               const SizedBox(width: AppSpacing.sm),
-              Text(label,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
-              const Spacer(),
-              if (value != null) ...[
-                Text(value!,
-                    style: AppTextStyles.body(colors.onSurface)),
-                if (onClear != null) ...[
-                  const SizedBox(width: AppSpacing.sm),
-                  GestureDetector(
-                    onTap: onClear,
-                    child: Icon(Icons.clear,
-                        size: 16, color: colors.onSurfaceVariant),
-                  ),
-                ],
-              ] else
-                Text(AppStrings.sleepTap,
-                    style: AppTextStyles.small(colors.primary)),
+              GestureDetector(
+                onTap: onClear,
+                child: Icon(
+                  Icons.clear,
+                  size: 16,
+                  color: colors.onSurfaceVariant,
+                ),
+              ),
             ],
-          ),
-        ),
-      );
+          ] else
+            Text(
+              AppStrings.sleepTap,
+              style: AppTextStyles.small(colors.primary),
+            ),
+        ],
+      ),
+    ),
+  );
 }
 
 class _ShiftChips extends StatelessWidget {
-  const _ShiftChips(
-      {required this.selected, required this.onChanged});
+  const _ShiftChips({required this.selected, required this.onChanged});
   final ShiftType selected;
   final ValueChanged<ShiftType> onChanged;
 
@@ -428,11 +452,15 @@ class _ShiftChips extends StatelessWidget {
         value: selected,
         underline: const SizedBox(),
         items: ShiftType.values
-            .map((s) => DropdownMenuItem(
-                  value: s,
-                  child: Text(s.displayName,
-                      style: AppTextStyles.small(colors.onSurface)),
-                ))
+            .map(
+              (s) => DropdownMenuItem(
+                value: s,
+                child: Text(
+                  s.displayName,
+                  style: AppTextStyles.small(colors.onSurface),
+                ),
+              ),
+            )
             .toList(),
         onChanged: (v) {
           if (v != null) onChanged(v);

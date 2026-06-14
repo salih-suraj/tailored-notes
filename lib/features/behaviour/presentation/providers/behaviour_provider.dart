@@ -21,6 +21,5 @@ BehaviourIncidentsRepository behaviourRepository(Ref ref) =>
 
 /// Live stream of behaviour incidents for [childId], newest first.
 @riverpod
-Stream<List<BehaviourIncident>> behaviourIncidents(
-        Ref ref, String childId) =>
+Stream<List<BehaviourIncident>> behaviourIncidents(Ref ref, String childId) =>
     ref.watch(behaviourRepositoryProvider).watchByChild(childId);

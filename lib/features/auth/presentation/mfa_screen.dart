@@ -102,8 +102,9 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
     final client = ref.read(supabaseClientProvider);
     if (client == null) return;
 
-    final factorId =
-        _mode == _Mode.enroll ? _enrollFactorId : _challengeFactorId;
+    final factorId = _mode == _Mode.enroll
+        ? _enrollFactorId
+        : _challengeFactorId;
     if (factorId == null) return;
 
     setState(() => _isVerifying = true);
@@ -132,9 +133,9 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
     await Clipboard.setData(ClipboardData(text: _enrollSecret!));
     if (!mounted) return;
     setState(() => _secretCopied = true);
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text(AppStrings.mfaCopied)),
-    );
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(const SnackBar(content: Text(AppStrings.mfaCopied)));
   }
 
   @override
@@ -156,20 +157,20 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
                 _Mode.loading => const CircularProgressIndicator(),
                 _Mode.error => _ErrorBody(message: _errorMessage ?? 'Error'),
                 _Mode.enroll => _body(
-                    colors: colors,
-                    title: AppStrings.mfaEnrollTitle,
-                    body: AppStrings.mfaEnrollBody,
-                    extra: _EnrollmentSecret(
-                      secret: _enrollSecret ?? '',
-                      copied: _secretCopied,
-                      onCopy: _copySecret,
-                    ),
+                  colors: colors,
+                  title: AppStrings.mfaEnrollTitle,
+                  body: AppStrings.mfaEnrollBody,
+                  extra: _EnrollmentSecret(
+                    secret: _enrollSecret ?? '',
+                    copied: _secretCopied,
+                    onCopy: _copySecret,
                   ),
+                ),
                 _Mode.challenge => _body(
-                    colors: colors,
-                    title: AppStrings.mfaTitle,
-                    body: AppStrings.mfaChallengeBody,
-                  ),
+                  colors: colors,
+                  title: AppStrings.mfaTitle,
+                  body: AppStrings.mfaChallengeBody,
+                ),
               },
             ),
           ),
@@ -189,10 +190,7 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset(
-            'assets/images/logo.png',
-            height: 72,
-          ),
+          Image.asset('assets/images/logo.png', height: 72),
           const SizedBox(height: AppSpacing.md),
           Text(
             AppStrings.appName,
@@ -204,18 +202,19 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.xl),
-          Text(title,
-              style: AppTextStyles.h2(colors.onSurface),
-              textAlign: TextAlign.center),
+          Text(
+            title,
+            style: AppTextStyles.h2(colors.onSurface),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: AppSpacing.md),
-          Text(body,
-              style: AppTextStyles.body(colors.onSurfaceVariant),
-              textAlign: TextAlign.center),
+          Text(
+            body,
+            style: AppTextStyles.body(colors.onSurfaceVariant),
+            textAlign: TextAlign.center,
+          ),
 
-          if (extra != null) ...[
-            const SizedBox(height: AppSpacing.xl),
-            extra,
-          ],
+          if (extra != null) ...[const SizedBox(height: AppSpacing.xl), extra],
 
           if (_mode == _Mode.enroll) ...[
             const SizedBox(height: AppSpacing.lg),
@@ -227,8 +226,10 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
           ],
 
           const SizedBox(height: AppSpacing.xl),
-          Text(AppStrings.mfaCodeLabel,
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.mfaCodeLabel,
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.sm),
           TextFormField(
             controller: _codeController,
@@ -287,8 +288,10 @@ class _EnrollmentSecret extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(AppStrings.mfaSecretLabel,
-            style: AppTextStyles.label(colors.onSurfaceVariant)),
+        Text(
+          AppStrings.mfaSecretLabel,
+          style: AppTextStyles.label(colors.onSurfaceVariant),
+        ),
         const SizedBox(height: AppSpacing.sm),
         Material(
           color: colors.surfaceContainerLow,
@@ -339,9 +342,11 @@ class _ErrorBody extends StatelessWidget {
       children: [
         Icon(Icons.error_outline, color: colors.error, size: 48),
         const SizedBox(height: AppSpacing.md),
-        Text(message,
-            style: AppTextStyles.body(colors.onSurface),
-            textAlign: TextAlign.center),
+        Text(
+          message,
+          style: AppTextStyles.body(colors.onSurface),
+          textAlign: TextAlign.center,
+        ),
       ],
     );
   }

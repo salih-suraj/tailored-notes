@@ -74,17 +74,23 @@ class _MedicalProfileEditorScreenState
         homeId: user?.homeId ?? 'dev-home-001',
         childId: widget.childId,
         nhsNumber: _nhsController.text.trim().isEmpty
-            ? null : _nhsController.text.trim(),
+            ? null
+            : _nhsController.text.trim(),
         bloodType: _bloodTypeController.text.trim().isEmpty
-            ? null : _bloodTypeController.text.trim(),
+            ? null
+            : _bloodTypeController.text.trim(),
         allergies: _allergiesController.text.trim().isEmpty
-            ? null : _allergiesController.text.trim(),
+            ? null
+            : _allergiesController.text.trim(),
         conditions: _conditionsController.text.trim().isEmpty
-            ? null : _conditionsController.text.trim(),
+            ? null
+            : _conditionsController.text.trim(),
         immunisationNotes: _immunisationController.text.trim().isEmpty
-            ? null : _immunisationController.text.trim(),
+            ? null
+            : _immunisationController.text.trim(),
         notes: _notesController.text.trim().isEmpty
-            ? null : _notesController.text.trim(),
+            ? null
+            : _notesController.text.trim(),
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -92,12 +98,17 @@ class _MedicalProfileEditorScreenState
       await ref.read(medicalHistoryRepositoryProvider).saveProfile(profile);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Medical profile save failed', error: e, stackTrace: st,
-          name: 'MedicalProfileEditor');
+      log(
+        'Medical profile save failed',
+        error: e,
+        stackTrace: st,
+        name: 'MedicalProfileEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -114,14 +125,18 @@ class _MedicalProfileEditorScreenState
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20, height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -129,11 +144,15 @@ class _MedicalProfileEditorScreenState
         padding: const EdgeInsets.all(AppSpacing.lg),
         children: [
           // Allergies first — most critical
-          Text(AppStrings.medHistoryAllergies,
-              style: AppTextStyles.label(AppColors.red)),
+          Text(
+            AppStrings.medHistoryAllergies,
+            style: AppTextStyles.label(AppColors.red),
+          ),
           const SizedBox(height: AppSpacing.xs),
-          Text(AppStrings.medHistoryAllergiesHint,
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.medHistoryAllergiesHint,
+            style: AppTextStyles.small(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.sm),
           TextField(
             controller: _allergiesController,
@@ -141,11 +160,14 @@ class _MedicalProfileEditorScreenState
             decoration: InputDecoration(
               hintText: AppStrings.medHistoryAllergiesHintField,
               border: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.red.withAlpha(120))),
+                borderSide: BorderSide(color: AppColors.red.withAlpha(120)),
+              ),
               enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.red.withAlpha(80))),
+                borderSide: BorderSide(color: AppColors.red.withAlpha(80)),
+              ),
               focusedBorder: const OutlineInputBorder(
-                  borderSide: BorderSide(color: AppColors.red)),
+                borderSide: BorderSide(color: AppColors.red),
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
@@ -190,9 +212,7 @@ class _MedicalProfileEditorScreenState
           TextField(
             controller: _immunisationController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.lg),
 
@@ -201,9 +221,7 @@ class _MedicalProfileEditorScreenState
           TextField(
             controller: _notesController,
             maxLines: 3,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.xxl),
 
@@ -227,6 +245,6 @@ class _Label extends StatelessWidget {
   final ColorScheme colors;
 
   @override
-  Widget build(BuildContext context) => Text(
-        text, style: AppTextStyles.label(colors.onSurfaceVariant));
+  Widget build(BuildContext context) =>
+      Text(text, style: AppTextStyles.label(colors.onSurfaceVariant));
 }

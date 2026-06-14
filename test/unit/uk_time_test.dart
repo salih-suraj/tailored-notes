@@ -47,14 +47,17 @@ void main() {
 
     test('dayEndUtc is the last second of the London day', () {
       // London 23:59:59 on 2026-06-14 (BST) == 22:59:59 UTC.
-      expect(UkTime.dayEndUtc('2026-06-14'),
-          DateTime.utc(2026, 6, 14, 22, 59, 59));
+      expect(
+        UkTime.dayEndUtc('2026-06-14'),
+        DateTime.utc(2026, 6, 14, 22, 59, 59),
+      );
     });
 
     test('start is strictly before end', () {
       expect(
-        UkTime.dayStartUtc('2026-06-14')
-            .isBefore(UkTime.dayEndUtc('2026-06-14')),
+        UkTime.dayStartUtc(
+          '2026-06-14',
+        ).isBefore(UkTime.dayEndUtc('2026-06-14')),
         isTrue,
       );
     });

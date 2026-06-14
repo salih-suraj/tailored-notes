@@ -15,17 +15,12 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
 
   Stream<List<CarePlanRow>> watchByChild(String childId) =>
       (select(carePlansTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
-            ..orderBy([
-              (t) => OrderingTerm.desc(t.updatedAt),
-            ]))
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
+            ..orderBy([(t) => OrderingTerm.desc(t.updatedAt)]))
           .watch();
 
   Future<CarePlanRow?> findPlanById(String id) =>
-      (select(carePlansTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+      (select(carePlansTable)..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertPlan(CarePlansTableCompanion plan) =>
       into(carePlansTable).insertOnConflictUpdate(plan);
@@ -48,8 +43,7 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
   Stream<List<CarePlanGoalRow>> watchGoals(String carePlanId) =>
       (select(carePlanGoalsTable)
             ..where(
-              (t) =>
-                  t.carePlanId.equals(carePlanId) & t.deletedAt.isNull(),
+              (t) => t.carePlanId.equals(carePlanId) & t.deletedAt.isNull(),
             )
             ..orderBy([
               (t) => OrderingTerm.asc(t.sortOrder),
@@ -57,9 +51,9 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
             ]))
           .watch();
 
-  Future<CarePlanGoalRow?> findGoalById(String id) =>
-      (select(carePlanGoalsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<CarePlanGoalRow?> findGoalById(String id) => (select(
+    carePlanGoalsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertGoal(CarePlanGoalsTableCompanion goal) =>
       into(carePlanGoalsTable).insertOnConflictUpdate(goal);
@@ -74,7 +68,7 @@ class CarePlansDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of goals pending upload, for the sync sweep.
-  Future<List<CarePlanGoalRow>> getUnsyncedGoals() =>
-      (select(carePlanGoalsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<CarePlanGoalRow>> getUnsyncedGoals() => (select(
+    carePlanGoalsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

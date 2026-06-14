@@ -4,17 +4,21 @@ part 'care_plan.freezed.dart';
 part 'care_plan.g.dart';
 
 enum CarePlanStatus {
-  @JsonValue('draft') draft,
-  @JsonValue('active') active,
-  @JsonValue('under_review') underReview,
-  @JsonValue('archived') archived;
+  @JsonValue('draft')
+  draft,
+  @JsonValue('active')
+  active,
+  @JsonValue('under_review')
+  underReview,
+  @JsonValue('archived')
+  archived;
 
   String get displayName => switch (this) {
-        CarePlanStatus.draft => 'Draft',
-        CarePlanStatus.active => 'Active',
-        CarePlanStatus.underReview => 'Under Review',
-        CarePlanStatus.archived => 'Archived',
-      };
+    CarePlanStatus.draft => 'Draft',
+    CarePlanStatus.active => 'Active',
+    CarePlanStatus.underReview => 'Under Review',
+    CarePlanStatus.archived => 'Archived',
+  };
 }
 
 /// An overarching care plan document for a child.

@@ -29,8 +29,10 @@ class TailorEdApp extends ConsumerWidget {
         final mediaQuery = MediaQuery.of(context);
         return MediaQuery(
           data: mediaQuery.copyWith(
-            textScaler: mediaQuery.textScaler
-                .clamp(minScaleFactor: 1.0, maxScaleFactor: 2.0),
+            textScaler: mediaQuery.textScaler.clamp(
+              minScaleFactor: 1.0,
+              maxScaleFactor: 2.0,
+            ),
           ),
           child: child!,
         );

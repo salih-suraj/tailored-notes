@@ -39,7 +39,7 @@ class SettingsScreen extends ConsumerWidget {
           ],
 
           // ── Appearance ───────────────────────────────────────────────────
-          _SectionHeader(AppStrings.settingsAppearance),
+          const _SectionHeader(AppStrings.settingsAppearance),
           const SizedBox(height: AppSpacing.sm),
           _SettingsCard(
             child: Column(
@@ -76,7 +76,7 @@ class SettingsScreen extends ConsumerWidget {
           const SizedBox(height: AppSpacing.lg),
 
           // ── Account ──────────────────────────────────────────────────────
-          _SectionHeader(AppStrings.settingsAccount),
+          const _SectionHeader(AppStrings.settingsAccount),
           const SizedBox(height: AppSpacing.sm),
           _SettingsCard(
             child: _SettingsTile(
@@ -109,7 +109,7 @@ class SettingsScreen extends ConsumerWidget {
               Navigator.of(ctx).pop();
               ref.read(authNotifierProvider.notifier).signOut();
             },
-            child: Text(
+            child: const Text(
               AppStrings.settingsSignOut,
               style: TextStyle(color: AppColors.red),
             ),
@@ -193,7 +193,9 @@ class _RoleBadge extends StatelessWidget {
     };
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm, vertical: 2),
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: color.withAlpha(25),
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -226,18 +228,23 @@ class _ThemeOption extends StatelessWidget {
       onTap: onTap,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.sm,
+        ),
         child: Row(
           children: [
-            Icon(icon,
-                size: 18,
-                color: selected ? AppColors.teal400 : colors.onSurfaceVariant),
+            Icon(
+              icon,
+              size: 18,
+              color: selected ? AppColors.teal400 : colors.onSurfaceVariant,
+            ),
             const SizedBox(width: AppSpacing.md),
             Expanded(
               child: Text(
                 label,
                 style: AppTextStyles.body(
-                    selected ? AppColors.teal400 : colors.onSurface),
+                  selected ? AppColors.teal400 : colors.onSurface,
+                ),
               ),
             ),
             if (selected)
@@ -273,7 +280,9 @@ class _SettingsTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppRadius.card),
       child: Padding(
         padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md, vertical: AppSpacing.md),
+          horizontal: AppSpacing.md,
+          vertical: AppSpacing.md,
+        ),
         child: Row(
           children: [
             Icon(icon, size: 18, color: tileColor),

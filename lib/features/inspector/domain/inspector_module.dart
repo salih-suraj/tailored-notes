@@ -13,31 +13,31 @@ enum InspectorModule {
   medicalHistory;
 
   String get scopeKey => switch (this) {
-        InspectorModule.dailyNotes => 'daily_notes',
-        InspectorModule.carePlans => 'care_plans',
-        InspectorModule.incidents => 'incidents',
-        InspectorModule.behaviour => 'behaviour',
-        InspectorModule.medication => 'medication',
-        InspectorModule.medicalHistory => 'medical_history',
-      };
+    InspectorModule.dailyNotes => 'daily_notes',
+    InspectorModule.carePlans => 'care_plans',
+    InspectorModule.incidents => 'incidents',
+    InspectorModule.behaviour => 'behaviour',
+    InspectorModule.medication => 'medication',
+    InspectorModule.medicalHistory => 'medical_history',
+  };
 
   String get displayName => switch (this) {
-        InspectorModule.dailyNotes => 'Daily Notes',
-        InspectorModule.carePlans => 'Care Plans',
-        InspectorModule.incidents => 'Incidents',
-        InspectorModule.behaviour => 'Behaviour',
-        InspectorModule.medication => 'Medication',
-        InspectorModule.medicalHistory => 'Medical History',
-      };
+    InspectorModule.dailyNotes => 'Daily Notes',
+    InspectorModule.carePlans => 'Care Plans',
+    InspectorModule.incidents => 'Incidents',
+    InspectorModule.behaviour => 'Behaviour',
+    InspectorModule.medication => 'Medication',
+    InspectorModule.medicalHistory => 'Medical History',
+  };
 
   IconData get icon => switch (this) {
-        InspectorModule.dailyNotes => Icons.edit_note,
-        InspectorModule.carePlans => Icons.flag_outlined,
-        InspectorModule.incidents => Icons.report_outlined,
-        InspectorModule.behaviour => Icons.psychology_outlined,
-        InspectorModule.medication => Icons.medication_outlined,
-        InspectorModule.medicalHistory => Icons.medical_information_outlined,
-      };
+    InspectorModule.dailyNotes => Icons.edit_note,
+    InspectorModule.carePlans => Icons.flag_outlined,
+    InspectorModule.incidents => Icons.report_outlined,
+    InspectorModule.behaviour => Icons.psychology_outlined,
+    InspectorModule.medication => Icons.medication_outlined,
+    InspectorModule.medicalHistory => Icons.medical_information_outlined,
+  };
 
   static InspectorModule? fromScopeKey(String key) {
     for (final module in InspectorModule.values) {

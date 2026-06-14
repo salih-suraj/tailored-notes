@@ -1,4 +1,4 @@
-﻿import 'dart:developer';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,7 +30,8 @@ class MedicalHistoryScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -43,8 +44,10 @@ class MedicalHistoryScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.medHistoryTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
         actions: [
@@ -53,23 +56,24 @@ class MedicalHistoryScreen extends ConsumerWidget {
               '/children/$childId/medical-history/edit',
               extra: profileAsync.valueOrNull,
             ),
-            child: Text(AppStrings.edit,
-                style: AppTextStyles.button(colors.primary)),
+            child: Text(
+              AppStrings.edit,
+              style: AppTextStyles.button(colors.primary),
+            ),
           ),
         ],
       ),
       body: switch ((profileAsync, contactsAsync)) {
-        (AsyncError(:final error), _) || (_, AsyncError(:final error)) =>
-          ErrorView(
-            message: error.toString(),
-            onRetry: () {
-              ref.invalidate(medicalProfileProvider(childId));
-              ref.invalidate(healthcareContactsProvider(childId));
-            },
-          ),
+        (AsyncError(:final error), _) ||
+        (_, AsyncError(:final error)) => ErrorView(
+          message: error.toString(),
+          onRetry: () {
+            ref.invalidate(medicalProfileProvider(childId));
+            ref.invalidate(healthcareContactsProvider(childId));
+          },
+        ),
         (AsyncLoading(), _) || (_, AsyncLoading()) => const LoadingSkeleton(),
-        (AsyncData(value: final profile),
-            AsyncData(value: final contacts)) =>
+        (AsyncData(value: final profile), AsyncData(value: final contacts)) =>
           _MedHistoryBody(
             childId: childId,
             profile: profile,
@@ -87,14 +91,16 @@ class MedicalHistoryScreen extends ConsumerWidget {
     );
   }
 
-  Future<void> _showContactSheet(BuildContext context, WidgetRef ref,
-      {HealthcareContact? contact}) =>
-      showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (_) => _ContactSheet(childId: childId, existing: contact),
-      );
+  Future<void> _showContactSheet(
+    BuildContext context,
+    WidgetRef ref, {
+    HealthcareContact? contact,
+  }) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (_) => _ContactSheet(childId: childId, existing: contact),
+  );
 }
 
 // ── Body ──────────────────────────────────────────────────────────────────────
@@ -119,14 +125,21 @@ class _MedHistoryBody extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.health_and_safety_outlined,
-                size: 56, color: colors.onSurfaceVariant),
+            Icon(
+              Icons.health_and_safety_outlined,
+              size: 56,
+              color: colors.onSurfaceVariant,
+            ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.medHistoryEmpty,
-                style: AppTextStyles.body(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medHistoryEmpty,
+              style: AppTextStyles.body(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.sm),
-            Text(AppStrings.medHistoryEmptyHint,
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medHistoryEmptyHint,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
       );
@@ -145,32 +158,38 @@ class _MedHistoryBody extends ConsumerWidget {
         if (profile != null) ...[
           const _SectionHeader(AppStrings.medHistoryKeyInfo),
           const SizedBox(height: AppSpacing.sm),
-          _InfoCard(children: [
-            if (profile!.nhsNumber != null)
-              _InfoRow(
-                label: AppStrings.medHistoryNhs,
-                value: profile!.nhsNumber!,
-                copyable: true,
-              ),
-            if (profile!.bloodType != null)
-              _InfoRow(
-                label: AppStrings.medHistoryBloodType,
-                value: profile!.bloodType!,
-              ),
-          ]),
+          _InfoCard(
+            children: [
+              if (profile!.nhsNumber != null)
+                _InfoRow(
+                  label: AppStrings.medHistoryNhs,
+                  value: profile!.nhsNumber!,
+                  copyable: true,
+                ),
+              if (profile!.bloodType != null)
+                _InfoRow(
+                  label: AppStrings.medHistoryBloodType,
+                  value: profile!.bloodType!,
+                ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.lg),
         ],
 
         // ── Conditions ─────────────────────────────────────────────────
-        if (profile?.conditions != null &&
-            profile!.conditions!.isNotEmpty) ...[
+        if (profile?.conditions != null && profile!.conditions!.isNotEmpty) ...[
           const _SectionHeader(AppStrings.medHistoryConditions),
           const SizedBox(height: AppSpacing.sm),
-          _InfoCard(children: [
-            Text(profile!.conditions!,
+          _InfoCard(
+            children: [
+              Text(
+                profile!.conditions!,
                 style: AppTextStyles.body(
-                    Theme.of(context).colorScheme.onSurface)),
-          ]),
+                  Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.lg),
         ],
 
@@ -187,8 +206,7 @@ class _MedHistoryBody extends ConsumerWidget {
                   context: context,
                   isScrollControlled: true,
                   useSafeArea: true,
-                  builder: (_) =>
-                      _ContactSheet(childId: childId, existing: c),
+                  builder: (_) => _ContactSheet(childId: childId, existing: c),
                 ),
                 onDelete: () => _confirmDelete(context, ref, c.id),
               ),
@@ -202,11 +220,16 @@ class _MedHistoryBody extends ConsumerWidget {
             profile!.immunisationNotes!.isNotEmpty) ...[
           const _SectionHeader(AppStrings.medHistoryImmunisation),
           const SizedBox(height: AppSpacing.sm),
-          _InfoCard(children: [
-            Text(profile!.immunisationNotes!,
+          _InfoCard(
+            children: [
+              Text(
+                profile!.immunisationNotes!,
                 style: AppTextStyles.body(
-                    Theme.of(context).colorScheme.onSurface)),
-          ]),
+                  Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.lg),
         ],
 
@@ -214,11 +237,16 @@ class _MedHistoryBody extends ConsumerWidget {
         if (profile?.notes != null && profile!.notes!.isNotEmpty) ...[
           const _SectionHeader(AppStrings.medHistoryNotes),
           const SizedBox(height: AppSpacing.sm),
-          _InfoCard(children: [
-            Text(profile!.notes!,
+          _InfoCard(
+            children: [
+              Text(
+                profile!.notes!,
                 style: AppTextStyles.body(
-                    Theme.of(context).colorScheme.onSurface)),
-          ]),
+                  Theme.of(context).colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
         ],
 
         const SizedBox(height: 80),
@@ -227,7 +255,10 @@ class _MedHistoryBody extends ConsumerWidget {
   }
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -240,7 +271,9 @@ class _MedHistoryBody extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -260,40 +293,43 @@ class _AllergyBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: AppColors.red.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          border: Border.all(color: AppColors.red.withAlpha(80)),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Icon(Icons.warning_amber_rounded,
-                color: AppColors.red, size: 20),
-            const SizedBox(width: AppSpacing.sm),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(AppStrings.medHistoryAllergies,
-                      style: AppTextStyles.label(AppColors.red)),
-                  const SizedBox(height: AppSpacing.xs),
-                  Text(allergies,
-                      style: AppTextStyles.body(AppColors.red)),
-                ],
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      color: AppColors.red.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      border: Border.all(color: AppColors.red.withAlpha(80)),
+    ),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Icon(Icons.warning_amber_rounded, color: AppColors.red, size: 20),
+        const SizedBox(width: AppSpacing.sm),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                AppStrings.medHistoryAllergies,
+                style: AppTextStyles.label(AppColors.red),
               ),
-            ),
-          ],
+              const SizedBox(height: AppSpacing.xs),
+              Text(allergies, style: AppTextStyles.body(AppColors.red)),
+            ],
+          ),
         ),
-      );
+      ],
+    ),
+  );
 }
 
 // ── Contact card ──────────────────────────────────────────────────────────────
 
 class _ContactCard extends StatelessWidget {
-  const _ContactCard(
-      {required this.contact, required this.onEdit, required this.onDelete});
+  const _ContactCard({
+    required this.contact,
+    required this.onEdit,
+    required this.onDelete,
+  });
 
   final HealthcareContact contact;
   final VoidCallback onEdit;
@@ -321,37 +357,48 @@ class _ContactCard extends StatelessWidget {
                       children: [
                         Container(
                           padding: const EdgeInsets.symmetric(
-                              horizontal: AppSpacing.sm, vertical: 2),
+                            horizontal: AppSpacing.sm,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.blue.withAlpha(25),
-                            borderRadius:
-                                BorderRadius.circular(AppRadius.pill),
+                            borderRadius: BorderRadius.circular(AppRadius.pill),
                           ),
-                          child: Text(contact.contactType.displayName,
-                              style: AppTextStyles.label(AppColors.blue)),
+                          child: Text(
+                            contact.contactType.displayName,
+                            style: AppTextStyles.label(AppColors.blue),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(height: AppSpacing.xs),
-                    Text(contact.name,
-                        style: AppTextStyles.h3(colors.onSurface)),
+                    Text(
+                      contact.name,
+                      style: AppTextStyles.h3(colors.onSurface),
+                    ),
                     if (contact.role != null)
-                      Text(contact.role!,
-                          style: AppTextStyles.small(
-                              colors.onSurfaceVariant)),
+                      Text(
+                        contact.role!,
+                        style: AppTextStyles.small(colors.onSurfaceVariant),
+                      ),
                     if (contact.phone != null) ...[
                       const SizedBox(height: AppSpacing.xs),
                       GestureDetector(
                         onTap: () => Clipboard.setData(
-                            ClipboardData(text: contact.phone!)),
+                          ClipboardData(text: contact.phone!),
+                        ),
                         child: Row(
                           children: [
-                            Icon(Icons.phone_outlined,
-                                size: 14,
-                                color: colors.primary),
+                            Icon(
+                              Icons.phone_outlined,
+                              size: 14,
+                              color: colors.primary,
+                            ),
                             const SizedBox(width: AppSpacing.xs),
-                            Text(contact.phone!,
-                                style: AppTextStyles.body(colors.primary)),
+                            Text(
+                              contact.phone!,
+                              style: AppTextStyles.body(colors.primary),
+                            ),
                           ],
                         ),
                       ),
@@ -360,8 +407,11 @@ class _ContactCard extends StatelessWidget {
                 ),
               ),
               PopupMenuButton<String>(
-                icon: Icon(Icons.more_vert,
-                    size: 18, color: colors.onSurfaceVariant),
+                icon: Icon(
+                  Icons.more_vert,
+                  size: 18,
+                  color: colors.onSurfaceVariant,
+                ),
                 tooltip: AppStrings.recordOptions,
                 onSelected: (v) {
                   if (v == 'edit') onEdit();
@@ -369,9 +419,13 @@ class _ContactCard extends StatelessWidget {
                 },
                 itemBuilder: (_) => [
                   const PopupMenuItem(
-                      value: 'edit', child: Text(AppStrings.edit)),
+                    value: 'edit',
+                    child: Text(AppStrings.edit),
+                  ),
                   const PopupMenuItem(
-                      value: 'delete', child: Text(AppStrings.delete)),
+                    value: 'delete',
+                    child: Text(AppStrings.delete),
+                  ),
                 ],
               ),
             ],
@@ -390,10 +444,9 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-        label,
-        style: AppTextStyles.label(
-            Theme.of(context).colorScheme.onSurfaceVariant),
-      );
+    label,
+    style: AppTextStyles.label(Theme.of(context).colorScheme.onSurfaceVariant),
+  );
 }
 
 class _InfoCard extends StatelessWidget {
@@ -402,21 +455,24 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.all(AppSpacing.lg),
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceContainerLow,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: children,
-        ),
-      );
+    padding: const EdgeInsets.all(AppSpacing.lg),
+    decoration: BoxDecoration(
+      color: Theme.of(context).colorScheme.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(AppRadius.card),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
+    ),
+  );
 }
 
 class _InfoRow extends StatelessWidget {
-  const _InfoRow(
-      {required this.label, required this.value, this.copyable = false});
+  const _InfoRow({
+    required this.label,
+    required this.value,
+    this.copyable = false,
+  });
   final String label;
   final String value;
   final bool copyable;
@@ -428,13 +484,11 @@ class _InfoRow extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
       child: Row(
         children: [
-          Text('$label: ',
-              style: AppTextStyles.small(colors.onSurfaceVariant)),
+          Text('$label: ', style: AppTextStyles.small(colors.onSurfaceVariant)),
           if (copyable)
             GestureDetector(
               onTap: () => Clipboard.setData(ClipboardData(text: value)),
-              child: Text(value,
-                  style: AppTextStyles.body(colors.primary)),
+              child: Text(value, style: AppTextStyles.body(colors.primary)),
             )
           else
             Text(value, style: AppTextStyles.body(colors.onSurface)),
@@ -496,7 +550,8 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(AppStrings.medHistoryNameRequired)));
+        const SnackBar(content: Text(AppStrings.medHistoryNameRequired)),
+      );
       return;
     }
     setState(() => _saving = true);
@@ -511,15 +566,20 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
         contactType: _type,
         name: name,
         role: _roleController.text.trim().isEmpty
-            ? null : _roleController.text.trim(),
+            ? null
+            : _roleController.text.trim(),
         phone: _phoneController.text.trim().isEmpty
-            ? null : _phoneController.text.trim(),
+            ? null
+            : _phoneController.text.trim(),
         email: _emailController.text.trim().isEmpty
-            ? null : _emailController.text.trim(),
+            ? null
+            : _emailController.text.trim(),
         address: _addressController.text.trim().isEmpty
-            ? null : _addressController.text.trim(),
+            ? null
+            : _addressController.text.trim(),
         notes: _notesController.text.trim().isEmpty
-            ? null : _notesController.text.trim(),
+            ? null
+            : _notesController.text.trim(),
         createdById: existing?.createdById ?? user?.id,
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
@@ -527,12 +587,17 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
       await ref.read(medicalHistoryRepositoryProvider).saveContact(contact);
       if (mounted) Navigator.of(context).pop();
     } catch (e, st) {
-      log('Contact save failed', error: e, stackTrace: st,
-          name: 'ContactSheet');
+      log(
+        'Contact save failed',
+        error: e,
+        stackTrace: st,
+        name: 'ContactSheet',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -544,7 +609,9 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
 
     return Padding(
       padding: EdgeInsets.only(
-        left: AppSpacing.lg, right: AppSpacing.lg, top: AppSpacing.lg,
+        left: AppSpacing.lg,
+        right: AppSpacing.lg,
+        top: AppSpacing.lg,
         bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.xl,
       ),
       child: SingleChildScrollView(
@@ -571,11 +638,14 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
             const SizedBox(height: AppSpacing.md),
 
             // Type chips
-            Text(AppStrings.medHistoryContactType,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medHistoryContactType,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
-              spacing: AppSpacing.sm, runSpacing: AppSpacing.sm,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
               children: ContactType.values.map((t) {
                 final sel = _type == t;
                 return FilterChip(
@@ -589,19 +659,31 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
             ),
             const SizedBox(height: AppSpacing.lg),
 
-            _SheetField(AppStrings.medHistoryContactName,
-                _nameController, autofocus: true),
+            _SheetField(
+              AppStrings.medHistoryContactName,
+              _nameController,
+              autofocus: true,
+            ),
             const SizedBox(height: AppSpacing.md),
             _SheetField(AppStrings.medHistoryContactRole, _roleController),
             const SizedBox(height: AppSpacing.md),
-            _SheetField(AppStrings.medHistoryContactPhone, _phoneController,
-                keyboard: TextInputType.phone),
+            _SheetField(
+              AppStrings.medHistoryContactPhone,
+              _phoneController,
+              keyboard: TextInputType.phone,
+            ),
             const SizedBox(height: AppSpacing.md),
-            _SheetField(AppStrings.medHistoryContactEmail, _emailController,
-                keyboard: TextInputType.emailAddress),
+            _SheetField(
+              AppStrings.medHistoryContactEmail,
+              _emailController,
+              keyboard: TextInputType.emailAddress,
+            ),
             const SizedBox(height: AppSpacing.md),
-            _SheetField(AppStrings.medHistoryContactAddress, _addressController,
-                maxLines: 2),
+            _SheetField(
+              AppStrings.medHistoryContactAddress,
+              _addressController,
+              maxLines: 2,
+            ),
             const SizedBox(height: AppSpacing.lg),
 
             FilledButton(
@@ -612,9 +694,13 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
               ),
               child: _saving
                   ? const SizedBox(
-                      width: 20, height: 20,
+                      width: 20,
+                      height: 20,
                       child: CircularProgressIndicator(
-                          strokeWidth: 2, color: AppColors.white))
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
+                    )
                   : const Text(AppStrings.save),
             ),
           ],
@@ -625,9 +711,13 @@ class _ContactSheetState extends ConsumerState<_ContactSheet> {
 }
 
 class _SheetField extends StatelessWidget {
-  const _SheetField(this.label, this.controller,
-      {this.maxLines = 1, this.keyboard = TextInputType.text,
-      this.autofocus = false});
+  const _SheetField(
+    this.label,
+    this.controller, {
+    this.maxLines = 1,
+    this.keyboard = TextInputType.text,
+    this.autofocus = false,
+  });
 
   final String label;
   final TextEditingController controller;
@@ -637,14 +727,13 @@ class _SheetField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => TextField(
-        controller: controller,
-        maxLines: maxLines,
-        keyboardType: keyboard,
-        autofocus: autofocus,
-        decoration: InputDecoration(
-          labelText: label,
-          border: const OutlineInputBorder(),
-        ),
-      );
+    controller: controller,
+    maxLines: maxLines,
+    keyboardType: keyboard,
+    autofocus: autofocus,
+    decoration: InputDecoration(
+      labelText: label,
+      border: const OutlineInputBorder(),
+    ),
+  );
 }
-

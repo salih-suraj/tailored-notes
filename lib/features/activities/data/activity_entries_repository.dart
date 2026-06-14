@@ -17,10 +17,10 @@ class ActivityEntriesRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final ActivityEntriesDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -77,30 +77,36 @@ class ActivityEntriesRepository implements SyncTarget {
   }
 
   ActivityEntry _toDomain(ActivityEntryRow r) => ActivityEntry(
-        id: r.id, homeId: r.homeId, childId: r.childId,
-        date: r.date,
-        shift: ShiftType.values.byName(r.shift),
-        category: ActivityCategory.values.byName(r.category),
-        title: r.title,
-        description: r.description,
-        durationMinutes: r.durationMinutes,
-        rewardEarned: r.rewardEarned,
-        achievement: r.achievement,
-        recordedById: r.recordedById,
-        recordedByName: r.recordedByName,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    date: r.date,
+    shift: ShiftType.values.byName(r.shift),
+    category: ActivityCategory.values.byName(r.category),
+    title: r.title,
+    description: r.description,
+    durationMinutes: r.durationMinutes,
+    rewardEarned: r.rewardEarned,
+    achievement: r.achievement,
+    recordedById: r.recordedById,
+    recordedByName: r.recordedByName,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   ActivityEntriesTableCompanion _toCompanion(ActivityEntry e) =>
       ActivityEntriesTableCompanion(
-        id: Value(e.id), homeId: Value(e.homeId), childId: Value(e.childId),
-        date: Value(e.date), shift: Value(e.shift.name),
-        category: Value(e.category.name), title: Value(e.title),
+        id: Value(e.id),
+        homeId: Value(e.homeId),
+        childId: Value(e.childId),
+        date: Value(e.date),
+        shift: Value(e.shift.name),
+        category: Value(e.category.name),
+        title: Value(e.title),
         description: Value(e.description),
         durationMinutes: Value(e.durationMinutes),
         rewardEarned: Value(e.rewardEarned),
@@ -120,20 +126,32 @@ class ActivityEntriesRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('activity_entries').upsert({
-        'id': e.id, 'home_id': e.homeId, 'child_id': e.childId,
-        'date': e.date, 'shift': e.shift.name,
-        'category': e.category.name, 'title': e.title,
-        'description': e.description, 'duration_minutes': e.durationMinutes,
-        'reward_earned': e.rewardEarned, 'achievement': e.achievement,
-        'recorded_by_id': e.recordedById, 'recorded_by_name': e.recordedByName,
-        'created_by_id': e.createdById, 'updated_by_id': e.updatedById,
+        'id': e.id,
+        'home_id': e.homeId,
+        'child_id': e.childId,
+        'date': e.date,
+        'shift': e.shift.name,
+        'category': e.category.name,
+        'title': e.title,
+        'description': e.description,
+        'duration_minutes': e.durationMinutes,
+        'reward_earned': e.rewardEarned,
+        'achievement': e.achievement,
+        'recorded_by_id': e.recordedById,
+        'recorded_by_name': e.recordedByName,
+        'created_by_id': e.createdById,
+        'updated_by_id': e.updatedById,
         'updated_at': e.updatedAt.toUtc().toIso8601String(),
         'deleted_at': e.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsert(_toCompanion(e.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for activity entry ${e.id}',
-          error: err, stackTrace: st, name: 'ActivityEntriesRepository');
+      log(
+        'Sync failed for activity entry ${e.id}',
+        error: err,
+        stackTrace: st,
+        name: 'ActivityEntriesRepository',
+      );
     }
   }
 }

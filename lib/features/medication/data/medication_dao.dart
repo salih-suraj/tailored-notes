@@ -25,9 +25,9 @@ class MedicationDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([(t) => OrderingTerm.asc(t.medicationName)]))
           .watch();
 
-  Future<PrescribedMedRow?> findMedById(String id) =>
-      (select(prescribedMedsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<PrescribedMedRow?> findMedById(String id) => (select(
+    prescribedMedsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertMed(PrescribedMedsTableCompanion med) =>
       into(prescribedMedsTable).insertOnConflictUpdate(med);
@@ -42,9 +42,9 @@ class MedicationDao extends DatabaseAccessor<AppDatabase>
       );
 
   /// One-shot list of meds pending upload, for the sync sweep.
-  Future<List<PrescribedMedRow>> getUnsyncedMeds() =>
-      (select(prescribedMedsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<PrescribedMedRow>> getUnsyncedMeds() => (select(
+    prescribedMedsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 
   // ── Administrations ────────────────────────────────────────────────────
 
@@ -64,15 +64,15 @@ class MedicationDao extends DatabaseAccessor<AppDatabase>
             ..orderBy([(t) => OrderingTerm.desc(t.administeredAt)]))
           .watch();
 
-  Future<MedAdministrationRow?> findAdminById(String id) =>
-      (select(medAdministrationsTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<MedAdministrationRow?> findAdminById(String id) => (select(
+    medAdministrationsTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsertAdmin(MedAdministrationsTableCompanion admin) =>
       into(medAdministrationsTable).insertOnConflictUpdate(admin);
 
   /// One-shot list of administrations pending upload, for the sync sweep.
-  Future<List<MedAdministrationRow>> getUnsyncedAdmins() =>
-      (select(medAdministrationsTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+  Future<List<MedAdministrationRow>> getUnsyncedAdmins() => (select(
+    medAdministrationsTable,
+  )..where((t) => t.isSynced.equals(false))).get();
 }

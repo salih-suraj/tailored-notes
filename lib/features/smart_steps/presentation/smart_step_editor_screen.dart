@@ -28,8 +28,7 @@ class SmartStepEditorScreen extends ConsumerStatefulWidget {
       _SmartStepEditorScreenState();
 }
 
-class _SmartStepEditorScreenState
-    extends ConsumerState<SmartStepEditorScreen> {
+class _SmartStepEditorScreenState extends ConsumerState<SmartStepEditorScreen> {
   final _titleController = TextEditingController();
   final _descriptionController = TextEditingController();
 
@@ -50,8 +49,11 @@ class _SmartStepEditorScreenState
       if (e.targetDate != null) {
         final parts = e.targetDate!.split('-');
         if (parts.length == 3) {
-          _targetDate = DateTime(int.parse(parts[0]),
-              int.parse(parts[1]), int.parse(parts[2]));
+          _targetDate = DateTime(
+            int.parse(parts[0]),
+            int.parse(parts[1]),
+            int.parse(parts[2]),
+          );
         }
       }
     }
@@ -70,8 +72,7 @@ class _SmartStepEditorScreenState
   Future<void> _pickTargetDate() async {
     final picked = await showDatePicker(
       context: context,
-      initialDate:
-          _targetDate ?? DateTime.now().add(const Duration(days: 30)),
+      initialDate: _targetDate ?? DateTime.now().add(const Duration(days: 30)),
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 365 * 3)),
     );
@@ -82,8 +83,7 @@ class _SmartStepEditorScreenState
     final title = _titleController.text.trim();
     if (title.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text(AppStrings.smartStepsTitleRequired)),
+        const SnackBar(content: Text(AppStrings.smartStepsTitleRequired)),
       );
       return;
     }
@@ -101,8 +101,7 @@ class _SmartStepEditorScreenState
         description: _descriptionController.text.trim().isEmpty
             ? null
             : _descriptionController.text.trim(),
-        targetDate:
-            _targetDate != null ? _dateStr(_targetDate!) : null,
+        targetDate: _targetDate != null ? _dateStr(_targetDate!) : null,
         status: _status,
         achievedDate: existing?.achievedDate,
         createdById: existing?.createdById ?? user?.id,
@@ -112,12 +111,17 @@ class _SmartStepEditorScreenState
       await ref.read(smartStepsRepositoryProvider).saveStep(step);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Smart step save failed',
-          error: e, stackTrace: st, name: 'SmartStepEditor');
+      log(
+        'Smart step save failed',
+        error: e,
+        stackTrace: st,
+        name: 'SmartStepEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -129,23 +133,28 @@ class _SmartStepEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.smartStepsEditStep
-            : AppStrings.smartStepsNewStep),
+        title: Text(
+          isEditing
+              ? AppStrings.smartStepsEditStep
+              : AppStrings.smartStepsNewStep,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -226,15 +235,20 @@ class _SmartStepEditorScreenState
             borderRadius: BorderRadius.circular(AppRadius.input),
             child: Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                horizontal: AppSpacing.lg,
+                vertical: AppSpacing.md,
+              ),
               decoration: BoxDecoration(
                 border: Border.all(color: colors.outline),
                 borderRadius: BorderRadius.circular(AppRadius.input),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.flag_outlined,
-                      size: 18, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.flag_outlined,
+                    size: 18,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     _targetDate != null
@@ -250,12 +264,17 @@ class _SmartStepEditorScreenState
                   if (_targetDate != null)
                     GestureDetector(
                       onTap: () => setState(() => _targetDate = null),
-                      child: Icon(Icons.clear,
-                          size: 16, color: colors.onSurfaceVariant),
+                      child: Icon(
+                        Icons.clear,
+                        size: 16,
+                        color: colors.onSurfaceVariant,
+                      ),
                     )
                   else
-                    Text(AppStrings.change,
-                        style: AppTextStyles.small(colors.primary)),
+                    Text(
+                      AppStrings.change,
+                      style: AppTextStyles.small(colors.primary),
+                    ),
                 ],
               ),
             ),
@@ -276,21 +295,21 @@ class _SmartStepEditorScreenState
   }
 
   Color _catColor(StepCategory c) => switch (c) {
-        StepCategory.communication => AppColors.blue,
-        StepCategory.selfCare => AppColors.teal400,
-        StepCategory.independence => AppColors.green,
-        StepCategory.social => AppColors.amber,
-        StepCategory.emotional => AppColors.purple,
-        StepCategory.learning => AppColors.roleSupportWorker,
-        StepCategory.physical => AppColors.orange,
-        StepCategory.other => AppColors.slate400,
-      };
+    StepCategory.communication => AppColors.blue,
+    StepCategory.selfCare => AppColors.teal400,
+    StepCategory.independence => AppColors.green,
+    StepCategory.social => AppColors.amber,
+    StepCategory.emotional => AppColors.purple,
+    StepCategory.learning => AppColors.roleSupportWorker,
+    StepCategory.physical => AppColors.orange,
+    StepCategory.other => AppColors.slate400,
+  };
 
   Color _statusColor(StepStatus s) => switch (s) {
-        StepStatus.notStarted => AppColors.slate400,
-        StepStatus.inProgress => AppColors.amber,
-        StepStatus.achieved => AppColors.green,
-      };
+    StepStatus.notStarted => AppColors.slate400,
+    StepStatus.inProgress => AppColors.amber,
+    StepStatus.achieved => AppColors.green,
+  };
 }
 
 class _Label extends StatelessWidget {

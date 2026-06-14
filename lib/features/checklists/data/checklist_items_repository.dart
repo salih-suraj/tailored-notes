@@ -21,10 +21,10 @@ class ChecklistItemsRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final ChecklistItemsDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -39,12 +39,14 @@ class ChecklistItemsRepository implements SyncTarget {
     final date = _todayStr();
     return _dao
         .watchByChildShiftAndDate(childId, shift.name, date)
-        .map((rows) => _mergeRoomTemplates(
-              childId: childId,
-              shift: shift,
-              date: date,
-              rows: rows,
-            ));
+        .map(
+          (rows) => _mergeRoomTemplates(
+            childId: childId,
+            shift: shift,
+            date: date,
+            rows: rows,
+          ),
+        );
   }
 
   /// Live stream of communal task items for the home on today's current shift.
@@ -53,8 +55,10 @@ class ChecklistItemsRepository implements SyncTarget {
     final date = _todayStr();
     return _dao
         .watchCommunalByShiftAndDate(_homeId, shift.name, date)
-        .map((rows) =>
-            _mergeCommunalTemplates(shift: shift, date: date, rows: rows));
+        .map(
+          (rows) =>
+              _mergeCommunalTemplates(shift: shift, date: date, rows: rows),
+        );
   }
 
   /// Toggles the completion state of [item], logs the change, persists locally, then syncs.
@@ -213,24 +217,24 @@ class ChecklistItemsRepository implements SyncTarget {
   String _todayStr() => UkTime.todayStr();
 
   ChecklistItem _toDomain(ChecklistItemRow row) => ChecklistItem(
-        id: row.id,
-        homeId: row.homeId,
-        childId: row.childId,
-        areaKey: row.areaKey,
-        areaLabel: row.areaLabel,
-        taskKey: row.taskKey,
-        taskLabel: row.taskLabel,
-        shift: ShiftType.values.byName(row.shift),
-        date: row.date,
-        isComplete: row.isComplete,
-        completedAt: row.completedAt,
-        completedByName: row.completedByName,
-        createdById: row.createdById,
-        updatedById: row.updatedById,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isSynced: row.isSynced,
-      );
+    id: row.id,
+    homeId: row.homeId,
+    childId: row.childId,
+    areaKey: row.areaKey,
+    areaLabel: row.areaLabel,
+    taskKey: row.taskKey,
+    taskLabel: row.taskLabel,
+    shift: ShiftType.values.byName(row.shift),
+    date: row.date,
+    isComplete: row.isComplete,
+    completedAt: row.completedAt,
+    completedByName: row.completedByName,
+    createdById: row.createdById,
+    updatedById: row.updatedById,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    isSynced: row.isSynced,
+  );
 
   ChecklistItemsTableCompanion _toCompanion(ChecklistItem item) =>
       ChecklistItemsTableCompanion(

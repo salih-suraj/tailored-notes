@@ -94,8 +94,13 @@ class _IncidentReportEditorScreenState
     );
     if (time == null || !mounted) return;
     setState(() {
-      _occurredAt =
-          DateTime(date.year, date.month, date.day, time.hour, time.minute);
+      _occurredAt = DateTime(
+        date.year,
+        date.month,
+        date.day,
+        time.hour,
+        time.minute,
+      );
     });
   }
 
@@ -137,7 +142,8 @@ class _IncidentReportEditorScreenState
         parentNotified: _parentNotified,
         managerNotified: _managerNotified,
         followUpRequired: _followUpRequired,
-        followUpDetails: _followUpRequired &&
+        followUpDetails:
+            _followUpRequired &&
                 _followUpDetailsController.text.trim().isNotEmpty
             ? _followUpDetailsController.text.trim()
             : null,
@@ -151,12 +157,17 @@ class _IncidentReportEditorScreenState
       await ref.read(incidentReportsRepositoryProvider).save(report);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Incident save failed', error: e, stackTrace: st,
-          name: 'IncidentEditor');
+      log(
+        'Incident save failed',
+        error: e,
+        stackTrace: st,
+        name: 'IncidentEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -168,23 +179,26 @@ class _IncidentReportEditorScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing
-            ? AppStrings.incidentEdit
-            : AppStrings.incidentNew),
+        title: Text(
+          isEditing ? AppStrings.incidentEdit : AppStrings.incidentNew,
+        ),
         actions: [
           if (_saving)
             const Padding(
               padding: EdgeInsets.all(AppSpacing.lg),
               child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(strokeWidth: 2)),
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
             )
           else
             TextButton(
               onPressed: _save,
-              child: Text(AppStrings.save,
-                  style: AppTextStyles.button(colors.primary)),
+              child: Text(
+                AppStrings.save,
+                style: AppTextStyles.button(colors.primary),
+              ),
             ),
         ],
       ),
@@ -197,24 +211,33 @@ class _IncidentReportEditorScreenState
             borderRadius: BorderRadius.circular(AppRadius.input),
             child: Container(
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                horizontal: AppSpacing.md,
+                vertical: AppSpacing.sm,
+              ),
               decoration: BoxDecoration(
                 border: Border.all(color: colors.outline),
                 borderRadius: BorderRadius.circular(AppRadius.input),
               ),
               child: Row(
                 children: [
-                  Icon(Icons.access_time,
-                      size: 18, color: colors.onSurfaceVariant),
+                  Icon(
+                    Icons.access_time,
+                    size: 18,
+                    color: colors.onSurfaceVariant,
+                  ),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
-                    DateFormat('EEEE d MMMM · HH:mm', 'en_GB')
-                        .format(_occurredAt),
+                    DateFormat(
+                      'EEEE d MMMM · HH:mm',
+                      'en_GB',
+                    ).format(_occurredAt),
                     style: AppTextStyles.body(colors.onSurface),
                   ),
                   const Spacer(),
-                  Text(AppStrings.change,
-                      style: AppTextStyles.small(colors.primary)),
+                  Text(
+                    AppStrings.change,
+                    style: AppTextStyles.small(colors.primary),
+                  ),
                 ],
               ),
             ),
@@ -236,8 +259,7 @@ class _IncidentReportEditorScreenState
                 onSelected: (_) => setState(() => _incidentType = t),
                 selectedColor: col.withAlpha(40),
                 checkmarkColor: col,
-                labelStyle: AppTextStyles.small(
-                    sel ? col : colors.onSurface),
+                labelStyle: AppTextStyles.small(sel ? col : colors.onSurface),
               );
             }).toList(),
           ),
@@ -257,8 +279,7 @@ class _IncidentReportEditorScreenState
                 onSelected: (_) => setState(() => _severity = s),
                 selectedColor: col.withAlpha(40),
                 checkmarkColor: col,
-                labelStyle: AppTextStyles.small(
-                    sel ? col : colors.onSurface),
+                labelStyle: AppTextStyles.small(sel ? col : colors.onSurface),
               );
             }).toList(),
           ),
@@ -270,9 +291,9 @@ class _IncidentReportEditorScreenState
           TextField(
             controller: _titleController,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: AppStrings.incidentTitleHint,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: AppSpacing.md),
@@ -283,9 +304,9 @@ class _IncidentReportEditorScreenState
           TextField(
             controller: _locationController,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: AppStrings.incidentLocationHint,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -297,9 +318,9 @@ class _IncidentReportEditorScreenState
             controller: _descriptionController,
             maxLines: 4,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: AppStrings.incidentDescriptionHint,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -311,9 +332,9 @@ class _IncidentReportEditorScreenState
             controller: _immediateActionController,
             maxLines: 3,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: AppStrings.incidentImmediateActionHint,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: AppSpacing.lg),
@@ -325,9 +346,9 @@ class _IncidentReportEditorScreenState
             controller: _injuryDetailsController,
             maxLines: 2,
             textCapitalization: TextCapitalization.sentences,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: AppStrings.incidentInjuryDetailsHint,
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(),
             ),
           ),
           const SizedBox(height: AppSpacing.xl),
@@ -380,8 +401,7 @@ class _IncidentReportEditorScreenState
                 labelText: AppStrings.incidentFollowUpDetails,
                 hintText: AppStrings.incidentFollowUpDetailsHint,
                 border: OutlineInputBorder(
-                  borderSide:
-                      BorderSide(color: AppColors.amber.withAlpha(120)),
+                  borderSide: BorderSide(color: AppColors.amber.withAlpha(120)),
                 ),
                 focusedBorder: const OutlineInputBorder(
                   borderSide: BorderSide(color: AppColors.amber),
@@ -402,7 +422,10 @@ class _IncidentReportEditorScreenState
                     width: 20,
                     height: 20,
                     child: CircularProgressIndicator(
-                        strokeWidth: 2, color: AppColors.white))
+                      strokeWidth: 2,
+                      color: AppColors.white,
+                    ),
+                  )
                 : const Text(AppStrings.save),
           ),
         ],
@@ -411,20 +434,20 @@ class _IncidentReportEditorScreenState
   }
 
   Color _typeColor(IncidentType t) => switch (t) {
-        IncidentType.behaviour => AppColors.amber,
-        IncidentType.medical => AppColors.blue,
-        IncidentType.accident => AppColors.orange,
-        IncidentType.propertyDamage => AppColors.slate400,
-        IncidentType.missingPerson => AppColors.red,
-        IncidentType.safeguarding => AppColors.roleInspector,
-      };
+    IncidentType.behaviour => AppColors.amber,
+    IncidentType.medical => AppColors.blue,
+    IncidentType.accident => AppColors.orange,
+    IncidentType.propertyDamage => AppColors.slate400,
+    IncidentType.missingPerson => AppColors.red,
+    IncidentType.safeguarding => AppColors.roleInspector,
+  };
 
   Color _severityColor(IncidentSeverity s) => switch (s) {
-        IncidentSeverity.low => AppColors.green,
-        IncidentSeverity.medium => AppColors.amber,
-        IncidentSeverity.high => AppColors.orange,
-        IncidentSeverity.critical => AppColors.red,
-      };
+    IncidentSeverity.low => AppColors.green,
+    IncidentSeverity.medium => AppColors.amber,
+    IncidentSeverity.high => AppColors.orange,
+    IncidentSeverity.critical => AppColors.red,
+  };
 }
 
 // ── Sub-widgets ───────────────────────────────────────────────────────────────
@@ -446,9 +469,9 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-        child: Text(text, style: AppTextStyles.label(colors.onSurfaceVariant)),
-      );
+    padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+    child: Text(text, style: AppTextStyles.label(colors.onSurfaceVariant)),
+  );
 }
 
 class _NotifyToggle extends StatelessWidget {
@@ -468,25 +491,32 @@ class _NotifyToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        decoration: BoxDecoration(
-          color: value ? color.withAlpha(15) : null,
-          border: Border.all(
-              color: value
-                  ? color.withAlpha(80)
-                  : Theme.of(context).colorScheme.outline),
-          borderRadius: BorderRadius.circular(AppRadius.card),
+    decoration: BoxDecoration(
+      color: value ? color.withAlpha(15) : null,
+      border: Border.all(
+        color: value
+            ? color.withAlpha(80)
+            : Theme.of(context).colorScheme.outline,
+      ),
+      borderRadius: BorderRadius.circular(AppRadius.card),
+    ),
+    child: SwitchListTile(
+      value: value,
+      onChanged: onChanged,
+      title: Text(
+        title,
+        style: AppTextStyles.body(
+          value ? color : Theme.of(context).colorScheme.onSurface,
         ),
-        child: SwitchListTile(
-          value: value,
-          onChanged: onChanged,
-          title: Text(title,
-              style: AppTextStyles.body(
-                  value ? color : Theme.of(context).colorScheme.onSurface)),
-          subtitle: Text(subtitle,
-              style: AppTextStyles.small(
-                  Theme.of(context).colorScheme.onSurfaceVariant)),
-          activeThumbColor: color,
-          dense: true,
+      ),
+      subtitle: Text(
+        subtitle,
+        style: AppTextStyles.small(
+          Theme.of(context).colorScheme.onSurfaceVariant,
         ),
-      );
+      ),
+      activeThumbColor: color,
+      dense: true,
+    ),
+  );
 }

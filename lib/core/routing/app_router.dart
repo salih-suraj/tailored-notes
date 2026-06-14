@@ -75,12 +75,12 @@ class _AuthChangeNotifier extends ChangeNotifier {
 
 /// Returns the default landing route for [role] after login / MFA.
 String _defaultRoute(UserRole role) => switch (role) {
-      UserRole.supportWorker => AppRoutes.children,
-      UserRole.teamLeader => AppRoutes.children,
-      UserRole.manager => AppRoutes.children,
-      UserRole.inspector => AppRoutes.inspector,
-      UserRole.parentGuardian => AppRoutes.parentPortal,
-    };
+  UserRole.supportWorker => AppRoutes.children,
+  UserRole.teamLeader => AppRoutes.children,
+  UserRole.manager => AppRoutes.children,
+  UserRole.inspector => AppRoutes.inspector,
+  UserRole.parentGuardian => AppRoutes.parentPortal,
+};
 
 /// Returns true if [role] is allowed to visit [location].
 /// Settings is always permitted. All other routes are role-gated.
@@ -88,29 +88,25 @@ bool _isRouteAllowed(String location, UserRole role) {
   if (location.startsWith(AppRoutes.settings)) return true;
   final allowed = switch (role) {
     UserRole.supportWorker => [
-        AppRoutes.children,
-        AppRoutes.dailyNotes,
-        AppRoutes.checklists,
-      ],
+      AppRoutes.children,
+      AppRoutes.dailyNotes,
+      AppRoutes.checklists,
+    ],
     UserRole.teamLeader => [
-        AppRoutes.children,
-        AppRoutes.dailyNotes,
-        AppRoutes.checklists,
-        AppRoutes.handover,
-      ],
+      AppRoutes.children,
+      AppRoutes.dailyNotes,
+      AppRoutes.checklists,
+      AppRoutes.handover,
+    ],
     UserRole.manager => [
-        AppRoutes.children,
-        AppRoutes.dashboard,
-        AppRoutes.handover,
-      ],
+      AppRoutes.children,
+      AppRoutes.dashboard,
+      AppRoutes.handover,
+    ],
     // Inspectors only reach children through an access grant in the portal —
     // the home-scoped /children routes are off-limits.
-    UserRole.inspector => [
-        AppRoutes.inspector,
-      ],
-    UserRole.parentGuardian => [
-        AppRoutes.parentPortal,
-      ],
+    UserRole.inspector => [AppRoutes.inspector],
+    UserRole.parentGuardian => [AppRoutes.parentPortal],
   };
   return allowed.any(location.startsWith);
 }
@@ -130,8 +126,8 @@ GoRouter appRouter(Ref ref) {
     redirect: (context, state) {
       final user = ref.read(currentUserProvider);
       final location = state.matchedLocation;
-      final isAuthRoute = location == AppRoutes.login ||
-          location == AppRoutes.forgotPassword;
+      final isAuthRoute =
+          location == AppRoutes.login || location == AppRoutes.forgotPassword;
       final isMfaRoute = location == AppRoutes.mfa;
 
       // Not logged in — send to login.
@@ -140,7 +136,9 @@ GoRouter appRouter(Ref ref) {
 
       // Logged in but on auth screen — send to correct landing page.
       if (isAuthRoute) {
-        return user.needsMfaChallenge ? AppRoutes.mfa : _defaultRoute(user.role);
+        return user.needsMfaChallenge
+            ? AppRoutes.mfa
+            : _defaultRoute(user.role);
       }
 
       // MFA checks. /mfa is fully resolved here — it must not fall through
@@ -159,18 +157,12 @@ GoRouter appRouter(Ref ref) {
       return null;
     },
     routes: [
-      GoRoute(
-        path: AppRoutes.login,
-        builder: (_, _) => const LoginScreen(),
-      ),
+      GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(
         path: AppRoutes.forgotPassword,
         builder: (_, _) => const PlaceholderScreen(title: 'Forgot Password'),
       ),
-      GoRoute(
-        path: AppRoutes.mfa,
-        builder: (_, _) => const MfaScreen(),
-      ),
+      GoRoute(path: AppRoutes.mfa, builder: (_, _) => const MfaScreen()),
       ShellRoute(
         builder: (context, state, child) => NavShell(child: child),
         routes: [
@@ -178,15 +170,11 @@ GoRouter appRouter(Ref ref) {
             path: AppRoutes.children,
             builder: (_, _) => const ChildrenListScreen(),
             routes: [
-              GoRoute(
-                path: 'new',
-                builder: (_, _) => const AddChildScreen(),
-              ),
+              GoRoute(path: 'new', builder: (_, _) => const AddChildScreen()),
               GoRoute(
                 path: ':id',
-                builder: (_, state) => ChildProfileScreen(
-                  childId: state.pathParameters['id']!,
-                ),
+                builder: (_, state) =>
+                    ChildProfileScreen(childId: state.pathParameters['id']!),
                 routes: [
                   GoRoute(
                     path: 'daily-notes',
@@ -211,21 +199,18 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'checklists',
-                    builder: (_, state) => ChecklistScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        ChecklistScreen(childId: state.pathParameters['id']!),
                   ),
                   GoRoute(
                     path: 'bath-temp',
-                    builder: (_, state) => BathTempScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        BathTempScreen(childId: state.pathParameters['id']!),
                   ),
                   GoRoute(
                     path: 'smart-steps',
-                    builder: (_, state) => SmartStepsScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        SmartStepsScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -252,9 +237,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'activities',
-                    builder: (_, state) => ActivitiesScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        ActivitiesScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -273,9 +257,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'food-diary',
-                    builder: (_, state) => FoodDiaryScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        FoodDiaryScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -294,9 +277,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'sleep-diary',
-                    builder: (_, state) => SleepDiaryScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        SleepDiaryScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -315,9 +297,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'behaviour',
-                    builder: (_, state) => BehaviourScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        BehaviourScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -329,8 +310,7 @@ GoRouter appRouter(Ref ref) {
                         path: ':incidentId/edit',
                         builder: (_, state) => BehaviourIncidentEditorScreen(
                           childId: state.pathParameters['id']!,
-                          existing:
-                              state.extra as BehaviourIncident?,
+                          existing: state.extra as BehaviourIncident?,
                         ),
                       ),
                     ],
@@ -352,9 +332,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'medication',
-                    builder: (_, state) => MedicationScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        MedicationScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'meds/new',
@@ -373,9 +352,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'care-plans',
-                    builder: (_, state) => CarePlansScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        CarePlansScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -385,9 +363,8 @@ GoRouter appRouter(Ref ref) {
                       ),
                       GoRoute(
                         path: ':planId',
-                        builder: (_, state) => CarePlanDetailScreen(
-                          plan: state.extra as CarePlan,
-                        ),
+                        builder: (_, state) =>
+                            CarePlanDetailScreen(plan: state.extra as CarePlan),
                         routes: [
                           GoRoute(
                             path: 'edit',
@@ -402,9 +379,8 @@ GoRouter appRouter(Ref ref) {
                   ),
                   GoRoute(
                     path: 'incidents',
-                    builder: (_, state) => IncidentsScreen(
-                      childId: state.pathParameters['id']!,
-                    ),
+                    builder: (_, state) =>
+                        IncidentsScreen(childId: state.pathParameters['id']!),
                     routes: [
                       GoRoute(
                         path: 'new',
@@ -464,23 +440,19 @@ GoRouter appRouter(Ref ref) {
           ),
           GoRoute(
             path: AppRoutes.sleepDiary,
-            builder: (_, _) =>
-                const PlaceholderScreen(title: 'Sleep Diary'),
+            builder: (_, _) => const PlaceholderScreen(title: 'Sleep Diary'),
           ),
           GoRoute(
             path: AppRoutes.foodDiary,
-            builder: (_, _) =>
-                const PlaceholderScreen(title: 'Food Diary'),
+            builder: (_, _) => const PlaceholderScreen(title: 'Food Diary'),
           ),
           GoRoute(
             path: AppRoutes.activities,
-            builder: (_, _) =>
-                const PlaceholderScreen(title: 'Activities'),
+            builder: (_, _) => const PlaceholderScreen(title: 'Activities'),
           ),
           GoRoute(
             path: AppRoutes.smartSteps,
-            builder: (_, _) =>
-                const PlaceholderScreen(title: 'Smart Steps'),
+            builder: (_, _) => const PlaceholderScreen(title: 'Smart Steps'),
           ),
           GoRoute(
             path: AppRoutes.handover,

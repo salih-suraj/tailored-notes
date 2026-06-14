@@ -47,8 +47,15 @@ abstract final class UkTime {
   /// End of today (London 23:59:59) as a UTC instant, for range queries.
   static DateTime endOfTodayUtc() {
     final uk = now();
-    return tz.TZDateTime(_london, uk.year, uk.month, uk.day, 23, 59, 59)
-        .toUtc();
+    return tz.TZDateTime(
+      _london,
+      uk.year,
+      uk.month,
+      uk.day,
+      23,
+      59,
+      59,
+    ).toUtc();
   }
 
   /// Start of the London day [date] ('YYYY-MM-DD') as a UTC instant.

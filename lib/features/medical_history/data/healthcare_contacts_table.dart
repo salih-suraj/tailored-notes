@@ -17,8 +17,7 @@ class HealthcareContactsTable extends Table {
   TextColumn get notes => text().nullable()();
   TextColumn get createdById => text().named('created_by_id').nullable()();
   TextColumn get updatedById => text().named('updated_by_id').nullable()();
-  DateTimeColumn get deletedAt =>
-      dateTime().named('deleted_at').nullable()();
+  DateTimeColumn get deletedAt => dateTime().named('deleted_at').nullable()();
   DateTimeColumn get createdAt => dateTime().named('created_at')();
   DateTimeColumn get updatedAt => dateTime().named('updated_at')();
   BoolColumn get isSynced =>

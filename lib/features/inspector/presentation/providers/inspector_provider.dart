@@ -35,9 +35,9 @@ InspectorFeedbackRepository inspectorFeedbackRepository(Ref ref) =>
 
 @riverpod
 InspectorAuditService inspectorAuditService(Ref ref) => InspectorAuditService(
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-    );
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+);
 
 /// Active grants for the signed-in inspector.
 @riverpod
@@ -66,10 +66,7 @@ Future<List<InspectorAccount>> inspectorSearch(Ref ref, String query) =>
 
 /// Children belonging to a granted home.
 @riverpod
-Future<List<Map<String, dynamic>>> inspectorChildren(
-  Ref ref,
-  String homeId,
-) =>
+Future<List<Map<String, dynamic>>> inspectorChildren(Ref ref, String homeId) =>
     ref.watch(inspectorRecordsRepositoryProvider).fetchChildren(homeId);
 
 /// Records for [module] in [homeId], optionally narrowed to [childId].
@@ -79,12 +76,9 @@ Future<List<Map<String, dynamic>>> inspectorRecords(
   String homeId,
   InspectorModule module,
   String? childId,
-) =>
-    ref.watch(inspectorRecordsRepositoryProvider).fetchRecords(
-          module: module,
-          homeId: homeId,
-          childId: childId,
-        );
+) => ref
+    .watch(inspectorRecordsRepositoryProvider)
+    .fetchRecords(module: module, homeId: homeId, childId: childId);
 
 /// All feedback submitted for [homeId]. Manager view.
 @riverpod

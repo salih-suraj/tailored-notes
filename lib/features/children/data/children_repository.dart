@@ -19,10 +19,10 @@ class ChildrenRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final ChildrenDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -47,8 +47,15 @@ class ChildrenRepository implements SyncTarget {
       action: isNew ? 'insert' : 'update',
       table: 'children',
       recordId: child.id,
-      before: isNew ? null : {'id': existing.id, 'name': existing.name, 'room': existing.room},
-      after: {'id': child.id, 'name': child.name, 'room': child.room, 'date_of_birth': child.dateOfBirth},
+      before: isNew
+          ? null
+          : {'id': existing.id, 'name': existing.name, 'room': existing.room},
+      after: {
+        'id': child.id,
+        'name': child.name,
+        'room': child.room,
+        'date_of_birth': child.dateOfBirth,
+      },
     );
 
     _trySyncToSupabase(withUpdater);
@@ -71,36 +78,36 @@ class ChildrenRepository implements SyncTarget {
   // ── Private helpers ────────────────────────────────────────────────────────
 
   Child _toDomain(ChildRow row) => Child(
-        id: row.id,
-        homeId: row.homeId,
-        name: row.name,
-        dateOfBirth: row.dateOfBirth,
-        room: row.room,
-        photoUrl: row.photoUrl,
-        notes: row.notes,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        deletedAt: row.deletedAt,
-        createdById: row.createdById,
-        updatedById: row.updatedById,
-        isSynced: row.isSynced,
-      );
+    id: row.id,
+    homeId: row.homeId,
+    name: row.name,
+    dateOfBirth: row.dateOfBirth,
+    room: row.room,
+    photoUrl: row.photoUrl,
+    notes: row.notes,
+    createdAt: row.createdAt,
+    updatedAt: row.updatedAt,
+    deletedAt: row.deletedAt,
+    createdById: row.createdById,
+    updatedById: row.updatedById,
+    isSynced: row.isSynced,
+  );
 
   ChildrenTableCompanion _toCompanion(Child child) => ChildrenTableCompanion(
-        id: Value(child.id),
-        homeId: Value(child.homeId),
-        name: Value(child.name),
-        dateOfBirth: Value(child.dateOfBirth),
-        room: Value(child.room),
-        photoUrl: Value(child.photoUrl),
-        notes: Value(child.notes),
-        createdAt: Value(child.createdAt.toUtc()),
-        updatedAt: Value(child.updatedAt.toUtc()),
-        deletedAt: Value(child.deletedAt?.toUtc()),
-        createdById: Value(child.createdById),
-        updatedById: Value(child.updatedById),
-        isSynced: Value(child.isSynced),
-      );
+    id: Value(child.id),
+    homeId: Value(child.homeId),
+    name: Value(child.name),
+    dateOfBirth: Value(child.dateOfBirth),
+    room: Value(child.room),
+    photoUrl: Value(child.photoUrl),
+    notes: Value(child.notes),
+    createdAt: Value(child.createdAt.toUtc()),
+    updatedAt: Value(child.updatedAt.toUtc()),
+    deletedAt: Value(child.deletedAt?.toUtc()),
+    createdById: Value(child.createdById),
+    updatedById: Value(child.updatedById),
+    isSynced: Value(child.isSynced),
+  );
 
   Future<void> _trySyncToSupabase(Child child) async {
     final client = _supabaseClient;

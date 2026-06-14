@@ -43,8 +43,11 @@ class ManagerParentAccessScreen extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.family_restroom_outlined,
-                        size: 56, color: colors.onSurfaceVariant),
+                    Icon(
+                      Icons.family_restroom_outlined,
+                      size: 56,
+                      color: colors.onSurfaceVariant,
+                    ),
                     const SizedBox(height: AppSpacing.lg),
                     Text(
                       AppStrings.managerNoParentLinks,
@@ -93,7 +96,8 @@ class _LinkTile extends ConsumerWidget {
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
             style: TextButton.styleFrom(
-                foregroundColor: Theme.of(dialogContext).colorScheme.error),
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.managerRevokeParentLink),
           ),
         ],
@@ -154,7 +158,9 @@ class _LinkTile extends ConsumerWidget {
                   label: link.canViewPhotos
                       ? AppStrings.managerParentLinkPhotosOn
                       : AppStrings.managerParentLinkPhotosOff,
-                  color: link.canViewPhotos ? AppColors.blue : AppColors.slate400,
+                  color: link.canViewPhotos
+                      ? AppColors.blue
+                      : AppColors.slate400,
                 ),
               ],
             ),
@@ -184,12 +190,11 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: 2),
-        decoration: BoxDecoration(
-          color: color.withAlpha(25),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(25),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }

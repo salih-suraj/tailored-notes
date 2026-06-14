@@ -31,7 +31,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    await ref.read(authNotifierProvider.notifier).signIn(
+    await ref
+        .read(authNotifierProvider.notifier)
+        .signIn(
           email: _emailController.text.trim(),
           password: _passwordController.text,
         );
@@ -72,10 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Logo + wordmark
-                    Image.asset(
-                      'assets/images/logo.png',
-                      height: 80,
-                    ),
+                    Image.asset('assets/images/logo.png', height: 80),
                     const SizedBox(height: AppSpacing.md),
                     Text(
                       AppStrings.appName,
@@ -155,8 +154,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
-                        onPressed: () =>
-                            context.push(AppRoutes.forgotPassword),
+                        onPressed: () => context.push(AppRoutes.forgotPassword),
                         child: const Text(AppStrings.forgotPassword),
                       ),
                     ),

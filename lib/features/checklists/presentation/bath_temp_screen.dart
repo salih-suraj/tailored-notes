@@ -31,7 +31,8 @@ class BathTempScreen extends ConsumerWidget {
     final recordsAsync = ref.watch(bathTempTodayProvider(childId));
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -141,9 +142,9 @@ class BathTempScreen extends ConsumerWidget {
         await ref.read(bathTempRepositoryProvider).delete(id);
       } catch (e) {
         if (context.mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(e.toString())),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text(e.toString())));
         }
       }
     }
@@ -164,8 +165,10 @@ class _BathTempCard extends StatelessWidget {
     final status = bathTempStatus(record.temperatureCelsius);
     final indicatorColor = _statusColor(status);
     final statusLabel = _statusLabel(status);
-    final timeStr =
-        DateFormat('HH:mm', 'en_GB').format(record.recordedAt.toUk());
+    final timeStr = DateFormat(
+      'HH:mm',
+      'en_GB',
+    ).format(record.recordedAt.toUk());
     final shiftColor = switch (record.shift) {
       ShiftType.morning => AppColors.amber,
       ShiftType.afternoon => AppColors.teal400,
@@ -216,10 +219,7 @@ class _BathTempCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: AppSpacing.xs),
-                  Text(
-                    statusLabel,
-                    style: AppTextStyles.body(indicatorColor),
-                  ),
+                  Text(statusLabel, style: AppTextStyles.body(indicatorColor)),
                   Text(
                     record.recordedByName,
                     style: AppTextStyles.small(colors.onSurfaceVariant),
@@ -260,16 +260,16 @@ class _BathTempCard extends StatelessWidget {
   }
 
   Color _statusColor(BathTempStatus s) => switch (s) {
-        BathTempStatus.safe => AppColors.green,
-        BathTempStatus.tooCold => AppColors.blue,
-        BathTempStatus.tooHot => AppColors.red,
-      };
+    BathTempStatus.safe => AppColors.green,
+    BathTempStatus.tooCold => AppColors.blue,
+    BathTempStatus.tooHot => AppColors.red,
+  };
 
   String _statusLabel(BathTempStatus s) => switch (s) {
-        BathTempStatus.safe => AppStrings.bathTempSafe,
-        BathTempStatus.tooCold => AppStrings.bathTempCold,
-        BathTempStatus.tooHot => AppStrings.bathTempHot,
-      };
+    BathTempStatus.safe => AppStrings.bathTempSafe,
+    BathTempStatus.tooCold => AppStrings.bathTempCold,
+    BathTempStatus.tooHot => AppStrings.bathTempHot,
+  };
 }
 
 class _ShiftBadge extends StatelessWidget {
@@ -279,16 +279,13 @@ class _ShiftBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm,
-          vertical: 2,
-        ),
-        decoration: BoxDecoration(
-          color: color.withAlpha(30),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
+    decoration: BoxDecoration(
+      color: color.withAlpha(30),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }
 
 // ── Entry bottom sheet ───────────────────────────────────────────────────────
@@ -329,7 +326,9 @@ class _BathTempEntrySheetState extends ConsumerState<_BathTempEntrySheet> {
     try {
       final user = ref.read(currentUserProvider);
       final now = DateTime.now().toUtc();
-      await ref.read(bathTempRepositoryProvider).save(
+      await ref
+          .read(bathTempRepositoryProvider)
+          .save(
             BathTempRecord(
               id: const Uuid().v4(),
               homeId: user?.homeId ?? 'dev-home-001',
@@ -338,8 +337,7 @@ class _BathTempEntrySheetState extends ConsumerState<_BathTempEntrySheet> {
               shift: ShiftType.forTime(DateTime.now()),
               recordedAt: now,
               recordedById: user?.id ?? 'dev-user-001',
-              recordedByName:
-                  user?.displayName ?? user?.email ?? 'Unknown',
+              recordedByName: user?.displayName ?? user?.email ?? 'Unknown',
               notes: _notesController.text.trim().isEmpty
                   ? null
                   : _notesController.text.trim(),
@@ -405,12 +403,9 @@ class _BathTempEntrySheetState extends ConsumerState<_BathTempEntrySheet> {
           const SizedBox(height: AppSpacing.lg),
           TextField(
             controller: _tempController,
-            keyboardType:
-                const TextInputType.numberWithOptions(decimal: true),
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
             inputFormatters: [
-              FilteringTextInputFormatter.allow(
-                RegExp(r'^\d{0,2}\.?\d{0,1}'),
-              ),
+              FilteringTextInputFormatter.allow(RegExp(r'^\d{0,2}\.?\d{0,1}')),
             ],
             textAlign: TextAlign.center,
             style: GoogleFonts.dmSans(
@@ -437,14 +432,11 @@ class _BathTempEntrySheetState extends ConsumerState<_BathTempEntrySheet> {
           if (status != null) ...[
             const SizedBox(height: AppSpacing.sm),
             Center(
-              child: Text(
-                switch (status) {
-                  BathTempStatus.safe => AppStrings.bathTempSafe,
-                  BathTempStatus.tooCold => AppStrings.bathTempCold,
-                  BathTempStatus.tooHot => AppStrings.bathTempHot,
-                },
-                style: AppTextStyles.body(indicatorColor),
-              ),
+              child: Text(switch (status) {
+                BathTempStatus.safe => AppStrings.bathTempSafe,
+                BathTempStatus.tooCold => AppStrings.bathTempCold,
+                BathTempStatus.tooHot => AppStrings.bathTempHot,
+              }, style: AppTextStyles.body(indicatorColor)),
             ),
           ],
           const SizedBox(height: AppSpacing.lg),

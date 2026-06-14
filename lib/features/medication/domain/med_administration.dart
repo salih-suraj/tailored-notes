@@ -6,15 +6,18 @@ part 'med_administration.freezed.dart';
 part 'med_administration.g.dart';
 
 enum AdminOutcome {
-  @JsonValue('administered') administered,
-  @JsonValue('refused') refused,
-  @JsonValue('held') held;
+  @JsonValue('administered')
+  administered,
+  @JsonValue('refused')
+  refused,
+  @JsonValue('held')
+  held;
 
   String get displayName => switch (this) {
-        AdminOutcome.administered => 'Administered',
-        AdminOutcome.refused => 'Refused by child',
-        AdminOutcome.held => 'Held / Withheld',
-      };
+    AdminOutcome.administered => 'Administered',
+    AdminOutcome.refused => 'Refused by child',
+    AdminOutcome.held => 'Held / Withheld',
+  };
 }
 
 /// A single medication administration event (or refusal/hold).

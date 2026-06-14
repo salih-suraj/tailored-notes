@@ -15,11 +15,7 @@ import '../domain/care_plan.dart';
 import 'providers/care_plans_provider.dart';
 
 class CarePlanEditorScreen extends ConsumerStatefulWidget {
-  const CarePlanEditorScreen({
-    super.key,
-    required this.childId,
-    this.existing,
-  });
+  const CarePlanEditorScreen({super.key, required this.childId, this.existing});
 
   final String childId;
   final CarePlan? existing;
@@ -104,7 +100,8 @@ class _CarePlanEditorScreenState extends ConsumerState<CarePlanEditorScreen> {
             ? null
             : _notesController.text.trim(),
         authorId: existing?.authorId ?? user?.id ?? 'dev-user-001',
-        authorName: existing?.authorName ??
+        authorName:
+            existing?.authorName ??
             user?.displayName ??
             user?.email ??
             'Unknown',
@@ -119,13 +116,17 @@ class _CarePlanEditorScreenState extends ConsumerState<CarePlanEditorScreen> {
       await ref.read(carePlansRepositoryProvider).savePlan(plan);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Care plan save failed', error: e, stackTrace: st,
-          name: 'CarePlanEditor');
+      log(
+        'Care plan save failed',
+        error: e,
+        stackTrace: st,
+        name: 'CarePlanEditor',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(AppStrings.saveFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -273,9 +274,7 @@ class _CarePlanEditorScreenState extends ConsumerState<CarePlanEditorScreen> {
           TextField(
             controller: _notesController,
             maxLines: 4,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-            ),
+            decoration: const InputDecoration(border: OutlineInputBorder()),
           ),
           const SizedBox(height: AppSpacing.xxl),
 

@@ -6,15 +6,18 @@ part 'behaviour_incident.freezed.dart';
 part 'behaviour_incident.g.dart';
 
 enum BehaviourSeverity {
-  @JsonValue('mild') mild,
-  @JsonValue('moderate') moderate,
-  @JsonValue('severe') severe;
+  @JsonValue('mild')
+  mild,
+  @JsonValue('moderate')
+  moderate,
+  @JsonValue('severe')
+  severe;
 
   String get displayName => switch (this) {
-        BehaviourSeverity.mild => 'Mild',
-        BehaviourSeverity.moderate => 'Moderate',
-        BehaviourSeverity.severe => 'Severe',
-      };
+    BehaviourSeverity.mild => 'Mild',
+    BehaviourSeverity.moderate => 'Moderate',
+    BehaviourSeverity.severe => 'Severe',
+  };
 }
 
 /// A single behavioural incident recorded using the ABC model:
@@ -29,10 +32,13 @@ class BehaviourIncident with _$BehaviourIncident {
     required ShiftType shift,
     required DateTime occurredAt,
     required BehaviourSeverity severity,
+
     /// What happened immediately before — triggers, environment, context.
     required String antecedent,
+
     /// Description of the behaviour itself.
     required String behaviour,
+
     /// Staff response and what happened as a result.
     required String consequence,
     int? durationMinutes,

@@ -83,13 +83,18 @@ class _HubCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(title, style: AppTextStyles.h3(colors.onSurface)),
-                    Text(description,
-                        style: AppTextStyles.small(colors.onSurfaceVariant)),
+                    Text(
+                      description,
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right,
-                  color: colors.onSurfaceVariant, size: 18),
+              Icon(
+                Icons.chevron_right,
+                color: colors.onSurfaceVariant,
+                size: 18,
+              ),
             ],
           ),
         ),

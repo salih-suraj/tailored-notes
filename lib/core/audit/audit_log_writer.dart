@@ -25,9 +25,9 @@ class AuditLogWriter implements SyncTarget {
     required AuditLogDao dao,
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser;
 
   final AuditLogDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -171,7 +171,7 @@ class AuditLogWriter implements SyncTarget {
 
 @Riverpod(keepAlive: true)
 AuditLogWriter auditLogWriter(Ref ref) => AuditLogWriter(
-      dao: ref.watch(appDatabaseProvider).auditLogDao,
-      supabaseClient: ref.watch(supabaseClientProvider),
-      currentUser: ref.watch(currentUserProvider),
-    );
+  dao: ref.watch(appDatabaseProvider).auditLogDao,
+  supabaseClient: ref.watch(supabaseClientProvider),
+  currentUser: ref.watch(currentUserProvider),
+);

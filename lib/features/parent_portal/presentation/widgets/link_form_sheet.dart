@@ -11,10 +11,7 @@ import '../../data/parent_links_repository.dart';
 import '../providers/parent_portal_provider.dart';
 
 /// Opens the "Link Parent to Child" bottom sheet for [homeId].
-Future<void> showLinkFormSheet(
-  BuildContext context, {
-  required String homeId,
-}) {
+Future<void> showLinkFormSheet(BuildContext context, {required String homeId}) {
   return showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
@@ -69,7 +66,9 @@ class _LinkFormSheetState extends ConsumerState<LinkFormSheet> {
     });
 
     try {
-      await ref.read(parentLinksRepositoryProvider).createLink(
+      await ref
+          .read(parentLinksRepositoryProvider)
+          .createLink(
             parentUserId: selected.id,
             childId: childId,
             homeId: widget.homeId,
@@ -109,11 +108,15 @@ class _LinkFormSheetState extends ConsumerState<LinkFormSheet> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppStrings.managerParentLinkFormTitle,
-                style: AppTextStyles.h2(colors.onSurface)),
+            Text(
+              AppStrings.managerParentLinkFormTitle,
+              style: AppTextStyles.h2(colors.onSurface),
+            ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.managerParentLinkFormSearchLabel,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.managerParentLinkFormSearchLabel,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.xs),
             TextField(
               controller: _searchController,
@@ -133,12 +136,16 @@ class _LinkFormSheetState extends ConsumerState<LinkFormSheet> {
                   padding: EdgeInsets.symmetric(vertical: AppSpacing.sm),
                   child: LinearProgressIndicator(),
                 ),
-                error: (e, _) => Text(e.toString(),
-                    style: AppTextStyles.small(colors.error)),
+                error: (e, _) => Text(
+                  e.toString(),
+                  style: AppTextStyles.small(colors.error),
+                ),
                 data: (results) {
                   if (results.isEmpty) {
-                    return Text(AppStrings.managerParentLinkFormNoResults,
-                        style: AppTextStyles.small(colors.onSurfaceVariant));
+                    return Text(
+                      AppStrings.managerParentLinkFormNoResults,
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    );
                   }
                   return Column(
                     children: [
@@ -157,8 +164,10 @@ class _LinkFormSheetState extends ConsumerState<LinkFormSheet> {
                 },
               ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.managerParentLinkFormChildLabel,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.managerParentLinkFormChildLabel,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.xs),
             childrenAsync.when(
               loading: () => const LinearProgressIndicator(),
@@ -220,13 +229,15 @@ class _Badge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.sm, vertical: AppSpacing.xs),
-        decoration: BoxDecoration(
-          color: color.withAlpha(20),
-          borderRadius: BorderRadius.circular(AppRadius.pill),
-          border: Border.all(color: color.withAlpha(60)),
-        ),
-        child: Text(label, style: AppTextStyles.label(color)),
-      );
+    padding: const EdgeInsets.symmetric(
+      horizontal: AppSpacing.sm,
+      vertical: AppSpacing.xs,
+    ),
+    decoration: BoxDecoration(
+      color: color.withAlpha(20),
+      borderRadius: BorderRadius.circular(AppRadius.pill),
+      border: Border.all(color: color.withAlpha(60)),
+    ),
+    child: Text(label, style: AppTextStyles.label(color)),
+  );
 }

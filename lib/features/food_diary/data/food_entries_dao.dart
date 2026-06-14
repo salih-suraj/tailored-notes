@@ -12,18 +12,16 @@ class FoodEntriesDao extends DatabaseAccessor<AppDatabase>
 
   Stream<List<FoodEntryRow>> watchByChild(String childId) =>
       (select(foodEntriesTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([
               (t) => OrderingTerm.desc(t.date),
               (t) => OrderingTerm.desc(t.createdAt),
             ]))
           .watch();
 
-  Future<FoodEntryRow?> findById(String id) =>
-      (select(foodEntriesTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<FoodEntryRow?> findById(String id) => (select(
+    foodEntriesTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(FoodEntriesTableCompanion entry) =>
       into(foodEntriesTable).insertOnConflictUpdate(entry);

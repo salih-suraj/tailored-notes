@@ -1,4 +1,4 @@
-﻿import 'dart:developer';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +32,8 @@ class MedicationScreen extends ConsumerWidget {
     final childrenAsync = ref.watch(childrenProvider);
     final colors = Theme.of(context).colorScheme;
 
-    final childName = childrenAsync.valueOrNull
+    final childName =
+        childrenAsync.valueOrNull
             ?.where((c) => c.id == childId)
             .firstOrNull
             ?.name ??
@@ -48,8 +49,10 @@ class MedicationScreen extends ConsumerWidget {
           children: [
             const Text(AppStrings.medicationTitle),
             if (childName.isNotEmpty)
-              Text(childName,
-                  style: AppTextStyles.small(colors.onSurfaceVariant)),
+              Text(
+                childName,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+              ),
           ],
         ),
         actions: [
@@ -62,16 +65,15 @@ class MedicationScreen extends ConsumerWidget {
         ],
       ),
       body: switch ((medsAsync, adminsAsync)) {
-        (AsyncError(:final error), _) || (_, AsyncError(:final error)) =>
-          ErrorView(
-            message: error.toString(),
-            onRetry: () {
-              ref.invalidate(prescribedMedsProvider(childId));
-              ref.invalidate(todayAdminsProvider(childId));
-            },
-          ),
-        (AsyncLoading(), _) || (_, AsyncLoading()) =>
-          const LoadingSkeleton(),
+        (AsyncError(:final error), _) ||
+        (_, AsyncError(:final error)) => ErrorView(
+          message: error.toString(),
+          onRetry: () {
+            ref.invalidate(prescribedMedsProvider(childId));
+            ref.invalidate(todayAdminsProvider(childId));
+          },
+        ),
+        (AsyncLoading(), _) || (_, AsyncLoading()) => const LoadingSkeleton(),
         (AsyncData(value: final meds), AsyncData(value: final admins)) =>
           _MARBody(
             childId: childId,
@@ -114,14 +116,21 @@ class _MARBody extends ConsumerWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.medication_outlined, size: 56,
-                color: colors.onSurfaceVariant),
+            Icon(
+              Icons.medication_outlined,
+              size: 56,
+              color: colors.onSurfaceVariant,
+            ),
             const SizedBox(height: AppSpacing.lg),
-            Text(AppStrings.medNoMeds,
-                style: AppTextStyles.body(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medNoMeds,
+              style: AppTextStyles.body(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.sm),
-            Text(AppStrings.medNoMedsHint,
-                style: AppTextStyles.small(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medNoMedsHint,
+              style: AppTextStyles.small(colors.onSurfaceVariant),
+            ),
           ],
         ),
       );
@@ -133,8 +142,7 @@ class _MARBody extends ConsumerWidget {
         // Date + shift header
         Row(
           children: [
-            Text(today,
-                style: AppTextStyles.body(colors.onSurfaceVariant)),
+            Text(today, style: AppTextStyles.body(colors.onSurfaceVariant)),
             const SizedBox(width: AppSpacing.sm),
             _ShiftBadge(shift: shift),
           ],
@@ -142,8 +150,10 @@ class _MARBody extends ConsumerWidget {
         const SizedBox(height: AppSpacing.lg),
 
         if (scheduled.isNotEmpty) ...[
-          Text(AppStrings.medScheduled,
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.medScheduled,
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.sm),
           ...scheduled.map((med) {
             final record = _latestRecordForMed(med.id, todayAdmins);
@@ -152,8 +162,7 @@ class _MARBody extends ConsumerWidget {
               child: _MedCard(
                 med: med,
                 latestAdmin: record,
-                onAdminister: () =>
-                    _showAdminSheet(context, ref, med, record),
+                onAdminister: () => _showAdminSheet(context, ref, med, record),
                 onDelete: () => _confirmDelete(context, ref, med.id),
               ),
             );
@@ -162,19 +171,21 @@ class _MARBody extends ConsumerWidget {
         ],
 
         if (prn.isNotEmpty) ...[
-          Text(AppStrings.medPrn,
-              style: AppTextStyles.label(colors.onSurfaceVariant)),
+          Text(
+            AppStrings.medPrn,
+            style: AppTextStyles.label(colors.onSurfaceVariant),
+          ),
           const SizedBox(height: AppSpacing.sm),
           ...prn.map((med) {
-            final records =
-                todayAdmins.where((a) => a.prescribedMedId == med.id).toList();
+            final records = todayAdmins
+                .where((a) => a.prescribedMedId == med.id)
+                .toList();
             return Padding(
               padding: const EdgeInsets.only(bottom: AppSpacing.sm),
               child: _PrnMedCard(
                 med: med,
                 todayRecords: records,
-                onAdminister: () =>
-                    _showAdminSheet(context, ref, med, null),
+                onAdminister: () => _showAdminSheet(context, ref, med, null),
                 onDelete: () => _confirmDelete(context, ref, med.id),
               ),
             );
@@ -187,10 +198,10 @@ class _MARBody extends ConsumerWidget {
   }
 
   MedAdministration? _latestRecordForMed(
-      String medId, List<MedAdministration> admins) {
-    final records = admins
-        .where((a) => a.prescribedMedId == medId)
-        .toList()
+    String medId,
+    List<MedAdministration> admins,
+  ) {
+    final records = admins.where((a) => a.prescribedMedId == medId).toList()
       ..sort((a, b) => b.administeredAt.compareTo(a.administeredAt));
     return records.isEmpty ? null : records.first;
   }
@@ -200,16 +211,18 @@ class _MARBody extends ConsumerWidget {
     WidgetRef ref,
     PrescribedMed med,
     MedAdministration? existing,
-  ) =>
-      showModalBottomSheet<void>(
-        context: context,
-        isScrollControlled: true,
-        useSafeArea: true,
-        builder: (_) => _AdminSheet(med: med, existing: existing),
-      );
+  ) => showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    builder: (_) => _AdminSheet(med: med, existing: existing),
+  );
 
   Future<void> _confirmDelete(
-      BuildContext context, WidgetRef ref, String id) async {
+    BuildContext context,
+    WidgetRef ref,
+    String id,
+  ) async {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -222,7 +235,9 @@ class _MARBody extends ConsumerWidget {
           ),
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Theme.of(dialogContext).colorScheme.error),
+            style: TextButton.styleFrom(
+              foregroundColor: Theme.of(dialogContext).colorScheme.error,
+            ),
             child: const Text(AppStrings.delete),
           ),
         ],
@@ -282,18 +297,22 @@ class _MedCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(med.medicationName,
-                        style: AppTextStyles.h3(colors.onSurface)),
+                    Text(
+                      med.medicationName,
+                      style: AppTextStyles.h3(colors.onSurface),
+                    ),
                     Text(
                       '${med.dose} · ${med.route.displayName} · ${med.frequency.displayName}',
                       style: AppTextStyles.small(colors.onSurfaceVariant),
                     ),
                     if (med.instructions != null) ...[
                       const SizedBox(height: 2),
-                      Text(med.instructions!,
-                          style: AppTextStyles.small(colors.onSurfaceVariant),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis),
+                      Text(
+                        med.instructions!,
+                        style: AppTextStyles.small(colors.onSurfaceVariant),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                     if (latestAdmin != null) ...[
                       const SizedBox(height: AppSpacing.xs),
@@ -306,15 +325,20 @@ class _MedCard extends StatelessWidget {
                 ),
               ),
               PopupMenuButton<String>(
-                icon: Icon(Icons.more_vert,
-                    size: 18, color: colors.onSurfaceVariant),
+                icon: Icon(
+                  Icons.more_vert,
+                  size: 18,
+                  color: colors.onSurfaceVariant,
+                ),
                 tooltip: AppStrings.recordOptions,
                 onSelected: (v) {
                   if (v == 'delete') onDelete();
                 },
                 itemBuilder: (_) => [
                   const PopupMenuItem(
-                      value: 'delete', child: Text(AppStrings.delete)),
+                    value: 'delete',
+                    child: Text(AppStrings.delete),
+                  ),
                 ],
               ),
             ],
@@ -358,18 +382,21 @@ class _PrnMedCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(med.medicationName,
-                          style: AppTextStyles.h3(colors.onSurface)),
+                      Text(
+                        med.medicationName,
+                        style: AppTextStyles.h3(colors.onSurface),
+                      ),
                       Text(
                         '${med.dose} · ${med.route.displayName}',
                         style: AppTextStyles.small(colors.onSurfaceVariant),
                       ),
                       if (med.instructions != null)
-                        Text(med.instructions!,
-                            style:
-                                AppTextStyles.small(colors.onSurfaceVariant),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis),
+                        Text(
+                          med.instructions!,
+                          style: AppTextStyles.small(colors.onSurfaceVariant),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                     ],
                   ),
                 ),
@@ -380,20 +407,26 @@ class _PrnMedCard extends StatelessWidget {
                   style: FilledButton.styleFrom(
                     backgroundColor: AppColors.blue,
                     padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                      horizontal: AppSpacing.md,
+                      vertical: AppSpacing.sm,
+                    ),
                   ),
                 ),
                 PopupMenuButton<String>(
-                  icon: Icon(Icons.more_vert,
-                      size: 18,
-                      color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  icon: Icon(
+                    Icons.more_vert,
+                    size: 18,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   tooltip: AppStrings.recordOptions,
                   onSelected: (v) {
                     if (v == 'delete') onDelete();
                   },
                   itemBuilder: (_) => [
                     const PopupMenuItem(
-                        value: 'delete', child: Text(AppStrings.delete)),
+                      value: 'delete',
+                      child: Text(AppStrings.delete),
+                    ),
                   ],
                 ),
               ],
@@ -481,8 +514,7 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
         shift: ShiftType.forTime(DateTime.now()),
         administeredAt: existing?.administeredAt ?? now,
         administeredById: user?.id ?? 'dev-user-001',
-        administeredByName:
-            user?.displayName ?? user?.email ?? 'Unknown',
+        administeredByName: user?.displayName ?? user?.email ?? 'Unknown',
         reason: _reasonController.text.trim().isEmpty
             ? null
             : _reasonController.text.trim(),
@@ -493,17 +525,15 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
         createdAt: existing?.createdAt ?? now,
         updatedAt: now,
       );
-      await ref
-          .read(medicationRepositoryProvider)
-          .recordAdministration(admin);
+      await ref.read(medicationRepositoryProvider).recordAdministration(admin);
       if (mounted) Navigator.of(context).pop();
     } catch (e, st) {
-      log('Admin save failed', error: e, stackTrace: st,
-          name: 'AdminSheet');
+      log('Admin save failed', error: e, stackTrace: st, name: 'AdminSheet');
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text(AppStrings.saveFailed)));
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -530,8 +560,10 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(widget.med.medicationName,
-                          style: AppTextStyles.h3(colors.onSurface)),
+                      Text(
+                        widget.med.medicationName,
+                        style: AppTextStyles.h3(colors.onSurface),
+                      ),
                       Text(
                         '${widget.med.dose} · ${widget.med.route.displayName}',
                         style: AppTextStyles.small(colors.onSurfaceVariant),
@@ -563,8 +595,10 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
             const SizedBox(height: AppSpacing.lg),
 
             // Outcome selector
-            Text(AppStrings.medOutcome,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.medOutcome,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
               spacing: AppSpacing.sm,
@@ -600,8 +634,10 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
             const SizedBox(height: AppSpacing.md),
 
             // Notes
-            Text(AppStrings.notesOptional,
-                style: AppTextStyles.label(colors.onSurfaceVariant)),
+            Text(
+              AppStrings.notesOptional,
+              style: AppTextStyles.label(colors.onSurfaceVariant),
+            ),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: _notesController,
@@ -618,9 +654,13 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
               ),
               child: _saving
                   ? const SizedBox(
-                      width: 20, height: 20,
+                      width: 20,
+                      height: 20,
                       child: CircularProgressIndicator(
-                          strokeWidth: 2, color: AppColors.white))
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
+                    )
                   : Text(_outcome.displayName),
             ),
           ],
@@ -630,10 +670,10 @@ class _AdminSheetState extends ConsumerState<_AdminSheet> {
   }
 
   Color _outcomeColor(AdminOutcome o) => switch (o) {
-        AdminOutcome.administered => AppColors.green,
-        AdminOutcome.refused => AppColors.red,
-        AdminOutcome.held => AppColors.amber,
-      };
+    AdminOutcome.administered => AppColors.green,
+    AdminOutcome.refused => AppColors.red,
+    AdminOutcome.held => AppColors.amber,
+  };
 }
 
 class _ShiftBadge extends StatelessWidget {
@@ -649,7 +689,9 @@ class _ShiftBadge extends StatelessWidget {
     };
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: AppSpacing.sm, vertical: 2),
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
       decoration: BoxDecoration(
         color: color.withAlpha(30),
         borderRadius: BorderRadius.circular(AppRadius.pill),
@@ -658,4 +700,3 @@ class _ShiftBadge extends StatelessWidget {
     );
   }
 }
-

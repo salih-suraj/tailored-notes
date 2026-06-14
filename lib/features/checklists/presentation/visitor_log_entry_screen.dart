@@ -25,8 +25,7 @@ class VisitorLogEntryScreen extends ConsumerStatefulWidget {
       _VisitorLogEntryScreenState();
 }
 
-class _VisitorLogEntryScreenState
-    extends ConsumerState<VisitorLogEntryScreen> {
+class _VisitorLogEntryScreenState extends ConsumerState<VisitorLogEntryScreen> {
   final _nameController = TextEditingController();
   final _purposeController = TextEditingController();
   final _authorisedByController = TextEditingController();
@@ -113,13 +112,17 @@ class _VisitorLogEntryScreenState
       await ref.read(visitorLogRepositoryProvider).save(entry);
       if (mounted) context.pop();
     } catch (e, st) {
-      log('Visitor log save failed', error: e, stackTrace: st,
-          name: 'VisitorLogEntry');
+      log(
+        'Visitor log save failed',
+        error: e,
+        stackTrace: st,
+        name: 'VisitorLogEntry',
+      );
       if (mounted) {
         setState(() => _saving = false);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(AppStrings.saveFailed)),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text(AppStrings.saveFailed)));
       }
     }
   }
@@ -205,7 +208,9 @@ class _VisitorLogEntryScreenState
             decoration: const InputDecoration(
               hintText: AppStrings.visitorNameHint,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppRadius.input)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppRadius.input),
+                ),
               ),
             ),
           ),
@@ -222,9 +227,8 @@ class _VisitorLogEntryScreenState
               return FilterChip(
                 label: Text(r),
                 selected: selected,
-                onSelected: (_) => setState(
-                  () => _selectedRelation = selected ? null : r,
-                ),
+                onSelected: (_) =>
+                    setState(() => _selectedRelation = selected ? null : r),
                 selectedColor: colors.primaryContainer,
                 checkmarkColor: colors.primary,
               );
@@ -240,7 +244,9 @@ class _VisitorLogEntryScreenState
             decoration: const InputDecoration(
               hintText: AppStrings.visitorPurposeHint,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppRadius.input)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppRadius.input),
+                ),
               ),
             ),
           ),
@@ -255,7 +261,9 @@ class _VisitorLogEntryScreenState
             decoration: const InputDecoration(
               hintText: AppStrings.visitorAuthorisedByHint,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppRadius.input)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppRadius.input),
+                ),
               ),
             ),
           ),
@@ -269,7 +277,9 @@ class _VisitorLogEntryScreenState
             maxLines: 3,
             decoration: const InputDecoration(
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(AppRadius.input)),
+                borderRadius: BorderRadius.all(
+                  Radius.circular(AppRadius.input),
+                ),
               ),
             ),
           ),
@@ -295,9 +305,7 @@ class _SectionLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-        text,
-        style: AppTextStyles.label(
-          Theme.of(context).colorScheme.onSurfaceVariant,
-        ),
-      );
+    text,
+    style: AppTextStyles.label(Theme.of(context).colorScheme.onSurfaceVariant),
+  );
 }

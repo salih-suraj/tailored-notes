@@ -22,17 +22,10 @@ void main() async {
   UkTime.init();
 
   if (_supabaseUrl.isNotEmpty && _supabaseAnonKey.isNotEmpty) {
-    await SupabaseInit.initialize(
-      url: _supabaseUrl,
-      anonKey: _supabaseAnonKey,
-    );
+    await SupabaseInit.initialize(url: _supabaseUrl, anonKey: _supabaseAnonKey);
   }
 
   FlutterNativeSplash.remove();
 
-  runApp(
-    const ProviderScope(
-      child: TailorEdApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: TailorEdApp()));
 }

@@ -13,18 +13,16 @@ class SleepEntriesDao extends DatabaseAccessor<AppDatabase>
   /// Non-deleted entries for [childId], newest first.
   Stream<List<SleepEntryRow>> watchByChild(String childId) =>
       (select(sleepEntriesTable)
-            ..where(
-              (t) => t.childId.equals(childId) & t.deletedAt.isNull(),
-            )
+            ..where((t) => t.childId.equals(childId) & t.deletedAt.isNull())
             ..orderBy([
               (t) => OrderingTerm.desc(t.date),
               (t) => OrderingTerm.desc(t.createdAt),
             ]))
           .watch();
 
-  Future<SleepEntryRow?> findById(String id) =>
-      (select(sleepEntriesTable)..where((t) => t.id.equals(id)))
-          .getSingleOrNull();
+  Future<SleepEntryRow?> findById(String id) => (select(
+    sleepEntriesTable,
+  )..where((t) => t.id.equals(id))).getSingleOrNull();
 
   Future<void> upsert(SleepEntriesTableCompanion entry) =>
       into(sleepEntriesTable).insertOnConflictUpdate(entry);
@@ -40,6 +38,5 @@ class SleepEntriesDao extends DatabaseAccessor<AppDatabase>
 
   /// One-shot list of rows pending upload, for the sync sweep.
   Future<List<SleepEntryRow>> getUnsynced() =>
-      (select(sleepEntriesTable)..where((t) => t.isSynced.equals(false)))
-          .get();
+      (select(sleepEntriesTable)..where((t) => t.isSynced.equals(false))).get();
 }

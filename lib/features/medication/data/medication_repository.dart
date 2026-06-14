@@ -19,10 +19,10 @@ class MedicationRepository implements SyncTarget {
     required SupabaseClient? supabaseClient,
     required AppUser? currentUser,
     required AuditLogWriter auditWriter,
-  })  : _dao = dao,
-        _supabaseClient = supabaseClient,
-        _currentUser = currentUser,
-        _audit = auditWriter;
+  }) : _dao = dao,
+       _supabaseClient = supabaseClient,
+       _currentUser = currentUser,
+       _audit = auditWriter;
 
   final MedicationDao _dao;
   final SupabaseClient? _supabaseClient;
@@ -31,10 +31,9 @@ class MedicationRepository implements SyncTarget {
 
   // ── Prescribed meds ───────────────────────────────────────────────────
 
-  Stream<List<PrescribedMed>> watchActiveMeds(String childId) =>
-      _dao
-          .watchActiveByChild(childId)
-          .map((rows) => rows.map(_medToDomain).toList());
+  Stream<List<PrescribedMed>> watchActiveMeds(String childId) => _dao
+      .watchActiveByChild(childId)
+      .map((rows) => rows.map(_medToDomain).toList());
 
   Future<void> saveMed(PrescribedMed med) async {
     final existing = await _dao.findMedById(med.id);
@@ -120,25 +119,25 @@ class MedicationRepository implements SyncTarget {
   // ── Helpers ───────────────────────────────────────────────────────────
 
   PrescribedMed _medToDomain(PrescribedMedRow r) => PrescribedMed(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        medicationName: r.medicationName,
-        dose: r.dose,
-        route: MedRoute.values.byName(r.route),
-        frequency: MedFrequency.values.byName(r.frequency),
-        instructions: r.instructions,
-        prescribedBy: r.prescribedBy,
-        startDate: r.startDate,
-        endDate: r.endDate,
-        isActive: r.isActive,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        deletedAt: r.deletedAt,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    medicationName: r.medicationName,
+    dose: r.dose,
+    route: MedRoute.values.byName(r.route),
+    frequency: MedFrequency.values.byName(r.frequency),
+    instructions: r.instructions,
+    prescribedBy: r.prescribedBy,
+    startDate: r.startDate,
+    endDate: r.endDate,
+    isActive: r.isActive,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    deletedAt: r.deletedAt,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   PrescribedMedsTableCompanion _medToCompanion(PrescribedMed m) =>
       PrescribedMedsTableCompanion(
@@ -162,27 +161,26 @@ class MedicationRepository implements SyncTarget {
         isSynced: Value(m.isSynced),
       );
 
-  MedAdministration _adminToDomain(MedAdministrationRow r) =>
-      MedAdministration(
-        id: r.id,
-        homeId: r.homeId,
-        childId: r.childId,
-        prescribedMedId: r.prescribedMedId,
-        medicationName: r.medicationName,
-        dose: r.dose,
-        outcome: AdminOutcome.values.byName(r.outcome),
-        shift: ShiftType.values.byName(r.shift),
-        administeredAt: r.administeredAt,
-        administeredById: r.administeredById,
-        administeredByName: r.administeredByName,
-        reason: r.reason,
-        notes: r.notes,
-        createdById: r.createdById,
-        updatedById: r.updatedById,
-        createdAt: r.createdAt,
-        updatedAt: r.updatedAt,
-        isSynced: r.isSynced,
-      );
+  MedAdministration _adminToDomain(MedAdministrationRow r) => MedAdministration(
+    id: r.id,
+    homeId: r.homeId,
+    childId: r.childId,
+    prescribedMedId: r.prescribedMedId,
+    medicationName: r.medicationName,
+    dose: r.dose,
+    outcome: AdminOutcome.values.byName(r.outcome),
+    shift: ShiftType.values.byName(r.shift),
+    administeredAt: r.administeredAt,
+    administeredById: r.administeredById,
+    administeredByName: r.administeredByName,
+    reason: r.reason,
+    notes: r.notes,
+    createdById: r.createdById,
+    updatedById: r.updatedById,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+    isSynced: r.isSynced,
+  );
 
   MedAdministrationsTableCompanion _adminToCompanion(MedAdministration a) =>
       MedAdministrationsTableCompanion(
@@ -211,20 +209,31 @@ class MedicationRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('prescribed_medications').upsert({
-        'id': m.id, 'home_id': m.homeId, 'child_id': m.childId,
-        'medication_name': m.medicationName, 'dose': m.dose,
-        'route': m.route.name, 'frequency': m.frequency.name,
-        'instructions': m.instructions, 'prescribed_by': m.prescribedBy,
-        'start_date': m.startDate, 'end_date': m.endDate,
-        'is_active': m.isActive, 'created_by_id': m.createdById,
+        'id': m.id,
+        'home_id': m.homeId,
+        'child_id': m.childId,
+        'medication_name': m.medicationName,
+        'dose': m.dose,
+        'route': m.route.name,
+        'frequency': m.frequency.name,
+        'instructions': m.instructions,
+        'prescribed_by': m.prescribedBy,
+        'start_date': m.startDate,
+        'end_date': m.endDate,
+        'is_active': m.isActive,
+        'created_by_id': m.createdById,
         'updated_by_id': m.updatedById,
         'updated_at': m.updatedAt.toUtc().toIso8601String(),
         'deleted_at': m.deletedAt?.toUtc().toIso8601String(),
       });
       await _dao.upsertMed(_medToCompanion(m.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for prescribed med ${m.id}',
-          error: err, stackTrace: st, name: 'MedicationRepository');
+      log(
+        'Sync failed for prescribed med ${m.id}',
+        error: err,
+        stackTrace: st,
+        name: 'MedicationRepository',
+      );
     }
   }
 
@@ -235,21 +244,31 @@ class MedicationRepository implements SyncTarget {
     if (client == null) return;
     try {
       await client.from('med_administrations').upsert({
-        'id': a.id, 'home_id': a.homeId, 'child_id': a.childId,
+        'id': a.id,
+        'home_id': a.homeId,
+        'child_id': a.childId,
         'prescribed_med_id': a.prescribedMedId,
-        'medication_name': a.medicationName, 'dose': a.dose,
-        'outcome': a.outcome.name, 'shift': a.shift.name,
+        'medication_name': a.medicationName,
+        'dose': a.dose,
+        'outcome': a.outcome.name,
+        'shift': a.shift.name,
         'administered_at': a.administeredAt.toUtc().toIso8601String(),
         'administered_by_id': a.administeredById,
         'administered_by_name': a.administeredByName,
-        'reason': a.reason, 'notes': a.notes,
-        'created_by_id': a.createdById, 'updated_by_id': a.updatedById,
+        'reason': a.reason,
+        'notes': a.notes,
+        'created_by_id': a.createdById,
+        'updated_by_id': a.updatedById,
         'updated_at': a.updatedAt.toUtc().toIso8601String(),
       });
       await _dao.upsertAdmin(_adminToCompanion(a.copyWith(isSynced: true)));
     } catch (err, st) {
-      log('Sync failed for med admin ${a.id}',
-          error: err, stackTrace: st, name: 'MedicationRepository');
+      log(
+        'Sync failed for med admin ${a.id}',
+        error: err,
+        stackTrace: st,
+        name: 'MedicationRepository',
+      );
     }
   }
 }

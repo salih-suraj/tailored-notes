@@ -2,14 +2,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:tailored_notes/features/children/domain/child.dart';
 
 Child _child({required String name, required String dob}) => Child(
-      id: 'c1',
-      homeId: 'home-1',
-      name: name,
-      dateOfBirth: dob,
-      room: 'Room 1',
-      createdAt: DateTime.utc(2026, 1, 1),
-      updatedAt: DateTime.utc(2026, 1, 1),
-    );
+  id: 'c1',
+  homeId: 'home-1',
+  name: name,
+  dateOfBirth: dob,
+  room: 'Room 1',
+  createdAt: DateTime.utc(2026, 1, 1),
+  updatedAt: DateTime.utc(2026, 1, 1),
+);
 
 void main() {
   group('Child.initials', () {
@@ -36,7 +36,8 @@ void main() {
   group('Child.ageYears', () {
     test('a birthday today gives the exact age', () {
       final now = DateTime.now();
-      final dob = '${now.year - 10}-${now.month.toString().padLeft(2, '0')}'
+      final dob =
+          '${now.year - 10}-${now.month.toString().padLeft(2, '0')}'
           '-${now.day.toString().padLeft(2, '0')}';
       expect(_child(name: 'A B', dob: dob).ageYears, 10);
     });
@@ -44,7 +45,8 @@ void main() {
     test('an upcoming birthday this year is not yet counted', () {
       // Born 10 years ago but the birthday is ~2 days away → still 9.
       final future = DateTime.now().add(const Duration(days: 2));
-      final dob = '${future.year - 10}-${future.month.toString().padLeft(2, '0')}'
+      final dob =
+          '${future.year - 10}-${future.month.toString().padLeft(2, '0')}'
           '-${future.day.toString().padLeft(2, '0')}';
       expect(_child(name: 'A B', dob: dob).ageYears, 9);
     });
