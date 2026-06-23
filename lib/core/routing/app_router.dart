@@ -62,6 +62,7 @@ import '../../features/parent_portal/presentation/manager_parent_access_screen.d
 import '../../features/parent_portal/presentation/parent_child_feed_screen.dart';
 import '../../features/parent_portal/presentation/parent_portal_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
+import '../../features/staff/presentation/manager_staff_screen.dart';
 import '../../shared/widgets/nav_shell.dart';
 import '../errors/placeholder_screen.dart';
 import 'app_routes.dart';
@@ -479,6 +480,10 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: 'parent-access',
                 builder: (_, _) => const ManagerParentAccessScreen(),
+              ),
+              GoRoute(
+                path: 'staff',
+                builder: (_, _) => const ManagerStaffScreen(),
               ),
             ],
           ),

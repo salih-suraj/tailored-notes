@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-06-13 (session 7 — paused for a break; see ▶ RESUME HERE)
+> Last updated: 2026-06-23 (session 8 — AI summary verified, P1 staff mgmt built, UX/colour/icon polish; see ▶ RESUME HERE)
 
 ---
 
@@ -95,7 +95,7 @@ Every new feature added without them makes the retrofit harder.
 |---|------|--------|-------|
 | 29 | Regulatory Inspector Access Portal | ✅ | v1 built + audited (session 5). Inspector Portal (`/inspector`) lists active grants, home access screen (children + module sections), generic read-only records viewer for Daily Notes, Care Plans, Incidents, Behaviour, Medication, Medical History, feedback editor (compliment/recommendation/requirement). Manager screen (`/dashboard/inspector-access`) for granting/revoking access and reviewing/resolving feedback. All inspector views + feedback writes logged to `audit_log` via `InspectorAuditService`. `'children'` scope auto-appended on grant creation (required by `inspectors_read_children` RLS). Backend SQL (`supabase_inspector_feedback.sql`, idempotent) run successfully 2026-06-11 — `inspector_feedback` table + RLS, 4 inspector read policies missing from base schema (care_plans, care_plan_goals, medical_profiles, healthcare_contacts), inspector `audit_log` INSERT policy, `user_profiles.email` column + backfill + sync trigger + manager search policy. **✅ Verified end-to-end 2026-06-12 with real manager + inspector accounts**: grant creation (email search), MFA login both roles, portal → home access → module records, feedback submission, manager feedback review, grant revoke, and `inspector_view`/`inspector_feedback` rows confirmed in `audit_log`. Required 3 fixes found during verification (see B3 + Q14 notes). Deferred to a follow-up (same pattern extends cleanly): sleep diary, food diary, activities, smart steps, visitor log, bath temp, cleaning checklists. |
 | 30 | Parent/Guardian Portal | ✅ | v1 built 2026-06-12, mirrors inspector portal architecture. `features/parent_portal/`: ParentLink (manual model), cloud-only repos (links + records), riverpod providers, Parent Portal screen (`/parent-portal`, linked children list), child feed screen (`/parent-portal/:linkId` — date-grouped activities with ⭐ reward + 🏆 achievement cards, read-only), manager Parent Access screen (`/dashboard/parent-access` — link parent↔child by email search, per-link photo permission toggle, revoke). Backend: `supabase_parent_portal.sql` (parent_links table + RLS, `parent_has_link()`, parent read policies on children + activity_entries only — no clinical tables, manager parent-search policy; JWT-claim policies per the 42P17 lesson). **✅ SQL run + verified end-to-end 2026-06-12** with a real parent_guardian account: manager link by email search, parent login (no MFA), linked child in portal, activity feed. Found during verification: missing/unknown `app_role` claim fell back to `UserRole.supportWorker` (staff tabs for a parent account) — `UserRole.fromString` fallback hardened to `parentGuardian` (least privilege). Deferred: photo storage RLS for signed URLs (photo gating is per-link `can_view_photos`, avatar only in v1), staff-authored wellbeing updates. |
-| 31 | AI-assisted shift summary | 🔧 | Built + **deployed to prod 2026-06-13**. **Edge Function** `supabase/functions/ai-shift-summary/index.ts` (Deno + `npm:@anthropic-ai/sdk`, model `claude-opus-4-8`, `max_tokens` 4000): JWT-verified by platform + role-gated in code (team_leader/manager only; manager requires `aal2`), API key held in `ANTHROPIC_API_KEY` secret (never in app). System prompt enforces no-hallucination, safety-critical-first, per-child British-English brief. Errors are production-friendly (staff see "temporarily unavailable, contact administrator"; real cause logged via `console.error` → dashboard logs). **Flutter:** `AiSummaryService` (calls `functions.invoke`), `AiSummarySheet` (draggable sheet — gathers this shift's records from the same providers as the handover cards into compact JSON, loading/error/retry, SelectableText output, copy-to-clipboard, AI disclaimer). ✨ button on Handover Summary AppBar. **CLI deploy done** (`supabase login`/`link`/`secrets set`/`functions deploy` all succeeded; key rotated after an accidental paste). **⛔ ONLY BLOCKER: the Anthropic account has $0 credit — API returns 400 "credit balance too low".** Add credit at console.anthropic.com → Plans & Billing, then test: log a record for the current shift → Handover → ✨. No redeploy needed. Completes B8. |
+| 31 | AI-assisted shift summary | ✅ | Built + deployed to prod 2026-06-13. **Edge Function** `supabase/functions/ai-shift-summary/index.ts` (Deno + `npm:@anthropic-ai/sdk`, model `claude-opus-4-8`, `max_tokens` 4000): JWT-verified by platform + role-gated in code (team_leader/manager only; manager requires `aal2`), API key held in `ANTHROPIC_API_KEY` secret (never in app). System prompt enforces no-hallucination, safety-critical-first, per-child British-English brief. Errors are production-friendly (staff see "temporarily unavailable, contact administrator"; real cause logged via `console.error` → dashboard logs). **Flutter:** `AiSummaryService` (calls `functions.invoke`), `AiSummarySheet` (draggable sheet — gathers this shift's records from the same providers as the handover cards into compact JSON, loading/error/retry, copy-to-clipboard, AI disclaimer). ✨ button on Handover Summary AppBar. **✅ Verified working end-to-end 2026-06-23** — $20 Anthropic credit added; summary generates from real shift records (~$0.05–0.10/shift). **Polish 2026-06-23:** the brief is Markdown; replaced the raw-`SelectableText` view with a dependency-free Markdown renderer (`_MarkdownBody` in `ai_summary_sheet.dart`) — bold child names, bullet points, headings, rules; Copy now copies clean plain text. Completes B8. |
 
 ---
 
@@ -139,13 +139,29 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| P1 | In-app Staff Management — Manager creates/disables staff accounts | ⬜ | **Today, accounts are admin-provisioned only**: an auth user (Dashboard) + a `user_profiles` row (role + home_id). The app has no sign-up — deliberate (users must not self-pick role/home in a safeguarding context). Fine for testing (`supabase_test_accounts.sql` provisions the 5 testers), but a real care-home manager must not need the Supabase dashboard. Build a Manager → "Staff" screen that creates/disables staff accounts via an **Edge Function using the service-role key** (same server-side-secret pattern as `ai-shift-summary`): create auth user + matching `user_profiles` row (role + the manager's home_id), and deactivate/remove. Restrict to manager role + AAL2. **Blocks go-live, not testing.** |
+| P1 | In-app Staff Management — Manager creates/disables staff accounts | 🔧 | **Built 2026-06-23 — pending deploy + device verify.** Closes the "no sign-up" gap: a real manager provisions staff in-app instead of the Supabase dashboard (self-sign-up stays deliberately absent — no self-picking role/home in a safeguarding context). **Edge Function** `supabase/functions/manage-staff/index.ts` (service-role key; manager + AAL2 gated; home FORCED from the manager's `app_home_id` JWT claim, never client-supplied; roles limited to support_worker/team_leader/manager): `create` (auth user with `email_confirm` + matching `user_profiles` row, rolls back the auth user if the profile insert fails) and `setActive` (auth ban/unban + `is_active` flag, after verifying the target is in the manager's home). **SQL** `supabase_staff_management.sql` (idempotent) adds `user_profiles.is_active`. **Flutter** `features/staff/`: `StaffMember` model, `StaffRepository` (list via RLS, create/setActive via the Edge Function), riverpod providers, `ManagerStaffScreen` (list + active/disabled badges + enable/disable confirm), `staff_form_sheet` (name/email/role/temp-password). Route `/dashboard/staff` + groups icon on the dashboard AppBar. `flutter analyze` clean. **To activate:** `supabase functions deploy manage-staff` + run `supabase_staff_management.sql` in the SQL editor, then test create→login→disable. **Known gap it surfaces:** no in-app change-password screen yet (forgot-password route still a placeholder), so the manager-set temp password is what staff keep until that's built. |
+
+---
+
+## Polish & UX — session 8 (2026-06-23)
+
+Cross-cutting fixes and polish on top of the feature set. All `flutter analyze` clean.
+
+| Item | Notes |
+|------|-------|
+| Sign-in / MFA error messages | Raw Supabase exceptions (`AuthApiException(... statusCode: 400)`) replaced with calm, user-facing copy via `auth_error_message.dart` — invalid credentials, unconfirmed email, rate-limit, no-connection, and a friendly MFA "wrong code" line. |
+| Single-tap submit | Sign In and Verify buttons wrapped in `TextFieldTapRegion` so the keyboard no longer dismisses mid-gesture and swallows the first tap (was a double-tap on Android). |
+| Date-picker crash | Dropped the `minScaleFactor: 1.0` text-scale floor in `app.dart` that tripped `assert(maxScale > minScale)` in the Material date picker on non-linear platform scalers (access-expiry picker crash). |
+| Professional colour | Logo-anchored palette (`#5271FF`): 11 distinct care-module accents, brand-led per-child avatar colours (`avatarColorFor`), nav bar/rail selection styling moved into the theme, dashboard hero gradient + identity-coloured section icons. |
+| App icon | `flutter_launcher_icons` set up — white "E" mark on solid brand indigo, full-bleed (iOS/legacy) + Android adaptive (indigo bg + padded white foreground). Source in `assets/icon/`. |
+| AI summary Markdown | Rendered the brief's Markdown instead of showing raw `**`/`-`/`#` (see item 31). |
+| Client progress doc | `CLIENT_PROGRESS.md` — plain-English, shareable status for the client. |
 
 ---
 
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-06-12 (session 6)*
+*Last updated: 2026-06-23 (session 8)*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
@@ -153,33 +169,38 @@ Every new feature added without them makes the retrofit harder.
 | Phase 2 — Daily Loop | 6 of 6 | ✅ COMPLETE | 100% |
 | Phase 3 — Care Records | 8 of 8 | ✅ COMPLETE | 100% |
 | Phase 4 — Oversight | 5 of 5 | ✅ COMPLETE | 100% |
-| Phase 5 — External | 3 of 3 | (29 + 30 verified; 31 built + deployed — pending Anthropic credit to test) | 100% |
-| Backend / Supabase | 8 of 8 | (B6 MFA-RLS verified; B8 Edge Function deployed) | 100% |
+| Phase 5 — External | 3 of 3 | (29 + 30 verified; **31 verified working 2026-06-23**) | 100% |
+| Backend / Supabase | 8 of 8 | (B6 MFA-RLS verified; B8 AI summary live + verified) | 100% |
 | Infrastructure gaps | 5 of 5 | (I5 code-complete; needs screen-reader device pass) | 100% |
-| Quality / cross-cutting | 9 of 14 | (Q1–Q3, Q8, Q10–Q14 done; Q5 underway; Q2 pending runtime verify) | 64% |
+| Quality / cross-cutting | 9 of 14 | (Q1–Q3, Q8, Q10–Q14 done; Q5–Q6 underway; Q2 pending runtime verify) | 64% |
+| Pre-launch | 0 of 1 | (P1 staff management built 2026-06-23 — pending deploy + verify) | — |
 | **Total** | **53 of 57** | | **93%** |
 
 ---
 
-## ▶ RESUME HERE (paused 2026-06-13 for a break)
+## ▶ RESUME HERE (updated 2026-06-23, session 8)
 
-All 57 planned items are built. Nothing is half-written. Two kinds of work remain:
+All 57 planned items are built; P1 (staff management) is now built too. Remaining work:
 
-**A. Quick confirmations (no coding, ~15 min total):**
-1. **Add Anthropic credit** → console.anthropic.com → Plans & Billing. Then test the AI summary (log a record for the current shift → Handover → ✨). This is the only thing blocking item 31 / B8 from ✅.
-2. **On-device pass** of the three 🔧 items: Q2 (log in → watch sync backfill; delete a record → confirm it vanishes from the inspector portal), I5 (TalkBack/VoiceOver + 200% font), item 31 (the AI summary above).
+**A. Activate the two server-backed features (you, ~10 min):**
+1. **Staff management (P1)** — `supabase functions deploy manage-staff`, run `supabase_staff_management.sql` in the SQL editor, then test: Dashboard → groups icon → Add Staff → create→login→disable.
+2. ~~Add Anthropic credit + test AI summary~~ ✅ done 2026-06-23 ($20 credit; verified working).
 
-**B. The one real remaining work area — tests + CI (Q5–Q8):**
-- Zero automated tests exist. This is the biggest risk: the 4 production bugs caught by hand this week (RLS recursion, missing grants, MFA redirect loop, role fallback) are exactly what tests would have caught.
-- Start with Q5 (unit tests for domain models + repositories), then Q6 (widget), Q7 (integration: offline→online sync, auth/MFA flow), Q8 (CI: `dart format` + `dart analyze` + test gate).
+**B. On-device passes of the 🔧 items:**
+- Q2 (log in → watch sync backfill; delete a record → confirm it vanishes from the inspector portal), I5 (TalkBack/VoiceOver + 200% font). AI summary (31) ✅ verified.
 
-*(Build order reordered 2026-06-12 at client direction: timezone → accessibility → AI summary → tests/CI — first three done.)*
+**C. The main remaining coding work — tests (Q5–Q7):**
+- Q5 (unit, ~60 passing) and Q6 (widget, ~10 passing) underway; Q7 (integration: offline→online sync, auth/MFA flow) not started. Q8 (CI gate) ✅. Add staff-screen widget tests next (role-gating + create/disable).
+
+**D. Smaller open items:** Q4 (Riverpod `select()`), Q9 (update ROADMAP.md), and the in-app change-password screen P1 surfaces (forgot-password route is still a placeholder).
 
 Completed in order:
 1. ~~Verify item 29 end-to-end~~ ✅ 2026-06-12
 2. ~~Verify item 30 end-to-end~~ ✅ 2026-06-12
-3. ~~Q2 — offline sync engine~~ 🔧 built 2026-06-12 (needs device pass — see A2)
+3. ~~Q2 — offline sync engine~~ 🔧 built 2026-06-12 (needs device pass)
 4. ~~Q3 — Timezone (UTC → Europe/London)~~ ✅ 2026-06-12
-5. ~~I5 — Accessibility~~ 🔧 code done 2026-06-12 (needs device pass — see A2)
-6. ~~Item 31 — AI shift summary~~ 🔧 built + deployed 2026-06-13 (needs Anthropic credit — see A1)
-7. **Q5–Q8 — Tests + CI** ← next coding work
+5. ~~I5 — Accessibility~~ 🔧 code done 2026-06-12 (needs device pass)
+6. ~~Item 31 — AI shift summary~~ ✅ built + deployed + **verified working 2026-06-23**
+7. ~~UX fixes + colour polish + app icon~~ ✅ 2026-06-23 (session 8)
+8. ~~P1 — In-app staff management~~ 🔧 built 2026-06-23 (needs deploy + verify)
+9. **Q5–Q7 — Tests** ← next coding work

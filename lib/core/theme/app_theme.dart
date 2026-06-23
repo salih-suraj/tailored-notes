@@ -96,6 +96,37 @@ abstract final class AppTheme {
         titleTextStyle: AppTextStyles.h1(colorScheme.onSurface),
         iconTheme: IconThemeData(color: colorScheme.onSurface),
       ),
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: colorScheme.surfaceContainerLow,
+        indicatorColor: colorScheme.primary.withAlpha(38),
+        elevation: 0,
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return AppTextStyles.small(
+            selected ? colorScheme.primary : colorScheme.onSurfaceVariant,
+          ).copyWith(fontWeight: selected ? FontWeight.w600 : FontWeight.w500);
+        }),
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          final selected = states.contains(WidgetState.selected);
+          return IconThemeData(
+            color: selected
+                ? colorScheme.primary
+                : colorScheme.onSurfaceVariant,
+          );
+        }),
+      ),
+      navigationRailTheme: NavigationRailThemeData(
+        backgroundColor: colorScheme.surfaceContainerLow,
+        indicatorColor: colorScheme.primary.withAlpha(38),
+        selectedIconTheme: IconThemeData(color: colorScheme.primary),
+        unselectedIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
+        selectedLabelTextStyle: AppTextStyles.small(
+          colorScheme.primary,
+        ).copyWith(fontWeight: FontWeight.w600),
+        unselectedLabelTextStyle: AppTextStyles.small(
+          colorScheme.onSurfaceVariant,
+        ),
+      ),
       dividerTheme: DividerThemeData(
         color: dark ? AppColors.darkBorder : const Color(0xFFE8E6DF),
         thickness: 1,

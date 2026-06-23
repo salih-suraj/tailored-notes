@@ -198,7 +198,9 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
   Future<void> _copy() async {
     final summary = _summary;
     if (summary == null) return;
-    await Clipboard.setData(ClipboardData(text: summary));
+    // Copy clean text (no Markdown markers) so it pastes tidily into records,
+    // emails, or messages.
+    await Clipboard.setData(ClipboardData(text: _markdownToPlainText(summary)));
     if (!mounted) return;
     ScaffoldMessenger.of(
       context,
@@ -284,15 +286,186 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
                     )
                   : SingleChildScrollView(
                       controller: scrollController,
-                      child: SelectableText(
-                        _summary ?? '',
-                        style: AppTextStyles.body(colors.onSurface),
+                      child: _MarkdownBody(
+                        markdown: _summary ?? '',
+                        baseStyle: AppTextStyles.body(colors.onSurface),
                       ),
                     ),
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+// ── Lightweight Markdown rendering ───────────────────────────────────────────
+//
+// The AI brief comes back as Markdown (bold child names, bullet points, the odd
+// heading). We render the small subset Claude actually uses rather than pull in
+// a full Markdown package — keeps the dependency surface and build risk down.
+
+/// Matches the inline Markdown emphasis tokens we support, longest-first so
+/// `**bold**` wins over `*italic*` at the same position.
+final _inlineToken = RegExp(
+  r'\*\*(.+?)\*\*|__(.+?)__|\*(.+?)\*|_(.+?)_|`(.+?)`',
+);
+
+final _bulletLine = RegExp(r'^\s*[-*•]\s+(.*)$');
+final _numberedLine = RegExp(r'^\s*(\d+)[.)]\s+(.*)$');
+final _headingLine = RegExp(r'^\s{0,3}(#{1,6})\s+(.*)$');
+final _ruleLine = RegExp(r'^\s*([-*_])\1{2,}\s*$');
+
+/// Parses [text] into styled spans, turning `**bold**`, `*italic*`/`_italic_`,
+/// and `` `code` `` into the matching [TextStyle] tweaks.
+List<TextSpan> _inlineSpans(String text, TextStyle base) {
+  final spans = <TextSpan>[];
+  var index = 0;
+  for (final m in _inlineToken.allMatches(text)) {
+    if (m.start > index) {
+      spans.add(TextSpan(text: text.substring(index, m.start), style: base));
+    }
+    final bold = m.group(1) ?? m.group(2);
+    final italic = m.group(3) ?? m.group(4);
+    final code = m.group(5);
+    if (bold != null) {
+      spans.add(
+        TextSpan(
+          text: bold,
+          style: base.copyWith(fontWeight: FontWeight.w700),
+        ),
+      );
+    } else if (italic != null) {
+      spans.add(
+        TextSpan(
+          text: italic,
+          style: base.copyWith(fontStyle: FontStyle.italic),
+        ),
+      );
+    } else if (code != null) {
+      spans.add(
+        TextSpan(
+          text: code,
+          style: base.copyWith(fontFamily: 'monospace'),
+        ),
+      );
+    }
+    index = m.end;
+  }
+  if (index < text.length) {
+    spans.add(TextSpan(text: text.substring(index), style: base));
+  }
+  return spans;
+}
+
+/// Strips Markdown markers to plain text (for the clipboard).
+String _markdownToPlainText(String md) {
+  String stripInline(String s) => s
+      .replaceAllMapped(RegExp(r'\*\*(.+?)\*\*'), (m) => m[1]!)
+      .replaceAllMapped(RegExp(r'__(.+?)__'), (m) => m[1]!)
+      .replaceAllMapped(RegExp(r'\*(.+?)\*'), (m) => m[1]!)
+      .replaceAllMapped(RegExp(r'_(.+?)_'), (m) => m[1]!)
+      .replaceAllMapped(RegExp(r'`(.+?)`'), (m) => m[1]!);
+
+  return md
+      .split('\n')
+      .map((line) {
+        if (_ruleLine.hasMatch(line)) return '';
+        final heading = _headingLine.firstMatch(line);
+        if (heading != null) return stripInline(heading.group(2)!.trim());
+        final bullet = _bulletLine.firstMatch(line);
+        if (bullet != null) return '• ${stripInline(bullet.group(1)!.trim())}';
+        return stripInline(line);
+      })
+      .join('\n');
+}
+
+class _MarkdownBody extends StatelessWidget {
+  const _MarkdownBody({required this.markdown, required this.baseStyle});
+
+  final String markdown;
+  final TextStyle baseStyle;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final children = <Widget>[];
+
+    for (final rawLine in markdown.split('\n')) {
+      final line = rawLine.trimRight();
+
+      if (line.trim().isEmpty) {
+        children.add(const SizedBox(height: AppSpacing.sm));
+        continue;
+      }
+
+      if (_ruleLine.hasMatch(line)) {
+        children.add(
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+            child: Divider(height: 1, color: colors.outlineVariant),
+          ),
+        );
+        continue;
+      }
+
+      final heading = _headingLine.firstMatch(line);
+      if (heading != null) {
+        final level = heading.group(1)!.length;
+        final style = baseStyle.copyWith(
+          fontWeight: FontWeight.w700,
+          fontSize: (baseStyle.fontSize ?? 15) + (level <= 2 ? 3 : 1),
+          height: 1.3,
+        );
+        children.add(
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            child: SelectableText.rich(
+              TextSpan(children: _inlineSpans(heading.group(2)!.trim(), style)),
+            ),
+          ),
+        );
+        continue;
+      }
+
+      final bullet = _bulletLine.firstMatch(line);
+      final numbered = bullet == null ? _numberedLine.firstMatch(line) : null;
+      if (bullet != null || numbered != null) {
+        final marker = bullet != null ? '•' : '${numbered!.group(1)}.';
+        final content = (bullet?.group(1) ?? numbered!.group(2)!).trim();
+        children.add(
+          Padding(
+            padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(width: 20, child: Text(marker, style: baseStyle)),
+                Expanded(
+                  child: SelectableText.rich(
+                    TextSpan(children: _inlineSpans(content, baseStyle)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+        continue;
+      }
+
+      // Plain paragraph.
+      children.add(
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.xs),
+          child: SelectableText.rich(
+            TextSpan(children: _inlineSpans(line, baseStyle)),
+          ),
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children,
     );
   }
 }

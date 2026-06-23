@@ -9,6 +9,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/network/supabase_client.dart';
 import '../../../shared/models/app_strings.dart';
+import 'auth_error_message.dart';
 
 /// MFA screen — shown after password sign-in for Manager and Inspector roles.
 ///
@@ -99,6 +100,9 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
 
   Future<void> _verify() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
+    // Close the keyboard now that the tap has registered (the Verify button is
+    // wrapped in TextFieldTapRegion, so the tap itself no longer dismisses it).
+    FocusScope.of(context).unfocus();
     final client = ref.read(supabaseClientProvider);
     if (client == null) return;
 
@@ -118,7 +122,7 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(e.toString()),
+            content: Text(mfaErrorMessage(e)),
             backgroundColor: Theme.of(context).colorScheme.error,
           ),
         );
@@ -250,18 +254,23 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
           ),
           const SizedBox(height: AppSpacing.xl),
 
-          ElevatedButton(
-            onPressed: _isVerifying ? null : _verify,
-            child: _isVerifying
-                ? const SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: AppColors.white,
-                    ),
-                  )
-                : const Text(AppStrings.mfaVerify),
+          // Wrapped in [TextFieldTapRegion] so tapping Verify counts as a tap
+          // inside the code field's group: the keyboard doesn't dismiss, the
+          // layout doesn't shift, and the first tap registers (no double-tap).
+          TextFieldTapRegion(
+            child: ElevatedButton(
+              onPressed: _isVerifying ? null : _verify,
+              child: _isVerifying
+                  ? const SizedBox(
+                      height: 20,
+                      width: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: AppColors.white,
+                      ),
+                    )
+                  : const Text(AppStrings.mfaVerify),
+            ),
           ),
         ],
       ),

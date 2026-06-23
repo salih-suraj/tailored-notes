@@ -22,6 +22,47 @@ abstract final class AppColors {
   static const green = Color(0xFF639922);
   static const purple = Color(0xFF9C27B0);
 
+  // Care-module accents — a curated, professionally-balanced palette so each
+  // module reads as its own colour without the screen turning into confetti.
+  // Mid-saturation hues, evenly spaced around the wheel, all legible on both
+  // the cream (light) and charcoal (dark) card surfaces.
+  static const moduleDailyNotes = Color(0xFF5271FF); // indigo (brand)
+  static const moduleBathTemp = Color(0xFF2E8BC0); // sky blue
+  static const moduleCarePlans = Color(0xFF7C5CFC); // violet
+  static const moduleMedication = Color(0xFF119A8E); // teal
+  static const moduleMedicalHistory = Color(0xFFDB4A7E); // rose
+  static const moduleBehaviour = Color(0xFFE8941A); // amber
+  static const moduleSleep = Color(0xFF4C57B5); // deep indigo / night
+  static const moduleFood = Color(0xFF5BA32B); // green
+  static const moduleActivities = Color(0xFFE87510); // orange
+  static const moduleSmartSteps = Color(0xFF0CA4B5); // cyan
+  static const moduleIncidents = Color(0xFFE24B4A); // red
+
+  /// Distinct, gentle hues used to colour person avatars by a stable seed so
+  /// the children list/profiles feel alive instead of a wall of identical dots.
+  /// Led by the logo's cornflower-indigo (#5271FF) and its cool neighbours, so
+  /// avatars stay on-brand; warm tones appear only as occasional accents.
+  static const avatarPalette = <Color>[
+    Color(0xFF5271FF), // indigo — the logo blue
+    Color(0xFF7C5CFC), // violet
+    Color(0xFF2E8BC0), // sky
+    Color(0xFF119A8E), // teal
+    Color(0xFF0CA4B5), // cyan
+    Color(0xFF4C57B5), // deep indigo
+    Color(0xFFDB4A7E), // rose accent
+    Color(0xFFE8941A), // amber accent
+  ];
+
+  /// Picks a stable avatar colour for [seed] (e.g. a child id or name).
+  static Color avatarColorFor(String seed) {
+    if (seed.isEmpty) return avatarPalette.first;
+    final hash = seed.codeUnits.fold<int>(
+      0,
+      (acc, c) => (acc * 31 + c) & 0x7fffffff,
+    );
+    return avatarPalette[hash % avatarPalette.length];
+  }
+
   // Role indicators
   static const roleSupportWorker = teal400;
   static const roleTeamLeader = blue;

@@ -25,14 +25,18 @@ class TailorEdApp extends ConsumerWidget {
       routerConfig: router,
       // I5: honour the system font-size setting up to 200% — beyond that,
       // layouts degrade without adding accessibility value.
+      //
+      // Only the MAX is clamped. Do NOT add `minScaleFactor: 1.0` here: on a
+      // non-linear platform scaler (e.g. Android 14+) it builds a
+      // _ClampedTextScaler whose min is 1.0, and any descendant that clamps its
+      // own max down to 1.0 — the Material date picker header does exactly this
+      // at default font size — collapses to min == max == 1.0, tripping the
+      // `assert(maxScale > minScale)` in text_scaler.dart and crashing the picker.
       builder: (context, child) {
         final mediaQuery = MediaQuery.of(context);
         return MediaQuery(
           data: mediaQuery.copyWith(
-            textScaler: mediaQuery.textScaler.clamp(
-              minScaleFactor: 1.0,
-              maxScaleFactor: 2.0,
-            ),
+            textScaler: mediaQuery.textScaler.clamp(maxScaleFactor: 2.0),
           ),
           child: child!,
         );

@@ -15,6 +15,15 @@ abstract final class AppStrings {
   static const passwordRequired = 'Password is required';
   static const showPassword = 'Show password';
   static const hidePassword = 'Hide password';
+  static const signInInvalidCredentials =
+      'Incorrect email or password. Please try again.';
+  static const signInEmailNotConfirmed =
+      'Please confirm your email address before signing in.';
+  static const signInTooManyAttempts =
+      'Too many attempts. Please wait a moment and try again.';
+  static const signInNoConnection =
+      'No internet connection. Check your network and try again.';
+  static const signInFailed = 'Couldn’t sign you in. Please try again.';
 
   // MFA
   static const mfaTitle = 'Two-Factor Authentication';
@@ -35,6 +44,9 @@ abstract final class AppStrings {
   static const mfaVerify = 'Verify';
   static const mfaVerifying = 'Verifying…';
   static const mfaCopied = 'Key copied to clipboard';
+  static const mfaInvalidCode =
+      'That code isn’t right. Open your authenticator app and enter the latest code.';
+  static const mfaVerifyFailed = 'Couldn’t verify the code. Please try again.';
 
   // Navigation
   static const navChildren = 'Children';
@@ -643,4 +655,40 @@ abstract final class AppStrings {
       'Show this child\'s photo to the parent in the portal';
   static const managerParentLinkFormSubmit = 'Link Parent';
   static const managerParentLinkCreated = 'Parent linked';
+
+  // Manager — Staff Management (P1)
+  static const managerStaffTitle = 'Staff';
+  static const managerStaffOpenTooltip = 'Staff';
+  static const managerNoStaff = 'No staff accounts yet';
+  static const managerNoStaffHint =
+      'Add your support workers, team leaders, and managers so they can sign in.';
+  static const managerStaffActive = 'Active';
+  static const managerStaffDisabled = 'Disabled';
+  static const managerStaffDisable = 'Disable';
+  static const managerStaffEnable = 'Enable';
+  static const managerStaffDisableTitle = 'Disable this account?';
+  static const managerStaffDisableConfirm =
+      'They will be signed out and unable to log in until you re-enable the account.';
+  static const managerStaffEnableTitle = 'Enable this account?';
+  static const managerStaffEnableConfirm =
+      'They will be able to sign in again.';
+  static const managerStaffUpdated = 'Staff account updated';
+  static const managerNewStaff = 'Add Staff';
+  static const managerStaffFormTitle = 'Add Staff Member';
+  static const managerStaffFormNameLabel = 'Full name';
+  static const managerStaffFormNameHint = 'e.g. Jordan Smith';
+  static const managerStaffFormEmailLabel = 'Email address';
+  static const managerStaffFormEmailHint = 'name@example.com';
+  static const managerStaffFormRoleLabel = 'Role';
+  static const managerStaffFormPasswordLabel = 'Temporary password';
+  static const managerStaffFormPasswordHint = 'At least 8 characters';
+  static const managerStaffFormPasswordNote =
+      'Share this with the staff member so they can sign in. They should change it after first login.';
+  static const managerStaffFormSubmit = 'Create Account';
+  static const managerStaffCreated = 'Staff account created';
+  static const managerStaffNameRequired = 'Enter the staff member\'s name';
+  static const managerStaffEmailRequired = 'Email is required';
+  static const managerStaffEmailInvalid = 'Enter a valid email';
+  static const managerStaffPasswordRequired = 'Temporary password is required';
+  static const managerStaffPasswordTooShort = 'Use at least 8 characters';
 }

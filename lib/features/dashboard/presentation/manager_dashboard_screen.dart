@@ -55,6 +55,11 @@ class ManagerDashboardScreen extends ConsumerWidget {
             tooltip: AppStrings.managerParentAccessOpenTooltip,
             onPressed: () => context.push(AppRoutes.managerParentAccess),
           ),
+          IconButton(
+            icon: const Icon(Icons.groups_outlined),
+            tooltip: AppStrings.managerStaffOpenTooltip,
+            onPressed: () => context.push(AppRoutes.managerStaff),
+          ),
         ],
       ),
       body: childrenAsync.when(
@@ -272,9 +277,18 @@ class _HomeStatsCard extends StatelessWidget {
     final allDone = completeCount == totalCount;
     final barColor = allDone ? AppColors.green : AppColors.amber;
 
-    return Material(
-      color: AppColors.teal400.withAlpha(20),
-      borderRadius: BorderRadius.circular(AppRadius.card),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.teal400.withAlpha(40),
+            AppColors.teal400.withAlpha(14),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(AppRadius.card),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Column(
@@ -450,7 +464,7 @@ class _DocumentationCard extends StatelessWidget {
                   Icon(
                     Icons.assignment_outlined,
                     size: 16,
-                    color: colors.onSurfaceVariant,
+                    color: colors.primary,
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
@@ -511,6 +525,7 @@ class _IncidentsSummaryCard extends StatelessWidget {
     if (incidents.isEmpty) {
       return const _EmptySummaryRow(
         icon: Icons.report_outlined,
+        iconColor: AppColors.moduleIncidents,
         title: AppStrings.dashboardIncidents,
         emptyText: AppStrings.dashboardNone,
       );
@@ -540,10 +555,10 @@ class _IncidentsSummaryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.report_outlined,
                   size: 16,
-                  color: colors.onSurfaceVariant,
+                  color: AppColors.moduleIncidents,
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
@@ -596,6 +611,7 @@ class _BehaviourSummaryCard extends StatelessWidget {
     if (behaviour.isEmpty) {
       return const _EmptySummaryRow(
         icon: Icons.psychology_outlined,
+        iconColor: AppColors.moduleBehaviour,
         title: AppStrings.dashboardBehaviour,
         emptyText: AppStrings.dashboardNone,
       );
@@ -621,10 +637,10 @@ class _BehaviourSummaryCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.psychology_outlined,
                   size: 16,
-                  color: colors.onSurfaceVariant,
+                  color: AppColors.moduleBehaviour,
                 ),
                 const SizedBox(width: AppSpacing.sm),
                 Expanded(
@@ -672,11 +688,13 @@ class _EmptySummaryRow extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.emptyText,
+    this.iconColor,
   });
 
   final IconData icon;
   final String title;
   final String emptyText;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
@@ -688,7 +706,7 @@ class _EmptySummaryRow extends StatelessWidget {
         padding: const EdgeInsets.all(AppSpacing.lg),
         child: Row(
           children: [
-            Icon(icon, size: 16, color: colors.onSurfaceVariant),
+            Icon(icon, size: 16, color: iconColor ?? colors.onSurfaceVariant),
             const SizedBox(width: AppSpacing.sm),
             Expanded(
               child: Text(title, style: AppTextStyles.label(colors.onSurface)),

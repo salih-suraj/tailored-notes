@@ -94,6 +94,7 @@ abstract final class AppRoutes {
   static const dashboard = '/dashboard';
   static const managerInspectorAccess = '/dashboard/inspector-access';
   static const managerParentAccess = '/dashboard/parent-access';
+  static const managerStaff = '/dashboard/staff';
 
   // Inspector portal — nested under /inspector
   static const inspector = '/inspector';

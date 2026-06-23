@@ -27,9 +27,11 @@ final connectivityProvider =
 // ignore: unused_element
 typedef ConnectivityRef =
     AutoDisposeStreamProviderRef<List<ConnectivityResult>>;
-String _$isOnlineHash() => r'07e0f4650dc373832ceac643b20a52e712a47dd2';
+String _$isOnlineHash() => r'4a1f353f011106f40f0c135132d45db55011bec4';
 
 /// True when any network interface is available.
+/// Before the first connectivity event arrives, assume online — a false
+/// "offline" flash at startup is worse than a briefly-late banner.
 ///
 /// Copied from [isOnline].
 @ProviderFor(isOnline)

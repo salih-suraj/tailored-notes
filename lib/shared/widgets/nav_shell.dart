@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/routing/app_routes.dart';
-import '../../core/theme/app_colors.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/auth/domain/user_role.dart';
 import '../../features/auth/presentation/providers/auth_provider.dart';
@@ -170,14 +169,12 @@ class _MobileShell extends StatelessWidget {
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         onDestinationSelected: (i) => context.go(destinations[i].route),
-        backgroundColor: colors.surfaceContainerLow,
-        indicatorColor: AppColors.teal50,
         height: 64,
         destinations: destinations
             .map(
               (d) => NavigationDestination(
                 icon: Semantics(label: d.semanticLabel, child: Icon(d.icon)),
-                selectedIcon: Icon(d.activeIcon, color: AppColors.teal600),
+                selectedIcon: Icon(d.activeIcon, color: colors.primary),
                 label: d.label,
               ),
             )
@@ -211,8 +208,6 @@ class _TabletShell extends StatelessWidget {
             selectedIndex: selectedIndex,
             onDestinationSelected: (i) => context.go(destinations[i].route),
             extended: extended,
-            backgroundColor: colors.surfaceContainerLow,
-            indicatorColor: AppColors.teal50,
             minWidth: AppTapTarget.min,
             minExtendedWidth: 200,
             destinations: destinations
@@ -222,7 +217,7 @@ class _TabletShell extends StatelessWidget {
                       label: d.semanticLabel,
                       child: Icon(d.icon),
                     ),
-                    selectedIcon: Icon(d.activeIcon, color: AppColors.teal600),
+                    selectedIcon: Icon(d.activeIcon, color: colors.primary),
                     label: Text(d.label),
                     padding: const EdgeInsets.symmetric(
                       vertical: AppSpacing.sm,

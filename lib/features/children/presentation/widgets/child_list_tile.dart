@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../shared/widgets/completion_dot.dart';
@@ -16,6 +17,7 @@ class ChildListTile extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final colors = Theme.of(context).colorScheme;
+    final avatarColor = AppColors.avatarColorFor(child.id);
 
     return Semantics(
       button: true,
@@ -36,14 +38,14 @@ class ChildListTile extends ConsumerWidget {
                 // Avatar
                 CircleAvatar(
                   radius: 22,
-                  backgroundColor: colors.primaryContainer,
+                  backgroundColor: avatarColor.withAlpha(38),
                   backgroundImage: child.photoUrl != null
                       ? NetworkImage(child.photoUrl!)
                       : null,
                   child: child.photoUrl == null
                       ? Text(
                           child.initials,
-                          style: AppTextStyles.label(colors.onPrimaryContainer),
+                          style: AppTextStyles.label(avatarColor),
                         )
                       : null,
                 ),

@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/routing/app_routes.dart';
 import '../../../core/theme/theme.dart';
 import '../../../shared/models/app_strings.dart';
+import 'auth_error_message.dart';
 import 'providers/auth_provider.dart';
 
 /// Login screen — entry point for all roles.
@@ -31,6 +32,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
+    // Close the keyboard now that the tap has registered (the Sign In button is
+    // wrapped in TextFieldTapRegion, so the tap itself no longer dismisses it).
+    FocusScope.of(context).unfocus();
     await ref
         .read(authNotifierProvider.notifier)
         .signIn(
@@ -42,7 +46,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     if (authState.hasError) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(authState.error.toString()),
+          content: Text(signInErrorMessage(authState.error)),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );
@@ -160,19 +164,28 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     ),
                     const SizedBox(height: AppSpacing.xl),
 
-                    // Sign in button
-                    ElevatedButton(
-                      onPressed: isLoading ? null : _submit,
-                      child: isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.white,
-                              ),
-                            )
-                          : const Text(AppStrings.signIn),
+                    // Sign in button.
+                    //
+                    // Wrapped in [TextFieldTapRegion] so the framework treats a
+                    // tap here as "inside" the text-field group. Without it, the
+                    // tap counts as a tap *outside* the focused field, which
+                    // dismisses the keyboard, resizes the layout, slides the
+                    // button out from under the finger, and swallows the first
+                    // tap — the classic "have to tap twice" bug.
+                    TextFieldTapRegion(
+                      child: ElevatedButton(
+                        onPressed: isLoading ? null : _submit,
+                        child: isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.white,
+                                ),
+                              )
+                            : const Text(AppStrings.signIn),
+                      ),
                     ),
                   ],
                 ),

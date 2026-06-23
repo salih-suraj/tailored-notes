@@ -6,7 +6,7 @@ part of 'sync_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$syncServiceHash() => r'276ccd5d61bc3d2a65d14a90f07692f637d44cfb';
+String _$syncServiceHash() => r'b699a3a514c3234220f82e255cc2482fe1533153';
 
 /// The Q2 sync engine, registered over every care-record repository plus
 /// the audit log. Starts sweeping when a user is signed in (RLS requires
