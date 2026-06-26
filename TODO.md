@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-06-23 (session 8 — AI summary verified, P1 staff mgmt built, UX/colour/icon polish; see ▶ RESUME HERE)
+> Last updated: 2026-06-25 (session 8 — double-tap root-caused + fixed (pinned footer), white app icon, AI summary verified, P1 staff mgmt built; see ▶ RESUME HERE)
 
 ---
 
@@ -143,17 +143,17 @@ Every new feature added without them makes the retrofit harder.
 
 ---
 
-## Polish & UX — session 8 (2026-06-23)
+## Polish & UX — session 8 (2026-06-23 → 06-25)
 
 Cross-cutting fixes and polish on top of the feature set. All `flutter analyze` clean.
 
 | Item | Notes |
 |------|-------|
 | Sign-in / MFA error messages | Raw Supabase exceptions (`AuthApiException(... statusCode: 400)`) replaced with calm, user-facing copy via `auth_error_message.dart` — invalid credentials, unconfirmed email, rate-limit, no-connection, and a friendly MFA "wrong code" line. |
-| Single-tap submit | Sign In and Verify buttons wrapped in `TextFieldTapRegion` so the keyboard no longer dismisses mid-gesture and swallows the first tap (was a double-tap on Android). |
+| Single-tap submit (FIXED 2026-06-25) | **Real root cause found** by reading the Flutter source: on Android *touch*, a tap outside a text field is a deliberate no-op (`editable_text.dart` ~L6700) and Material buttons don't steal focus — so the keyboard was never being dismissed by the field. Earlier `onTapOutside` + `TextFieldTapRegion` attempts patched a path that never runs on device. Actual cause: with the centred scrolling layout, the Sign In / Verify button sat at/under the keyboard's top edge, so the first tap hit the keyboard (dismissing it) and only the second hit the button. **Fix:** moved the action button out of the scroll area into a **pinned footer** on both login + MFA screens, so it always sits above the keyboard and a single tap lands. Removed the dead `TextFieldTapRegion` wrappers. analyze clean; needs a fresh device build to confirm. |
 | Date-picker crash | Dropped the `minScaleFactor: 1.0` text-scale floor in `app.dart` that tripped `assert(maxScale > minScale)` in the Material date picker on non-linear platform scalers (access-expiry picker crash). |
 | Professional colour | Logo-anchored palette (`#5271FF`): 11 distinct care-module accents, brand-led per-child avatar colours (`avatarColorFor`), nav bar/rail selection styling moved into the theme, dashboard hero gradient + identity-coloured section icons. |
-| App icon | `flutter_launcher_icons` set up — white "E" mark on solid brand indigo, full-bleed (iOS/legacy) + Android adaptive (indigo bg + padded white foreground). Source in `assets/icon/`. |
+| App icon | `flutter_launcher_icons` set up. v1 (2026-06-23): white "E" on solid brand indigo. **v2 (2026-06-24): switched to the indigo "E" on a white background** at client request — full-bleed (iOS/legacy) + Android adaptive (white bg + padded indigo foreground). Source in `assets/icon/`. |
 | AI summary Markdown | Rendered the brief's Markdown instead of showing raw `**`/`-`/`#` (see item 31). |
 | Client progress doc | `CLIENT_PROGRESS.md` — plain-English, shareable status for the client. |
 

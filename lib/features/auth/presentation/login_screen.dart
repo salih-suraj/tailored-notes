@@ -32,8 +32,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    // Close the keyboard now that the tap has registered (the Sign In button is
-    // wrapped in TextFieldTapRegion, so the tap itself no longer dismisses it).
+    // Close the keyboard now that the tap has registered.
     FocusScope.of(context).unfocus();
     await ref
         .read(authNotifierProvider.notifier)
@@ -64,134 +63,152 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Scaffold(
       backgroundColor: colors.surface,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.xl,
-              vertical: AppSpacing.xxxl,
-            ),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
+        child: Column(
+          children: [
+            // Scrollable field area.
+            Expanded(
               child: Form(
                 key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // Logo + wordmark
-                    Image.asset('assets/images/logo.png', height: 80),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      AppStrings.appName,
-                      style: GoogleFonts.dmSerifDisplay(
-                        fontSize: 28,
-                        color: AppColors.teal600,
-                        height: 1.2,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Text(
-                      AppStrings.appTagline,
-                      style: AppTextStyles.small(colors.onSurfaceVariant),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(height: AppSpacing.xxxl),
-
-                    // Email
-                    Text(
-                      AppStrings.emailLabel,
-                      style: AppTextStyles.label(colors.onSurfaceVariant),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextFormField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
-                      validator: (v) {
-                        if (v == null || v.trim().isEmpty) {
-                          return AppStrings.emailRequired;
-                        }
-                        if (!v.contains('@')) return AppStrings.emailInvalid;
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-
-                    // Password
-                    Text(
-                      AppStrings.passwordLabel,
-                      style: AppTextStyles.label(colors.onSurfaceVariant),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    TextFormField(
-                      controller: _passwordController,
-                      obscureText: _obscurePassword,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (_) => _submit(),
-                      validator: (v) {
-                        if (v == null || v.isEmpty) {
-                          return AppStrings.passwordRequired;
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscurePassword
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: colors.onSurfaceVariant,
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.xl,
+                    AppSpacing.xxxl,
+                    AppSpacing.xl,
+                    AppSpacing.lg,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          // Logo + wordmark
+                          Image.asset('assets/images/logo.png', height: 80),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            AppStrings.appName,
+                            style: GoogleFonts.dmSerifDisplay(
+                              fontSize: 28,
+                              color: AppColors.teal600,
+                              height: 1.2,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          onPressed: () => setState(
-                            () => _obscurePassword = !_obscurePassword,
+                          const SizedBox(height: AppSpacing.sm),
+                          Text(
+                            AppStrings.appTagline,
+                            style: AppTextStyles.small(colors.onSurfaceVariant),
+                            textAlign: TextAlign.center,
                           ),
-                          tooltip: _obscurePassword
-                              ? AppStrings.showPassword
-                              : AppStrings.hidePassword,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
+                          const SizedBox(height: AppSpacing.xxxl),
 
-                    // Forgot password
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: TextButton(
-                        onPressed: () => context.push(AppRoutes.forgotPassword),
-                        child: const Text(AppStrings.forgotPassword),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xl),
+                          // Email
+                          Text(
+                            AppStrings.emailLabel,
+                            style: AppTextStyles.label(colors.onSurfaceVariant),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          TextFormField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            autocorrect: false,
+                            textInputAction: TextInputAction.next,
+                            validator: (v) {
+                              if (v == null || v.trim().isEmpty) {
+                                return AppStrings.emailRequired;
+                              }
+                              if (!v.contains('@')) {
+                                return AppStrings.emailInvalid;
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: AppSpacing.lg),
 
-                    // Sign in button.
-                    //
-                    // Wrapped in [TextFieldTapRegion] so the framework treats a
-                    // tap here as "inside" the text-field group. Without it, the
-                    // tap counts as a tap *outside* the focused field, which
-                    // dismisses the keyboard, resizes the layout, slides the
-                    // button out from under the finger, and swallows the first
-                    // tap — the classic "have to tap twice" bug.
-                    TextFieldTapRegion(
-                      child: ElevatedButton(
-                        onPressed: isLoading ? null : _submit,
-                        child: isLoading
-                            ? const SizedBox(
-                                height: 20,
-                                width: 20,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: AppColors.white,
+                          // Password
+                          Text(
+                            AppStrings.passwordLabel,
+                            style: AppTextStyles.label(colors.onSurfaceVariant),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          TextFormField(
+                            controller: _passwordController,
+                            obscureText: _obscurePassword,
+                            textInputAction: TextInputAction.done,
+                            onFieldSubmitted: (_) => _submit(),
+                            validator: (v) {
+                              if (v == null || v.isEmpty) {
+                                return AppStrings.passwordRequired;
+                              }
+                              return null;
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  _obscurePassword
+                                      ? Icons.visibility_outlined
+                                      : Icons.visibility_off_outlined,
+                                  color: colors.onSurfaceVariant,
                                 ),
-                              )
-                            : const Text(AppStrings.signIn),
+                                onPressed: () => setState(
+                                  () => _obscurePassword = !_obscurePassword,
+                                ),
+                                tooltip: _obscurePassword
+                                    ? AppStrings.showPassword
+                                    : AppStrings.hidePassword,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+
+                          // Forgot password
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: TextButton(
+                              onPressed: () =>
+                                  context.push(AppRoutes.forgotPassword),
+                              child: const Text(AppStrings.forgotPassword),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
+            // Pinned action footer. The Sign In button lives here, outside the
+            // scroll area, so it always sits ABOVE the soft keyboard and a
+            // single tap lands on it. Previously it sat at the keyboard's top
+            // edge inside the scroll view, so the first tap hit the keyboard
+            // (dismissing it) and you had to tap a second time.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.xl,
+                AppSpacing.sm,
+                AppSpacing.xl,
+                AppSpacing.lg,
+              ),
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 400),
+                  child: ElevatedButton(
+                    onPressed: isLoading ? null : _submit,
+                    child: isLoading
+                        ? const SizedBox(
+                            height: 20,
+                            width: 20,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: AppColors.white,
+                            ),
+                          )
+                        : const Text(AppStrings.signIn),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

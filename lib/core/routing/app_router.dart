@@ -116,8 +116,14 @@ bool _isRouteAllowed(String location, UserRole role) {
 GoRouter appRouter(Ref ref) {
   final authChange = _AuthChangeNotifier();
 
-  // Fire router refresh on every auth state change.
-  ref.listen(authStateChangesProvider, (_, _) => authChange.notify());
+  // Refresh the router whenever the *resolved user* changes. We listen to
+  // currentUserProvider — the exact thing `redirect` reads below — not the raw
+  // authStateChangesProvider. Both derive from the auth stream, so listening to
+  // the stream can fire the refresh BEFORE currentUserProvider has recomputed:
+  // `redirect` then reads a stale null and the first sign-in doesn't navigate
+  // (you'd have to tap Sign In / Verify a second time). Listening to the
+  // resolved user guarantees the refresh runs after it's up to date.
+  ref.listen(currentUserProvider, (_, _) => authChange.notify());
   ref.onDispose(authChange.dispose);
 
   return GoRouter(

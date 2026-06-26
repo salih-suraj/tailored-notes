@@ -100,8 +100,7 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
 
   Future<void> _verify() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    // Close the keyboard now that the tap has registered (the Verify button is
-    // wrapped in TextFieldTapRegion, so the tap itself no longer dismisses it).
+    // Close the keyboard now that the tap has registered.
     FocusScope.of(context).unfocus();
     final client = ref.read(supabaseClientProvider);
     if (client == null) return;
@@ -149,35 +148,75 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
     return Scaffold(
       backgroundColor: colors.surface,
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.xl,
-              vertical: AppSpacing.xxxl,
-            ),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: switch (_mode) {
-                _Mode.loading => const CircularProgressIndicator(),
-                _Mode.error => _ErrorBody(message: _errorMessage ?? 'Error'),
-                _Mode.enroll => _body(
-                  colors: colors,
-                  title: AppStrings.mfaEnrollTitle,
-                  body: AppStrings.mfaEnrollBody,
-                  extra: _EnrollmentSecret(
-                    secret: _enrollSecret ?? '',
-                    copied: _secretCopied,
-                    onCopy: _copySecret,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xl,
+                  AppSpacing.xxxl,
+                  AppSpacing.xl,
+                  AppSpacing.lg,
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: switch (_mode) {
+                      _Mode.loading => const CircularProgressIndicator(),
+                      _Mode.error => _ErrorBody(
+                        message: _errorMessage ?? 'Error',
+                      ),
+                      _Mode.enroll => _body(
+                        colors: colors,
+                        title: AppStrings.mfaEnrollTitle,
+                        body: AppStrings.mfaEnrollBody,
+                        extra: _EnrollmentSecret(
+                          secret: _enrollSecret ?? '',
+                          copied: _secretCopied,
+                          onCopy: _copySecret,
+                        ),
+                      ),
+                      _Mode.challenge => _body(
+                        colors: colors,
+                        title: AppStrings.mfaTitle,
+                        body: AppStrings.mfaChallengeBody,
+                      ),
+                    },
                   ),
                 ),
-                _Mode.challenge => _body(
-                  colors: colors,
-                  title: AppStrings.mfaTitle,
-                  body: AppStrings.mfaChallengeBody,
-                ),
-              },
+              ),
             ),
-          ),
+            // Pinned Verify footer — keeps the button above the soft keyboard so
+            // a single tap lands on it. It used to sit at the keyboard's top
+            // edge inside the scroll view, so the first tap hit the keyboard.
+            if (_mode == _Mode.enroll || _mode == _Mode.challenge)
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  AppSpacing.xl,
+                  AppSpacing.sm,
+                  AppSpacing.xl,
+                  AppSpacing.lg,
+                ),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 400),
+                    child: ElevatedButton(
+                      onPressed: _isVerifying ? null : _verify,
+                      child: _isVerifying
+                          ? const SizedBox(
+                              height: 20,
+                              width: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: AppColors.white,
+                              ),
+                            )
+                          : const Text(AppStrings.mfaVerify),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         ),
       ),
     );
@@ -251,26 +290,6 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
               return null;
             },
             onFieldSubmitted: (_) => _isVerifying ? null : _verify(),
-          ),
-          const SizedBox(height: AppSpacing.xl),
-
-          // Wrapped in [TextFieldTapRegion] so tapping Verify counts as a tap
-          // inside the code field's group: the keyboard doesn't dismiss, the
-          // layout doesn't shift, and the first tap registers (no double-tap).
-          TextFieldTapRegion(
-            child: ElevatedButton(
-              onPressed: _isVerifying ? null : _verify,
-              child: _isVerifying
-                  ? const SizedBox(
-                      height: 20,
-                      width: 20,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: AppColors.white,
-                      ),
-                    )
-                  : const Text(AppStrings.mfaVerify),
-            ),
           ),
         ],
       ),
