@@ -149,7 +149,6 @@ class _IncidentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final typeColor = _typeColor(report.incidentType);
     final severityColor = _severityColor(report.severity);
     final dateStr = DateFormat(
       'EEE d MMM · HH:mm',
@@ -170,10 +169,7 @@ class _IncidentCard extends StatelessWidget {
               // Header row: type badge, severity badge, flags, menu
               Row(
                 children: [
-                  _Badge(
-                    label: report.incidentType.displayName,
-                    color: typeColor,
-                  ),
+                  _NeutralChip(label: report.incidentType.displayName),
                   const SizedBox(width: AppSpacing.sm),
                   _Badge(
                     label: report.severity.displayName,
@@ -270,15 +266,6 @@ class _IncidentCard extends StatelessWidget {
     );
   }
 
-  Color _typeColor(IncidentType t) => switch (t) {
-    IncidentType.behaviour => AppColors.amber,
-    IncidentType.medical => AppColors.blue,
-    IncidentType.accident => AppColors.orange,
-    IncidentType.propertyDamage => AppColors.slate400,
-    IncidentType.missingPerson => AppColors.red,
-    IncidentType.safeguarding => AppColors.roleInspector,
-  };
-
   Color _severityColor(IncidentSeverity s) => switch (s) {
     IncidentSeverity.low => AppColors.green,
     IncidentSeverity.medium => AppColors.amber,
@@ -348,4 +335,27 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (incident type) — colour here
+/// is reserved for severity and the follow-up / police / notification signals.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
