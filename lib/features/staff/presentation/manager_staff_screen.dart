@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
+import '../../../shared/errors/friendly_error.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -34,7 +35,7 @@ class ManagerStaffScreen extends ConsumerWidget {
       body: staffAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(staffForHomeProvider(homeId)),
         ),
         data: (staff) {
@@ -158,7 +159,7 @@ class _StaffTileState extends ConsumerState<_StaffTile> {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      ).showSnackBar(SnackBar(content: Text(friendlyError(e))));
     } finally {
       if (mounted) setState(() => _busy = false);
     }

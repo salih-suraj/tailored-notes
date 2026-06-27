@@ -6,6 +6,7 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/time/uk_time.dart';
+import '../../../shared/errors/friendly_error.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -94,7 +95,7 @@ class _GrantsTab extends ConsumerWidget {
     return grantsAsync.when(
       loading: () => const LoadingSkeleton(),
       error: (e, _) => ErrorView(
-        message: e.toString(),
+        error: e,
         onRetry: () => ref.invalidate(grantsForHomeProvider(homeId)),
       ),
       data: (grants) {
@@ -253,7 +254,7 @@ class _FeedbackTab extends ConsumerWidget {
     return feedbackAsync.when(
       loading: () => const LoadingSkeleton(),
       error: (e, _) => ErrorView(
-        message: e.toString(),
+        error: e,
         onRetry: () => ref.invalidate(feedbackForHomeProvider(homeId)),
       ),
       data: (items) {
@@ -440,7 +441,7 @@ class _FeedbackStatusSheetState extends ConsumerState<_FeedbackStatusSheet> {
       if (!mounted) return;
       ScaffoldMessenger.of(
         context,
-      ).showSnackBar(SnackBar(content: Text(e.toString())));
+      ).showSnackBar(SnackBar(content: Text(friendlyError(e))));
     } finally {
       if (mounted) setState(() => _submitting = false);
     }

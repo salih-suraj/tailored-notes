@@ -58,7 +58,7 @@ class _InspectorHomeAccessScreenState
       body: grantAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(grantByIdProvider(widget.grantId)),
         ),
         data: (grant) {
@@ -90,7 +90,7 @@ class _InspectorHomeAccessScreenState
               const SizedBox(height: AppSpacing.sm),
               childrenAsync.when(
                 loading: () => const LoadingSkeleton(itemCount: 2),
-                error: (e, _) => ErrorView(message: e.toString()),
+                error: (e, _) => ErrorView(error: e),
                 data: (children) {
                   if (children.isEmpty) {
                     return Text(

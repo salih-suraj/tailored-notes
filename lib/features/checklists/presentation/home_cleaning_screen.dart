@@ -73,7 +73,7 @@ class HomeCleaningScreen extends ConsumerWidget {
       body: switch ((childrenAsync, communalAsync)) {
         (AsyncError(:final error), _) ||
         (_, AsyncError(:final error)) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () {
             ref.invalidate(childrenProvider);
             ref.invalidate(communalChecklistProvider);

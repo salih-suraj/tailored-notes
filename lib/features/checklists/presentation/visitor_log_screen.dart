@@ -35,7 +35,7 @@ class VisitorLogScreen extends ConsumerWidget {
       body: entriesAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(visitorLogTodayProvider),
         ),
         data: (entries) {

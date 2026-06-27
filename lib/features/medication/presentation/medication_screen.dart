@@ -67,7 +67,7 @@ class MedicationScreen extends ConsumerWidget {
       body: switch ((medsAsync, adminsAsync)) {
         (AsyncError(:final error), _) ||
         (_, AsyncError(:final error)) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () {
             ref.invalidate(prescribedMedsProvider(childId));
             ref.invalidate(todayAdminsProvider(childId));

@@ -48,7 +48,7 @@ class FoodDiaryScreen extends ConsumerWidget {
       body: entriesAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(foodEntriesProvider(childId)),
         ),
         data: (entries) {

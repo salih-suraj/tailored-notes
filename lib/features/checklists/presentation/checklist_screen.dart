@@ -64,14 +64,14 @@ class ChecklistScreen extends ConsumerWidget {
       ),
       body: switch ((roomAsync, communalAsync)) {
         (AsyncError(:final error), _) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () {
             ref.invalidate(roomChecklistProvider(childId));
             ref.invalidate(communalChecklistProvider);
           },
         ),
         (_, AsyncError(:final error)) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () {
             ref.invalidate(roomChecklistProvider(childId));
             ref.invalidate(communalChecklistProvider);

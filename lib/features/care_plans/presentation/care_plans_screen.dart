@@ -48,7 +48,7 @@ class CarePlansScreen extends ConsumerWidget {
       body: plansAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(carePlansProvider(childId)),
         ),
         data: (plans) {

@@ -66,7 +66,7 @@ class MedicalHistoryScreen extends ConsumerWidget {
       body: switch ((profileAsync, contactsAsync)) {
         (AsyncError(:final error), _) ||
         (_, AsyncError(:final error)) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () {
             ref.invalidate(medicalProfileProvider(childId));
             ref.invalidate(healthcareContactsProvider(childId));

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../shared/errors/friendly_error.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -93,7 +94,7 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
     } catch (e) {
       setState(() {
         _mode = _Mode.error;
-        _errorMessage = e.toString();
+        _errorMessage = friendlyError(e);
       });
     }
   }

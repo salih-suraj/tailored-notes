@@ -50,7 +50,7 @@ class BehaviourScreen extends ConsumerWidget {
       body: incidentsAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(behaviourIncidentsProvider(childId)),
         ),
         data: (incidents) {

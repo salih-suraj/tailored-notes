@@ -68,7 +68,7 @@ class _DailyNotesListScreenState extends ConsumerState<DailyNotesListScreen> {
             child: notesAsync.when(
               loading: () => const LoadingSkeleton(),
               error: (e, _) => ErrorView(
-                message: e.toString(),
+                error: e,
                 onRetry: () =>
                     ref.invalidate(dailyNotesProvider(widget.childId)),
               ),

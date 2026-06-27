@@ -49,7 +49,7 @@ class SmartStepDetailScreen extends ConsumerWidget {
       body: progressAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(stepProgressNotesProvider(step.id)),
         ),
         data: (notes) => CustomScrollView(

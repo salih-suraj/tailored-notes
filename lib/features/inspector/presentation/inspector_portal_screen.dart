@@ -26,7 +26,7 @@ class InspectorPortalScreen extends ConsumerWidget {
       body: grantsAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(myActiveGrantsProvider),
         ),
         data: (grants) {

@@ -91,7 +91,7 @@ class _InspectorRecordsScreenState
       appBar: AppBar(title: Text(module.displayName)),
       body: grantAsync.when(
         loading: () => const LoadingSkeleton(),
-        error: (e, _) => ErrorView(message: e.toString()),
+        error: (e, _) => ErrorView(error: e),
         data: (grant) {
           if (grant == null) {
             return const ErrorView(message: AppStrings.inspectorExpired);
@@ -102,7 +102,7 @@ class _InspectorRecordsScreenState
           return recordsAsync.when(
             loading: () => const LoadingSkeleton(),
             error: (e, _) => ErrorView(
-              message: e.toString(),
+              error: e,
               onRetry: () => ref.invalidate(
                 inspectorRecordsProvider(grant.homeId, module, widget.childId),
               ),

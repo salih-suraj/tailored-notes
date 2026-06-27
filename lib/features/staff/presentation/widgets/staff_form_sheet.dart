@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../shared/errors/friendly_error.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_spacing.dart';
@@ -78,7 +79,7 @@ class _StaffFormSheetState extends ConsumerState<StaffFormSheet> {
       Navigator.of(context).pop();
     } catch (e) {
       if (!mounted) return;
-      setState(() => _error = e.toString());
+      setState(() => _error = friendlyError(e));
     } finally {
       if (mounted) setState(() => _submitting = false);
     }

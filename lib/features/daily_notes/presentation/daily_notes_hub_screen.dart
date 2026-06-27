@@ -25,7 +25,7 @@ class DailyNotesHubScreen extends ConsumerWidget {
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (error, _) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () => ref.invalidate(childrenProvider),
         ),
         data: (children) {

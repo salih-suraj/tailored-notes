@@ -31,7 +31,7 @@ class ParentChildFeedScreen extends ConsumerWidget {
       error: (e, _) => Scaffold(
         appBar: AppBar(title: const Text(AppStrings.parentFeedTitle)),
         body: ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(parentLinkByIdProvider(linkId)),
         ),
       ),
@@ -69,7 +69,7 @@ class _ActivityFeed extends ConsumerWidget {
     return activitiesAsync.when(
       loading: () => const LoadingSkeleton(),
       error: (e, _) => ErrorView(
-        message: e.toString(),
+        error: e,
         onRetry: () => ref.invalidate(parentChildActivitiesProvider(childId)),
       ),
       data: (entries) {

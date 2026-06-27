@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../shared/errors/friendly_error.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -189,7 +190,7 @@ class _AiSummarySheetState extends ConsumerState<AiSummarySheet> {
     } catch (e) {
       if (!mounted) return;
       setState(() {
-        _error = e.toString().replaceFirst('Bad state: ', '');
+        _error = friendlyError(e);
         _loading = false;
       });
     }

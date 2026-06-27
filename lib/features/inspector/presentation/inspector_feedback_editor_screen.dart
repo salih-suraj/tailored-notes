@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../shared/errors/friendly_error.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -99,7 +100,7 @@ class _InspectorFeedbackEditorScreenState
       context.pop();
     } catch (e) {
       if (!mounted) return;
-      setState(() => _error = e.toString());
+      setState(() => _error = friendlyError(e));
     } finally {
       if (mounted) setState(() => _submitting = false);
     }
@@ -114,7 +115,7 @@ class _InspectorFeedbackEditorScreenState
       appBar: AppBar(title: const Text(AppStrings.inspectorFeedbackTitle)),
       body: grantAsync.when(
         loading: () => const LoadingSkeleton(),
-        error: (e, _) => ErrorView(message: e.toString()),
+        error: (e, _) => ErrorView(error: e),
         data: (grant) {
           if (grant == null) {
             return const ErrorView(message: AppStrings.inspectorExpired);
