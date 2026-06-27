@@ -15,112 +15,57 @@ import '../../medical_history/presentation/providers/medical_history_provider.da
 import '../domain/child.dart';
 import 'providers/children_provider.dart';
 
-final _dobFormat = DateFormat('dd·MM·yyyy', 'en_GB');
+final _dobFormat = DateFormat('d MMM yyyy', 'en_GB');
 final _todayFormat = DateFormat('EEE d MMM', 'en_GB');
 
-/// One care-module entry on the profile grid.
-class _Module {
-  const _Module({
-    required this.icon,
-    required this.label,
-    required this.description,
-    required this.color,
-    required this.route,
-  });
-
+/// One care-record entry on the profile.
+class _Record {
+  const _Record(this.icon, this.label, this.route);
   final IconData icon;
   final String label;
-  final String description;
-  final Color color;
   final String route;
 }
 
-/// Overview of a single child — identity, safety flags, today's documentation
-/// status, then a grid of entry points into each care record.
+/// Child profile — "operational calm": neutral chrome, one serif identity
+/// moment, loud safety signals, a glanceable status panel, and the records as
+/// a single refined list. Colour is reserved for safety and compliance.
 class ChildProfileScreen extends ConsumerWidget {
   const ChildProfileScreen({super.key, required this.childId});
 
   final String childId;
 
-  // Flat grid order — safety-relevant modules first, daily records after.
-  static const _modules = [
-    _Module(
-      icon: Icons.medication_outlined,
-      label: AppStrings.moduleMedication,
-      description: AppStrings.moduleMedicationDesc,
-      color: AppColors.moduleMedication,
-      route: 'medication',
+  static const _records = [
+    _Record(
+      Icons.edit_note_outlined,
+      AppStrings.moduleDailyNotes,
+      'daily-notes',
     ),
-    _Module(
-      icon: Icons.thermostat_outlined,
-      label: AppStrings.bathTempModule,
-      description: AppStrings.bathTempModuleDesc,
-      color: AppColors.moduleBathTemp,
-      route: 'bath-temp',
+    _Record(
+      Icons.medication_outlined,
+      AppStrings.moduleMedication,
+      'medication',
     ),
-    _Module(
-      icon: Icons.report_outlined,
-      label: AppStrings.moduleIncidents,
-      description: AppStrings.moduleIncidentsDesc,
-      color: AppColors.moduleIncidents,
-      route: 'incidents',
+    _Record(Icons.show_chart, AppStrings.moduleBehaviour, 'behaviour'),
+    _Record(Icons.report_outlined, AppStrings.moduleIncidents, 'incidents'),
+    _Record(
+      Icons.health_and_safety_outlined,
+      AppStrings.moduleMedicalHistory,
+      'medical-history',
     ),
-    _Module(
-      icon: Icons.description_outlined,
-      label: AppStrings.moduleCarePlans,
-      description: AppStrings.moduleCarePlansDesc,
-      color: AppColors.moduleCarePlans,
-      route: 'care-plans',
+    _Record(
+      Icons.description_outlined,
+      AppStrings.moduleCarePlans,
+      'care-plans',
     ),
-    _Module(
-      icon: Icons.health_and_safety_outlined,
-      label: AppStrings.moduleMedicalHistory,
-      description: AppStrings.moduleMedicalHistoryDesc,
-      color: AppColors.moduleMedicalHistory,
-      route: 'medical-history',
+    _Record(Icons.stairs_outlined, AppStrings.moduleSmartSteps, 'smart-steps'),
+    _Record(Icons.thermostat_outlined, AppStrings.bathTempModule, 'bath-temp'),
+    _Record(
+      Icons.restaurant_outlined,
+      AppStrings.moduleFoodDiary,
+      'food-diary',
     ),
-    _Module(
-      icon: Icons.show_chart,
-      label: AppStrings.moduleBehaviour,
-      description: AppStrings.moduleBehaviourDesc,
-      color: AppColors.moduleBehaviour,
-      route: 'behaviour',
-    ),
-    _Module(
-      icon: Icons.edit_note,
-      label: AppStrings.moduleDailyNotes,
-      description: AppStrings.moduleDailyNotesDesc,
-      color: AppColors.moduleDailyNotes,
-      route: 'daily-notes',
-    ),
-    _Module(
-      icon: Icons.restaurant_outlined,
-      label: AppStrings.moduleFoodDiary,
-      description: AppStrings.moduleFoodDiaryDesc,
-      color: AppColors.moduleFood,
-      route: 'food-diary',
-    ),
-    _Module(
-      icon: Icons.bedtime_outlined,
-      label: AppStrings.moduleSleepDiary,
-      description: AppStrings.moduleSleepDiaryDesc,
-      color: AppColors.moduleSleep,
-      route: 'sleep-diary',
-    ),
-    _Module(
-      icon: Icons.star_outline,
-      label: AppStrings.moduleActivities,
-      description: AppStrings.moduleActivitiesDesc,
-      color: AppColors.moduleActivities,
-      route: 'activities',
-    ),
-    _Module(
-      icon: Icons.stairs_outlined,
-      label: AppStrings.moduleSmartSteps,
-      description: AppStrings.moduleSmartStepsDesc,
-      color: AppColors.moduleSmartSteps,
-      route: 'smart-steps',
-    ),
+    _Record(Icons.bedtime_outlined, AppStrings.moduleSleepDiary, 'sleep-diary'),
+    _Record(Icons.star_outline, AppStrings.moduleActivities, 'activities'),
   ];
 
   @override
@@ -133,7 +78,7 @@ class ChildProfileScreen extends ConsumerWidget {
     return childrenAsync.when(
       loading: () => const Scaffold(body: LoadingSkeleton()),
       error: (error, _) => Scaffold(
-        appBar: AppBar(title: const Text(AppStrings.childProfile)),
+        appBar: AppBar(),
         body: ErrorView(
           error: error,
           onRetry: () => ref.invalidate(childrenProvider),
@@ -141,7 +86,6 @@ class ChildProfileScreen extends ConsumerWidget {
       ),
       data: (children) {
         final child = children.where((c) => c.id == childId).firstOrNull;
-
         if (child == null) {
           return Scaffold(
             appBar: AppBar(title: const Text(AppStrings.childProfile)),
@@ -158,39 +102,55 @@ class ChildProfileScreen extends ConsumerWidget {
         final conditions = medical?.conditions?.trim() ?? '';
 
         return Scaffold(
-          appBar: AppBar(title: Text(child.name)),
+          // Minimal bar — the name is the serif hero in the body.
+          appBar: AppBar(toolbarHeight: 48),
           body: ListView(
             padding: const EdgeInsets.fromLTRB(
               AppSpacing.lg,
-              AppSpacing.lg,
+              0,
               AppSpacing.lg,
               AppSpacing.xxl,
             ),
             children: [
-              _IdentityCard(child: child),
-              const SizedBox(height: AppSpacing.md),
+              _Hero(child: child),
+              const SizedBox(height: AppSpacing.lg),
 
               if (allergies.isNotEmpty) ...[
-                _AllergyBanner(
-                  text: allergies,
+                _SafetyFlag(
+                  title: AppStrings.profileAllergyFlag,
+                  body: allergies,
+                  critical: true,
                   onTap: () =>
                       context.push('/children/$childId/medical-history'),
                 ),
                 const SizedBox(height: AppSpacing.sm),
               ],
               if (conditions.isNotEmpty) ...[
-                _ConditionBanner(
-                  text: conditions,
+                _SafetyFlag(
+                  title: AppStrings.profileConditionsFlag,
+                  body: conditions,
+                  critical: false,
                   onTap: () =>
                       context.push('/children/$childId/medical-history'),
                 ),
                 const SizedBox(height: AppSpacing.sm),
               ],
 
-              _DocumentationCard(completion: completion),
-              const SizedBox(height: AppSpacing.lg),
+              const SizedBox(height: AppSpacing.xs),
+              _TodayPanel(completion: completion),
+              const SizedBox(height: AppSpacing.xl),
 
-              _ModuleGrid(modules: _modules, childId: childId),
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: AppSpacing.xs,
+                  bottom: AppSpacing.sm,
+                ),
+                child: Text(
+                  AppStrings.careRecordSection,
+                  style: AppTextStyles.label(colors.onSurfaceVariant),
+                ),
+              ),
+              _RecordsList(records: _records, childId: childId),
             ],
           ),
         );
@@ -199,10 +159,10 @@ class ChildProfileScreen extends ConsumerWidget {
   }
 }
 
-// ── Identity ──────────────────────────────────────────────────────────────────
+// ── Identity hero ─────────────────────────────────────────────────────────────
 
-class _IdentityCard extends StatelessWidget {
-  const _IdentityCard({required this.child});
+class _Hero extends StatelessWidget {
+  const _Hero({required this.child});
 
   final Child child;
 
@@ -211,182 +171,184 @@ class _IdentityCard extends StatelessWidget {
     final colors = Theme.of(context).colorScheme;
     final accent = AppColors.avatarColorFor(child.id);
     final dob = DateTime.tryParse(child.dateOfBirth);
+    final meta = [
+      '${AppStrings.profileAgeLabel} ${child.ageYears}',
+      '${AppStrings.profileRoomLabel} ${child.room}',
+      if (dob != null)
+        '${AppStrings.profileDobLabel} ${_dobFormat.format(dob)}',
+    ].join('  ·  ');
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.lg),
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: accent.withAlpha(38),
-            backgroundImage: child.photoUrl != null
-                ? NetworkImage(child.photoUrl!)
-                : null,
-            child: child.photoUrl == null
-                ? Text(child.initials, style: AppTextStyles.h2(accent))
-                : null,
-          ),
-          const SizedBox(width: AppSpacing.lg),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  child.name,
-                  style: AppTextStyles.h1(colors.onSurface),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  dob != null
-                      ? '${AppStrings.profileAgeLabel} ${child.ageYears}  ·  '
-                            '${AppStrings.profileDobLabel} ${_dobFormat.format(dob)}'
-                      : '${AppStrings.profileAgeLabel} ${child.ageYears}',
-                  style: AppTextStyles.small(colors.onSurfaceVariant),
-                ),
-                Text(
-                  '${AppStrings.profileRoomLabel} ${child.room}',
-                  style: AppTextStyles.small(colors.onSurfaceVariant),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// ── Safety banners ────────────────────────────────────────────────────────────
-
-/// Solid-red, white-on-red allergy banner — the loudest element on the screen.
-class _AllergyBanner extends StatelessWidget {
-  const _AllergyBanner({required this.text, this.onTap});
-
-  final String text;
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      button: onTap != null,
-      child: Material(
-        color: AppColors.red,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: 28,
-                  height: 28,
-                  decoration: BoxDecoration(
-                    color: AppColors.white.withAlpha(60),
-                    borderRadius: BorderRadius.circular(AppRadius.button),
-                  ),
-                  child: const Icon(
-                    Icons.priority_high_rounded,
-                    color: AppColors.white,
-                    size: 18,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.sm),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.profileAllergyFlag,
-                        style: AppTextStyles.label(
-                          AppColors.white,
-                        ).copyWith(fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(height: AppSpacing.xs),
-                      Text(
-                        text,
-                        style: AppTextStyles.body(
-                          AppColors.white,
-                        ).copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                ),
-                if (onTap != null)
-                  const Icon(
-                    Icons.chevron_right,
-                    color: AppColors.white,
-                    size: 18,
-                  ),
-              ],
-            ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        CircleAvatar(
+          radius: 28,
+          backgroundColor: accent.withAlpha(28),
+          backgroundImage: child.photoUrl != null
+              ? NetworkImage(child.photoUrl!)
+              : null,
+          child: child.photoUrl == null
+              ? Text(
+                  child.initials,
+                  style: AppTextStyles.h2(accent).copyWith(letterSpacing: 0.5),
+                )
+              : null,
+        ),
+        const SizedBox(width: AppSpacing.lg),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                child.name,
+                style: AppTextStyles.display(
+                  colors.onSurface,
+                ).copyWith(fontSize: 26, height: 1.1),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: AppSpacing.xs),
+              Text(meta, style: AppTextStyles.small(colors.onSurfaceVariant)),
+            ],
           ),
         ),
-      ),
+      ],
     );
   }
 }
 
-/// Tinted condition banner with a left accent bar (serious, but below the
-/// solid allergy banner in the loudness ladder).
-class _ConditionBanner extends StatelessWidget {
-  const _ConditionBanner({required this.text, this.onTap});
+// ── Safety flag ───────────────────────────────────────────────────────────────
 
-  final String text;
+/// The one place the calm breaks on purpose. [critical] = solid red (allergy);
+/// otherwise a tinted accent-bar panel (condition). Tap opens Medical History.
+class _SafetyFlag extends StatelessWidget {
+  const _SafetyFlag({
+    required this.title,
+    required this.body,
+    required this.critical,
+    this.onTap,
+  });
+
+  final String title;
+  final String body;
+  final bool critical;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    const color = AppColors.red;
 
+    if (critical) {
+      return _tappable(
+        child: Container(
+          decoration: BoxDecoration(
+            color: AppColors.red,
+            borderRadius: BorderRadius.circular(AppRadius.card),
+          ),
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: AppColors.white.withAlpha(56),
+                  borderRadius: BorderRadius.circular(AppRadius.button),
+                ),
+                child: const Icon(
+                  Icons.priority_high_rounded,
+                  color: AppColors.white,
+                  size: 20,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextStyles.label(
+                        AppColors.white,
+                      ).copyWith(fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Text(
+                      body,
+                      style: AppTextStyles.body(
+                        AppColors.white,
+                      ).copyWith(fontWeight: FontWeight.w600, height: 1.4),
+                    ),
+                  ],
+                ),
+              ),
+              if (onTap != null)
+                const Icon(
+                  Icons.chevron_right,
+                  color: AppColors.white,
+                  size: 18,
+                ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return _tappable(
+      child: Container(
+        decoration: BoxDecoration(
+          color: AppColors.amber.withAlpha(isDark ? 36 : 22),
+          borderRadius: BorderRadius.circular(AppRadius.card),
+          border: const Border(
+            left: BorderSide(color: AppColors.amber, width: 4),
+          ),
+        ),
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: AppTextStyles.label(
+                AppColors.amber,
+              ).copyWith(fontWeight: FontWeight.w700),
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(
+              body,
+              style: AppTextStyles.small(
+                colors.onSurface,
+              ).copyWith(height: 1.4),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _tappable({required Widget child}) {
+    if (onTap == null) return child;
     return Semantics(
-      button: onTap != null,
+      button: true,
       child: Material(
-        color: color.withAlpha(isDark ? 38 : 20),
+        color: Colors.transparent,
         borderRadius: BorderRadius.circular(AppRadius.card),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(AppRadius.card),
-              border: const Border(left: BorderSide(color: color, width: 4)),
-            ),
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.profileConditionsFlag,
-                  style: AppTextStyles.label(
-                    color,
-                  ).copyWith(fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(text, style: AppTextStyles.small(colors.onSurface)),
-              ],
-            ),
-          ),
+          child: child,
         ),
       ),
     );
   }
 }
 
-// ── Documentation summary ─────────────────────────────────────────────────────
+// ── Today panel ───────────────────────────────────────────────────────────────
 
-class _DocumentationCard extends StatelessWidget {
-  const _DocumentationCard({required this.completion});
+class _TodayPanel extends StatelessWidget {
+  const _TodayPanel({required this.completion});
 
   final ShiftCompletion completion;
 
@@ -396,13 +358,14 @@ class _DocumentationCard extends StatelessWidget {
     final done = completion.completedCount;
     final total = completion.totalCount;
     final remaining = total - done;
+    final allDone = completion.status == CompletionStatus.complete;
+    final remainingColor = completion.status == CompletionStatus.none
+        ? AppColors.red
+        : AppColors.amber;
     final outstanding = completion.sections
         .where((s) => !s.complete)
         .map((s) => s.label)
         .join(' · ');
-    final remainingColor = completion.status == CompletionStatus.none
-        ? AppColors.red
-        : AppColors.amber;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.lg),
@@ -427,7 +390,7 @@ class _DocumentationCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.sm),
+          const SizedBox(height: AppSpacing.md),
           Row(
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
@@ -441,8 +404,14 @@ class _DocumentationCard extends StatelessWidget {
                   style: AppTextStyles.small(colors.onSurfaceVariant),
                 ),
               ),
-              if (remaining > 0)
-                _CountPill(
+              if (allDone)
+                const Icon(
+                  Icons.check_circle_rounded,
+                  color: AppColors.green,
+                  size: 22,
+                )
+              else
+                _Pill(
                   label: '$remaining ${AppStrings.profileOutstanding}',
                   color: remainingColor,
                 ),
@@ -456,12 +425,12 @@ class _DocumentationCard extends StatelessWidget {
                 if (done > 0)
                   Expanded(
                     flex: done,
-                    child: Container(height: 8, color: AppColors.green),
+                    child: Container(height: 6, color: AppColors.green),
                   ),
                 if (remaining > 0)
                   Expanded(
                     flex: remaining,
-                    child: Container(height: 8, color: remainingColor),
+                    child: Container(height: 6, color: remainingColor),
                   ),
               ],
             ),
@@ -479,8 +448,8 @@ class _DocumentationCard extends StatelessWidget {
   }
 }
 
-class _CountPill extends StatelessWidget {
-  const _CountPill({required this.label, required this.color});
+class _Pill extends StatelessWidget {
+  const _Pill({required this.label, required this.color});
 
   final String label;
   final Color color;
@@ -504,103 +473,76 @@ class _CountPill extends StatelessWidget {
   }
 }
 
-// ── Module grid ───────────────────────────────────────────────────────────────
+// ── Records (one inset list) ──────────────────────────────────────────────────
 
-class _ModuleGrid extends StatelessWidget {
-  const _ModuleGrid({required this.modules, required this.childId});
+class _RecordsList extends StatelessWidget {
+  const _RecordsList({required this.records, required this.childId});
 
-  final List<_Module> modules;
-  final String childId;
-
-  @override
-  Widget build(BuildContext context) {
-    final rows = <Widget>[];
-    for (var i = 0; i < modules.length; i += 2) {
-      final left = modules[i];
-      final right = i + 1 < modules.length ? modules[i + 1] : null;
-      if (i > 0) rows.add(const SizedBox(height: AppSpacing.sm));
-      rows.add(
-        IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: _GridCard(module: left, childId: childId),
-              ),
-              const SizedBox(width: AppSpacing.sm),
-              Expanded(
-                child: right == null
-                    ? const SizedBox()
-                    : _GridCard(module: right, childId: childId),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-    return Column(children: rows);
-  }
-}
-
-class _GridCard extends StatelessWidget {
-  const _GridCard({required this.module, required this.childId});
-
-  final _Module module;
+  final List<_Record> records;
   final String childId;
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    return Material(
+      color: colors.surfaceContainerLow,
+      borderRadius: BorderRadius.circular(AppRadius.card),
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        children: [
+          for (var i = 0; i < records.length; i++) ...[
+            if (i > 0)
+              Divider(
+                height: 1,
+                thickness: 1,
+                indent: AppSpacing.lg + 22 + AppSpacing.lg,
+                color: colors.outlineVariant,
+              ),
+            _RecordRow(record: records[i], childId: childId),
+          ],
+        ],
+      ),
+    );
+  }
+}
 
+class _RecordRow extends StatelessWidget {
+  const _RecordRow({required this.record, required this.childId});
+
+  final _Record record;
+  final String childId;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Semantics(
       button: true,
-      label: module.label,
-      child: Material(
-        color: colors.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        child: InkWell(
-          onTap: () => context.push('/children/$childId/${module.route}'),
-          borderRadius: BorderRadius.circular(AppRadius.card),
-          child: Padding(
-            padding: const EdgeInsets.all(AppSpacing.md),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 32,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: module.color.withAlpha(36),
-                        borderRadius: BorderRadius.circular(AppRadius.button),
-                      ),
-                      child: Icon(module.icon, color: module.color, size: 18),
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.chevron_right,
-                      color: colors.onSurfaceVariant,
-                      size: 18,
-                    ),
-                  ],
+      label: record.label,
+      child: InkWell(
+        onTap: () => context.push('/children/$childId/${record.route}'),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.md + 2,
+          ),
+          child: Row(
+            children: [
+              Icon(record.icon, size: 22, color: colors.onSurfaceVariant),
+              const SizedBox(width: AppSpacing.lg),
+              Expanded(
+                child: Text(
+                  record.label,
+                  style: AppTextStyles.body(
+                    colors.onSurface,
+                  ).copyWith(fontWeight: FontWeight.w500),
                 ),
-                const SizedBox(height: AppSpacing.sm),
-                Text(
-                  module.label,
-                  style: AppTextStyles.h3(colors.onSurface),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: AppSpacing.xs),
-                Text(
-                  module.description,
-                  style: AppTextStyles.small(colors.onSurfaceVariant),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
+              ),
+              Icon(
+                Icons.chevron_right,
+                size: 18,
+                color: colors.onSurfaceVariant,
+              ),
+            ],
           ),
         ),
       ),
