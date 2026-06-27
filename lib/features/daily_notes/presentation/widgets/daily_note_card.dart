@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_text_styles.dart';
 import '../../../../core/time/uk_time.dart';
@@ -84,28 +83,28 @@ class DailyNoteCard extends StatelessWidget {
   }
 }
 
+/// Quiet, neutral shift chip. Shift is organisational metadata, not a safety
+/// signal — so it stays neutral and lets the real status colours read.
 class _ShiftBadge extends StatelessWidget {
   const _ShiftBadge({required this.shift});
   final ShiftType shift;
 
-  Color _color(ShiftType s) => switch (s) {
-    ShiftType.morning => AppColors.green,
-    ShiftType.afternoon => AppColors.blue,
-    ShiftType.night => AppColors.roleSupportWorker,
-  };
-
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.sm,
         vertical: 2,
       ),
       decoration: BoxDecoration(
-        color: _color(shift).withAlpha(30),
         borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
       ),
-      child: Text(shift.displayName, style: AppTextStyles.label(_color(shift))),
+      child: Text(
+        shift.displayName,
+        style: AppTextStyles.label(colors.onSurfaceVariant),
+      ),
     );
   }
 }

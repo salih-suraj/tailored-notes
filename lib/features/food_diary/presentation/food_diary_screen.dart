@@ -93,7 +93,7 @@ class FoodDiaryScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/children/$childId/food-diary/new'),
-        backgroundColor: AppColors.green,
+        backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text(AppStrings.foodLogEntry),
@@ -147,7 +147,6 @@ class _FoodCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final appetiteColor = _appetiteColor(entry.appetite);
-    final mealColor = _mealColor(entry.mealType);
 
     final parts = entry.date.split('-');
     final dateStr = parts.length == 3
@@ -173,7 +172,7 @@ class _FoodCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _Badge(label: entry.mealType.displayName, color: mealColor),
+                  _NeutralChip(label: entry.mealType.displayName),
                   const SizedBox(width: AppSpacing.sm),
                   _Badge(
                     label: entry.appetite.displayName,
@@ -254,16 +253,29 @@ class _FoodCard extends StatelessWidget {
     Appetite.fair => AppColors.amber,
     Appetite.poor => AppColors.red,
   };
+}
 
-  Color _mealColor(MealType m) => switch (m) {
-    MealType.breakfast => AppColors.amber,
-    MealType.morningSnack => AppColors.darkAmber,
-    MealType.lunch => AppColors.teal400,
-    MealType.afternoonSnack => AppColors.blue,
-    MealType.dinner => AppColors.green,
-    MealType.eveningSnack => AppColors.roleSupportWorker,
-    MealType.other => AppColors.slate400,
-  };
+/// Quiet neutral chip for organisational metadata (meal type) — colour is
+/// reserved for genuine status (appetite, concerns).
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
 
 class _Badge extends StatelessWidget {

@@ -8,7 +8,6 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../core/time/uk_time.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
-import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -95,7 +94,7 @@ class BehaviourScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/children/$childId/behaviour/new'),
-        backgroundColor: AppColors.amber,
+        backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text(AppStrings.behaviourLogIncident),
@@ -155,11 +154,6 @@ class _IncidentCard extends StatelessWidget {
       'EEE d MMM · HH:mm',
       'en_GB',
     ).format(incident.occurredAt.toUk());
-    final shiftColor = switch (incident.shift) {
-      ShiftType.morning => AppColors.amber,
-      ShiftType.afternoon => AppColors.teal400,
-      ShiftType.night => AppColors.roleSupportWorker,
-    };
 
     return Material(
       color: colors.surfaceContainerLow,
@@ -180,7 +174,7 @@ class _IncidentCard extends StatelessWidget {
                     color: severityColor,
                   ),
                   const SizedBox(width: AppSpacing.sm),
-                  _Badge(label: incident.shift.displayName, color: shiftColor),
+                  _NeutralChip(label: incident.shift.displayName),
                   const Spacer(),
                   if (incident.physicalIntervention)
                     const Padding(
@@ -337,4 +331,27 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (shift) — colour here is
+/// reserved for severity and the physical-intervention / injury safety flags.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }

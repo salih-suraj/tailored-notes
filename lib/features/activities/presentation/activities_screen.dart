@@ -93,7 +93,7 @@ class ActivitiesScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/children/$childId/activities/new'),
-        backgroundColor: AppColors.amber,
+        backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text(AppStrings.activitiesLog),
@@ -148,7 +148,6 @@ class _ActivityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final catColor = _categoryColor(entry.category);
 
     final parts = entry.date.split('-');
     final dateStr = parts.length == 3
@@ -174,7 +173,7 @@ class _ActivityCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _Badge(label: entry.category.displayName, color: catColor),
+                  _NeutralChip(label: entry.category.displayName),
                   const SizedBox(width: AppSpacing.sm),
                   Text(
                     dateStr,
@@ -273,30 +272,27 @@ class _ActivityCard extends StatelessWidget {
       ),
     );
   }
-
-  Color _categoryColor(ActivityCategory c) => switch (c) {
-    ActivityCategory.physical => AppColors.green,
-    ActivityCategory.creative => AppColors.blue,
-    ActivityCategory.educational => AppColors.teal400,
-    ActivityCategory.social => AppColors.amber,
-    ActivityCategory.community => AppColors.roleSupportWorker,
-    ActivityCategory.lifeSkills => AppColors.purple,
-    ActivityCategory.other => AppColors.slate400,
-  };
 }
 
-class _Badge extends StatelessWidget {
-  const _Badge({required this.label, required this.color});
+/// Quiet neutral chip for organisational metadata (activity category) — colour
+/// is reserved for genuine signals (reward earned, achievement).
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
   final String label;
-  final Color color;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-    decoration: BoxDecoration(
-      color: color.withAlpha(25),
-      borderRadius: BorderRadius.circular(AppRadius.pill),
-    ),
-    child: Text(label, style: AppTextStyles.label(color)),
-  );
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }

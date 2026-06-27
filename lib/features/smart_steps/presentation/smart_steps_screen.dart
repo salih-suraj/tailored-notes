@@ -231,7 +231,6 @@ class _StepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final statusColor = _statusColor(step.status);
-    final catColor = _categoryColor(step.category);
 
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -260,10 +259,7 @@ class _StepCard extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          _Badge(
-                            label: step.category.displayName,
-                            color: catColor,
-                          ),
+                          _NeutralChip(label: step.category.displayName),
                           if (step.status == StepStatus.achieved) ...[
                             const SizedBox(width: AppSpacing.sm),
                             const Icon(
@@ -321,31 +317,27 @@ class _StepCard extends StatelessWidget {
     StepStatus.inProgress => AppColors.amber,
     StepStatus.achieved => AppColors.green,
   };
-
-  Color _categoryColor(StepCategory c) => switch (c) {
-    StepCategory.communication => AppColors.blue,
-    StepCategory.selfCare => AppColors.teal400,
-    StepCategory.independence => AppColors.green,
-    StepCategory.social => AppColors.amber,
-    StepCategory.emotional => AppColors.purple,
-    StepCategory.learning => AppColors.roleSupportWorker,
-    StepCategory.physical => AppColors.orange,
-    StepCategory.other => AppColors.slate400,
-  };
 }
 
-class _Badge extends StatelessWidget {
-  const _Badge({required this.label, required this.color});
+/// Quiet neutral chip for organisational metadata (step category) — colour here
+/// is reserved for status (the accent bar) and the achieved trophy.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
   final String label;
-  final Color color;
 
   @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 2),
-    decoration: BoxDecoration(
-      color: color.withAlpha(25),
-      borderRadius: BorderRadius.circular(AppRadius.pill),
-    ),
-    child: Text(label, style: AppTextStyles.label(color)),
-  );
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }

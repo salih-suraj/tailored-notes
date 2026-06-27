@@ -7,7 +7,6 @@ import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../features/children/presentation/providers/children_provider.dart';
-import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
@@ -150,11 +149,6 @@ class _SleepCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final qualityColor = _qualityColor(entry.quality);
-    final shiftColor = switch (entry.shift) {
-      ShiftType.morning => AppColors.amber,
-      ShiftType.afternoon => AppColors.teal400,
-      ShiftType.night => AppColors.roleSupportWorker,
-    };
 
     // Format date
     final parts = entry.date.split('-');
@@ -181,9 +175,9 @@ class _SleepCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _Badge(label: dateStr, color: colors.onSurfaceVariant),
+                  _NeutralChip(label: dateStr),
                   const SizedBox(width: AppSpacing.sm),
-                  _Badge(label: entry.shift.displayName, color: shiftColor),
+                  _NeutralChip(label: entry.shift.displayName),
                   const SizedBox(width: AppSpacing.sm),
                   _Badge(label: entry.quality.displayName, color: qualityColor),
                   const Spacer(),
@@ -301,4 +295,27 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (date, shift) — colour here
+/// is reserved for sleep quality.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
