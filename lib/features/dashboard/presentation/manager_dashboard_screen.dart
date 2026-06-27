@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/routing/app_routes.dart';
+import '../../../features/auth/domain/user_role.dart';
+import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/time/uk_time.dart';
 import '../../../core/theme/app_spacing.dart';
@@ -35,6 +37,9 @@ class ManagerDashboardScreen extends ConsumerWidget {
     final now = UkTime.now();
     final shift = ShiftType.forTime(now);
     final colors = Theme.of(context).colorScheme;
+    // Team leaders share this oversight dashboard, but provisioning staff,
+    // parents, and inspectors stays manager-only.
+    final isManager = ref.watch(currentUserProvider)?.role == UserRole.manager;
 
     return Scaffold(
       appBar: AppBar(
@@ -45,27 +50,29 @@ class ManagerDashboardScreen extends ConsumerWidget {
             tooltip: AppStrings.dashboardViewBehaviourPatterns,
             onPressed: () => context.push(AppRoutes.behaviourPatterns),
           ),
-          IconButton(
-            icon: const Icon(Icons.fact_check_outlined),
-            tooltip: AppStrings.managerInspectorAccessOpenTooltip,
-            onPressed: () => context.push(AppRoutes.managerInspectorAccess),
-          ),
-          IconButton(
-            icon: const Icon(Icons.family_restroom_outlined),
-            tooltip: AppStrings.managerParentAccessOpenTooltip,
-            onPressed: () => context.push(AppRoutes.managerParentAccess),
-          ),
-          IconButton(
-            icon: const Icon(Icons.groups_outlined),
-            tooltip: AppStrings.managerStaffOpenTooltip,
-            onPressed: () => context.push(AppRoutes.managerStaff),
-          ),
+          if (isManager) ...[
+            IconButton(
+              icon: const Icon(Icons.fact_check_outlined),
+              tooltip: AppStrings.managerInspectorAccessOpenTooltip,
+              onPressed: () => context.push(AppRoutes.managerInspectorAccess),
+            ),
+            IconButton(
+              icon: const Icon(Icons.family_restroom_outlined),
+              tooltip: AppStrings.managerParentAccessOpenTooltip,
+              onPressed: () => context.push(AppRoutes.managerParentAccess),
+            ),
+            IconButton(
+              icon: const Icon(Icons.groups_outlined),
+              tooltip: AppStrings.managerStaffOpenTooltip,
+              onPressed: () => context.push(AppRoutes.managerStaff),
+            ),
+          ],
         ],
       ),
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(childrenProvider),
         ),
         data: (children) {

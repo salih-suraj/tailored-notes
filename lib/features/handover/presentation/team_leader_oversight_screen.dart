@@ -36,6 +36,11 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
         title: const Text(AppStrings.oversightTitle),
         actions: [
           IconButton(
+            icon: const Icon(Icons.dashboard_outlined),
+            tooltip: AppStrings.navDashboard,
+            onPressed: () => context.push(AppRoutes.dashboard),
+          ),
+          IconButton(
             icon: const Icon(Icons.insights_outlined),
             tooltip: AppStrings.dashboardViewBehaviourPatterns,
             onPressed: () => context.push(AppRoutes.behaviourPatterns),
@@ -50,7 +55,7 @@ class TeamLeaderOversightScreen extends ConsumerWidget {
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(
-          message: e.toString(),
+          error: e,
           onRetry: () => ref.invalidate(childrenProvider),
         ),
         data: (children) {

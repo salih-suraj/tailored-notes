@@ -83,21 +83,38 @@ String _defaultRoute(UserRole role) => switch (role) {
   UserRole.parentGuardian => AppRoutes.parentPortal,
 };
 
+/// Manager-only admin surfaces — provisioning staff, linking parents, and
+/// granting inspector access. Team leaders have full care access but never
+/// these three. Checked before the per-role list because they live under
+/// `/dashboard`, which team leaders are otherwise allowed to visit.
+const _managerOnlyRoutes = [
+  AppRoutes.managerStaff,
+  AppRoutes.managerParentAccess,
+  AppRoutes.managerInspectorAccess,
+];
+
 /// Returns true if [role] is allowed to visit [location].
 /// Settings is always permitted. All other routes are role-gated.
 bool _isRouteAllowed(String location, UserRole role) {
   if (location.startsWith(AppRoutes.settings)) return true;
+  if (_managerOnlyRoutes.any(location.startsWith)) {
+    return role == UserRole.manager;
+  }
   final allowed = switch (role) {
     UserRole.supportWorker => [
       AppRoutes.children,
       AppRoutes.dailyNotes,
       AppRoutes.checklists,
     ],
+    // Team leaders sit between support workers and managers: full care access
+    // plus the oversight dashboard — everything except the manager-only admin
+    // routes handled above.
     UserRole.teamLeader => [
       AppRoutes.children,
       AppRoutes.dailyNotes,
       AppRoutes.checklists,
       AppRoutes.handover,
+      AppRoutes.dashboard,
     ],
     UserRole.manager => [
       AppRoutes.children,
