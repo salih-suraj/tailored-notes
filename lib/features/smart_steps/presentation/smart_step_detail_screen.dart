@@ -168,7 +168,7 @@ class _StepHeader extends StatelessWidget {
             children: [
               _Badge(label: step.status.displayName, color: statusColor),
               const SizedBox(width: AppSpacing.sm),
-              _Badge(label: step.category.displayName, color: AppColors.blue),
+              _NeutralChip(label: step.category.displayName),
             ],
           ),
           if (step.description != null && step.description!.isNotEmpty) ...[
@@ -240,6 +240,29 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (step category) — colour is
+/// reserved for status, progress outcome, and achievement signals.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
 
 // ── Progress card ─────────────────────────────────────────────────────────────

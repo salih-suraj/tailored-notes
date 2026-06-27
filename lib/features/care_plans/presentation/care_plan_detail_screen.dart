@@ -174,7 +174,6 @@ class _PlanHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final statusColor = _statusColor(plan.status);
 
     return Container(
       margin: const EdgeInsets.all(AppSpacing.lg),
@@ -194,12 +193,12 @@ class _PlanHeader extends StatelessWidget {
                   vertical: 2,
                 ),
                 decoration: BoxDecoration(
-                  color: statusColor.withAlpha(25),
                   borderRadius: BorderRadius.circular(AppRadius.pill),
+                  border: Border.all(color: colors.outlineVariant),
                 ),
                 child: Text(
                   plan.status.displayName,
-                  style: AppTextStyles.label(statusColor),
+                  style: AppTextStyles.label(colors.onSurfaceVariant),
                 ),
               ),
               if (plan.reviewDate != null) ...[
@@ -237,13 +236,6 @@ class _PlanHeader extends StatelessWidget {
     );
   }
 
-  Color _statusColor(CarePlanStatus s) => switch (s) {
-    CarePlanStatus.active => AppColors.green,
-    CarePlanStatus.draft => AppColors.amber,
-    CarePlanStatus.underReview => AppColors.blue,
-    CarePlanStatus.archived => AppColors.slate400,
-  };
-
   String _formatDate(String d) {
     final parts = d.split('-');
     if (parts.length != 3) return d;
@@ -273,7 +265,6 @@ class _GoalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final statusColor = _goalStatusColor(goal.status);
-    const catColor = AppColors.blue;
 
     return Material(
       color: colors.surfaceContainerLow,
@@ -288,7 +279,7 @@ class _GoalCard extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  _Chip(label: goal.category.displayName, color: catColor),
+                  _NeutralChip(label: goal.category.displayName),
                   const SizedBox(width: AppSpacing.sm),
                   _Chip(label: goal.status.displayName, color: statusColor),
                   const Spacer(),
@@ -366,6 +357,29 @@ class _Chip extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (plan status, goal category)
+/// — colour is reserved for goal progress status.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
 
 // ── Goal editor sheet ─────────────────────────────────────────────────────────
@@ -505,8 +519,8 @@ class _GoalEditorSheetState extends ConsumerState<_GoalEditorSheet> {
                   label: Text(c.displayName),
                   selected: sel,
                   onSelected: (_) => setState(() => _category = c),
-                  selectedColor: colors.primaryContainer,
-                  checkmarkColor: colors.primary,
+                  selectedColor: AppColors.teal400.withAlpha(40),
+                  checkmarkColor: AppColors.teal400,
                 );
               }).toList(),
             ),
