@@ -91,31 +91,41 @@ class ChildrenListScreen extends ConsumerWidget {
             return s.status != CompletionStatus.complete;
           }).toList();
 
-          return Column(
+          return ListView(
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.lg,
+              AppSpacing.lg,
+              AppSpacing.xxl,
+            ),
             children: [
-              if (incomplete.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    AppSpacing.lg,
-                    0,
-                  ),
-                  child: _IncompleteDocsBanner(incomplete: incomplete),
-                ),
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(AppSpacing.lg),
-                  itemCount: children.length,
-                  separatorBuilder: (_, _) =>
-                      const SizedBox(height: AppSpacing.sm),
-                  itemBuilder: (context, index) {
-                    final child = children[index];
-                    return ChildListTile(
-                      child: child,
-                      onTap: () => context.push('/children/${child.id}'),
-                    );
-                  },
+              if (incomplete.isNotEmpty) ...[
+                _IncompleteDocsBanner(incomplete: incomplete),
+                const SizedBox(height: AppSpacing.lg),
+              ],
+              // One refined roster panel — neutral chrome, hairline dividers,
+              // each child's documentation status carried by the colour dot.
+              Material(
+                color: colors.surfaceContainerLow,
+                borderRadius: BorderRadius.circular(AppRadius.card),
+                clipBehavior: Clip.antiAlias,
+                child: Column(
+                  children: [
+                    for (var i = 0; i < children.length; i++) ...[
+                      if (i > 0)
+                        Divider(
+                          height: 1,
+                          thickness: 1,
+                          indent: 72,
+                          color: colors.outlineVariant,
+                        ),
+                      ChildListTile(
+                        child: children[i],
+                        onTap: () =>
+                            context.push('/children/${children[i].id}'),
+                      ),
+                    ],
+                  ],
                 ),
               ),
             ],
