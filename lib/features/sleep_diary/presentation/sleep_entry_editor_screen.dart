@@ -310,7 +310,7 @@ class _SleepEntryEditorScreenState
           FilledButton(
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.roleSupportWorker,
+              backgroundColor: AppColors.teal400,
               minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: const Text(AppStrings.save),

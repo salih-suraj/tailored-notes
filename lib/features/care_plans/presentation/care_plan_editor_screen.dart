@@ -191,18 +191,12 @@ class _CarePlanEditorScreenState extends ConsumerState<CarePlanEditorScreen> {
             runSpacing: AppSpacing.sm,
             children: CarePlanStatus.values.map((s) {
               final sel = _status == s;
-              final col = switch (s) {
-                CarePlanStatus.active => AppColors.green,
-                CarePlanStatus.draft => AppColors.amber,
-                CarePlanStatus.underReview => AppColors.blue,
-                CarePlanStatus.archived => AppColors.slate400,
-              };
               return FilterChip(
                 label: Text(s.displayName),
                 selected: sel,
                 onSelected: (_) => setState(() => _status = s),
-                selectedColor: col.withAlpha(40),
-                checkmarkColor: col,
+                selectedColor: AppColors.teal400.withAlpha(40),
+                checkmarkColor: AppColors.teal400,
               );
             }).toList(),
           ),

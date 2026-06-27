@@ -169,13 +169,12 @@ class _SmartStepEditorScreenState extends ConsumerState<SmartStepEditorScreen> {
             runSpacing: AppSpacing.sm,
             children: StepCategory.values.map((c) {
               final sel = _category == c;
-              final col = _catColor(c);
               return FilterChip(
                 label: Text(c.displayName),
                 selected: sel,
                 onSelected: (_) => setState(() => _category = c),
-                selectedColor: col.withAlpha(40),
-                checkmarkColor: col,
+                selectedColor: AppColors.teal400.withAlpha(40),
+                checkmarkColor: AppColors.teal400,
               );
             }).toList(),
           ),
@@ -293,17 +292,6 @@ class _SmartStepEditorScreenState extends ConsumerState<SmartStepEditorScreen> {
       ),
     );
   }
-
-  Color _catColor(StepCategory c) => switch (c) {
-    StepCategory.communication => AppColors.blue,
-    StepCategory.selfCare => AppColors.teal400,
-    StepCategory.independence => AppColors.green,
-    StepCategory.social => AppColors.amber,
-    StepCategory.emotional => AppColors.purple,
-    StepCategory.learning => AppColors.roleSupportWorker,
-    StepCategory.physical => AppColors.orange,
-    StepCategory.other => AppColors.slate400,
-  };
 
   Color _statusColor(StepStatus s) => switch (s) {
     StepStatus.notStarted => AppColors.slate400,

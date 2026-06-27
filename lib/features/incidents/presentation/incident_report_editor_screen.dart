@@ -252,14 +252,15 @@ class _IncidentReportEditorScreenState
             runSpacing: AppSpacing.sm,
             children: IncidentType.values.map((t) {
               final sel = _incidentType == t;
-              final col = _typeColor(t);
               return FilterChip(
                 label: Text(t.displayName),
                 selected: sel,
                 onSelected: (_) => setState(() => _incidentType = t),
-                selectedColor: col.withAlpha(40),
-                checkmarkColor: col,
-                labelStyle: AppTextStyles.small(sel ? col : colors.onSurface),
+                selectedColor: AppColors.teal400.withAlpha(40),
+                checkmarkColor: AppColors.teal400,
+                labelStyle: AppTextStyles.small(
+                  sel ? AppColors.teal400 : colors.onSurface,
+                ),
               );
             }).toList(),
           ),
@@ -414,7 +415,7 @@ class _IncidentReportEditorScreenState
           FilledButton(
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.red,
+              backgroundColor: AppColors.teal400,
               minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: _saving
@@ -432,15 +433,6 @@ class _IncidentReportEditorScreenState
       ),
     );
   }
-
-  Color _typeColor(IncidentType t) => switch (t) {
-    IncidentType.behaviour => AppColors.amber,
-    IncidentType.medical => AppColors.blue,
-    IncidentType.accident => AppColors.orange,
-    IncidentType.propertyDamage => AppColors.slate400,
-    IncidentType.missingPerson => AppColors.red,
-    IncidentType.safeguarding => AppColors.roleInspector,
-  };
 
   Color _severityColor(IncidentSeverity s) => switch (s) {
     IncidentSeverity.low => AppColors.green,

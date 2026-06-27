@@ -228,13 +228,12 @@ class _ActivityEntryEditorScreenState
             runSpacing: AppSpacing.sm,
             children: ActivityCategory.values.map((c) {
               final sel = _category == c;
-              final col = _categoryColor(c);
               return FilterChip(
                 label: Text(c.displayName),
                 selected: sel,
                 onSelected: (_) => setState(() => _category = c),
-                selectedColor: col.withAlpha(40),
-                checkmarkColor: col,
+                selectedColor: AppColors.teal400.withAlpha(40),
+                checkmarkColor: AppColors.teal400,
               );
             }).toList(),
           ),
@@ -334,7 +333,7 @@ class _ActivityEntryEditorScreenState
           FilledButton(
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.amber,
+              backgroundColor: AppColors.teal400,
               minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: const Text(AppStrings.save),
@@ -343,16 +342,6 @@ class _ActivityEntryEditorScreenState
       ),
     );
   }
-
-  Color _categoryColor(ActivityCategory c) => switch (c) {
-    ActivityCategory.physical => AppColors.green,
-    ActivityCategory.creative => AppColors.blue,
-    ActivityCategory.educational => AppColors.teal400,
-    ActivityCategory.social => AppColors.amber,
-    ActivityCategory.community => AppColors.roleSupportWorker,
-    ActivityCategory.lifeSkills => AppColors.purple,
-    ActivityCategory.other => AppColors.slate400,
-  };
 }
 
 class _Label extends StatelessWidget {

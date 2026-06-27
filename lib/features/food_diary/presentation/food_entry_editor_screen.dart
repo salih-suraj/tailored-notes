@@ -228,13 +228,12 @@ class _FoodEntryEditorScreenState extends ConsumerState<FoodEntryEditorScreen> {
             runSpacing: AppSpacing.sm,
             children: MealType.values.map((m) {
               final sel = _mealType == m;
-              final col = _mealColor(m);
               return FilterChip(
                 label: Text(m.displayName),
                 selected: sel,
                 onSelected: (_) => setState(() => _mealType = m),
-                selectedColor: col.withAlpha(40),
-                checkmarkColor: col,
+                selectedColor: AppColors.teal400.withAlpha(40),
+                checkmarkColor: AppColors.teal400,
               );
             }).toList(),
           ),
@@ -299,7 +298,7 @@ class _FoodEntryEditorScreenState extends ConsumerState<FoodEntryEditorScreen> {
           FilledButton(
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.green,
+              backgroundColor: AppColors.teal400,
               minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: const Text(AppStrings.save),
@@ -308,16 +307,6 @@ class _FoodEntryEditorScreenState extends ConsumerState<FoodEntryEditorScreen> {
       ),
     );
   }
-
-  Color _mealColor(MealType m) => switch (m) {
-    MealType.breakfast => AppColors.amber,
-    MealType.morningSnack => AppColors.darkAmber,
-    MealType.lunch => AppColors.teal400,
-    MealType.afternoonSnack => AppColors.blue,
-    MealType.dinner => AppColors.green,
-    MealType.eveningSnack => AppColors.roleSupportWorker,
-    MealType.other => AppColors.slate400,
-  };
 
   Color _appetiteColor(Appetite a) => switch (a) {
     Appetite.good => AppColors.green,

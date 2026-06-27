@@ -408,7 +408,7 @@ class _BehaviourIncidentEditorScreenState
           FilledButton(
             onPressed: _saving ? null : _save,
             style: FilledButton.styleFrom(
-              backgroundColor: AppColors.amber,
+              backgroundColor: AppColors.teal400,
               minimumSize: const Size.fromHeight(AppTapTarget.min),
             ),
             child: _saving
