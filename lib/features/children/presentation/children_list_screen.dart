@@ -8,6 +8,7 @@ import '../../../shared/models/shift_completion.dart';
 import '../../../shared/providers/shift_completion_provider.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
+import '../../../shared/widgets/status_banner.dart';
 import '../../auth/domain/user_role.dart';
 import '../../auth/presentation/providers/auth_provider.dart';
 import '../domain/child.dart';
@@ -26,35 +27,11 @@ class _IncompleteDocsBanner extends StatelessWidget {
         ? names.join(' · ')
         : '${names.take(2).join(' · ')} and ${names.length - 2} others';
 
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.md),
-      decoration: BoxDecoration(
-        color: AppColors.amber.withAlpha(20),
-        borderRadius: BorderRadius.circular(AppRadius.card),
-        border: Border.all(color: AppColors.amber.withAlpha(80)),
-      ),
-      child: Row(
-        children: [
-          const Icon(
-            Icons.warning_amber_rounded,
-            color: AppColors.amber,
-            size: 18,
-          ),
-          const SizedBox(width: AppSpacing.sm),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.alertIncompleteTitle,
-                  style: AppTextStyles.label(AppColors.amber),
-                ),
-                Text(subtitle, style: AppTextStyles.small(AppColors.amber)),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return StatusBanner(
+      color: AppColors.amber,
+      icon: Icons.warning_amber_rounded,
+      title: AppStrings.alertIncompleteTitle,
+      message: subtitle,
     );
   }
 }
@@ -84,7 +61,7 @@ class ChildrenListScreen extends ConsumerWidget {
       body: childrenAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (error, _) => ErrorView(
-          message: error.toString(),
+          error: error,
           onRetry: () => ref.invalidate(childrenProvider),
         ),
         data: (children) {

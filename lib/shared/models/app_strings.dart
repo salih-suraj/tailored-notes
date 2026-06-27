@@ -81,16 +81,17 @@ abstract final class AppStrings {
   static const addChildDobRequired = 'Date of birth is required';
   static const addChildRoomRequired = 'Room is required';
 
-  // Child profile — identity, safety flags, section headers
+  // Child profile — identity, safety flags, documentation summary
   static const careRecordSection = 'CARE RECORD';
   static const profileAgeLabel = 'Age';
   static const profileRoomLabel = 'Room';
   static const profileDobLabel = 'DOB';
-  static const profileAllergyFlag = 'ALLERGIES — CHECK BEFORE FOOD OR MEDS';
-  static const profileConditionsFlag = 'MEDICAL CONDITIONS';
-  static const profileSectionDailyCare = 'DAILY CARE';
-  static const profileSectionHealthSafety = 'HEALTH & SAFETY';
-  static const profileSectionPlanning = 'PLANNING & PROGRESS';
+  static const profileAllergyFlag = 'ALLERGY ALERT';
+  static const profileConditionsFlag = 'MEDICAL CONDITION';
+  static const profileDocHeader = 'TODAY · DOCUMENTATION';
+  static const profileLogsComplete = 'logs complete';
+  static const profileOutstanding = 'outstanding';
+  static const profileOutstandingPrefix = 'Outstanding';
 
   // Child profile — module labels and descriptions
   static const moduleDailyNotes = 'Daily Notes';
