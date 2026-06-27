@@ -94,7 +94,7 @@ class IncidentsScreen extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => context.push('/children/$childId/incidents/new'),
-        backgroundColor: AppColors.red,
+        backgroundColor: AppColors.teal400,
         foregroundColor: AppColors.white,
         icon: const Icon(Icons.add),
         label: const Text(AppStrings.incidentLog),
