@@ -361,12 +361,12 @@ class _ContactCard extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.blue.withAlpha(25),
                             borderRadius: BorderRadius.circular(AppRadius.pill),
+                            border: Border.all(color: colors.outlineVariant),
                           ),
                           child: Text(
                             contact.contactType.displayName,
-                            style: AppTextStyles.label(AppColors.blue),
+                            style: AppTextStyles.label(colors.onSurfaceVariant),
                           ),
                         ),
                       ],

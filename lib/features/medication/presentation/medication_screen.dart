@@ -405,7 +405,7 @@ class _PrnMedCard extends StatelessWidget {
                   icon: const Icon(Icons.add, size: 16),
                   label: const Text(AppStrings.medRecord),
                   style: FilledButton.styleFrom(
-                    backgroundColor: AppColors.blue,
+                    backgroundColor: AppColors.teal400,
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.md,
                       vertical: AppSpacing.sm,
