@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/mfa_screen.dart';
+import '../../features/auth/presentation/set_password_screen.dart';
 import '../../features/handover/presentation/team_leader_oversight_screen.dart';
 import '../../features/incidents/domain/incident_report.dart';
 import '../../features/incidents/presentation/incident_report_editor_screen.dart';
@@ -153,6 +154,7 @@ GoRouter appRouter(Ref ref) {
       final isAuthRoute =
           location == AppRoutes.login || location == AppRoutes.forgotPassword;
       final isMfaRoute = location == AppRoutes.mfa;
+      final isSetPasswordRoute = location == AppRoutes.setPassword;
 
       // Not logged in — send to login.
       if (user == null && !isAuthRoute) return AppRoutes.login;
@@ -160,9 +162,21 @@ GoRouter appRouter(Ref ref) {
 
       // Logged in but on auth screen — send to correct landing page.
       if (isAuthRoute) {
+        if (user.mustChangePassword) return AppRoutes.setPassword;
         return user.needsMfaChallenge
             ? AppRoutes.mfa
             : _defaultRoute(user.role);
+      }
+
+      // Forced password change comes first — before MFA and the role guard.
+      // An account provisioned with a temporary password must replace it
+      // before doing anything else. Resolved fully here so it never falls
+      // through to the guards below (which would bounce off this screen).
+      if (user.mustChangePassword && !isSetPasswordRoute) {
+        return AppRoutes.setPassword;
+      }
+      if (isSetPasswordRoute) {
+        return user.mustChangePassword ? null : _defaultRoute(user.role);
       }
 
       // MFA checks. /mfa is fully resolved here — it must not fall through
@@ -187,6 +201,10 @@ GoRouter appRouter(Ref ref) {
         builder: (_, _) => const PlaceholderScreen(title: 'Forgot Password'),
       ),
       GoRoute(path: AppRoutes.mfa, builder: (_, _) => const MfaScreen()),
+      GoRoute(
+        path: AppRoutes.setPassword,
+        builder: (_, _) => const SetPasswordScreen(),
+      ),
       ShellRoute(
         builder: (context, state, child) => NavShell(child: child),
         routes: [

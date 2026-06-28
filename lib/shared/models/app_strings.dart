@@ -25,6 +25,23 @@ abstract final class AppStrings {
       'No internet connection. Check your network and try again.';
   static const signInFailed = 'Couldn’t sign you in. Please try again.';
 
+  // Set password (forced change on first login)
+  static const setPasswordTitle = 'Set your password';
+  static const setPasswordBody =
+      'Your account was set up with a temporary password. '
+      'Choose a new password to continue.';
+  static const setPasswordNewLabel = 'NEW PASSWORD';
+  static const setPasswordConfirmLabel = 'CONFIRM PASSWORD';
+  static const setPasswordHint = 'At least 8 characters';
+  static const setPasswordRequired = 'Enter a new password';
+  static const setPasswordTooShort = 'Use at least 8 characters';
+  static const setPasswordConfirmRequired = 'Re-enter your new password';
+  static const setPasswordMismatch = 'Passwords do not match';
+  static const setPasswordSame =
+      'Choose a password different from the temporary one';
+  static const setPasswordSubmit = 'Save password';
+  static const setPasswordSuccess = 'Password updated';
+
   // MFA
   static const mfaTitle = 'Two-Factor Authentication';
   static const mfaEnrollTitle = 'Set Up Authenticator';

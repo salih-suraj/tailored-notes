@@ -4,6 +4,7 @@ abstract final class AppRoutes {
   static const login = '/login';
   static const forgotPassword = '/forgot-password';
   static const mfa = '/mfa';
+  static const setPassword = '/set-password';
 
   // Shell (role-gated nav shell hosts these)
   static const home = '/home';

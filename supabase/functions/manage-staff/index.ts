@@ -142,7 +142,10 @@ async function createStaff(
     email,
     password,
     email_confirm: true,
-    user_metadata: { display_name: displayName },
+    // must_change_password forces the app's set-password screen on first login,
+    // so the manager's temporary password is only ever transitional and the
+    // staff member sets (and solely knows) their own. Cleared by updateUser.
+    user_metadata: { display_name: displayName, must_change_password: true },
   });
   if (createErr) {
     // Most common: email already registered.

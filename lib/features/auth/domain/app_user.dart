@@ -13,6 +13,7 @@ class AppUser {
     required this.homeId,
     this.displayName,
     this.isMfaVerified = false,
+    this.mustChangePassword = false,
   });
 
   final String id;
@@ -23,6 +24,12 @@ class AppUser {
 
   /// True when the session has been upgraded to AAL2 (TOTP verified).
   final bool isMfaVerified;
+
+  /// True when the account was provisioned with a temporary password and the
+  /// user has not yet set their own. Stored in the auth user's metadata by the
+  /// manage-staff Edge Function; cleared by the set-password screen via
+  /// `updateUser`. Forces a password change on first login (see app_router).
+  final bool mustChangePassword;
 
   /// Manager and Inspector must complete MFA before accessing the app.
   bool get requiresMfa =>
@@ -43,6 +50,8 @@ class AppUser {
       homeId: claims['app_home_id'] as String? ?? '',
       displayName: session.user.userMetadata?['display_name'] as String?,
       isMfaVerified: claims['aal'] == 'aal2',
+      mustChangePassword:
+          session.user.userMetadata?['must_change_password'] == true,
     );
   }
 
