@@ -47,14 +47,17 @@ function jwtClaims(authHeader: string | null): Record<string, unknown> {
   }
 }
 
-// Roles a manager may provision in-app. Internal staff plus parent/guardian
-// accounts (created here, then linked to a child separately). Inspector
-// accounts are provisioned through the inspector-access flow, not here.
+// Roles a manager may provision in-app: internal staff, parent/guardian
+// accounts (created here, then linked to a child separately), and inspector
+// accounts (created here, then granted time-boxed home access separately).
+// Every account is forced onto the manager's own home and made to reset its
+// temporary password on first login.
 const ALLOWED_ROLES = [
   "support_worker",
   "team_leader",
   "manager",
   "parent_guardian",
+  "inspector",
 ];
 
 // ~100 years — effectively permanent until explicitly re-enabled.

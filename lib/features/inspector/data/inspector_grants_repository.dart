@@ -89,6 +89,41 @@ class InspectorGrantsRepository {
         .toList();
   }
 
+  /// Creates an inspector account, separate from granting them access to a
+  /// home. Goes through the `manage-staff` Edge Function (service-role: creates
+  /// the auth user + user_profiles row and stamps must_change_password). Once
+  /// created the inspector is findable via [searchInspectors] for the grant
+  /// form. Inspectors are cross-home, so any manager can then grant them
+  /// time-boxed access to their own home.
+  Future<void> createInspectorAccount({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
+    final client = _requireClient();
+    try {
+      await client.functions.invoke(
+        'manage-staff',
+        body: {
+          'action': 'create',
+          'email': email,
+          'password': password,
+          'displayName': displayName,
+          'role': 'inspector',
+        },
+      );
+    } on FunctionException catch (e) {
+      // Prefer the function's plain-English { error }; otherwise rethrow so
+      // friendlyError() humanises by status (never a raw code).
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
+    }
+  }
+
   /// Searches inspector accounts by email for the grant-creation form.
   Future<List<InspectorAccount>> searchInspectors(String query) async {
     if (query.trim().isEmpty) return [];

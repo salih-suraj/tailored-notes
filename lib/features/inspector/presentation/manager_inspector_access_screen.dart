@@ -16,6 +16,7 @@ import '../domain/inspector_grant.dart';
 import '../domain/inspector_module.dart';
 import 'providers/inspector_provider.dart';
 import 'widgets/grant_form_sheet.dart';
+import 'widgets/inspector_form_sheet.dart';
 
 final _dateFormat = DateFormat('d MMM yyyy', 'en_GB');
 
@@ -54,6 +55,13 @@ class _ManagerInspectorAccessScreenState
     return Scaffold(
       appBar: AppBar(
         title: const Text(AppStrings.managerInspectorAccessTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_1_outlined),
+            tooltip: AppStrings.managerAddInspectorTooltip,
+            onPressed: () => showInspectorFormSheet(context),
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

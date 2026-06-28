@@ -618,6 +618,29 @@ abstract final class AppStrings {
   static const managerRevokeGrantConfirm =
       'This inspector will lose access to your home immediately.';
   static const managerNewGrant = 'Grant Access';
+  // Add-inspector account form (creation, separate from granting access).
+  static const managerAddInspector = 'Add inspector';
+  static const managerAddInspectorTooltip = 'Add an inspector account';
+  static const managerInspectorFormTitle = 'Add Inspector Account';
+  static const managerInspectorFormNameLabel = 'INSPECTOR NAME';
+  static const managerInspectorFormNameHint = 'e.g. Pat Okafor';
+  static const managerInspectorNameRequired = 'Enter the inspector’s name';
+  static const managerInspectorFormEmailLabel = 'EMAIL ADDRESS';
+  static const managerInspectorFormEmailHint = 'inspector@example.com';
+  static const managerInspectorEmailRequired = 'Email is required';
+  static const managerInspectorEmailInvalid = 'Enter a valid email';
+  static const managerInspectorFormPasswordLabel = 'Temporary password';
+  static const managerInspectorFormPasswordHint = 'At least 8 characters';
+  static const managerInspectorPasswordRequired =
+      'Temporary password is required';
+  static const managerInspectorPasswordTooShort = 'Use at least 8 characters';
+  static const managerInspectorFormPasswordNote =
+      'The inspector sets their own password and two-factor authentication on '
+      'first sign-in. Share these details securely, then use Grant Access to '
+      'give them time-limited access to your home.';
+  static const managerInspectorFormSubmit = 'Create inspector account';
+  static const managerInspectorCreated =
+      'Inspector account created — use Grant Access to give them access to your home';
   static const managerGrantFormTitle = 'Grant Inspector Access';
   static const managerGrantFormSearchLabel = 'Inspector email';
   static const managerGrantFormSearchHint = 'Search by email';
