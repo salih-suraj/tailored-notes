@@ -80,15 +80,18 @@ flutter_native_splash:
     icon_background_color: "#ffffff"
     image: assets/images/logo.png
 
-# App launcher icons — indigo "E" mark (#5271FF) on a white background.
+# App launcher icons — TailorEd "TE" mark (blue→teal gradient: document in a
+# caring hand + safeguarding shield). Source art: assets/images/logo.jpeg,
+# squared to assets/icon/*.png via the PIL script.
 # Regenerate after changing the source art:  dart run flutter_launcher_icons
 flutter_launcher_icons:
   android: true
   ios: true
   remove_alpha_ios: true
   image_path: "assets/icon/icon.png"
-  # Android adaptive icon: flat white background + the indigo mark foreground,
-  # padded to sit inside the safe zone the launcher mask may crop.
+  # Android adaptive icon: full-bleed gradient mark as the foreground; the
+  # launcher mask crops the rounded-corner whitespace. White background shows
+  # only behind the masked corners.
   adaptive_icon_background: "#FFFFFF"
   adaptive_icon_foreground: "assets/icon/icon_foreground.png"
 
