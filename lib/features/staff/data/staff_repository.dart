@@ -71,9 +71,15 @@ class StaffRepository {
     try {
       await client.functions.invoke('manage-staff', body: body);
     } on FunctionException catch (e) {
+      // Prefer the function's own plain-English { error } message. Otherwise
+      // rethrow so friendlyError() humanises it by status — never surface a
+      // raw status code to the user.
       final details = e.details;
       final message = details is Map ? details['error'] as String? : null;
-      throw StateError(message ?? 'Staff action failed (${e.status}).');
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
     }
   }
 }

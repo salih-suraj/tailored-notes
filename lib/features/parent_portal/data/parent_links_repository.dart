@@ -113,9 +113,14 @@ class ParentLinksRepository {
         },
       );
     } on FunctionException catch (e) {
+      // Prefer the function's plain-English { error }; otherwise rethrow so
+      // friendlyError() humanises by status (never a raw code).
       final details = e.details;
       final message = details is Map ? details['error'] as String? : null;
-      throw StateError(message ?? 'Could not create the parent account.');
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
     }
   }
 

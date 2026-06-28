@@ -57,7 +57,8 @@ String _byStatus(int? status) {
     case 403:
       return "You don't have permission to do that.";
     case 404:
-      return "We couldn't find what you were looking for.";
+      return "We couldn't reach that service. Please try again in a moment, "
+          'or contact your administrator if it continues.';
     case 408:
     case 429:
       return 'The service is busy right now — please try again in a moment.';
