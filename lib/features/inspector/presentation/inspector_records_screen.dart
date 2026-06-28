@@ -197,7 +197,7 @@ class _DailyNoteCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            _Badge(label: _label(record['shift']), color: AppColors.teal400),
+            _NeutralChip(label: _label(record['shift'])),
             const Spacer(),
             Text(
               _fmtDateTime(record['occurred_at']),
@@ -227,13 +227,6 @@ class _CarePlanCard extends StatelessWidget {
 
   final Map<String, dynamic> record;
 
-  Color _statusColor(String? status) => switch (status) {
-    'active' => AppColors.green,
-    'under_review' => AppColors.amber,
-    'archived' => AppColors.slate400,
-    _ => AppColors.blue, // draft
-  };
-
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -252,10 +245,7 @@ class _CarePlanCard extends StatelessWidget {
                 style: AppTextStyles.h3(colors.onSurface),
               ),
             ),
-            _Badge(
-              label: _label(record['status']),
-              color: _statusColor(record['status'] as String?),
-            ),
+            _NeutralChip(label: _label(record['status'])),
           ],
         ),
         if (reviewDate != null) ...[
@@ -327,7 +317,7 @@ class _GoalTile extends StatelessWidget {
               ],
             ),
             const SizedBox(height: AppSpacing.xs),
-            _MiniChip(label: _label(goal['category']), color: AppColors.purple),
+            _NeutralChip(label: _label(goal['category'])),
             if ((goal['strategy'] as String? ?? '').isNotEmpty) ...[
               const SizedBox(height: AppSpacing.xs),
               Text(
@@ -356,16 +346,6 @@ class _IncidentCard extends StatelessWidget {
 
   final Map<String, dynamic> record;
 
-  Color _typeColor(String? type) => switch (type) {
-    'behaviour' => AppColors.amber,
-    'medical' => AppColors.blue,
-    'accident' => AppColors.orange,
-    'property_damage' => AppColors.slate400,
-    'missing_person' => AppColors.red,
-    'safeguarding' => AppColors.roleInspector,
-    _ => AppColors.slate400,
-  };
-
   Color _severityColor(String? severity) => switch (severity) {
     'low' => AppColors.green,
     'medium' => AppColors.amber,
@@ -382,10 +362,7 @@ class _IncidentCard extends StatelessWidget {
       children: [
         Row(
           children: [
-            _Badge(
-              label: _label(record['incident_type']),
-              color: _typeColor(record['incident_type'] as String?),
-            ),
+            _NeutralChip(label: _label(record['incident_type'])),
             const SizedBox(width: AppSpacing.sm),
             _Badge(
               label: _label(record['severity']),
@@ -486,7 +463,7 @@ class _BehaviourCard extends StatelessWidget {
               color: _severityColor(record['severity'] as String?),
             ),
             const SizedBox(width: AppSpacing.sm),
-            _Badge(label: _label(record['shift']), color: AppColors.teal400),
+            _NeutralChip(label: _label(record['shift'])),
             const Spacer(),
             Text(
               _fmtDateTime(record['occurred_at']),
@@ -686,10 +663,7 @@ class _MedicalHistoryCard extends StatelessWidget {
                   style: AppTextStyles.h3(colors.onSurface),
                 ),
               ),
-              _Badge(
-                label: _label(record['contact_type']),
-                color: AppColors.blue,
-              ),
+              _NeutralChip(label: _label(record['contact_type'])),
             ],
           ),
           if ((record['role'] as String? ?? '').isNotEmpty)
@@ -802,6 +776,31 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (status, type, category,
+/// shift, contact type) — colour is reserved for severity, outcome, and the
+/// notification / safety flags.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
 
 class _MiniChip extends StatelessWidget {

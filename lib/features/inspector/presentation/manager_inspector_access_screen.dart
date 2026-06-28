@@ -218,7 +218,7 @@ class _GrantTile extends ConsumerWidget {
               runSpacing: AppSpacing.xs,
               children: [
                 for (final module in modules)
-                  _Badge(label: module.displayName, color: AppColors.blue),
+                  _NeutralChip(label: module.displayName),
               ],
             ),
             if (isActive) ...[
@@ -527,4 +527,28 @@ class _Badge extends StatelessWidget {
     ),
     child: Text(label, style: AppTextStyles.label(color)),
   );
+}
+
+/// Quiet neutral chip for organisational metadata (granted modules) — colour
+/// is reserved for grant status and feedback severity / status.
+class _NeutralChip extends StatelessWidget {
+  const _NeutralChip({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    return Container(
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.sm,
+        vertical: 2,
+      ),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(AppRadius.pill),
+        border: Border.all(color: colors.outlineVariant),
+      ),
+      child: Text(label, style: AppTextStyles.label(colors.onSurfaceVariant)),
+    );
+  }
 }
