@@ -90,6 +90,35 @@ class ParentLinksRepository {
         .toList();
   }
 
+  /// Creates a parent/guardian account in the manager's home, separate from
+  /// linking them to a child. Goes through the `manage-staff` Edge Function
+  /// (service-role: creates the auth user + user_profiles row, forces the home
+  /// from the manager's JWT, and stamps must_change_password). Once created the
+  /// parent is findable via [searchParents] for the link form.
+  Future<void> createParentAccount({
+    required String email,
+    required String password,
+    required String displayName,
+  }) async {
+    final client = _requireClient();
+    try {
+      await client.functions.invoke(
+        'manage-staff',
+        body: {
+          'action': 'create',
+          'email': email,
+          'password': password,
+          'displayName': displayName,
+          'role': 'parent_guardian',
+        },
+      );
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      throw StateError(message ?? 'Could not create the parent account.');
+    }
+  }
+
   /// Searches parent/guardian accounts by email for the link-creation form.
   Future<List<ParentAccount>> searchParents(String query) async {
     if (query.trim().isEmpty) return [];

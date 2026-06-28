@@ -13,6 +13,7 @@ import '../../auth/presentation/providers/auth_provider.dart';
 import '../domain/parent_link.dart';
 import 'providers/parent_portal_provider.dart';
 import 'widgets/link_form_sheet.dart';
+import 'widgets/parent_form_sheet.dart';
 
 final _dateFormat = DateFormat('d MMM yyyy', 'en_GB');
 
@@ -28,7 +29,16 @@ class ManagerParentAccessScreen extends ConsumerWidget {
     final colors = Theme.of(context).colorScheme;
 
     return Scaffold(
-      appBar: AppBar(title: const Text(AppStrings.managerParentAccessTitle)),
+      appBar: AppBar(
+        title: const Text(AppStrings.managerParentAccessTitle),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.person_add_alt_1_outlined),
+            tooltip: AppStrings.managerAddParentTooltip,
+            onPressed: () => showParentFormSheet(context),
+          ),
+        ],
+      ),
       body: linksAsync.when(
         loading: () => const LoadingSkeleton(),
         error: (e, _) => ErrorView(

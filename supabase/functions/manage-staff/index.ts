@@ -47,9 +47,15 @@ function jwtClaims(authHeader: string | null): Record<string, unknown> {
   }
 }
 
-// Roles a manager is allowed to provision in-app. External roles (inspector,
-// parent_guardian) are intentionally excluded.
-const ALLOWED_ROLES = ["support_worker", "team_leader", "manager"];
+// Roles a manager may provision in-app. Internal staff plus parent/guardian
+// accounts (created here, then linked to a child separately). Inspector
+// accounts are provisioned through the inspector-access flow, not here.
+const ALLOWED_ROLES = [
+  "support_worker",
+  "team_leader",
+  "manager",
+  "parent_guardian",
+];
 
 // ~100 years — effectively permanent until explicitly re-enabled.
 const BAN_DURATION = "876600h";
@@ -134,7 +140,7 @@ async function createStaff(
     return json({ error: "Enter the staff member's name." }, 400);
   }
   if (!ALLOWED_ROLES.includes(role)) {
-    return json({ error: "Choose a valid staff role." }, 400);
+    return json({ error: "Choose a valid role." }, 400);
   }
 
   // Create the auth user (email pre-confirmed — managers vouch for staff).

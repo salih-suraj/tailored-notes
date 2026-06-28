@@ -671,6 +671,27 @@ abstract final class AppStrings {
   static const managerRevokeParentLinkConfirm =
       'This parent will immediately lose access to this child\'s updates.';
   static const managerNewParentLink = 'Link Parent';
+  // Add-parent account form (creation, separate from linking).
+  static const managerAddParent = 'Add parent';
+  static const managerAddParentTooltip = 'Add a parent account';
+  static const managerParentFormTitle = 'Add Parent Account';
+  static const managerParentFormNameLabel = 'PARENT / GUARDIAN NAME';
+  static const managerParentFormNameHint = 'e.g. Jane Smith';
+  static const managerParentNameRequired = 'Enter the parent’s name';
+  static const managerParentFormEmailLabel = 'EMAIL ADDRESS';
+  static const managerParentFormEmailHint = 'parent@example.com';
+  static const managerParentEmailRequired = 'Email is required';
+  static const managerParentEmailInvalid = 'Enter a valid email';
+  static const managerParentFormPasswordLabel = 'Temporary password';
+  static const managerParentFormPasswordHint = 'At least 8 characters';
+  static const managerParentPasswordRequired = 'Temporary password is required';
+  static const managerParentPasswordTooShort = 'Use at least 8 characters';
+  static const managerParentFormPasswordNote =
+      'The parent sets their own password on first sign-in. Share these '
+      'details securely, then use Link Parent to connect them to a child.';
+  static const managerParentFormSubmit = 'Create parent account';
+  static const managerParentCreated =
+      'Parent account created — use Link Parent to connect them to a child';
   static const managerParentLinkFormTitle = 'Link Parent to Child';
   static const managerParentLinkFormSearchLabel = 'Parent email';
   static const managerParentLinkFormSearchHint = 'Search by email';
