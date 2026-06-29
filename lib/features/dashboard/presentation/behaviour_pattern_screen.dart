@@ -378,7 +378,7 @@ class _TrendCard extends StatelessWidget {
               BarChartRodData(
                 toY: count.toDouble(),
                 color: count == 0 ? colors.outlineVariant : AppColors.amber,
-                width: days <= 7 ? 18 : 12,
+                width: days <= 7 ? 18 : 14,
                 borderRadius: BorderRadius.circular(3),
               ),
             ],
@@ -394,8 +394,9 @@ class _TrendCard extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             // Each day needs a comfortable slot. When the period is wider than
-            // the card (e.g. 30 days) scroll horizontally instead of squashing.
-            final width = (days * 22.0).clamp(
+            // the card (14+ days on a phone) scroll horizontally instead of
+            // squashing; shorter periods stretch to fill the card.
+            final width = (days * 30.0).clamp(
               constraints.maxWidth,
               double.infinity,
             );
