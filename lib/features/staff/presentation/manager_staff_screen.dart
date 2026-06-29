@@ -295,23 +295,34 @@ class _StaffTileState extends ConsumerState<_StaffTile> {
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                else ...[
-                  TextButton(
-                    onPressed: _resetPassword,
-                    child: const Text(AppStrings.managerStaffReset),
+                else
+                  // Overflow menu rather than two inline buttons — keeps the
+                  // row from overflowing on narrow phones / long role names.
+                  PopupMenuButton<String>(
+                    icon: Icon(Icons.more_vert, color: colors.onSurfaceVariant),
+                    tooltip: AppStrings.recordOptions,
+                    onSelected: (v) {
+                      if (v == 'reset') _resetPassword();
+                      if (v == 'toggle') _toggleActive();
+                    },
+                    itemBuilder: (_) => [
+                      const PopupMenuItem(
+                        value: 'reset',
+                        child: Text(AppStrings.managerStaffReset),
+                      ),
+                      PopupMenuItem(
+                        value: 'toggle',
+                        child: Text(
+                          member.isActive
+                              ? AppStrings.managerStaffDisable
+                              : AppStrings.managerStaffEnable,
+                          style: member.isActive
+                              ? TextStyle(color: colors.error)
+                              : null,
+                        ),
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    onPressed: _toggleActive,
-                    style: member.isActive
-                        ? TextButton.styleFrom(foregroundColor: colors.error)
-                        : null,
-                    child: Text(
-                      member.isActive
-                          ? AppStrings.managerStaffDisable
-                          : AppStrings.managerStaffEnable,
-                    ),
-                  ),
-                ],
               ],
             ),
           ],
