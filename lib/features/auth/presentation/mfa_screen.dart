@@ -77,7 +77,7 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
         // No factor enrolled yet — start enrollment.
         final enroll = await client.auth.mfa.enroll(
           factorType: FactorType.totp,
-          issuer: 'TailorEd Notes',
+          issuer: 'TailorEd',
           friendlyName: 'Authenticator',
         );
         setState(() {

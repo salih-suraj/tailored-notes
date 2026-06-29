@@ -1,4 +1,4 @@
-/// The five roles in TailorEd Notes. Injected into the JWT as `app_role`
+/// The five roles in TailorEd. Injected into the JWT as `app_role`
 /// by the custom_access_token_hook (reads `user_profiles.role`).
 enum UserRole {
   supportWorker,

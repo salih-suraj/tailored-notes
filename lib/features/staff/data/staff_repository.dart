@@ -66,6 +66,20 @@ class StaffRepository {
     await _invoke({'action': 'setActive', 'userId': userId, 'active': active});
   }
 
+  /// Resets a staff account to a new temporary password and re-arms the forced
+  /// password change, so the member signs in once with [password] and then
+  /// sets their own. The in-app "forgot password" resolution.
+  Future<void> resetPassword({
+    required String userId,
+    required String password,
+  }) async {
+    await _invoke({
+      'action': 'resetPassword',
+      'userId': userId,
+      'password': password,
+    });
+  }
+
   Future<void> _invoke(Map<String, dynamic> body) async {
     final client = _requireClient();
     try {

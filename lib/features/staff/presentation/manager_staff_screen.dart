@@ -165,6 +165,73 @@ class _StaffTileState extends ConsumerState<_StaffTile> {
     }
   }
 
+  Future<void> _resetPassword() async {
+    final member = widget.member;
+    final controller = TextEditingController();
+    final newPassword = await showDialog<String>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text(AppStrings.managerStaffResetTitle),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(AppStrings.managerStaffResetBody),
+            const SizedBox(height: AppSpacing.md),
+            TextField(
+              controller: controller,
+              autofocus: true,
+              obscureText: true,
+              autocorrect: false,
+              enableSuggestions: false,
+              decoration: const InputDecoration(
+                hintText: AppStrings.managerStaffResetHint,
+                border: OutlineInputBorder(),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text(AppStrings.cancel),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(controller.text),
+            child: const Text(AppStrings.managerStaffResetSubmit),
+          ),
+        ],
+      ),
+    );
+    controller.dispose();
+    if (newPassword == null) return; // cancelled
+    if (newPassword.length < 8) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(AppStrings.managerStaffPasswordTooShort)),
+      );
+      return;
+    }
+
+    setState(() => _busy = true);
+    try {
+      await ref
+          .read(staffRepositoryProvider)
+          .resetPassword(userId: member.id, password: newPassword);
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(AppStrings.managerStaffResetDone)),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(friendlyError(e))));
+    } finally {
+      if (mounted) setState(() => _busy = false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
@@ -228,7 +295,11 @@ class _StaffTileState extends ConsumerState<_StaffTile> {
                     height: 20,
                     child: CircularProgressIndicator(strokeWidth: 2),
                   )
-                else
+                else ...[
+                  TextButton(
+                    onPressed: _resetPassword,
+                    child: const Text(AppStrings.managerStaffReset),
+                  ),
                   TextButton(
                     onPressed: _toggleActive,
                     style: member.isActive
@@ -240,6 +311,7 @@ class _StaffTileState extends ConsumerState<_StaffTile> {
                           : AppStrings.managerStaffEnable,
                     ),
                   ),
+                ],
               ],
             ),
           ],

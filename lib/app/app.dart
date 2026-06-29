@@ -18,7 +18,7 @@ class TailorEdApp extends ConsumerWidget {
     ref.watch(syncServiceProvider);
 
     return MaterialApp.router(
-      title: 'TailorEd Notes',
+      title: 'TailorEd',
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: ref.watch(themeModeNotifierProvider),

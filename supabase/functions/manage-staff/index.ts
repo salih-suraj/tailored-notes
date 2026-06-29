@@ -118,6 +118,8 @@ Deno.serve(async (req) => {
       return await createStaff(admin, managerHomeId, body);
     case "setActive":
       return await setActive(admin, managerHomeId, body);
+    case "resetPassword":
+      return await resetPassword(admin, managerHomeId, body);
     default:
       return json({ error: "Unknown action" }, 400);
   }
@@ -230,6 +232,55 @@ async function setActive(
   if (flagErr) {
     console.error("is_active update failed:", flagErr);
     return json({ error: "Account updated, but its status may be out of sync. Refresh." }, 500);
+  }
+
+  return json({ ok: true });
+}
+
+// Reset an account's password to a manager-set temporary one and re-arm the
+// forced password change, so the user signs in once with the temp password and
+// is then made to set their own. This is the in-app answer to "I forgot my
+// password" — a manager resolves it without the Supabase dashboard.
+async function resetPassword(
+  // deno-lint-ignore no-explicit-any
+  admin: any,
+  homeId: string,
+  body: { userId?: string; password?: string },
+): Promise<Response> {
+  const userId = body.userId ?? "";
+  const password = body.password ?? "";
+  if (userId.length === 0) {
+    return json({ error: "Missing user id." }, 400);
+  }
+  if (password.length < 8) {
+    return json({ error: "Temporary password must be at least 8 characters." }, 400);
+  }
+
+  // The target must belong to the manager's own home.
+  const { data: target, error: lookupErr } = await admin
+    .from("user_profiles")
+    .select("id, home_id, display_name")
+    .eq("id", userId)
+    .maybeSingle();
+  if (lookupErr || !target) {
+    return json({ error: "That account was not found." }, 404);
+  }
+  if (target.home_id !== homeId) {
+    return json({ error: "Forbidden: that account is in another home." }, 403);
+  }
+
+  // Set the new temporary password and re-arm must_change_password. Carry the
+  // existing display_name so the metadata merge never drops it.
+  const { error: updateErr } = await admin.auth.admin.updateUserById(userId, {
+    password,
+    user_metadata: {
+      display_name: target.display_name,
+      must_change_password: true,
+    },
+  });
+  if (updateErr) {
+    console.error("resetPassword updateUserById failed:", updateErr);
+    return json({ error: "Could not reset the password. Please try again." }, 500);
   }
 
   return json({ ok: true });

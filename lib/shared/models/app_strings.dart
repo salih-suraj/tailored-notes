@@ -2,7 +2,7 @@
 /// Prepared for flutter_localizations — replace with ARB-generated class when ready.
 abstract final class AppStrings {
   // App
-  static const appName = 'TailorEd Notes';
+  static const appName = 'TailorEd';
   static const appTagline = 'Care documentation for residential homes';
 
   // Auth
@@ -761,6 +761,16 @@ abstract final class AppStrings {
   static const managerStaffEnableConfirm =
       'They will be able to sign in again.';
   static const managerStaffUpdated = 'Staff account updated';
+  // Reset a staff member's password (in-app "forgot password" resolution).
+  static const managerStaffReset = 'Reset password';
+  static const managerStaffResetTitle = 'Reset password';
+  static const managerStaffResetBody =
+      'Set a temporary password. The staff member signs in with it once, then '
+      'chooses their own.';
+  static const managerStaffResetHint = 'New temporary password (8+ characters)';
+  static const managerStaffResetSubmit = 'Reset password';
+  static const managerStaffResetDone =
+      'Password reset — share the new temporary password with the staff member.';
   static const managerNewStaff = 'Add Staff';
   static const managerStaffFormTitle = 'Add Staff Member';
   static const managerStaffFormNameLabel = 'Full name';
