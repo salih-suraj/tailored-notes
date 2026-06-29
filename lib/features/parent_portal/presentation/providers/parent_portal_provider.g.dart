@@ -486,6 +486,143 @@ class _ParentSearchProviderElement
   String get query => (origin as ParentSearchProvider).query;
 }
 
+String _$parentAccountsForHomeHash() =>
+    r'841f487c48445540cf90c00effaa89a589aca436';
+
+/// All parent accounts in [homeId]. Manager "Accounts" tab.
+///
+/// Copied from [parentAccountsForHome].
+@ProviderFor(parentAccountsForHome)
+const parentAccountsForHomeProvider = ParentAccountsForHomeFamily();
+
+/// All parent accounts in [homeId]. Manager "Accounts" tab.
+///
+/// Copied from [parentAccountsForHome].
+class ParentAccountsForHomeFamily
+    extends Family<AsyncValue<List<ParentAccount>>> {
+  /// All parent accounts in [homeId]. Manager "Accounts" tab.
+  ///
+  /// Copied from [parentAccountsForHome].
+  const ParentAccountsForHomeFamily();
+
+  /// All parent accounts in [homeId]. Manager "Accounts" tab.
+  ///
+  /// Copied from [parentAccountsForHome].
+  ParentAccountsForHomeProvider call(String homeId) {
+    return ParentAccountsForHomeProvider(homeId);
+  }
+
+  @override
+  ParentAccountsForHomeProvider getProviderOverride(
+    covariant ParentAccountsForHomeProvider provider,
+  ) {
+    return call(provider.homeId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'parentAccountsForHomeProvider';
+}
+
+/// All parent accounts in [homeId]. Manager "Accounts" tab.
+///
+/// Copied from [parentAccountsForHome].
+class ParentAccountsForHomeProvider
+    extends AutoDisposeFutureProvider<List<ParentAccount>> {
+  /// All parent accounts in [homeId]. Manager "Accounts" tab.
+  ///
+  /// Copied from [parentAccountsForHome].
+  ParentAccountsForHomeProvider(String homeId)
+    : this._internal(
+        (ref) => parentAccountsForHome(ref as ParentAccountsForHomeRef, homeId),
+        from: parentAccountsForHomeProvider,
+        name: r'parentAccountsForHomeProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$parentAccountsForHomeHash,
+        dependencies: ParentAccountsForHomeFamily._dependencies,
+        allTransitiveDependencies:
+            ParentAccountsForHomeFamily._allTransitiveDependencies,
+        homeId: homeId,
+      );
+
+  ParentAccountsForHomeProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.homeId,
+  }) : super.internal();
+
+  final String homeId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<ParentAccount>> Function(ParentAccountsForHomeRef provider)
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: ParentAccountsForHomeProvider._internal(
+        (ref) => create(ref as ParentAccountsForHomeRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        homeId: homeId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<ParentAccount>> createElement() {
+    return _ParentAccountsForHomeProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is ParentAccountsForHomeProvider && other.homeId == homeId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, homeId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin ParentAccountsForHomeRef
+    on AutoDisposeFutureProviderRef<List<ParentAccount>> {
+  /// The parameter `homeId` of this provider.
+  String get homeId;
+}
+
+class _ParentAccountsForHomeProviderElement
+    extends AutoDisposeFutureProviderElement<List<ParentAccount>>
+    with ParentAccountsForHomeRef {
+  _ParentAccountsForHomeProviderElement(super.provider);
+
+  @override
+  String get homeId => (origin as ParentAccountsForHomeProvider).homeId;
+}
+
 String _$parentChildActivitiesHash() =>
     r'e163f343c1f92ff9fa8ef9396a91a3467cb5f917';
 

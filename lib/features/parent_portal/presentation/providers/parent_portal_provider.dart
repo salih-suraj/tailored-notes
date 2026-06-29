@@ -44,6 +44,11 @@ Future<List<ParentLink>> parentLinksForHome(Ref ref, String homeId) =>
 Future<List<ParentAccount>> parentSearch(Ref ref, String query) =>
     ref.watch(parentLinksRepositoryProvider).searchParents(query);
 
+/// All parent accounts in [homeId]. Manager "Accounts" tab.
+@riverpod
+Future<List<ParentAccount>> parentAccountsForHome(Ref ref, String homeId) =>
+    ref.watch(parentLinksRepositoryProvider).fetchParentAccounts(homeId);
+
 /// Activity/achievement records for a linked child.
 @riverpod
 Future<List<Map<String, dynamic>>> parentChildActivities(

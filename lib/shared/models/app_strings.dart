@@ -625,7 +625,11 @@ abstract final class AppStrings {
   // Manager — Inspector Access
   static const managerInspectorAccessTitle = 'Inspector Access';
   static const managerInspectorAccessTabGrants = 'Access';
+  static const managerInspectorAccessTabAccounts = 'Inspectors';
   static const managerInspectorAccessTabFeedback = 'Feedback';
+  static const managerNoInspectorAccounts = 'No inspector accounts yet';
+  static const managerNoInspectorAccountsHint =
+      'Use Add inspector (top right) to create one.';
   static const managerInspectorAccessOpenTooltip = 'Inspector Access';
   static const managerNoGrants = 'No inspector access has been granted';
   static const managerGrantActive = 'Active';
@@ -712,6 +716,11 @@ abstract final class AppStrings {
   static const managerRevokeParentLinkConfirm =
       'This parent will immediately lose access to this child\'s updates.';
   static const managerNewParentLink = 'Link Parent';
+  static const managerParentAccountsTab = 'Accounts';
+  static const managerParentLinksTab = 'Links';
+  static const managerNoParentAccounts = 'No parent accounts yet';
+  static const managerNoParentAccountsHint =
+      'Use Add parent (top right) to create one.';
   // Add-parent account form (creation, separate from linking).
   static const managerAddParent = 'Add parent';
   static const managerAddParentTooltip = 'Add a parent account';
@@ -771,6 +780,13 @@ abstract final class AppStrings {
   static const managerStaffResetSubmit = 'Reset password';
   static const managerStaffResetDone =
       'Password reset — share the new temporary password with the staff member.';
+  // Generic account reset (parent / inspector accounts — shared tile).
+  static const managerAccountResetBody =
+      'Set a temporary password. They sign in with it once, then choose their '
+      'own.';
+  static const managerAccountResetDone =
+      'Password reset — share the new temporary password with them.';
+  static const managerAccountDisabled = 'Disabled';
   static const managerNewStaff = 'Add Staff';
   static const managerStaffFormTitle = 'Add Staff Member';
   static const managerStaffFormNameLabel = 'Full name';

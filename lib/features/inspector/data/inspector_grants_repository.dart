@@ -3,13 +3,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/domain/app_user.dart';
 import '../domain/inspector_grant.dart';
 
-/// A minimal inspector account, returned when a manager searches for an
-/// inspector to grant access to.
+/// An inspector account — returned when a manager searches for an inspector to
+/// grant access, and when listing inspector accounts this home has created.
 class InspectorAccount {
-  const InspectorAccount({required this.id, required this.email});
+  const InspectorAccount({
+    required this.id,
+    required this.email,
+    this.displayName,
+    this.isActive = true,
+  });
 
   final String id;
   final String email;
+  final String? displayName;
+  final bool isActive;
 }
 
 /// `inspector_grants` is cloud-only (not in local Drift) — every method here
@@ -115,6 +122,52 @@ class InspectorGrantsRepository {
     } on FunctionException catch (e) {
       // Prefer the function's plain-English { error }; otherwise rethrow so
       // friendlyError() humanises by status (never a raw code).
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
+    }
+  }
+
+  /// Inspector accounts this home has created (home_id-scoped), by email. Lets
+  /// a manager see accounts they've added even before granting access.
+  Future<List<InspectorAccount>> fetchInspectorAccounts(String homeId) async {
+    final client = _requireClient();
+    final rows = await client
+        .from('user_profiles')
+        .select('id, email, display_name, is_active')
+        .eq('home_id', homeId)
+        .eq('role', 'inspector')
+        .order('email', ascending: true);
+    return (rows as List).cast<Map<String, dynamic>>().map((r) {
+      return InspectorAccount(
+        id: r['id'] as String,
+        email: r['email'] as String? ?? '',
+        displayName: r['display_name'] as String?,
+        isActive: r['is_active'] as bool? ?? true,
+      );
+    }).toList();
+  }
+
+  /// Resets an inspector account to a new temporary password and re-arms the
+  /// forced change (via the manage-staff Edge Function — home-scoped + gated).
+  Future<void> resetPassword({
+    required String userId,
+    required String password,
+  }) async {
+    final client = _requireClient();
+    try {
+      await client.functions.invoke(
+        'manage-staff',
+        body: {
+          'action': 'resetPassword',
+          'userId': userId,
+          'password': password,
+        },
+      );
+    } on FunctionException catch (e) {
       final details = e.details;
       final message = details is Map ? details['error'] as String? : null;
       if (message != null && message.trim().isNotEmpty) {

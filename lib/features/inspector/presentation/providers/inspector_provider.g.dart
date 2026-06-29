@@ -524,6 +524,148 @@ class _InspectorSearchProviderElement
   String get query => (origin as InspectorSearchProvider).query;
 }
 
+String _$inspectorAccountsForHomeHash() =>
+    r'9265df0332abc6771aecb8a4b6f838cb542c7cb2';
+
+/// Inspector accounts this home has created. Manager "Inspectors" tab.
+///
+/// Copied from [inspectorAccountsForHome].
+@ProviderFor(inspectorAccountsForHome)
+const inspectorAccountsForHomeProvider = InspectorAccountsForHomeFamily();
+
+/// Inspector accounts this home has created. Manager "Inspectors" tab.
+///
+/// Copied from [inspectorAccountsForHome].
+class InspectorAccountsForHomeFamily
+    extends Family<AsyncValue<List<InspectorAccount>>> {
+  /// Inspector accounts this home has created. Manager "Inspectors" tab.
+  ///
+  /// Copied from [inspectorAccountsForHome].
+  const InspectorAccountsForHomeFamily();
+
+  /// Inspector accounts this home has created. Manager "Inspectors" tab.
+  ///
+  /// Copied from [inspectorAccountsForHome].
+  InspectorAccountsForHomeProvider call(String homeId) {
+    return InspectorAccountsForHomeProvider(homeId);
+  }
+
+  @override
+  InspectorAccountsForHomeProvider getProviderOverride(
+    covariant InspectorAccountsForHomeProvider provider,
+  ) {
+    return call(provider.homeId);
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'inspectorAccountsForHomeProvider';
+}
+
+/// Inspector accounts this home has created. Manager "Inspectors" tab.
+///
+/// Copied from [inspectorAccountsForHome].
+class InspectorAccountsForHomeProvider
+    extends AutoDisposeFutureProvider<List<InspectorAccount>> {
+  /// Inspector accounts this home has created. Manager "Inspectors" tab.
+  ///
+  /// Copied from [inspectorAccountsForHome].
+  InspectorAccountsForHomeProvider(String homeId)
+    : this._internal(
+        (ref) => inspectorAccountsForHome(
+          ref as InspectorAccountsForHomeRef,
+          homeId,
+        ),
+        from: inspectorAccountsForHomeProvider,
+        name: r'inspectorAccountsForHomeProvider',
+        debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+            ? null
+            : _$inspectorAccountsForHomeHash,
+        dependencies: InspectorAccountsForHomeFamily._dependencies,
+        allTransitiveDependencies:
+            InspectorAccountsForHomeFamily._allTransitiveDependencies,
+        homeId: homeId,
+      );
+
+  InspectorAccountsForHomeProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.homeId,
+  }) : super.internal();
+
+  final String homeId;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<InspectorAccount>> Function(
+      InspectorAccountsForHomeRef provider,
+    )
+    create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: InspectorAccountsForHomeProvider._internal(
+        (ref) => create(ref as InspectorAccountsForHomeRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        homeId: homeId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<InspectorAccount>> createElement() {
+    return _InspectorAccountsForHomeProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is InspectorAccountsForHomeProvider && other.homeId == homeId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, homeId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin InspectorAccountsForHomeRef
+    on AutoDisposeFutureProviderRef<List<InspectorAccount>> {
+  /// The parameter `homeId` of this provider.
+  String get homeId;
+}
+
+class _InspectorAccountsForHomeProviderElement
+    extends AutoDisposeFutureProviderElement<List<InspectorAccount>>
+    with InspectorAccountsForHomeRef {
+  _InspectorAccountsForHomeProviderElement(super.provider);
+
+  @override
+  String get homeId => (origin as InspectorAccountsForHomeProvider).homeId;
+}
+
 String _$inspectorChildrenHash() => r'11b054f6d1fa061554d0cbf0cc4ee270e358795f';
 
 /// Children belonging to a granted home.

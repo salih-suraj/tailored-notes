@@ -3,13 +3,20 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../auth/domain/app_user.dart';
 import '../domain/parent_link.dart';
 
-/// A minimal parent/guardian account, returned when a manager searches for a
-/// parent to link to a child.
+/// A parent/guardian account — returned when a manager searches for a parent to
+/// link, and when listing all parent accounts in the home.
 class ParentAccount {
-  const ParentAccount({required this.id, required this.email});
+  const ParentAccount({
+    required this.id,
+    required this.email,
+    this.displayName,
+    this.isActive = true,
+  });
 
   final String id;
   final String email;
+  final String? displayName;
+  final bool isActive;
 }
 
 /// `parent_links` is cloud-only (not in local Drift) — every method here
@@ -115,6 +122,52 @@ class ParentLinksRepository {
     } on FunctionException catch (e) {
       // Prefer the function's plain-English { error }; otherwise rethrow so
       // friendlyError() humanises by status (never a raw code).
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
+    }
+  }
+
+  /// All parent/guardian accounts in [homeId] (created here), newest by email.
+  /// Lets a manager see accounts they've added even before linking them.
+  Future<List<ParentAccount>> fetchParentAccounts(String homeId) async {
+    final client = _requireClient();
+    final rows = await client
+        .from('user_profiles')
+        .select('id, email, display_name, is_active')
+        .eq('home_id', homeId)
+        .eq('role', 'parent_guardian')
+        .order('email', ascending: true);
+    return (rows as List).cast<Map<String, dynamic>>().map((r) {
+      return ParentAccount(
+        id: r['id'] as String,
+        email: r['email'] as String? ?? '',
+        displayName: r['display_name'] as String?,
+        isActive: r['is_active'] as bool? ?? true,
+      );
+    }).toList();
+  }
+
+  /// Resets a parent account to a new temporary password and re-arms the forced
+  /// change (via the manage-staff Edge Function — home-scoped + manager-gated).
+  Future<void> resetPassword({
+    required String userId,
+    required String password,
+  }) async {
+    final client = _requireClient();
+    try {
+      await client.functions.invoke(
+        'manage-staff',
+        body: {
+          'action': 'resetPassword',
+          'userId': userId,
+          'password': password,
+        },
+      );
+    } on FunctionException catch (e) {
       final details = e.details;
       final message = details is Map ? details['error'] as String? : null;
       if (message != null && message.trim().isNotEmpty) {

@@ -10,6 +10,7 @@ import '../../../shared/errors/friendly_error.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
+import '../../../shared/widgets/managed_account_tile.dart';
 import '../../auth/presentation/providers/auth_provider.dart';
 import '../domain/inspector_feedback.dart';
 import '../domain/inspector_grant.dart';
@@ -38,7 +39,7 @@ class _ManagerInspectorAccessScreenState
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(() => setState(() {}));
   }
 
@@ -66,6 +67,7 @@ class _ManagerInspectorAccessScreenState
           controller: _tabController,
           tabs: const [
             Tab(text: AppStrings.managerInspectorAccessTabGrants),
+            Tab(text: AppStrings.managerInspectorAccessTabAccounts),
             Tab(text: AppStrings.managerInspectorAccessTabFeedback),
           ],
         ),
@@ -74,6 +76,7 @@ class _ManagerInspectorAccessScreenState
         controller: _tabController,
         children: [
           _GrantsTab(homeId: homeId),
+          _InspectorAccountsTab(homeId: homeId),
           _FeedbackTab(homeId: homeId),
         ],
       ),
@@ -84,6 +87,76 @@ class _ManagerInspectorAccessScreenState
               label: const Text(AppStrings.managerNewGrant),
             )
           : null,
+    );
+  }
+}
+
+// ── Inspectors (accounts) tab ────────────────────────────────────────────
+
+class _InspectorAccountsTab extends ConsumerWidget {
+  const _InspectorAccountsTab({required this.homeId});
+
+  final String homeId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountsAsync = ref.watch(inspectorAccountsForHomeProvider(homeId));
+    final colors = Theme.of(context).colorScheme;
+
+    return accountsAsync.when(
+      loading: () => const LoadingSkeleton(),
+      error: (e, _) => ErrorView(
+        error: e,
+        onRetry: () => ref.invalidate(inspectorAccountsForHomeProvider(homeId)),
+      ),
+      data: (accounts) {
+        if (accounts.isEmpty) {
+          return Center(
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.xl),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.badge_outlined,
+                    size: 56,
+                    color: colors.onSurfaceVariant,
+                  ),
+                  const SizedBox(height: AppSpacing.lg),
+                  Text(
+                    AppStrings.managerNoInspectorAccounts,
+                    style: AppTextStyles.body(colors.onSurfaceVariant),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: AppSpacing.xs),
+                  Text(
+                    AppStrings.managerNoInspectorAccountsHint,
+                    style: AppTextStyles.small(colors.onSurfaceVariant),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+        return ListView.separated(
+          padding: const EdgeInsets.all(AppSpacing.lg),
+          itemCount: accounts.length,
+          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+          itemBuilder: (_, i) {
+            final a = accounts[i];
+            return ManagedAccountTile(
+              name: a.displayName ?? a.email,
+              email: a.email,
+              accent: AppColors.roleInspector,
+              isActive: a.isActive,
+              onResetPassword: (pw) => ref
+                  .read(inspectorGrantsRepositoryProvider)
+                  .resetPassword(userId: a.id, password: pw),
+            );
+          },
+        );
+      },
     );
   }
 }

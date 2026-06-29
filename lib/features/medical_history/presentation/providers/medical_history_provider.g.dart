@@ -26,7 +26,7 @@ final medicalHistoryRepositoryProvider =
 // ignore: unused_element
 typedef MedicalHistoryRepositoryRef =
     AutoDisposeProviderRef<MedicalHistoryRepository>;
-String _$medicalProfileHash() => r'8e31dfe4c7f21262ccf49524e2ce6a5d03632bd6';
+String _$medicalProfileHash() => r'd0b24e868f097f8a455d9921af2ca8b2a1ab3849';
 
 /// Copied from Dart SDK
 class _SystemHash {

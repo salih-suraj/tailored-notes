@@ -9,6 +9,7 @@ import '../../../core/time/uk_time.dart';
 import '../../../shared/models/app_strings.dart';
 import '../../../shared/widgets/error_view.dart';
 import '../../../shared/widgets/loading_skeleton.dart';
+import '../../../shared/widgets/managed_account_tile.dart';
 import '../../auth/presentation/providers/auth_provider.dart';
 import '../domain/parent_link.dart';
 import 'providers/parent_portal_provider.dart';
@@ -17,70 +18,181 @@ import 'widgets/parent_form_sheet.dart';
 
 final _dateFormat = DateFormat('d MMM yyyy', 'en_GB');
 
-/// Manager screen for linking parent/guardian accounts to children and
-/// revoking access.
+/// Manager screen for parent/guardian accounts: an Accounts tab (every parent
+/// account in the home, with password reset) and a Links tab (parent↔child
+/// links). Creating an account and linking it to a child are separate steps.
 class ManagerParentAccessScreen extends ConsumerWidget {
   const ManagerParentAccessScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homeId = ref.watch(currentUserProvider)?.homeId ?? '';
+
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text(AppStrings.managerParentAccessTitle),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.person_add_alt_1_outlined),
+              tooltip: AppStrings.managerAddParentTooltip,
+              onPressed: () => showParentFormSheet(context),
+            ),
+          ],
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: AppStrings.managerParentAccountsTab),
+              Tab(text: AppStrings.managerParentLinksTab),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _ParentAccountsTab(homeId: homeId),
+            _ParentLinksTab(homeId: homeId),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () => showLinkFormSheet(context, homeId: homeId),
+          icon: const Icon(Icons.add),
+          label: const Text(AppStrings.managerNewParentLink),
+        ),
+      ),
+    );
+  }
+}
+
+class _ParentAccountsTab extends ConsumerWidget {
+  const _ParentAccountsTab({required this.homeId});
+
+  final String homeId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final accountsAsync = ref.watch(parentAccountsForHomeProvider(homeId));
+    final colors = Theme.of(context).colorScheme;
+
+    return accountsAsync.when(
+      loading: () => const LoadingSkeleton(),
+      error: (e, _) => ErrorView(
+        error: e,
+        onRetry: () => ref.invalidate(parentAccountsForHomeProvider(homeId)),
+      ),
+      data: (accounts) {
+        if (accounts.isEmpty) {
+          return _EmptyState(
+            icon: Icons.family_restroom_outlined,
+            title: AppStrings.managerNoParentAccounts,
+            hint: AppStrings.managerNoParentAccountsHint,
+            colors: colors,
+          );
+        }
+        return ListView.separated(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.lg,
+            AppSpacing.lg,
+            96,
+          ),
+          itemCount: accounts.length,
+          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+          itemBuilder: (_, i) {
+            final a = accounts[i];
+            return ManagedAccountTile(
+              name: a.displayName ?? a.email,
+              email: a.email,
+              accent: AppColors.roleParent,
+              isActive: a.isActive,
+              onResetPassword: (pw) => ref
+                  .read(parentLinksRepositoryProvider)
+                  .resetPassword(userId: a.id, password: pw),
+            );
+          },
+        );
+      },
+    );
+  }
+}
+
+class _ParentLinksTab extends ConsumerWidget {
+  const _ParentLinksTab({required this.homeId});
+
+  final String homeId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final linksAsync = ref.watch(parentLinksForHomeProvider(homeId));
     final colors = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(AppStrings.managerParentAccessTitle),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.person_add_alt_1_outlined),
-            tooltip: AppStrings.managerAddParentTooltip,
-            onPressed: () => showParentFormSheet(context),
-          ),
-        ],
+    return linksAsync.when(
+      loading: () => const LoadingSkeleton(),
+      error: (e, _) => ErrorView(
+        error: e,
+        onRetry: () => ref.invalidate(parentLinksForHomeProvider(homeId)),
       ),
-      body: linksAsync.when(
-        loading: () => const LoadingSkeleton(),
-        error: (e, _) => ErrorView(
-          error: e,
-          onRetry: () => ref.invalidate(parentLinksForHomeProvider(homeId)),
-        ),
-        data: (links) {
-          if (links.isEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.xl),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.family_restroom_outlined,
-                      size: 56,
-                      color: colors.onSurfaceVariant,
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    Text(
-                      AppStrings.managerNoParentLinks,
-                      style: AppTextStyles.body(colors.onSurfaceVariant),
-                      textAlign: TextAlign.center,
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }
-          return ListView.separated(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            itemCount: links.length,
-            separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
-            itemBuilder: (_, i) => _LinkTile(link: links[i], homeId: homeId),
+      data: (links) {
+        if (links.isEmpty) {
+          return _EmptyState(
+            icon: Icons.link_off_outlined,
+            title: AppStrings.managerNoParentLinks,
+            colors: colors,
           );
-        },
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => showLinkFormSheet(context, homeId: homeId),
-        icon: const Icon(Icons.add),
-        label: const Text(AppStrings.managerNewParentLink),
+        }
+        return ListView.separated(
+          padding: const EdgeInsets.fromLTRB(
+            AppSpacing.lg,
+            AppSpacing.lg,
+            AppSpacing.lg,
+            96,
+          ),
+          itemCount: links.length,
+          separatorBuilder: (_, _) => const SizedBox(height: AppSpacing.sm),
+          itemBuilder: (_, i) => _LinkTile(link: links[i], homeId: homeId),
+        );
+      },
+    );
+  }
+}
+
+class _EmptyState extends StatelessWidget {
+  const _EmptyState({
+    required this.icon,
+    required this.title,
+    required this.colors,
+    this.hint,
+  });
+
+  final IconData icon;
+  final String title;
+  final String? hint;
+  final ColorScheme colors;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.xl),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 56, color: colors.onSurfaceVariant),
+            const SizedBox(height: AppSpacing.lg),
+            Text(
+              title,
+              style: AppTextStyles.body(colors.onSurfaceVariant),
+              textAlign: TextAlign.center,
+            ),
+            if (hint != null) ...[
+              const SizedBox(height: AppSpacing.xs),
+              Text(
+                hint!,
+                style: AppTextStyles.small(colors.onSurfaceVariant),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

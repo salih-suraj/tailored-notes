@@ -64,6 +64,14 @@ Future<List<InspectorGrant>> grantsForHome(Ref ref, String homeId) =>
 Future<List<InspectorAccount>> inspectorSearch(Ref ref, String query) =>
     ref.watch(inspectorGrantsRepositoryProvider).searchInspectors(query);
 
+/// Inspector accounts this home has created. Manager "Inspectors" tab.
+@riverpod
+Future<List<InspectorAccount>> inspectorAccountsForHome(
+  Ref ref,
+  String homeId,
+) =>
+    ref.watch(inspectorGrantsRepositoryProvider).fetchInspectorAccounts(homeId);
+
 /// Children belonging to a granted home.
 @riverpod
 Future<List<Map<String, dynamic>>> inspectorChildren(Ref ref, String homeId) =>
