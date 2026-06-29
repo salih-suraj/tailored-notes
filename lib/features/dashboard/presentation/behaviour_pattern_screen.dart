@@ -317,82 +317,94 @@ class _TrendCard extends StatelessWidget {
 
     final maxCount = countByDay.values.fold(0, (a, b) => a > b ? a : b);
 
+    final chart = BarChart(
+      BarChartData(
+        maxY: (maxCount + 1).toDouble(),
+        gridData: FlGridData(
+          show: true,
+          drawVerticalLine: false,
+          horizontalInterval: 1,
+          getDrawingHorizontalLine: (_) =>
+              FlLine(color: colors.outlineVariant, strokeWidth: 1),
+        ),
+        borderData: FlBorderData(show: false),
+        titlesData: FlTitlesData(
+          leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              interval: 1,
+              reservedSize: 24,
+              getTitlesWidget: (v, _) => v == v.roundToDouble() && v > 0
+                  ? Text(
+                      v.toInt().toString(),
+                      style: AppTextStyles.small(colors.onSurfaceVariant),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ),
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 22,
+              interval: days <= 7
+                  ? 1
+                  : days <= 14
+                  ? 2
+                  : 3,
+              getTitlesWidget: (v, _) {
+                final idx = v.toInt();
+                if (idx < 0 || idx >= days) return const SizedBox.shrink();
+                final date = now.subtract(Duration(days: days - 1 - idx));
+                return Text(
+                  DateFormat('d/M').format(date),
+                  style: AppTextStyles.small(colors.onSurfaceVariant),
+                );
+              },
+            ),
+          ),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        barGroups: List.generate(days, (i) {
+          final date = now.subtract(Duration(days: days - 1 - i));
+          final count = countByDay[_dayKey(date)] ?? 0;
+          return BarChartGroupData(
+            x: i,
+            barRods: [
+              BarChartRodData(
+                toY: count.toDouble(),
+                color: count == 0 ? colors.outlineVariant : AppColors.amber,
+                width: days <= 7 ? 18 : 12,
+                borderRadius: BorderRadius.circular(3),
+              ),
+            ],
+          );
+        }),
+      ),
+    );
+
     return _SectionCard(
       title: AppStrings.behaviourPatternsTrendTitle,
       child: SizedBox(
         height: 160,
-        child: BarChart(
-          BarChartData(
-            maxY: (maxCount + 1).toDouble(),
-            gridData: FlGridData(
-              show: true,
-              drawVerticalLine: false,
-              horizontalInterval: 1,
-              getDrawingHorizontalLine: (_) =>
-                  FlLine(color: colors.outlineVariant, strokeWidth: 1),
-            ),
-            borderData: FlBorderData(show: false),
-            titlesData: FlTitlesData(
-              leftTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  interval: 1,
-                  reservedSize: 24,
-                  getTitlesWidget: (v, _) => v == v.roundToDouble() && v > 0
-                      ? Text(
-                          v.toInt().toString(),
-                          style: AppTextStyles.small(colors.onSurfaceVariant),
-                        )
-                      : const SizedBox.shrink(),
-                ),
-              ),
-              bottomTitles: AxisTitles(
-                sideTitles: SideTitles(
-                  showTitles: true,
-                  reservedSize: 22,
-                  interval: days <= 7
-                      ? 1
-                      : days <= 14
-                      ? 2
-                      : 5,
-                  getTitlesWidget: (v, _) {
-                    final idx = v.toInt();
-                    if (idx < 0 || idx >= days) return const SizedBox.shrink();
-                    final date = now.subtract(Duration(days: days - 1 - idx));
-                    return Text(
-                      DateFormat('d/M').format(date),
-                      style: AppTextStyles.small(colors.onSurfaceVariant),
-                    );
-                  },
-                ),
-              ),
-              topTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
-              rightTitles: const AxisTitles(
-                sideTitles: SideTitles(showTitles: false),
-              ),
-            ),
-            barGroups: List.generate(days, (i) {
-              final date = now.subtract(Duration(days: days - 1 - i));
-              final count = countByDay[_dayKey(date)] ?? 0;
-              return BarChartGroupData(
-                x: i,
-                barRods: [
-                  BarChartRodData(
-                    toY: count.toDouble(),
-                    color: count == 0 ? colors.outlineVariant : AppColors.amber,
-                    width: days <= 7
-                        ? 18
-                        : days <= 14
-                        ? 12
-                        : 6,
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                ],
-              );
-            }),
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            // Each day needs a comfortable slot. When the period is wider than
+            // the card (e.g. 30 days) scroll horizontally instead of squashing.
+            final width = (days * 22.0).clamp(
+              constraints.maxWidth,
+              double.infinity,
+            );
+            if (width <= constraints.maxWidth) return chart;
+            return SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(width: width, child: chart),
+            );
+          },
         ),
       ),
     );
