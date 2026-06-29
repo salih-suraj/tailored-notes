@@ -1,4 +1,4 @@
-# TailorEd Notes — User Guide
+# TailorEd — User Guide
 
 > Digital care documentation for residential children's homes.
 > Last updated: May 2026
@@ -31,7 +31,7 @@
 
 ## 1. Signing In
 
-1. Open TailorEd Notes on your device.
+1. Open TailorEd on your device.
 2. Enter your **email address** and **password**, then tap **Sign in**.
 3. **Managers and Inspectors only** — after signing in you will be taken to a Two-Factor Authentication screen:
    - **First time:** The app shows a secret key. Open Google Authenticator (or any TOTP app), tap Add Account, choose "Enter a setup key", and type in the key shown. Then enter the 6-digit code the app generates and tap **Verify**.

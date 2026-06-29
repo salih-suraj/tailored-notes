@@ -1,4 +1,4 @@
-# TailorEd Notes — Build Roadmap
+# TailorEd — Build Roadmap
 
 > Updated as we build. Each item is marked `done`, `in progress`, or `todo`.
 > Full tracking in TODO.md. Phases match the build brief in `guide.txt`.

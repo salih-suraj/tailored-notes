@@ -4,7 +4,7 @@ Copy everything below this line and paste it into a new Claude conversation.
 
 ---
 
-I am building TailorEd Notes — a Flutter digital care documentation platform for UK residential 
+I am building TailorEd — a Flutter digital care documentation platform for UK residential 
 children's homes. The Flutter app is fully built and offline-first (using Drift locally). I now 
 need to set up Supabase as the cloud backend. Walk me through every step, generating all SQL 
 and configuration as we go.

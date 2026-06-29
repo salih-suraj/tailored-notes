@@ -1,9 +1,9 @@
-# TailorEd Notes — Progress Update
+# TailorEd — Progress Update
 
-**Date:** 23 June 2026
-**Status:** Feature-complete — in final testing and hardening ahead of launch.
+**Date:** 29 June 2026
+**Status:** Feature-complete — onboarding and branding finished; in final testing and hardening ahead of launch.
 
-TailorEd Notes is a digital care-documentation app for residential children's
+TailorEd is a digital care-documentation app for residential children's
 homes, replacing paper records and disconnected tools with one secure system
 for staff, managers, inspectors, and parents.
 
@@ -16,14 +16,16 @@ for staff, managers, inspectors, and parents.
 | Core app & all care records | ✅ Built |
 | Manager & oversight tools | ✅ Built |
 | Inspector & parent access | ✅ Built |
-| Staff management (in-app) | ✅ Built — final setup pending |
+| Team-leader role & oversight | ✅ Built |
+| In-app onboarding (all roles) | ✅ Built |
 | Security & two-factor sign-in | ✅ Built |
-| Branding, colours & app icon | ✅ Done |
+| AI shift summary | ✅ Live |
+| Branding — name, icon & colours | ✅ Done |
 | Final device testing | 🔄 In progress |
-| AI shift summary | 🔄 Built — awaiting AI service top-up |
 
-**Overall: all planned features are built. The remaining work is testing,
-final sign-off, and switching on the last two services.**
+**Overall: all planned features are built and the app is fully branded as
+TailorEd. The remaining work is testing, final sign-off, and security
+hardening.**
 
 ---
 
@@ -59,9 +61,14 @@ final sign-off, and switching on the last two services.**
 - A **Parent/Guardian portal** showing their child's activities and
   achievements (with photo permissions controlled by the manager).
 
-**Staff management (new)**
-- Managers can now create and disable staff accounts from inside the app —
-  no need to touch any technical dashboard.
+**Roles & in-app onboarding**
+- Five roles: support worker, **team leader** (full care access plus oversight,
+  below a manager), manager, inspector, and parent/guardian.
+- Managers create and manage **all** accounts from inside the app — staff,
+  parents, and inspectors — no technical dashboard needed.
+- New accounts are given a temporary password and **must set their own** on
+  first sign-in, so a manager never knows anyone's real password.
+- If someone forgets their password, a manager resets it in one tap.
 
 **Built-in throughout**
 - Works **offline** and syncs automatically when back online.
@@ -75,11 +82,17 @@ final sign-off, and switching on the last two services.**
 
 ## Completed in this latest round
 
-- Polished, professional colour design across the app (brand-led, not noisy).
-- New branded **app icon** for the home screen.
-- Improved sign-in: clearer error messages, smoother button behaviour.
-- Bug fixes found during review.
-- In-app **staff management** for managers.
+- **Rebranded to "TailorEd"** — new app name, home-screen icon, and launch
+  screen (the document-in-a-caring-hand mark with a safeguarding shield).
+- A calm, consistent **design language** applied across every screen — colour
+  is now reserved for things that matter (safety and status), so the important
+  signals stand out.
+- **Team-leader role** added — sitting between support workers and managers.
+- **Full in-app onboarding** for every role, with a forced first-login
+  password change and one-tap manager password resets.
+- AI shift-summary verified **live**.
+- A round of fixes from review (clearer error messages everywhere, layout and
+  chart polish).
 
 ---
 
@@ -87,13 +100,14 @@ final sign-off, and switching on the last two services.**
 
 These do not require more features — it's testing, sign-off, and final setup:
 
-1. **Final testing on real devices** — checking each screen, the offline sync,
-   and accessibility on phones and tablets.
-2. **Switch on the AI shift-summary** — the feature is built and deployed; it
-   needs the AI service account topped up with credit to go live.
-3. **Activate in-app staff management** — one quick server step to enable it.
-4. **Automated test coverage** — adding tests that guard against future
-   regressions (in progress).
+1. **Final testing on real devices** — each screen, the offline sync, and
+   accessibility on phones and tablets.
+2. **Security hardening** — a small tightening of the first-login password step.
+3. **Email invitations (optional, later)** — accounts are set up with a
+   temporary password today; sending email invites is a nice future addition
+   once the app is on the app stores.
+4. **Automated test coverage** — tests that guard against future regressions
+   (in progress).
 
 ---
 

@@ -1,4 +1,4 @@
-# TailorEd Notes — Full Manual Test Plan
+# TailorEd — Full Manual Test Plan
 
 Five testers, one role each, coordinating live. Tick every box. When a box
 fails, note: what you did, what you expected, what happened.
