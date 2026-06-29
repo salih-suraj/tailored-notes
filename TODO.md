@@ -3,7 +3,7 @@
 > Source of truth for everything required from both the business proposal (Rabi Ahmed)
 > and the technical build brief (guide.txt). Update this as items complete.
 >
-> Last updated: 2026-06-25 (session 8 — double-tap root-caused + fixed (pinned footer), white app icon, AI summary verified, P1 staff mgmt built; see ▶ RESUME HERE)
+> Last updated: 2026-06-29 (session 9 — rebrand to "TailorEd", operational-calm design pass app-wide, team-leader role + onboarding, forced password reset, in-app parent & inspector provisioning, error-message + dead-route audit; see ▶ RESUME HERE)
 
 ---
 
@@ -40,7 +40,7 @@ Every new feature added without them makes the retrofit harder.
 | 1 | Project setup, folder structure, pubspec.yaml | ✅ | |
 | 2 | Design tokens — colours, spacing, radius, typography | ✅ | |
 | 3 | Theme — light + dark ThemeData | ✅ | |
-| 4 | Router skeleton — all top-level routes, placeholder screens | ✅ | `/daily-notes` tab (Support Worker + Team Leader) now shows `DailyNotesHubScreen` — lists all children, tap routes to that child's daily notes. Other unused top-level placeholders remain as stubs. |
+| 4 | Router skeleton — all top-level routes, placeholder screens | ✅ | `/daily-notes` tab (Support Worker + Team Leader) shows `DailyNotesHubScreen`. **Session 9:** removed the 7 unreachable top-level "(coming soon)" record stubs + dead constants; deleted `PlaceholderScreen`. Forgot-password is now a real screen. |
 | 5 | Supabase client — EU region, --dart-define credentials, safe null init | ✅ | |
 | 6 | Auth — login screen, role-based redirect, MFA | ✅ | Email/password login + MFA (TOTP) for Manager and Inspector. Settings screen with sign-out, theme switcher, user/role card. |
 | 7 | Navigation shell — bottom bar (mobile) + rail (tablet) + extended rail (wide) | ✅ | Role-based tabs. Semantic labels on icons. |
@@ -139,7 +139,7 @@ Every new feature added without them makes the retrofit harder.
 
 | # | Task | Status | Notes |
 |---|------|--------|-------|
-| P1 | In-app Staff Management — Manager creates/disables staff accounts | 🔧 | **Built 2026-06-23 — pending deploy + device verify.** Closes the "no sign-up" gap: a real manager provisions staff in-app instead of the Supabase dashboard (self-sign-up stays deliberately absent — no self-picking role/home in a safeguarding context). **Edge Function** `supabase/functions/manage-staff/index.ts` (service-role key; manager + AAL2 gated; home FORCED from the manager's `app_home_id` JWT claim, never client-supplied; roles limited to support_worker/team_leader/manager): `create` (auth user with `email_confirm` + matching `user_profiles` row, rolls back the auth user if the profile insert fails) and `setActive` (auth ban/unban + `is_active` flag, after verifying the target is in the manager's home). **SQL** `supabase_staff_management.sql` (idempotent) adds `user_profiles.is_active`. **Flutter** `features/staff/`: `StaffMember` model, `StaffRepository` (list via RLS, create/setActive via the Edge Function), riverpod providers, `ManagerStaffScreen` (list + active/disabled badges + enable/disable confirm), `staff_form_sheet` (name/email/role/temp-password). Route `/dashboard/staff` + groups icon on the dashboard AppBar. `flutter analyze` clean. **To activate:** `supabase functions deploy manage-staff` + run `supabase_staff_management.sql` in the SQL editor, then test create→login→disable. **Known gap it surfaces:** no in-app change-password screen yet (forgot-password route still a placeholder), so the manager-set temp password is what staff keep until that's built. |
+| P1 | In-app Staff Management — Manager creates/disables staff accounts | ✅ | **Built 2026-06-23 — pending deploy + device verify.** Closes the "no sign-up" gap: a real manager provisions staff in-app instead of the Supabase dashboard (self-sign-up stays deliberately absent — no self-picking role/home in a safeguarding context). **Edge Function** `supabase/functions/manage-staff/index.ts` (service-role key; manager + AAL2 gated; home FORCED from the manager's `app_home_id` JWT claim, never client-supplied; roles limited to support_worker/team_leader/manager): `create` (auth user with `email_confirm` + matching `user_profiles` row, rolls back the auth user if the profile insert fails) and `setActive` (auth ban/unban + `is_active` flag, after verifying the target is in the manager's home). **SQL** `supabase_staff_management.sql` (idempotent) adds `user_profiles.is_active`. **Flutter** `features/staff/`: `StaffMember` model, `StaffRepository` (list via RLS, create/setActive via the Edge Function), riverpod providers, `ManagerStaffScreen` (list + active/disabled badges + enable/disable confirm), `staff_form_sheet` (name/email/role/temp-password). Route `/dashboard/staff` + groups icon on the dashboard AppBar. `flutter analyze` clean. **To activate:** `supabase functions deploy manage-staff` + run `supabase_staff_management.sql` in the SQL editor, then test create→login→disable. **Known gap it surfaces:** no in-app change-password screen yet (forgot-password route still a placeholder), so the manager-set temp password is what staff keep until that's built. |
 
 ---
 
@@ -159,9 +159,40 @@ Cross-cutting fixes and polish on top of the feature set. All `flutter analyze` 
 
 ---
 
+## Session 9 (2026-06-29) — rebrand, design system, onboarding & audit
+
+| Item | Notes |
+|------|-------|
+| Operational-calm design pass | App-wide colour discipline: colour reserved for genuine safety/status (severity, completion, appetite, sleep quality, med outcome, allergy alerts, notification flags, reward/achievement); organisational metadata (shift, meal/category/type, workflow status, contact type, modules) → neutral outlined chips; one teal action accent for every FAB / Save button / selection chip; role colours kept as identity. Flagship child profile + roster redesigned earlier; this pass propagated it to all record list + editor + detail screens and the inspector read-only mirror. Convention saved to agent memory (`operational-calm-colour.md`). |
+| Rebrand → "TailorEd" | App display name `tailored_notes`/"Tailored Notes" → **TailorEd** (Android label + iOS CFBundleDisplayName). New launcher icon + splash from `assets/images/logo.jpeg` (blue→teal "TE" document in a caring hand + safeguarding shield), regenerated for Android (default + adaptive) and iOS via flutter_launcher_icons + flutter_native_splash. **Needs a fresh build to appear on device.** |
+| Team Leader role | Sits between support worker and manager: full care access (children, daily notes, checklists, handover, oversight dashboard, care plans/risk assessments); blocked from the three manager-only admin surfaces (staff, parent access, inspector access) and from adding children (manager-only, confirmed with client). Routing/nav/gating verified. DB: `supabase_team_leader_role.sql` (role CHECK widened to the full five-role set) — **applied to prod**. |
+| Forced password reset (P1 follow-on) | Closes the change-password gap P1 surfaced. Accounts provisioned with a temp password carry `must_change_password` in auth user metadata; router intercepts first login (before MFA + role guard) → `SetPasswordScreen` (set new + confirm, `updateUser` sets password & clears flag) → on to role home. Back/AppBar signs out → login (no longer exits the app). Error messages map to specific causes (weak / same-as-temp / expired session), never a code. **Caveat (alarm A1):** flag is in user-writable `user_metadata` → bypassable by a technical user; harden to `app_metadata` + Edge Function clear with the email-invite work. |
+| In-app parent provisioning (Phase-1 onboarding) | Parent Access screen → **Add parent** (name/email/temp password) creates a `parent_guardian` account, separate from linking to a child. Then **Link Parent** as before. `manage-staff` `ALLOWED_ROLES` extended to `parent_guardian`. |
+| In-app inspector provisioning | Inspector Access screen → **Add inspector** creates an `inspector` account, separate from granting home access. `manage-staff` `ALLOWED_ROLES` extended to `inspector` (cross-home; home_id is a vestigial attribute — access is via grants). |
+| Error-message audit (no coded messages) | Removed every raw-status / `toString()` leak to users: staff repo (`Staff action failed (404)`), parent + inspector repos, `ai_summary_service` (`AI summary failed (404)`), and `link_form_sheet` (showed `e.toString()`). All now defer to `friendlyError()` (prefer the function's plain-English `{error}`, else humanise by status). `friendlyError` 404 copy reworded for the Edge-Function context. |
+| Dead-route / placeholder cleanup | "Forgot password?" linked to a "(coming soon)" placeholder → replaced with a real `ForgotPasswordScreen` (explains a manager/admin resets access — fits the provisioning model). Removed 7 unreachable top-level "(coming soon)" record routes + their dead constants; deleted the now-unused `PlaceholderScreen`. `flutter analyze` clean app-wide. |
+| Edge Function deploy | `manage-staff` **deployed to prod** by the client (it had never been deployed — that was the real cause of the staff-add 404). One deploy activates forced-reset + parent + inspector provisioning. |
+
+---
+
+## ⚠️ Open risks / alarms (from the session-9 audit) — recommended fixes
+
+| # | Risk | Severity | Recommended fix |
+|---|------|----------|-----------------|
+| A1 | `must_change_password` lives in **user-writable** `user_metadata` — a technical user could clear it via `updateUser` and skip the forced reset. Purpose is operational (replace the temp password), not defending an account against its owner, so impact is low. | Low | Move the flag to admin-only `app_metadata` (set by `manage-staff`), clear it via a small Edge Function action after the password change. Bundle with the email-invite work. |
+| A2 | **No working password-reset loop.** Forgot-password now points users to "ask your manager", but managers have **no in-app "reset this user's password" action** — only the vendor can reset (dashboard). | Med | Add a `resetPassword` action to `manage-staff` (manager + AAL2 + home-scoped: set a new temp password + `must_change_password=true`) and a per-staff "Reset password" button. Small, completes the loop. |
+| A3 | **No vendor first-manager bootstrap.** Standing up a brand-new home + its first manager still requires the Supabase dashboard. | Med | Last Phase-1 onboarding piece: a guarded super-admin path (Edge Function or documented runbook) to create a home + first manager. |
+| A4 | **No email infrastructure (custom SMTP).** Blocks email invites and self-service password reset; Supabase's default sender is rate-limited and spam-prone. | Med (pre-scale) | Configure custom SMTP (Resend/SES/Postmark) + a hosted set-password landing page (or app deep links once on the Play Store), then upgrade onboarding from temp-password to email invites. |
+| A5 | Created-but-unlinked **parents/inspectors aren't visible** on their screens (which list links/grants, not accounts), so a just-added account "disappears" until linked/granted. | Low | Turn each screen into an accounts list (accounts + their links/grants nested), or add an "Accounts" tab. |
+| A6 | Cloud-only **offline-sync engine (Q2)** and **accessibility (I5)** still need an on-device verification pass; **integration tests (Q7)** not started. | Med | Device pass for Q2/I5; write `test/integration/` for offline→online sync + auth/MFA flow. |
+
+No correctness/lint issues found — `flutter analyze` is clean across the whole project.
+
+---
+
 ## Summary — what's actually done vs what's required
 
-*Last updated: 2026-06-23 (session 8)*
+*Last updated: 2026-06-29 (session 9)*
 
 | Area | Done | Total | % |
 |------|------|-------|---|
@@ -173,34 +204,27 @@ Cross-cutting fixes and polish on top of the feature set. All `flutter analyze` 
 | Backend / Supabase | 8 of 8 | (B6 MFA-RLS verified; B8 AI summary live + verified) | 100% |
 | Infrastructure gaps | 5 of 5 | (I5 code-complete; needs screen-reader device pass) | 100% |
 | Quality / cross-cutting | 9 of 14 | (Q1–Q3, Q8, Q10–Q14 done; Q5–Q6 underway; Q2 pending runtime verify) | 64% |
-| Pre-launch | 0 of 1 | (P1 staff management built 2026-06-23 — pending deploy + verify) | — |
-| **Total** | **53 of 57** | | **93%** |
+| Pre-launch | 1 of 1 | (P1 staff management deployed + in-app onboarding for all roles; forced password reset live) | 100% |
+| **Total** | **54 of 57** | | **95%** |
 
 ---
 
-## ▶ RESUME HERE (updated 2026-06-23, session 8)
+## ▶ RESUME HERE (updated 2026-06-29, session 9)
 
-All 57 planned items are built; P1 (staff management) is now built too. Remaining work:
+All 57 planned items + P1 are built and deployed. The app is rebranded (TailorEd), the design system is applied app-wide, and in-app onboarding works for every role with a forced first-login password reset. Remaining work:
 
-**A. Activate the two server-backed features (you, ~10 min):**
-1. **Staff management (P1)** — `supabase functions deploy manage-staff`, run `supabase_staff_management.sql` in the SQL editor, then test: Dashboard → groups icon → Add Staff → create→login→disable.
-2. ~~Add Anthropic credit + test AI summary~~ ✅ done 2026-06-23 ($20 credit; verified working).
+**A. Device verification of session-9 work (you):**
+1. **Rebuild/reinstall** to pick up the rebrand (name/icon/splash) + the new Dart (forced reset, parent/inspector "Add", friendly errors).
+2. Provision each role in-app (Staff / Add parent / Add inspector) → confirm first login forces the set-password screen → lands on the right home. Confirm errors read as plain English.
 
-**B. On-device passes of the 🔧 items:**
-- Q2 (log in → watch sync backfill; delete a record → confirm it vanishes from the inspector portal), I5 (TalkBack/VoiceOver + 200% font). AI summary (31) ✅ verified.
+**B. Close the onboarding loop (next coding work — see Alarms):**
+- **A2** manager "reset password" action + button (small; completes forgot-password).
+- **A3** vendor first-manager bootstrap (last Phase-1 onboarding piece).
+- **A1/A4** harden the reset flag (`app_metadata`) + email invites once SMTP + a set-password landing exist.
+- **A5** turn Parent/Inspector screens into accounts lists so created-but-unlinked accounts are visible.
 
-**C. The main remaining coding work — tests (Q5–Q7):**
-- Q5 (unit, ~60 passing) and Q6 (widget, ~10 passing) underway; Q7 (integration: offline→online sync, auth/MFA flow) not started. Q8 (CI gate) ✅. Add staff-screen widget tests next (role-gating + create/disable).
+**C. On-device passes of the 🔧 items:** Q2 (sync backfill + delete propagation), I5 (TalkBack/VoiceOver + 200% font).
 
-**D. Smaller open items:** Q4 (Riverpod `select()`), Q9 (update ROADMAP.md), and the in-app change-password screen P1 surfaces (forgot-password route is still a placeholder).
+**D. Tests:** Q5 (unit ~60) + Q6 (widget ~10) underway; **Q7 integration** (offline→online sync, auth/MFA flow) not started. Add staff/parent/inspector provisioning + set-password widget tests.
 
-Completed in order:
-1. ~~Verify item 29 end-to-end~~ ✅ 2026-06-12
-2. ~~Verify item 30 end-to-end~~ ✅ 2026-06-12
-3. ~~Q2 — offline sync engine~~ 🔧 built 2026-06-12 (needs device pass)
-4. ~~Q3 — Timezone (UTC → Europe/London)~~ ✅ 2026-06-12
-5. ~~I5 — Accessibility~~ 🔧 code done 2026-06-12 (needs device pass)
-6. ~~Item 31 — AI shift summary~~ ✅ built + deployed + **verified working 2026-06-23**
-7. ~~UX fixes + colour polish + app icon~~ ✅ 2026-06-23 (session 8)
-8. ~~P1 — In-app staff management~~ 🔧 built 2026-06-23 (needs deploy + verify)
-9. **Q5–Q7 — Tests** ← next coding work
+**E. Smaller:** Q4 (Riverpod `select()`), Q9 (update ROADMAP.md).
