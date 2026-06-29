@@ -41,6 +41,15 @@ abstract final class AppStrings {
       'Choose a password different from the temporary one';
   static const setPasswordSubmit = 'Save password';
   static const setPasswordSuccess = 'Password updated';
+  static const setPasswordBackToSignIn = 'Back to sign in';
+  static const setPasswordWeak =
+      'That password isn’t strong enough. Use at least 8 characters.';
+  static const setPasswordSessionExpired =
+      'Your session has expired. Please sign in again with your temporary '
+      'password, then set a new one.';
+  static const setPasswordGenericError =
+      'We couldn’t update your password. Make sure it’s at least 8 characters '
+      'and different from your temporary one, then try again.';
 
   // MFA
   static const mfaTitle = 'Two-Factor Authentication';
