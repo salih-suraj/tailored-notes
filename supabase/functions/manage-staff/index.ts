@@ -154,10 +154,11 @@ async function createStaff(
     email,
     password,
     email_confirm: true,
-    // must_change_password forces the app's set-password screen on first login,
-    // so the manager's temporary password is only ever transitional and the
-    // staff member sets (and solely knows) their own. Cleared by updateUser.
-    user_metadata: { display_name: displayName, must_change_password: true },
+    user_metadata: { display_name: displayName },
+    // must_change_password forces the app's set-password screen on first login.
+    // It lives in admin-only app_metadata (not user-writable) and is cleared
+    // only by the change-password function, so it can't be tampered away.
+    app_metadata: { must_change_password: true },
   });
   if (createErr) {
     // Most common: email already registered.
@@ -269,14 +270,11 @@ async function resetPassword(
     return json({ error: "Forbidden: that account is in another home." }, 403);
   }
 
-  // Set the new temporary password and re-arm must_change_password. Carry the
-  // existing display_name so the metadata merge never drops it.
+  // Set the new temporary password and re-arm must_change_password (admin-only
+  // app_metadata, cleared by the change-password function).
   const { error: updateErr } = await admin.auth.admin.updateUserById(userId, {
     password,
-    user_metadata: {
-      display_name: target.display_name,
-      must_change_password: true,
-    },
+    app_metadata: { must_change_password: true },
   });
   if (updateErr) {
     console.error("resetPassword updateUserById failed:", updateErr);

@@ -26,9 +26,10 @@ class AppUser {
   final bool isMfaVerified;
 
   /// True when the account was provisioned with a temporary password and the
-  /// user has not yet set their own. Stored in the auth user's metadata by the
-  /// manage-staff Edge Function; cleared by the set-password screen via
-  /// `updateUser`. Forces a password change on first login (see app_router).
+  /// user has not yet set their own. Stored in the auth user's admin-only
+  /// `app_metadata` (not user-writable) and cleared only by the change-password
+  /// Edge Function, so it can't be tampered away. Forces a password change on
+  /// first login (see app_router).
   final bool mustChangePassword;
 
   /// Manager and Inspector must complete MFA before accessing the app.
@@ -51,7 +52,7 @@ class AppUser {
       displayName: session.user.userMetadata?['display_name'] as String?,
       isMfaVerified: claims['aal'] == 'aal2',
       mustChangePassword:
-          session.user.userMetadata?['must_change_password'] == true,
+          session.user.appMetadata['must_change_password'] == true,
     );
   }
 

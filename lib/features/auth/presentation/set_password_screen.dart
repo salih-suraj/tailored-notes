@@ -46,49 +46,51 @@ class _SetPasswordScreenState extends ConsumerState<SetPasswordScreen> {
     if (client == null) return;
 
     setState(() => _saving = true);
-    try {
-      await client.auth.updateUser(
-        UserAttributes(
-          password: _passwordController.text,
-          data: {'must_change_password': false},
-        ),
-      );
-      // Success — the router redirects once currentUser refreshes.
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text(AppStrings.setPasswordSuccess)),
-        );
-      }
-    } on AuthException catch (e) {
-      // friendlyError() collapses every AuthException to a generic "session"
-      // line, which hides the real reason here. Surface the actual cause —
-      // most often the password is too weak or matches the temporary one.
-      if (mounted) _showError(_passwordErrorMessage(e));
-    } catch (e) {
-      if (mounted) _showError(friendlyError(e));
-    } finally {
-      if (mounted) setState(() => _saving = false);
-    }
-  }
 
-  /// Maps a password-update [AuthException] to a clear, non-technical message.
-  String _passwordErrorMessage(AuthException e) {
-    final msg = e.message.toLowerCase();
-    if (e is AuthSessionMissingException ||
-        msg.contains('session') ||
-        msg.contains('jwt') ||
-        msg.contains('token')) {
-      return AppStrings.setPasswordSessionExpired;
+    // Phase 1 — set the new password AND clear the forced-reset flag
+    // server-side in one step. The flag lives in admin-only app_metadata, so
+    // this function is the only thing that can clear it (change-password fn).
+    // A failure here means the password was NOT changed.
+    try {
+      await client.functions.invoke(
+        'change-password',
+        body: {'password': _passwordController.text},
+      );
+    } on FunctionException catch (e) {
+      final details = e.details;
+      final message = details is Map ? details['error'] as String? : null;
+      if (mounted) {
+        _showError(
+          message != null && message.trim().isNotEmpty
+              ? message
+              : friendlyError(e),
+        );
+        setState(() => _saving = false);
+      }
+      return;
+    } catch (e) {
+      if (mounted) {
+        _showError(friendlyError(e));
+        setState(() => _saving = false);
+      }
+      return;
     }
-    if (msg.contains('different')) return AppStrings.setPasswordSame;
-    if (msg.contains('at least') ||
-        msg.contains('characters') ||
-        msg.contains('weak') ||
-        msg.contains('length') ||
-        msg.contains('short')) {
-      return AppStrings.setPasswordWeak;
+
+    // Phase 2 — password is changed. Refresh so the cleared flag reaches a new
+    // token and the router moves the user on. If the refresh fails (e.g. the
+    // token was rotated by the password change), sign out for a clean re-login
+    // with the new password — either way the change succeeded.
+    try {
+      await client.auth.refreshSession();
+    } catch (_) {
+      await ref.read(authNotifierProvider.notifier).signOut();
     }
-    return AppStrings.setPasswordGenericError;
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text(AppStrings.setPasswordSuccess)),
+      );
+      setState(() => _saving = false);
+    }
   }
 
   void _showError(String message) {

@@ -114,7 +114,10 @@ Deno.serve(async (req) => {
     email,
     password,
     email_confirm: true,
-    user_metadata: { display_name: displayName, must_change_password: true },
+    user_metadata: { display_name: displayName },
+    // Forced first-login password change — admin-only app_metadata (see
+    // change-password function).
+    app_metadata: { must_change_password: true },
   });
   if (createErr) {
     const msg = /already|exist|registered/i.test(createErr.message ?? "")
