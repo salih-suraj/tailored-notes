@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../features/auth/presentation/forgot_password_screen.dart';
 import '../../features/auth/presentation/login_screen.dart';
 import '../../features/auth/presentation/mfa_screen.dart';
 import '../../features/auth/presentation/set_password_screen.dart';
@@ -65,7 +66,6 @@ import '../../features/parent_portal/presentation/parent_portal_screen.dart';
 import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/staff/presentation/manager_staff_screen.dart';
 import '../../shared/widgets/nav_shell.dart';
-import '../errors/placeholder_screen.dart';
 import 'app_routes.dart';
 
 part 'app_router.g.dart';
@@ -198,7 +198,7 @@ GoRouter appRouter(Ref ref) {
       GoRoute(path: AppRoutes.login, builder: (_, _) => const LoginScreen()),
       GoRoute(
         path: AppRoutes.forgotPassword,
-        builder: (_, _) => const PlaceholderScreen(title: 'Forgot Password'),
+        builder: (_, _) => const ForgotPasswordScreen(),
       ),
       GoRoute(path: AppRoutes.mfa, builder: (_, _) => const MfaScreen()),
       GoRoute(
@@ -467,34 +467,6 @@ GoRouter appRouter(Ref ref) {
                 builder: (_, _) => const HomeCleaningScreen(),
               ),
             ],
-          ),
-          GoRoute(
-            path: AppRoutes.medication,
-            builder: (_, _) => const PlaceholderScreen(title: 'Medication'),
-          ),
-          GoRoute(
-            path: AppRoutes.incidents,
-            builder: (_, _) => const PlaceholderScreen(title: 'Incidents'),
-          ),
-          GoRoute(
-            path: AppRoutes.behaviour,
-            builder: (_, _) => const PlaceholderScreen(title: 'Behaviour'),
-          ),
-          GoRoute(
-            path: AppRoutes.sleepDiary,
-            builder: (_, _) => const PlaceholderScreen(title: 'Sleep Diary'),
-          ),
-          GoRoute(
-            path: AppRoutes.foodDiary,
-            builder: (_, _) => const PlaceholderScreen(title: 'Food Diary'),
-          ),
-          GoRoute(
-            path: AppRoutes.activities,
-            builder: (_, _) => const PlaceholderScreen(title: 'Activities'),
-          ),
-          GoRoute(
-            path: AppRoutes.smartSteps,
-            builder: (_, _) => const PlaceholderScreen(title: 'Smart Steps'),
           ),
           GoRoute(
             path: AppRoutes.handover,

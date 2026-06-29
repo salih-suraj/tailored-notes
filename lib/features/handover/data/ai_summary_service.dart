@@ -33,9 +33,14 @@ class AiSummaryService {
       }
       return summary;
     } on FunctionException catch (e) {
+      // Prefer the function's plain-English { error }; otherwise rethrow so
+      // friendlyError() humanises by status — never surface a raw status code.
       final details = e.details;
       final message = details is Map ? details['error'] as String? : null;
-      throw StateError(message ?? 'AI summary failed (${e.status}).');
+      if (message != null && message.trim().isNotEmpty) {
+        throw StateError(message);
+      }
+      rethrow;
     }
   }
 }

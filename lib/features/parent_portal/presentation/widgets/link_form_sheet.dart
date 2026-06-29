@@ -172,8 +172,10 @@ class _LinkFormSheetState extends ConsumerState<LinkFormSheet> {
             const SizedBox(height: AppSpacing.xs),
             childrenAsync.when(
               loading: () => const LinearProgressIndicator(),
-              error: (e, _) =>
-                  Text(e.toString(), style: AppTextStyles.small(colors.error)),
+              error: (e, _) => Text(
+                friendlyError(e),
+                style: AppTextStyles.small(colors.error),
+              ),
               data: (children) => DropdownButtonFormField<String>(
                 initialValue: _childId,
                 decoration: const InputDecoration(border: OutlineInputBorder()),

@@ -25,6 +25,15 @@ abstract final class AppStrings {
       'No internet connection. Check your network and try again.';
   static const signInFailed = 'Couldn’t sign you in. Please try again.';
 
+  // Forgot password — accounts are provisioned, so resets are handled by a
+  // manager/administrator rather than open self-service.
+  static const forgotPasswordTitle = 'Forgot your password?';
+  static const forgotPasswordBody =
+      'For everyone’s safety, accounts are managed for you. Ask your home '
+      'manager or administrator to reset your access — you’ll then set a new '
+      'password the next time you sign in.';
+  static const forgotPasswordBack = 'Back to sign in';
+
   // Set password (forced change on first login)
   static const setPasswordTitle = 'Set your password';
   static const setPasswordBody =

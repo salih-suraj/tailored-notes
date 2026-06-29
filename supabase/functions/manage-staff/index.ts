@@ -17,9 +17,10 @@
 // - The new/target account's home is FORCED to the manager's own app_home_id
 //   claim — never taken from the request — so a manager can only manage staff
 //   in their own home.
-// - Only internal staff roles can be created (support_worker, team_leader,
-//   manager). Inspectors and parents are external and provisioned through the
-//   access-grant flows, never here.
+// - A manager may provision internal staff (support_worker, team_leader,
+//   manager), parent/guardian accounts, and inspector accounts — see
+//   ALLOWED_ROLES. Linking parents to children and granting inspectors home
+//   access are separate flows; this function only creates the account.
 
 import { createClient } from "npm:@supabase/supabase-js@2";
 

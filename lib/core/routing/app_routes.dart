@@ -7,7 +7,6 @@ abstract final class AppRoutes {
   static const setPassword = '/set-password';
 
   // Shell (role-gated nav shell hosts these)
-  static const home = '/home';
   static const children = '/children';
   static const addChild = '/children/new';
   static const childProfile = '/children/:id';
@@ -79,16 +78,7 @@ abstract final class AppRoutes {
   static const homeCleaning = '/checklists/cleaning';
 
   static const dailyNotes = '/daily-notes';
-  static const dailyNoteEditor = '/daily-notes/:id/edit';
   static const checklists = '/checklists';
-  static const medication = '/medication';
-  static const incidents = '/incidents';
-  static const incidentEditor = '/incidents/:id/edit';
-  static const behaviour = '/behaviour';
-  static const sleepDiary = '/sleep-diary';
-  static const foodDiary = '/food-diary';
-  static const activities = '/activities';
-  static const smartSteps = '/smart-steps';
   static const handover = '/handover';
   static const handoverSummary = '/handover/summary';
   static const behaviourPatterns = '/dashboard/behaviour-patterns';
