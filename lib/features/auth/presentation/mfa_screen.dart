@@ -11,6 +11,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/network/supabase_client.dart';
 import '../../../shared/models/app_strings.dart';
 import 'auth_error_message.dart';
+import 'providers/auth_provider.dart';
 
 /// MFA screen — shown after password sign-in for Manager and Inspector roles.
 ///
@@ -142,82 +143,104 @@ class _MfaScreenState extends ConsumerState<MfaScreen> {
     ).showSnackBar(const SnackBar(content: Text(AppStrings.mfaCopied)));
   }
 
+  /// Back / "Back to sign in" — cancels the MFA step and signs out, so the
+  /// device back button (and the AppBar arrow) return to login instead of
+  /// closing the app.
+  Future<void> _signOut() async {
+    await ref.read(authNotifierProvider.notifier).signOut();
+  }
+
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: colors.surface,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.xl,
-                  AppSpacing.xxxl,
-                  AppSpacing.xl,
-                  AppSpacing.lg,
-                ),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: switch (_mode) {
-                      _Mode.loading => const CircularProgressIndicator(),
-                      _Mode.error => _ErrorBody(
-                        message: _errorMessage ?? 'Error',
-                      ),
-                      _Mode.enroll => _body(
-                        colors: colors,
-                        title: AppStrings.mfaEnrollTitle,
-                        body: AppStrings.mfaEnrollBody,
-                        extra: _EnrollmentSecret(
-                          secret: _enrollSecret ?? '',
-                          copied: _secretCopied,
-                          onCopy: _copySecret,
-                        ),
-                      ),
-                      _Mode.challenge => _body(
-                        colors: colors,
-                        title: AppStrings.mfaTitle,
-                        body: AppStrings.mfaChallengeBody,
-                      ),
-                    },
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) _signOut();
+      },
+      child: Scaffold(
+        backgroundColor: colors.surface,
+        appBar: AppBar(
+          backgroundColor: colors.surface,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            tooltip: AppStrings.setPasswordBackToSignIn,
+            onPressed: _isVerifying ? null : _signOut,
+          ),
+        ),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.xl,
+                    AppSpacing.xxxl,
+                    AppSpacing.xl,
+                    AppSpacing.lg,
                   ),
-                ),
-              ),
-            ),
-            // Pinned Verify footer — keeps the button above the soft keyboard so
-            // a single tap lands on it. It used to sit at the keyboard's top
-            // edge inside the scroll view, so the first tap hit the keyboard.
-            if (_mode == _Mode.enroll || _mode == _Mode.challenge)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.xl,
-                  AppSpacing.sm,
-                  AppSpacing.xl,
-                  AppSpacing.lg,
-                ),
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 400),
-                    child: ElevatedButton(
-                      onPressed: _isVerifying ? null : _verify,
-                      child: _isVerifying
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: AppColors.white,
-                              ),
-                            )
-                          : const Text(AppStrings.mfaVerify),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: switch (_mode) {
+                        _Mode.loading => const CircularProgressIndicator(),
+                        _Mode.error => _ErrorBody(
+                          message: _errorMessage ?? 'Error',
+                        ),
+                        _Mode.enroll => _body(
+                          colors: colors,
+                          title: AppStrings.mfaEnrollTitle,
+                          body: AppStrings.mfaEnrollBody,
+                          extra: _EnrollmentSecret(
+                            secret: _enrollSecret ?? '',
+                            copied: _secretCopied,
+                            onCopy: _copySecret,
+                          ),
+                        ),
+                        _Mode.challenge => _body(
+                          colors: colors,
+                          title: AppStrings.mfaTitle,
+                          body: AppStrings.mfaChallengeBody,
+                        ),
+                      },
                     ),
                   ),
                 ),
               ),
-          ],
+              // Pinned Verify footer — keeps the button above the soft keyboard so
+              // a single tap lands on it. It used to sit at the keyboard's top
+              // edge inside the scroll view, so the first tap hit the keyboard.
+              if (_mode == _Mode.enroll || _mode == _Mode.challenge)
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    AppSpacing.xl,
+                    AppSpacing.sm,
+                    AppSpacing.xl,
+                    AppSpacing.lg,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 400),
+                      child: ElevatedButton(
+                        onPressed: _isVerifying ? null : _verify,
+                        child: _isVerifying
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.white,
+                                ),
+                              )
+                            : const Text(AppStrings.mfaVerify),
+                      ),
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
