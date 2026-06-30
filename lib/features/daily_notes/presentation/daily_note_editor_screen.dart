@@ -11,6 +11,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/daily_note.dart';
 import 'providers/daily_notes_provider.dart';
 
@@ -178,7 +179,12 @@ class _DailyNoteEditorScreenState extends ConsumerState<DailyNoteEditorScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [_content],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existingNote != null;
 

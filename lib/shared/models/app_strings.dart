@@ -34,6 +34,13 @@ abstract final class AppStrings {
       'password the next time you sign in.';
   static const forgotPasswordBack = 'Back to sign in';
 
+  // Unsaved-changes guard (editors)
+  static const unsavedTitle = 'Discard changes?';
+  static const unsavedBody =
+      'You have unsaved changes. If you leave now they’ll be lost.';
+  static const unsavedKeepEditing = 'Keep editing';
+  static const unsavedDiscard = 'Discard';
+
   // Set password (forced change on first login)
   static const setPasswordTitle = 'Set your password';
   static const setPasswordBody =

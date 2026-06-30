@@ -11,6 +11,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/care_plan.dart';
 import 'providers/care_plans_provider.dart';
 
@@ -132,7 +133,12 @@ class _CarePlanEditorScreenState extends ConsumerState<CarePlanEditorScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [_titleController, _notesController],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existing != null;
 

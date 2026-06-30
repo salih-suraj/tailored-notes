@@ -12,6 +12,7 @@ import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/food_entry.dart';
 import 'providers/food_diary_provider.dart';
 
@@ -147,7 +148,16 @@ class _FoodEntryEditorScreenState extends ConsumerState<FoodEntryEditorScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [
+      _descriptionController,
+      _concernsController,
+      _notesController,
+    ],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existing != null;
 

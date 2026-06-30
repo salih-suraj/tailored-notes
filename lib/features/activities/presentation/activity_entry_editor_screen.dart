@@ -13,6 +13,7 @@ import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/activity_entry.dart';
 import 'providers/activities_provider.dart';
 
@@ -145,7 +146,17 @@ class _ActivityEntryEditorScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [
+      _titleController,
+      _descriptionController,
+      _durationController,
+      _achievementController,
+    ],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existing != null;
 

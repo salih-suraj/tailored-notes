@@ -13,6 +13,7 @@ import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../features/daily_notes/domain/daily_note.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/sleep_entry.dart';
 import 'providers/sleep_diary_provider.dart';
 
@@ -158,7 +159,12 @@ class _SleepEntryEditorScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [_wakingsController, _notesController],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existing != null;
 

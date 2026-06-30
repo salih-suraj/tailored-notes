@@ -12,6 +12,7 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/time/uk_time.dart';
 import '../../../features/auth/presentation/providers/auth_provider.dart';
 import '../../../shared/models/app_strings.dart';
+import '../../../shared/widgets/unsaved_changes_guard.dart';
 import '../domain/incident_report.dart';
 import 'providers/incidents_provider.dart';
 
@@ -173,7 +174,19 @@ class _IncidentReportEditorScreenState
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => UnsavedChangesGuard(
+    controllers: [
+      _titleController,
+      _descriptionController,
+      _immediateActionController,
+      _injuryDetailsController,
+      _followUpDetailsController,
+      _locationController,
+    ],
+    child: _buildScaffold(context),
+  );
+
+  Widget _buildScaffold(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
     final isEditing = widget.existing != null;
 
